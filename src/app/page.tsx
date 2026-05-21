@@ -681,11 +681,11 @@ export default function Home() {
           <div className="p-8 md:p-12 lg:px-16 lg:py-24">
             <div className="mx-auto max-w-xl text-center sm:text-left">
               <h2 className="text-3xl font-cabinet font-bold text-white md:text-4xl mb-4">
-                Let's Build Something Extraordinary Together
+                Let&apos;s Build Something Extraordinary Together
               </h2>
 
               <p className="text-zinc-300 md:mt-4 md:block font-light text-base">
-                Ready to elevate your digital presence? Let's collaborate to create a high-performance, visually stunning experience for your brand.
+                Ready to elevate your digital presence? Let&apos;s collaborate to create a high-performance, visually stunning experience for your brand.
               </p>
 
               <div className="mt-4 md:mt-8">

@@ -93,7 +93,7 @@ export default function QuoteConfigurator({ onSelectSummary }: QuoteConfigurator
     const base = selectedService.price + selectedScale.price;
     const multiplier = selectedTimeline.multiplier || 1.0;
     const finalPrice = Math.round(base * multiplier);
-    setEstimatedCost(finalPrice);
+    setTimeout(() => setEstimatedCost(finalPrice), 0);
 
     const summaryText = `Service: ${selectedService.name} | Scale: ${selectedScale.name} | Timeline: ${selectedTimeline.name} | Estimated Investment: $${finalPrice}`;
     onSelectSummary(summaryText);

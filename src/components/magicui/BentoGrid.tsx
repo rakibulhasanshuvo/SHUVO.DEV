@@ -17,7 +17,7 @@ export function BentoCard({
   background,
   className,
 }: {
-  Icon: any;
+  Icon: React.ElementType;
   name: string;
   description: string;
   href: string;
