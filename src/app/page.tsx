@@ -257,7 +257,7 @@ export default function Home() {
             >
               {/* Primary CTA: View My Work */}
               <a
-                href="#projects-stack"
+                href="#work"
                 className="group relative inline-flex items-center justify-center px-9 py-4 font-cabinet font-bold rounded-full overflow-hidden transition-all duration-300 scale-100 hover:scale-[1.04] active:scale-[0.98] text-center"
               >
                 {/* Glowing border/background glow */}
@@ -321,7 +321,9 @@ export default function Home() {
 
 
         {/* Featured Work (3D Sticky Stack Cards) */}
-        <StickyStackCards />
+        <section id="work" className="scroll-mt-24">
+          <StickyStackCards />
+        </section>
 
         {/* Endless Object Moving (Marquee) */}
         <div className="relative w-full overflow-hidden">
@@ -378,12 +380,12 @@ export default function Home() {
         <AngledGallery />
 
         {/* About Section */}
-        <div className="mt-40 mb-40">
+        <section id="about" className="scroll-mt-24 mt-40 mb-40">
           <AboutSection />
-        </div>
+        </section>
 
         {/* Work Process (Timeline Flow) */}
-        <section id="process" className="mb-40 max-w-[1440px] mx-auto px-6 relative">
+        <section id="process" className="scroll-mt-24 mb-40 max-w-[1440px] mx-auto px-6 relative">
           {/* Rain Background */}
           <div className="absolute inset-0 -z-10 opacity-30 overflow-hidden rounded-3xl">
             <RainBackground />
@@ -475,7 +477,7 @@ export default function Home() {
         {/* Reviews Section */}
 
 
-        <section id="reviews" className="mb-40 max-w-[1440px] mx-auto px-6">
+        <section id="reviews" className="scroll-mt-24 mb-40 max-w-[1440px] mx-auto px-6">
           <h2 className="font-cabinet font-bold text-3xl mb-12 text-white">Client Reviews</h2>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
@@ -554,7 +556,7 @@ export default function Home() {
           </div>
         </section>
         {/* FAQ Section */}
-        <section id="faq" className="mt-40 relative overflow-hidden">
+        <section id="faq" className="scroll-mt-24 mt-40 relative overflow-hidden">
           <div className="absolute inset-0 -z-10 opacity-20">
             <FallingMatrix />
           </div>
@@ -562,7 +564,7 @@ export default function Home() {
 
             <h2 className="font-cabinet font-bold text-4xl md:text-5xl mb-4 text-white">Frequently Asked Questions</h2>
             <p className="text-text-muted max-w-2xl mx-auto font-light">
-              Got questions? I've got answers. If you don't find what you're looking for, feel free to reach out.
+              Got questions? I&apos;ve got answers. If you don&apos;t find what you're looking for, feel free to reach out.
             </p>
           </div>
 
@@ -594,7 +596,7 @@ export default function Home() {
         </section>
 
         {/* Blog Section */}
-        <section id="blog" className="mt-40">
+        <section id="blog" className="scroll-mt-24 mt-40">
           <div className="text-center mb-16">
             <h2 className="font-cabinet font-bold text-4xl md:text-5xl mb-4 text-white">Latest Insights</h2>
             <p className="text-text-muted max-w-2xl mx-auto font-light">
@@ -614,10 +616,10 @@ export default function Home() {
                     How I built my first website with Nuxt, Tailwind CSS and Vercel
                   </h3>
 
-                  <p className="mt-1 text-xs text-text-muted">By John Doe</p>
+                  <p className="mt-1 text-xs text-text-muted">By M.R.H. Shuvo</p>
 
                   <p className="mt-4 line-clamp-2 text-sm text-text-muted font-light">
-                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. At velit illum provident a, ipsa maiores deleniti consectetur nobis et eaque.
+                    A deep dive into my journey of building a modern portfolio using Next.js, Tailwind CSS, and Vercel for the first time.
                   </p>
                 </div>
               </div>
@@ -627,7 +629,7 @@ export default function Home() {
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-4">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5"></path>
                   </svg>
-                  <span>31/06/2025</span>
+                  <span>30/06/2025</span>
                 </div>
 
                 <div className="flex items-center gap-2">
@@ -651,7 +653,7 @@ export default function Home() {
                     The Art of Cyber-Luxury: Aesthetics in Modern Web Design
                   </h3>
 
-                  <p className="mt-1 text-xs text-text-muted">By John Doe</p>
+                  <p className="mt-1 text-xs text-text-muted">By M.R.H. Shuvo</p>
 
                   <p className="mt-4 line-clamp-2 text-sm text-text-muted font-light">
                     Exploring how to combine high-tech cyber elements with minimalist luxury design principles to create stunning interfaces.
@@ -677,7 +679,7 @@ export default function Home() {
             </a>
           </div>
         </section>
-        <section id="contact" className="overflow-hidden glass rounded-3xl sm:grid sm:grid-cols-2 sm:items-center mt-32 border border-white/10 bg-gradient-to-br from-white/5 to-transparent shadow-xl">
+        <section id="contact" className="scroll-mt-24 overflow-hidden glass rounded-3xl sm:grid sm:grid-cols-2 sm:items-center mt-32 border border-white/10 bg-gradient-to-br from-white/5 to-transparent shadow-xl">
           <div className="p-8 md:p-12 lg:px-16 lg:py-24">
             <div className="mx-auto max-w-xl text-center sm:text-left">
               <h2 className="text-3xl font-cabinet font-bold text-white md:text-4xl mb-4">
