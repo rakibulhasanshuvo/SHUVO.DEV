@@ -84,9 +84,20 @@ export default function ContactPage() {
           
           {/* Left Column: Form & Stepper (span 3) */}
           <div className="lg:col-span-3 space-y-8">
+            {/* Stepper calculator (Moved to top for better UX flow) */}
+            <div className="relative">
+              <QuoteConfigurator onSelectSummary={setQuoteSummary} />
+              {/* Visual connector to form */}
+              <div className="hidden md:flex absolute -bottom-8 left-1/2 -translate-x-1/2 flex-col items-center justify-center pointer-events-none">
+                 <div className="w-px h-8 bg-gradient-to-b from-[#00F0FF]/40 to-transparent"></div>
+                 <div className="w-2 h-2 rounded-full bg-[#00F0FF]/50 blur-[2px] mt-[-2px]"></div>
+                 <div className="w-1 h-1 rounded-full bg-[#00F0FF] absolute bottom-0"></div>
+              </div>
+            </div>
+
             {/* Form */}
             <form onSubmit={handleSubmit} className="glass p-6 md:p-8 rounded-3xl border border-white/10 bg-[#060608] space-y-6 relative">
-              <h3 className="font-cabinet font-bold text-xl text-white mb-6">Contact Form</h3>
+              <h3 className="font-cabinet font-bold text-xl text-white mb-6 flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-[#00F0FF] animate-pulse"></span>Transmission Details</h3>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <GlowingInput
@@ -173,8 +184,6 @@ export default function ContactPage() {
               </div>
             </form>
 
-            {/* Stepper calculator */}
-            <QuoteConfigurator onSelectSummary={setQuoteSummary} />
           </div>
 
           {/* Right Column: High-End Metrics / Status indicators (span 2) */}
