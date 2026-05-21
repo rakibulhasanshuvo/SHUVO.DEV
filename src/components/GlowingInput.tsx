@@ -12,12 +12,20 @@ export function GlowingInput({ label, id, ...props }: GlowingInputProps) {
   const [isFocused, setIsFocused] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
 
+  const rectRef = useRef<DOMRect | null>(null);
+
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+    if (containerRef.current) {
+      rectRef.current = containerRef.current.getBoundingClientRect();
+    }
+  };
+
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!containerRef.current) return;
-    const rect = containerRef.current.getBoundingClientRect();
+    if (!rectRef.current) return;
     setCoords({
-      x: e.clientX - rect.left,
-      y: e.clientY - rect.top,
+      x: e.clientX - rectRef.current.left,
+      y: e.clientY - rectRef.current.top,
     });
   };
 
@@ -25,7 +33,7 @@ export function GlowingInput({ label, id, ...props }: GlowingInputProps) {
     <div
       ref={containerRef}
       onMouseMove={handleMouseMove}
-      onMouseEnter={() => setIsHovered(true)}
+      onMouseEnter={handleMouseEnter}
       onMouseLeave={() => setIsHovered(false)}
       className="relative w-full group"
     >
@@ -73,12 +81,20 @@ export function GlowingTextArea({ label, id, ...props }: GlowingTextAreaProps) {
   const [isFocused, setIsFocused] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
 
+  const rectRef = useRef<DOMRect | null>(null);
+
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+    if (containerRef.current) {
+      rectRef.current = containerRef.current.getBoundingClientRect();
+    }
+  };
+
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!containerRef.current) return;
-    const rect = containerRef.current.getBoundingClientRect();
+    if (!rectRef.current) return;
     setCoords({
-      x: e.clientX - rect.left,
-      y: e.clientY - rect.top,
+      x: e.clientX - rectRef.current.left,
+      y: e.clientY - rectRef.current.top,
     });
   };
 
@@ -86,7 +102,7 @@ export function GlowingTextArea({ label, id, ...props }: GlowingTextAreaProps) {
     <div
       ref={containerRef}
       onMouseMove={handleMouseMove}
-      onMouseEnter={() => setIsHovered(true)}
+      onMouseEnter={handleMouseEnter}
       onMouseLeave={() => setIsHovered(false)}
       className="relative w-full group"
     >
