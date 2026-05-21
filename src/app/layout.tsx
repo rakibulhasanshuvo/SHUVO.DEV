@@ -63,7 +63,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className={`${satoshi.variable} ${cabinetGrotesk.variable} min-h-full flex flex-col bg-cyber-black text-white font-satoshi selection:bg-neon-cyan/30 selection:text-white`}>
+<body className={`${satoshi.variable} ${cabinetGrotesk.variable} min-h-full flex flex-col bg-cyber-black text-white font-satoshi selection:bg-neon-cyan/30 selection:text-white overflow-x-hidden`}>
         <Providers>
           <Navbar />
           <div className="pt-24 flex-1 flex flex-col relative">

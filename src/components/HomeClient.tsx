@@ -25,6 +25,7 @@ import FeaturedWork from "@/components/featured-work/FeaturedWork";
 const StickyStackCards = dynamic(() => import("@/components/StickyStackCards"), { ssr: false });
 import AboutSection from "@/components/AboutSection";
 import AutotypingText from "@/components/ui/AutotypingText";
+import FaqAccordion from "@/components/FaqAccordion";
 
 
 

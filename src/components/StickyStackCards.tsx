@@ -286,11 +286,19 @@ function Card({ i, project, progress }: CardProps) {
   const translateZ = useTransform(progress, progressRange, zVals, { clamp: true });
   const darken = useTransform(progress, progressRange, darkenVals, { clamp: true });
 
+  const rectRef = useRef<DOMRect | null>(null);
+
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+    if (cardRef.current) {
+      rectRef.current = cardRef.current.getBoundingClientRect();
+    }
+  };
+
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!cardRef.current) return;
-    const { left, top } = cardRef.current.getBoundingClientRect();
-    const x = e.clientX - left;
-    const y = e.clientY - top;
+    if (!rectRef.current) return;
+    const x = e.clientX - rectRef.current.left;
+    const y = e.clientY - rectRef.current.top;
     setCoords({ x, y });
   };
 
@@ -298,7 +306,7 @@ function Card({ i, project, progress }: CardProps) {
     <m.div
       ref={cardRef}
       onMouseMove={handleMouseMove}
-      onMouseEnter={() => setIsHovered(true)}
+      onMouseEnter={handleMouseEnter}
       onMouseLeave={() => setIsHovered(false)}
       style={{
         y,

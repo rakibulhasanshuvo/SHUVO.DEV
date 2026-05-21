@@ -77,6 +77,7 @@ export default function StickyStackGrid() {
   );
 }
 
+
 interface CardProps {
   progress: MotionValue<number>;
   card: CardItem;

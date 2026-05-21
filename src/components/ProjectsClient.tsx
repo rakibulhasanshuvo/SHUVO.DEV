@@ -2,6 +2,8 @@
 
 import React from "react";
 import { m } from "framer-motion";
+import { TiltCard } from "@/components/ui/TiltCard";
+import InteractiveGridBackground from "@/components/InteractiveGridBackground";
 
 const projects = [
   {
@@ -9,8 +11,8 @@ const projects = [
     title: "Amolnama",
     description: "Digital ledger & data pipeline utilizing 10+ scraper bots tracking national events.",
     tech: ["Next.js", "Python", "Puppeteer", "PostgreSQL"],
-    glowClass: "hover:shadow-[0_0_30px_-5px_rgba(0,240,255,0.3)]",
-    borderClass: "border-[#00F0FF]/20",
+    spotlightColor: "rgba(0,240,255,0.15)",
+    borderClass: "group-hover:border-[#00F0FF]/40 border-white/5",
     dotColor: "bg-[#00F0FF]",
     dotGlow: "shadow-[0_0_10px_#00F0FF]",
   },
@@ -19,8 +21,8 @@ const projects = [
     title: "Componeo",
     description: "High-performance React component registry with a Next.js and Supabase backend.",
     tech: ["Next.js", "Supabase", "Tailwind CSS", "TypeScript"],
-    glowClass: "hover:shadow-[0_0_30px_-5px_rgba(161,0,255,0.3)]",
-    borderClass: "border-[#A100FF]/20",
+    spotlightColor: "rgba(161,0,255,0.15)",
+    borderClass: "group-hover:border-[#A100FF]/40 border-white/5",
     dotColor: "bg-[#A100FF]",
     dotGlow: "shadow-[0_0_10px_#A100FF]",
   },
@@ -29,8 +31,8 @@ const projects = [
     title: "Izzan",
     description: "Full-stack e-commerce architecture with secure checkout and inventory management.",
     tech: ["Next.js", "Stripe", "Prisma", "PostgreSQL"],
-    glowClass: "hover:shadow-[0_0_30px_-5px_rgba(16,185,129,0.3)]",
-    borderClass: "border-emerald-500/20",
+    spotlightColor: "rgba(16,185,129,0.15)",
+    borderClass: "group-hover:border-emerald-500/40 border-white/5",
     dotColor: "bg-emerald-500",
     dotGlow: "shadow-[0_0_10px_#10B981]",
   },
@@ -64,14 +66,18 @@ export default function ProjectsClient() {
             <m.div
               key={project.id}
               whileHover={{ y: -10 }}
-              className={`
-                glass rounded-2xl p-8
-                transition-all duration-500
-                flex flex-col justify-between h-[320px]
-                ${project.glowClass}
-                border ${project.borderClass}
-              `}
+              className="h-[320px]"
             >
+              <TiltCard
+                className={`
+                  glass rounded-2xl p-8
+                  transition-all duration-500
+                  flex flex-col justify-between h-full
+                  ${project.glowClass}
+                  border ${project.borderClass}
+                `}
+                spotlightColor="rgba(255,255,255,0.1)"
+              >
               <div>
                 <div className="flex justify-between items-center mb-4">
                   <h3 className="text-2xl font-bold font-cabinet text-white/90">
@@ -96,7 +102,8 @@ export default function ProjectsClient() {
                   ))}
                 </div>
               </div>
-            </m.div>
+              </TiltCard>
+              </m.div>
           ))}
         </div>
       </div>

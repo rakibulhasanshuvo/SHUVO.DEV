@@ -11,28 +11,106 @@ export default function AboutSection() {
     >
       {/* 1. Stretched Background Text "SHUVO" */}
       <div className="absolute inset-0 w-full h-full flex items-center justify-center select-none pointer-events-none z-0">
-        <svg
+        <m.svg
           className="w-full h-full"
           viewBox="0 0 1000 400"
           preserveAspectRatio="none"
           xmlns="http://www.w3.org/2000/svg"
-          fill="#151515"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
         >
           {/* S */}
-          <path d="M 30,0 L 190,0 L 190,140 L 140,140 L 140,50 L 80,50 L 80,175 L 190,175 L 190,400 L 30,400 L 30,260 L 80,260 L 80,350 L 140,350 L 140,225 L 30,225 Z" />
+          <m.path
+            d="M 30,0 L 190,0 L 190,140 L 140,140 L 140,50 L 80,50 L 80,175 L 190,175 L 190,400 L 30,400 L 30,260 L 80,260 L 80,350 L 140,350 L 140,225 L 30,225 Z"
+            variants={{
+              hidden: { pathLength: 0, fill: "rgba(21, 21, 21, 0)", stroke: "#00f0ff", strokeWidth: 1 },
+              visible: {
+                pathLength: 1,
+                fill: "rgba(21, 21, 21, 1)",
+                stroke: "rgba(0, 240, 255, 0)",
+                transition: {
+                  pathLength: { duration: 2, ease: "easeInOut" },
+                  fill: { duration: 1, delay: 1.5, ease: "easeOut" },
+                  stroke: { duration: 1, delay: 1.5, ease: "easeOut" }
+                }
+              }
+            }}
+          />
           
           {/* H */}
-          <path d="M 220,0 L 270,0 L 270,175 L 330,175 L 330,0 L 380,0 L 380,400 L 330,400 L 330,225 L 270,225 L 270,400 L 220,400 Z" />
+          <m.path
+            d="M 220,0 L 270,0 L 270,175 L 330,175 L 330,0 L 380,0 L 380,400 L 330,400 L 330,225 L 270,225 L 270,400 L 220,400 Z"
+            variants={{
+              hidden: { pathLength: 0, fill: "rgba(21, 21, 21, 0)", stroke: "#00f0ff", strokeWidth: 1 },
+              visible: {
+                pathLength: 1,
+                fill: "rgba(21, 21, 21, 1)",
+                stroke: "rgba(0, 240, 255, 0)",
+                transition: {
+                  pathLength: { duration: 2, ease: "easeInOut", delay: 0.2 },
+                  fill: { duration: 1, delay: 1.7, ease: "easeOut" },
+                  stroke: { duration: 1, delay: 1.7, ease: "easeOut" }
+                }
+              }
+            }}
+          />
           
           {/* U */}
-          <path d="M 410,0 L 460,0 L 460,350 L 520,350 L 520,0 L 570,0 L 570,400 L 410,400 Z" />
+          <m.path
+            d="M 410,0 L 460,0 L 460,350 L 520,350 L 520,0 L 570,0 L 570,400 L 410,400 Z"
+            variants={{
+              hidden: { pathLength: 0, fill: "rgba(21, 21, 21, 0)", stroke: "#00f0ff", strokeWidth: 1 },
+              visible: {
+                pathLength: 1,
+                fill: "rgba(21, 21, 21, 1)",
+                stroke: "rgba(0, 240, 255, 0)",
+                transition: {
+                  pathLength: { duration: 2, ease: "easeInOut", delay: 0.4 },
+                  fill: { duration: 1, delay: 1.9, ease: "easeOut" },
+                  stroke: { duration: 1, delay: 1.9, ease: "easeOut" }
+                }
+              }
+            }}
+          />
           
           {/* V */}
-          <path d="M 600,0 L 650,0 L 680,270 L 710,0 L 760,0 L 700,400 L 660,400 Z" />
+          <m.path
+            d="M 600,0 L 650,0 L 680,270 L 710,0 L 760,0 L 700,400 L 660,400 Z"
+            variants={{
+              hidden: { pathLength: 0, fill: "rgba(21, 21, 21, 0)", stroke: "#00f0ff", strokeWidth: 1 },
+              visible: {
+                pathLength: 1,
+                fill: "rgba(21, 21, 21, 1)",
+                stroke: "rgba(0, 240, 255, 0)",
+                transition: {
+                  pathLength: { duration: 2, ease: "easeInOut", delay: 0.6 },
+                  fill: { duration: 1, delay: 2.1, ease: "easeOut" },
+                  stroke: { duration: 1, delay: 2.1, ease: "easeOut" }
+                }
+              }
+            }}
+          />
           
           {/* O */}
-          <path fillRule="evenodd" d="M 790,0 L 950,0 L 950,400 L 790,400 Z M 840,50 L 840,350 L 900,350 L 900,50 Z" />
-        </svg>
+          <m.path
+            fillRule="evenodd"
+            d="M 790,0 L 950,0 L 950,400 L 790,400 Z M 840,50 L 840,350 L 900,350 L 900,50 Z"
+            variants={{
+              hidden: { pathLength: 0, fill: "rgba(21, 21, 21, 0)", stroke: "#00f0ff", strokeWidth: 1 },
+              visible: {
+                pathLength: 1,
+                fill: "rgba(21, 21, 21, 1)",
+                stroke: "rgba(0, 240, 255, 0)",
+                transition: {
+                  pathLength: { duration: 2, ease: "easeInOut", delay: 0.8 },
+                  fill: { duration: 1, delay: 2.3, ease: "easeOut" },
+                  stroke: { duration: 1, delay: 2.3, ease: "easeOut" }
+                }
+              }
+            }}
+          />
+        </m.svg>
       </div>
 
       {/* 2. User Portrait (Absolute overlay on the right) */}
