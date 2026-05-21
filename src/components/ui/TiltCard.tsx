@@ -72,7 +72,7 @@ export const TiltCard = ({ children, className = "", glowColor = "rgba(0, 240, 2
         rotateY,
         transformStyle: "preserve-3d",
       }}
-      whileHover={{ scale: 1.02 }}
+      whileHover={{ scale: 1.01 }}
       transition={{ duration: 0.2 }}
       className={`relative rounded-2xl group ${className}`}
     >
