@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { m, useScroll, useTransform, MotionValue } from "framer-motion";
 
 // Structure representing the registry units or projects
 interface CardItem {
@@ -78,9 +78,9 @@ export default function StickyStackGrid() {
 }
 
 interface CardProps {
+  progress: MotionValue<number>;
   card: CardItem;
   index: number;
-  progress: any;
   range: number[];
   targetScale: number;
 }
@@ -93,7 +93,7 @@ const Card: React.FC<CardProps> = ({ card, index, progress, range, targetScale }
 
   return (
     <div className="h-screen w-full flex items-center justify-center sticky top-0 pt-12 px-4 md:px-8">
-      <motion.div 
+      <m.div
         style={{ scale, opacity, filter: blurValue }}
         className={`
           relative w-full max-w-5xl h-[70vh] md:h-[75vh] rounded-[2.5rem] 
@@ -129,7 +129,7 @@ const Card: React.FC<CardProps> = ({ card, index, progress, range, targetScale }
           <div className="w-2 h-2 rounded-full border border-white/30" />
           <div className="w-12 h-[1px] bg-white/20" />
         </div>
-      </motion.div>
+      </m.div>
     </div>
   );
 };

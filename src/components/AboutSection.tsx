@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 
 export default function AboutSection() {
   return (
@@ -37,7 +37,7 @@ export default function AboutSection() {
 
       {/* 2. User Portrait (Absolute overlay on the right) */}
       <div className="absolute right-0 bottom-0 w-full max-w-[320px] sm:max-w-[420px] md:max-w-[500px] lg:max-w-[620px] h-[75%] sm:h-[85%] md:h-[95%] lg:h-full z-10 flex items-end justify-end pointer-events-none">
-        <motion.img
+        <m.img
           initial={{ opacity: 0, x: 80, scale: 0.95 }}
           whileInView={{ opacity: 1, x: 0, scale: 1 }}
           viewport={{ once: true, amount: 0.1 }}
@@ -55,7 +55,7 @@ export default function AboutSection() {
 
       {/* 3. Sleek Floating Description Card (Rectangle on the bottom-left) */}
       <div className="relative w-full max-w-xl z-20 mt-auto md:mb-6">
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.1 }}
@@ -109,7 +109,7 @@ export default function AboutSection() {
               </span>
             </a>
           </div>
-        </motion.div>
+        </m.div>
       </div>
 
       {/* Dynamic Ambient neon cyan glow behind portrait */}

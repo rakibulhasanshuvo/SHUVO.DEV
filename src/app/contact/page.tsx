@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { m, AnimatePresence } from "framer-motion";
 import { GlowingInput, GlowingTextArea } from "@/components/GlowingInput";
 import QuoteConfigurator from "@/components/QuoteConfigurator";
 
@@ -61,7 +61,7 @@ export default function ContactPage() {
         
         {/* Title Block */}
         <section className="text-center md:text-left">
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
@@ -76,7 +76,7 @@ export default function ContactPage() {
             <p className="text-gray-400 font-satoshi text-base md:text-xl font-light mt-4 max-w-2xl leading-relaxed">
               Have a high-end application or conversion workflow? Use my dynamic quote stepper or contact form to initiate a direct pipeline review.
             </p>
-          </motion.div>
+          </m.div>
         </section>
 
         {/* Main Grid */}
@@ -150,24 +150,24 @@ export default function ContactPage() {
 
                 <AnimatePresence mode="wait">
                   {status === "success" && (
-                    <motion.span
+                    <m.span
                       initial={{ opacity: 0, x: -10 }}
                       animate={{ opacity: 1, x: 0 }}
                       exit={{ opacity: 0, x: 10 }}
                       className="text-xs font-mono text-[#00F0FF]"
                     >
                       ✓ {responseMsg}
-                    </motion.span>
+                    </m.span>
                   )}
                   {status === "error" && (
-                    <motion.span
+                    <m.span
                       initial={{ opacity: 0, x: -10 }}
                       animate={{ opacity: 1, x: 0 }}
                       exit={{ opacity: 0, x: 10 }}
                       className="text-xs font-mono text-red-500"
                     >
                       ⚠ {responseMsg}
-                    </motion.span>
+                    </m.span>
                   )}
                 </AnimatePresence>
               </div>

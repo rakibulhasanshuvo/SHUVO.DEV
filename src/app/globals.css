@@ -22,8 +22,8 @@
   --color-text-muted: var(--text-muted);
   
   /* Fonts */
-  --font-cabinet: 'Cabinet Grotesk', system-ui, sans-serif;
-  --font-satoshi: 'Satoshi', system-ui, sans-serif;
+  --font-cabinet: var(--font-cabinet-grotesk), 'Cabinet Grotesk', system-ui, sans-serif;
+  --font-satoshi: var(--font-satoshi), 'Satoshi', system-ui, sans-serif;
   --font-jetbrains: 'JetBrains Mono', monospace;
 }
 

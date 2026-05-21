@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { motion, AnimatePresence } from "framer-motion";
+import { m, AnimatePresence } from "framer-motion";
 
 const links = [
   { href: "/", label: "Home" },
@@ -62,7 +62,7 @@ export default function Navbar() {
                   }`}
                 >
                   {isActive && (
-                    <motion.div
+                    <m.div
                       layoutId="nav-glider"
                       className="absolute inset-0 bg-gradient-to-r from-neon-cyan/40 to-neon-cyan rounded-full z-[-1] shadow-[0_0_15px_rgba(0,240,255,0.3)] border border-neon-cyan/20"
                       transition={{ type: "spring", stiffness: 380, damping: 30 }}
@@ -112,7 +112,7 @@ export default function Navbar() {
       {/* Mobile Drawer */}
       <AnimatePresence>
         {mobileOpen && (
-          <motion.div
+          <m.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
@@ -142,7 +142,7 @@ export default function Navbar() {
                 Hire Me
               </Link>
             </div>
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
     </header>

@@ -1,8 +1,23 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import localFont from "next/font/local";
+
+const satoshi = localFont({
+  src: "../fonts/Satoshi-Variable.woff2",
+  variable: "--font-satoshi",
+  display: "swap",
+});
+
+const cabinetGrotesk = localFont({
+  src: "../fonts/CabinetGrotesk-Variable.woff2",
+  variable: "--font-cabinet-grotesk",
+  display: "swap",
+});
 import Navbar from "@/components/Navbar";
+import { Providers } from "@/components/Providers";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://rakibulhasanshuvo.com"),
   title: "Rakibul Hasan Shuvo | Cyber-Luxury Full-Stack Web Developer & Designer",
   description: "Portfolio of Muhammad Rakibul Hasan Shuvo, a Full-Stack Web Developer & Graphic Designer engineering high-performance, visually stunning Next.js and Supabase experiences.",
   keywords: ["Rakibul Hasan Shuvo", "Full-Stack Developer", "Next.js", "Tailwind CSS v4", "Supabase", "Cyber-Luxury Design", "React Developer", "Bangladesh Developer"],
@@ -41,22 +56,20 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <head>
-        {/* Preload Fontshare stylesheet for Satoshi and Cabinet Grotesk with display=swap to avoid FOUT */}
-        <link 
-          href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&f[]=cabinet-grotesk@800&display=swap" 
-          rel="stylesheet" 
-        />
+
         {/* JSON-LD Schema markup */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="min-h-full flex flex-col bg-cyber-black text-white font-satoshi selection:bg-neon-cyan/30 selection:text-white">
-        <Navbar />
-        <div className="pt-24 flex-1 flex flex-col relative">
-          {children}
-        </div>
+      <body className={`${satoshi.variable} ${cabinetGrotesk.variable} min-h-full flex flex-col bg-cyber-black text-white font-satoshi selection:bg-neon-cyan/30 selection:text-white`}>
+        <Providers>
+          <Navbar />
+          <div className="pt-24 flex-1 flex flex-col relative">
+            {children}
+          </div>
+        </Providers>
       </body>
     </html>
   );

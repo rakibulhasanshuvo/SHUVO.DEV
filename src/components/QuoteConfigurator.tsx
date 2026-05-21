@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { m, AnimatePresence } from "framer-motion";
 
 interface Option {
   id: string;
@@ -125,7 +125,7 @@ export default function QuoteConfigurator({ onSelectSummary }: QuoteConfigurator
       <div className="min-h-[220px]">
         <AnimatePresence mode="wait">
           {step === 1 && (
-            <motion.div
+            <m.div
               key="step1"
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -158,11 +158,11 @@ export default function QuoteConfigurator({ onSelectSummary }: QuoteConfigurator
                   );
                 })}
               </div>
-            </motion.div>
+            </m.div>
           )}
 
           {step === 2 && (
-            <motion.div
+            <m.div
               key="step2"
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -199,11 +199,11 @@ export default function QuoteConfigurator({ onSelectSummary }: QuoteConfigurator
                   );
                 })}
               </div>
-            </motion.div>
+            </m.div>
           )}
 
           {step === 3 && (
-            <motion.div
+            <m.div
               key="step3"
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -236,7 +236,7 @@ export default function QuoteConfigurator({ onSelectSummary }: QuoteConfigurator
                   );
                 })}
               </div>
-            </motion.div>
+            </m.div>
           )}
         </AnimatePresence>
       </div>

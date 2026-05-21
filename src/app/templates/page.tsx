@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useMemo } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { m, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import LazyVideoPreview from "@/components/ui/LazyVideoPreview";
 
@@ -129,7 +129,7 @@ export default function TemplatesPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           <AnimatePresence mode="popLayout">
             {filteredTemplates.map((template) => (
-              <motion.div
+              <m.div
                 layout
                 key={template.id}
                 initial={{ opacity: 0, y: 15 }}
@@ -191,7 +191,7 @@ export default function TemplatesPage() {
                     </Link>
                   </div>
                 </div>
-              </motion.div>
+              </m.div>
             ))}
           </AnimatePresence>
         </div>

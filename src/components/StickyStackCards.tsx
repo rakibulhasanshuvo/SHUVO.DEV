@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef, useState, useEffect } from "react";
-import { motion, useScroll, useTransform, MotionValue } from "framer-motion";
+import { m, useScroll, useTransform, MotionValue } from "framer-motion";
 import Link from "next/link";
 
 interface Project {
@@ -295,7 +295,7 @@ function Card({ i, project, progress }: CardProps) {
   };
 
   return (
-    <motion.div
+    <m.div
       ref={cardRef}
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovered(true)}
@@ -343,7 +343,7 @@ function Card({ i, project, progress }: CardProps) {
       />
 
       {/* Dim overlay behind active card to increase contrast of front card */}
-      <motion.div
+      <m.div
         style={{ opacity: darken }}
         className="absolute inset-0 bg-black pointer-events-none transition-opacity duration-300 z-20"
       />
@@ -398,6 +398,6 @@ function Card({ i, project, progress }: CardProps) {
           </Link>
         </div>
       </div>
-    </motion.div>
+    </m.div>
   );
 }

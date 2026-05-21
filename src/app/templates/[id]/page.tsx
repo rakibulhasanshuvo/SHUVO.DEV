@@ -1,6 +1,7 @@
 import React from "react";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import TASLProvenanceCard from "@/components/ui/TASLProvenanceCard";
 
 interface PageProps {
@@ -164,11 +165,7 @@ export default async function TemplateDetailsPage({ params }: PageProps) {
               <div className="relative bg-[#0F0F12] aspect-[16/10] flex items-center justify-center p-8 transition-all">
                 {/* Simulated frame content */}
                 <div className="w-full h-full rounded-2xl border border-white/10 bg-[#070709] overflow-hidden relative shadow-inner group">
-                  <img
-                    src={template.posterUrl}
-                    alt={template.title}
-                    className="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-700"
-                  />
+                  <Image fill src={template.posterUrl} alt={template.title} className="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-700" sizes="(max-width: 1024px) 100vw, 1024px" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent flex flex-col justify-end p-8">
                     <span className="text-[10px] font-mono text-neon-cyan tracking-widest uppercase mb-2">LIVE SANDBOX READY</span>
                     <h3 className="text-2xl font-bold font-cabinet text-white mb-2">{template.title}</h3>

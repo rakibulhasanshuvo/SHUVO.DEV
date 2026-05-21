@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useRef, useState, useEffect } from "react";
+import Image from "next/image";
 
 interface LazyVideoPreviewProps {
   src: string;
@@ -58,12 +59,7 @@ export default function LazyVideoPreview({
     >
       {/* Loading Placeholder / Poster Fallback */}
       {(!loaded || !isInView) && (
-        <img
-          src={poster}
-          alt="Preview Poster"
-          className="absolute inset-0 w-full h-full object-cover z-10 transition-opacity duration-500"
-          style={{ opacity: loaded && isInView ? 0 : 1 }}
-        />
+                <Image fill src={poster} alt="Preview Poster" className="absolute inset-0 w-full h-full object-cover z-10 transition-opacity duration-500" style={{ opacity: loaded && isInView ? 0 : 1 }} sizes="(max-width: 768px) 100vw, 50vw" />
       )}
 
       {/* Actual VP9 High-Efficiency WebM Loop */}

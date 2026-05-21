@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { m, AnimatePresence } from "framer-motion";
 
 interface Hotspot {
   id: string;
@@ -176,7 +176,7 @@ export default function HardwareShowroom() {
         <div className="lg:col-span-2 min-h-[280px] flex flex-col justify-center">
           <AnimatePresence mode="wait">
             {activeHotspot ? (
-              <motion.div
+              <m.div
                 key={activeHotspot.id}
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -216,9 +216,9 @@ export default function HardwareShowroom() {
                     </span>
                   </div>
                 </div>
-              </motion.div>
+              </m.div>
             ) : (
-              <motion.div
+              <m.div
                 key="empty-state"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -230,7 +230,7 @@ export default function HardwareShowroom() {
                 <p className="text-gray-400 font-satoshi text-xs leading-relaxed max-w-sm mx-auto lg:mx-0 font-light">
                   Click or hover over any glowing hotspot pin inside the workstation schematic to inspect structural processor configurations, cooling performance profiles, and active workspace latency indexes.
                 </p>
-              </motion.div>
+              </m.div>
             )}
           </AnimatePresence>
         </div>

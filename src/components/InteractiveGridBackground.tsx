@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef, useEffect } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { m, useScroll, useTransform } from "framer-motion";
 
 export default function InteractiveGridBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -280,7 +280,7 @@ export default function InteractiveGridBackground() {
   }, []);
 
   return (
-    <motion.canvas
+    <m.canvas
       ref={canvasRef}
       style={{ opacity, mixBlendMode: "screen" }}
       className="fixed inset-0 w-screen h-screen pointer-events-none -z-20"
