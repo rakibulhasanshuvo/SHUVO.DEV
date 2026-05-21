@@ -77,10 +77,12 @@ export default function StickyStackGrid() {
   );
 }
 
+import { MotionValue } from "framer-motion";
+
 interface CardProps {
   card: CardItem;
   index: number;
-  progress: any;
+  progress: MotionValue<number>;
   range: number[];
   targetScale: number;
 }

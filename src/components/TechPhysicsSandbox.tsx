@@ -218,18 +218,21 @@ export default function TechPhysicsSandbox() {
     tick();
 
     // Event Listeners for Clicking/Dragging
-    const getCoordinates = (e: MouseEvent | TouchEvent) => {
-      const rect = canvas.getBoundingClientRect();
+    let cachedRect: DOMRect | null = null;
+    const getCoordinates = (e: MouseEvent | TouchEvent, refreshRect = false) => {
+      if (!cachedRect || refreshRect) {
+        cachedRect = canvas.getBoundingClientRect();
+      }
       const clientX = "touches" in e ? e.touches[0].clientX : e.clientX;
       const clientY = "touches" in e ? e.touches[0].clientY : e.clientY;
       return {
-        x: clientX - rect.left,
-        y: clientY - rect.top,
+        x: clientX - cachedRect.left,
+        y: clientY - cachedRect.top,
       };
     };
 
     const handleStart = (e: MouseEvent | TouchEvent) => {
-      const pos = getCoordinates(e);
+      const pos = getCoordinates(e, true);
       mouseX = pos.x;
       mouseY = pos.y;
 
@@ -243,7 +246,7 @@ export default function TechPhysicsSandbox() {
     };
 
     const handleMove = (e: MouseEvent | TouchEvent) => {
-      const pos = getCoordinates(e);
+      const pos = getCoordinates(e, false);
       mouseX = pos.x;
       mouseY = pos.y;
     };
