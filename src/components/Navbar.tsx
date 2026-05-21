@@ -28,7 +28,7 @@ export default function Navbar() {
 
   // Force close mobile menu on path changes
   useEffect(() => {
-    setMobileOpen(false);
+    setTimeout(() => setMobileOpen(false), 0);
   }, [pathname]);
 
   return (

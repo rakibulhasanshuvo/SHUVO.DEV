@@ -35,7 +35,7 @@ export default function TechPhysicsSandbox() {
   // Check prefers-reduced-motion
   useEffect(() => {
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-    setReducedMotion(mediaQuery.matches);
+    setTimeout(() => setReducedMotion(mediaQuery.matches), 0);
     const listener = (e: MediaQueryListEvent) => setReducedMotion(e.matches);
     mediaQuery.addEventListener("change", listener);
     return () => mediaQuery.removeEventListener("change", listener);

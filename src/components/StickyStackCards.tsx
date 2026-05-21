@@ -79,7 +79,7 @@ export default function StickyStackCards() {
 
   // Set up screen-size triggers and verify client mount for Next.js SSR safety
   useEffect(() => {
-    setMounted(true);
+    setTimeout(() => setMounted(true), 0);
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768);
     };
