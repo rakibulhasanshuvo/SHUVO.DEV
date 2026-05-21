@@ -213,8 +213,8 @@ export default function Home() {
         />
       </div>
       <div className="relative z-10 pt-12 pb-4">
-        {/* Full-width Hero Backdrop Wrapper — overflow-hidden scoped to hero only */}
-        <div className="relative w-full overflow-hidden">
+        {/* Full-width Hero Backdrop Wrapper */}
+        <div className="relative w-full">
           <section className="relative mb-40 pt-10 max-w-[1440px] mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 
 
@@ -313,7 +313,7 @@ export default function Home() {
             <ThreeDCarousel />
           </div>
         </section>
-        </div>{/* END overflow-hidden hero wrapper */}
+        </div>{/* END hero wrapper */}
 
         {/* Cyber Core Showcase */}
         <section className="relative flex flex-col items-center justify-center py-24 my-20 z-10 overflow-hidden">
