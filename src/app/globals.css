@@ -1,0 +1,125 @@
+@import "tailwindcss";
+
+:root {
+  --background: #000000;
+  --foreground: #FFFFFF;
+  
+  --cyber-black: #000000;
+  --cyber-charcoal: #0B0B0C;
+  --neon-cyan: #00F0FF;
+  --electric-purple: #A100FF;
+  --text-muted: #86868B;
+}
+
+@theme {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  
+  --color-cyber-black: var(--cyber-black);
+  --color-cyber-charcoal: var(--cyber-charcoal);
+  --color-neon-cyan: var(--neon-cyan);
+  --color-electric-purple: var(--electric-purple);
+  --color-text-muted: var(--text-muted);
+  
+  /* Fonts */
+  --font-cabinet: 'Cabinet Grotesk', system-ui, sans-serif;
+  --font-satoshi: 'Satoshi', system-ui, sans-serif;
+  --font-jetbrains: 'JetBrains Mono', monospace;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: 'Satoshi', system-ui, sans-serif;
+}
+
+/* Glassmorphism utility */
+.glass {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Neon Glow utility */
+.glow-cyan {
+  box-shadow: 0 0 30px -5px rgba(0, 240, 255, 0.3);
+}
+
+.glow-purple {
+  box-shadow: 0 0 30px -5px rgba(161, 0, 255, 0.3);
+}
+
+/* Moving Gradient Animation */
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient-shift 5s ease infinite;
+}
+
+/* Marquee Animations */
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes marquee-reverse {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(0%); }
+}
+
+.animate-marquee {
+  animation: marquee var(--duration, 20s) linear infinite;
+}
+
+.animate-marquee-reverse {
+  animation: marquee-reverse var(--duration, 20s) linear infinite;
+}
+
+/* Terminal Loader Animations */
+@keyframes blinkCursor {
+  50% {
+    border-right-color: transparent;
+  }
+}
+
+@keyframes typeAndDelete {
+  0%,
+  10% {
+    width: 0;
+  }
+  45%,
+  55% {
+    width: 6.2em;
+  } /* adjust width based on content */
+  90%,
+  100% {
+    width: 0;
+  }
+}
+
+.animate-blink-cursor {
+  animation: blinkCursor 0.5s step-end infinite alternate;
+}
+
+.animate-type-delete {
+  animation: typeAndDelete 4s steps(11) infinite;
+}
+
+/* Glowing shimmer sweep effect */
+@keyframes shimmer {
+  0% {
+    left: -150%;
+  }
+  50% {
+    left: 150%;
+  }
+  100% {
+    left: 150%;
+  }
+}
+

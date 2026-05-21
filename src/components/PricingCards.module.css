@@ -1,0 +1,186 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: 2rem;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.card {
+  --white: hsl(0, 0%, 100%);
+  --black: hsl(240, 15%, 9%);
+  --paragraph: hsl(0, 0%, 83%);
+  --line: hsl(240, 9%, 17%);
+  --primary: hsl(266, 92%, 58%); /* Default purple */
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.5rem;
+  background-color: hsla(240, 15%, 9%, 1);
+  border-radius: 1rem;
+  box-shadow: 0px -16px 24px 0px rgba(255, 255, 255, 0.1) inset;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px -16px 24px 0px rgba(255, 255, 255, 0.15) inset, 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* Themes */
+.cyan {
+  --primary: hsl(180, 100%, 47%); /* Neon Cyan */
+}
+
+.purple {
+  --primary: hsl(266, 92%, 58%); /* Purple */
+}
+
+.mixed {
+  --primary: hsl(284, 100%, 60%); /* Pink/Magenta */
+}
+
+.card .card__border {
+  overflow: hidden;
+  pointer-events: none;
+  position: absolute;
+  z-index: -1;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: calc(100% + 2px);
+  height: calc(100% + 2px);
+  background-image: linear-gradient(0deg, hsl(0, 0%, 100%) -50%, hsl(0, 0%, 20%) 100%);
+  border-radius: 1rem;
+}
+
+.card .card__border::before {
+  content: "";
+  pointer-events: none;
+  position: absolute; /* Fixed the 'fixed' bug */
+  z-index: 0;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transform-origin: center;
+  width: 200%;
+  height: 200%; /* Make it square to rotate properly */
+  background-image: conic-gradient(
+    from 0deg,
+    transparent 0%,
+    var(--primary) 25%,
+    transparent 50%,
+    var(--primary) 75%,
+    transparent 100%
+  );
+  animation: rotate 6s linear infinite;
+}
+
+@keyframes rotate {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+/* Inner overlay to mask the rotating border */
+.card::after {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  background-color: var(--black);
+  border-radius: 0.95rem;
+  z-index: 0;
+}
+
+/* Ensure content is above overlay */
+.card_title__container,
+.line,
+.card__list,
+.button {
+  position: relative;
+  z-index: 1;
+}
+
+.card .card_title__container .card_title {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: var(--white);
+  font-family: 'Cabinet Grotesk', sans-serif;
+}
+
+.card .card_title__container .card_paragraph {
+  margin-top: 0.25rem;
+  font-size: 0.85rem;
+  color: var(--paragraph);
+}
+
+.card .line {
+  width: 100%;
+  height: 1px;
+  background-color: var(--line);
+  border: none;
+}
+
+.card .card__list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  flex-grow: 1; /* Push button to bottom */
+}
+
+.card .card__list .card__list_item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.card .card__list .card__list_item .check {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 1.25rem;
+  height: 1.25rem;
+  background-color: var(--primary);
+  border-radius: 50%;
+}
+
+.card .card__list .card__list_item .check .check_svg {
+  width: 0.75rem;
+  height: 0.75rem;
+  fill: var(--black);
+}
+
+.card .card__list .card__list_item .list_text {
+  font-size: 0.85rem;
+  color: var(--white);
+}
+
+.card .button {
+  cursor: pointer;
+  padding: 0.75rem;
+  width: 100%;
+  background-image: linear-gradient(0deg, var(--primary) 0%, #00f0ff 100%);
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: var(--white);
+  border: 0;
+  border-radius: 9999px;
+  box-shadow: inset 0 -2px 15px -4px rgba(255, 255, 255, 0.5);
+  transition: opacity 0.3s ease;
+}
+
+.card .button:hover {
+  opacity: 0.9;
+}

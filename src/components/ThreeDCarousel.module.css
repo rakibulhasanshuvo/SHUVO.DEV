@@ -1,0 +1,94 @@
+.wrapper {
+  width: 100%;
+  height: 600px;
+  position: relative;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+  perspective: 1200px; /* Slightly higher perspective for deeper 3D depth */
+}
+
+.inner {
+  --w: 220px;
+  --h: 300px;
+  --translateZ: 380px; /* Adjusted to perfect viewing diameter */
+  --rotateX: -12deg; /* Adjusted angle for standard viewport height */
+  position: absolute;
+  width: var(--w);
+  height: var(--h);
+  z-index: 2;
+  transform-style: preserve-3d;
+  transform: rotateX(var(--rotateX));
+  animation: rotating 28s linear infinite; /* Premium cinematic rotation speed */
+}
+
+@keyframes rotating {
+  from {
+    transform: rotateX(var(--rotateX)) rotateY(0);
+  }
+  to {
+    transform: rotateX(var(--rotateX)) rotateY(1turn);
+  }
+}
+
+.card {
+  position: absolute;
+  border: 1px solid rgba(var(--color-card), 0.35); /* Elegant thin neon border */
+  border-radius: 20px; /* Rounded iOS-luxury corners */
+  overflow: hidden;
+  inset: 0;
+  transform: rotateY(calc((360deg / var(--quantity)) * var(--index))) translateZ(var(--translateZ));
+  background: rgba(8, 8, 10, 0.65); /* Frosted dark luxury glass backing */
+  backdrop-filter: blur(14px); /* Strong frosted blur */
+  -webkit-backdrop-filter: blur(14px);
+  transform-style: preserve-3d;
+  backface-visibility: hidden; /* CRITICAL: Hides backward-facing cards at the back of the cylinder to prevent messy mirrored graphics */
+  
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 
+              inset 0 1px 1px rgba(255, 255, 255, 0.05); /* Premium inner border light-catch */
+  
+  /* Smooth transition matching all states with cubic bezier physics */
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+              box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+              border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              background 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card:hover {
+  border-color: rgba(var(--color-card), 0.85); /* Bright glow border */
+  background: rgba(12, 12, 16, 0.8); /* Slightly darker background on hover for text readability */
+  
+  /* Glowing drop shadow that matches the individual card theme */
+  box-shadow: 0 0 35px rgba(var(--color-card), 0.3), 
+              0 15px 45px rgba(0, 0, 0, 0.6), 
+              inset 0 1px 2px rgba(255, 255, 255, 0.1);
+              
+  /* 3D POP-OUT EFFECT: Translates the card forward out of its cylinder slot by 25px when hovered */
+  transform: rotateY(calc((360deg / var(--quantity)) * var(--index))) translateZ(calc(var(--translateZ) + 25px));
+}
+
+.card:hover h4 {
+  color: #ffffff;
+  text-shadow: 0 0 8px rgba(var(--color-card), 0.5); /* Glow matches card's individual theme */
+}
+
+.card:hover p {
+  color: #e4e4e7; /* Bright zinc */
+}
+
+.img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  
+  /* Elegant light source from top center shining downwards */
+  background: radial-gradient(
+    circle at 50% 0%, 
+    rgba(var(--color-card), 0.16) 0%,
+    rgba(var(--color-card), 0.04) 50%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}
+
