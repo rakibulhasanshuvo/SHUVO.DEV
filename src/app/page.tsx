@@ -23,6 +23,7 @@ import FeaturedWork from "@/components/featured-work/FeaturedWork";
 import StickyStackCards from "@/components/StickyStackCards";
 import AboutSection from "@/components/AboutSection";
 import AutotypingText from "@/components/ui/AutotypingText";
+import FaqAccordion from "@/components/FaqAccordion";
 
 
 
@@ -630,31 +631,7 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="max-w-4xl mx-auto space-y-4">
-            <details className="group glass p-4 rounded-xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent shadow-xl [&_summary::-webkit-details-marker]:hidden" open>
-              <summary className="flex cursor-pointer items-center justify-between gap-4 font-medium text-white">
-                <span>What services do you offer?</span>
-                <svg className="size-5 shrink-0 transition-transform duration-300 group-open:-rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
-                </svg>
-              </summary>
-              <div className="mt-4 text-text-muted text-sm font-light">
-                I specialize in custom web development, UI/UX design, performance optimization, and integrating complex third-party services. I focus on creating high-performance, visually stunning digital experiences.
-              </div>
-            </details>
-
-            <details className="group glass p-4 rounded-xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent shadow-xl [&_summary::-webkit-details-marker]:hidden">
-              <summary className="flex cursor-pointer items-center justify-between gap-4 font-medium text-white">
-                <span>What is your typical project timeline?</span>
-                <svg className="size-5 shrink-0 transition-transform duration-300 group-open:-rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
-                </svg>
-              </summary>
-              <div className="mt-4 text-text-muted text-sm font-light">
-                Project timelines vary based on complexity. A standard landing page might take 1-2 weeks, while a complex web application can take 4-8 weeks. I provide detailed timelines during the discovery phase.
-              </div>
-            </details>
-          </div>
+          <FaqAccordion />
         </section>
 
         {/* Blog Section */}
