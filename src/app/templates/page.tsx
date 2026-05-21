@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import LazyVideoPreview from "@/components/ui/LazyVideoPreview";
@@ -58,6 +58,15 @@ const categories = ["All", "Creative Agency", "SaaS & Dashboard", "Full-Stack Co
 export default function TemplatesPage() {
   const [search, setSearch] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
+  const [isGalleryOpen, setIsGalleryOpen] = useState(false);
+
+  useEffect(() => {
+    if (isGalleryOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+  }, [isGalleryOpen]);
 
   const filteredTemplates = useMemo(() => {
     return templatesData.filter((template) => {
@@ -91,6 +100,12 @@ export default function TemplatesPage() {
           <p className="text-text-muted text-base sm:text-lg max-w-xl mx-auto font-light leading-relaxed">
             Beautifully designed, highly performant templates engineered with Next.js, Framer Motion, and elite CSS aesthetics.
           </p>
+          <button
+            onClick={() => setIsGalleryOpen(true)}
+            className="mt-8 px-6 py-3 bg-neon-cyan/10 border border-neon-cyan/30 text-neon-cyan rounded-full font-mono text-sm tracking-widest hover:bg-neon-cyan/20 transition-all shadow-[0_0_15px_rgba(0,255,255,0.15)] hover:shadow-[0_0_25px_rgba(0,255,255,0.3)] uppercase cursor-pointer"
+          >
+            View All Templates
+          </button>
         </header>
 
         {/* Search and Category Filters */}
@@ -205,6 +220,51 @@ export default function TemplatesPage() {
           </div>
         )}
       </div>
+
+      {/* Full-Screen Overlay Gallery */}
+      <AnimatePresence>
+        {isGalleryOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 50 }}
+            transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+            className="fixed inset-0 z-[100] bg-[#0a0a0a]/90 backdrop-blur-2xl overflow-y-auto"
+          >
+            {/* Sticky Header */}
+            <div className="sticky top-0 z-10 flex items-center justify-between px-6 py-6 border-b border-white/10 bg-[#0B0B0E]/80 backdrop-blur-md">
+              <div className="flex items-center gap-4">
+                <h2 className="text-2xl font-bold font-cabinet text-white">All Templates</h2>
+                <span className="text-[10px] font-mono font-bold tracking-widest text-neon-cyan uppercase px-2 py-1 bg-neon-cyan/10 border border-neon-cyan/20 rounded-full">
+                  {templatesData.length} ITEMS
+                </span>
+              </div>
+              <button
+                onClick={() => setIsGalleryOpen(false)}
+                className="text-xs font-mono font-bold text-text-muted hover:text-white transition-colors cursor-pointer flex items-center gap-2"
+              >
+                CLOSE <span className="text-lg leading-none">&times;</span>
+              </button>
+            </div>
+
+            {/* Grid Layout */}
+            <div className="p-6 max-w-[1600px] mx-auto">
+              <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6">
+                {templatesData.map((template) => (
+                  <Link key={template.id} href={`/templates/${template.id}`} onClick={() => setIsGalleryOpen(false)} className="block group relative rounded-2xl border border-white/10 bg-[#0B0B0E]/60 overflow-hidden hover:border-neon-cyan/30 transition-all cursor-pointer aspect-[3/4]">
+                    <LazyVideoPreview src={template.videoUrl} poster={template.posterUrl} className="absolute inset-0 w-full h-full object-cover rounded-none" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent pointer-events-none" />
+                    <div className="absolute bottom-0 left-0 right-0 p-4">
+                      <span className="text-[9px] font-mono font-bold tracking-widest text-neon-cyan uppercase mb-1 block">{template.category}</span>
+                      <h3 className="text-sm font-bold font-cabinet text-white leading-tight group-hover:text-neon-cyan transition-colors">{template.title}</h3>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
