@@ -18,7 +18,7 @@ import { Marquee } from "@/components/magicui/Marquee";
 import Loader from "@/components/Loader";
 import HoneycombLoader from "@/components/HoneycombLoader";
 
-import LinkCards from "@/components/LinkCards";
+
 import PricingCards from "@/components/PricingCards";
 import CyberButton from "@/components/CyberButton";
 import AngledGallery from "@/components/AngledGallery";
