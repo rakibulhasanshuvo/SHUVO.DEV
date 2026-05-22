@@ -590,9 +590,9 @@ export default function Home() {
 
                 <p className="text-zinc-300 text-base mb-4 font-light relative z-10">"Shuvo delivered an exceptional project. The attention to detail and performance optimization was outstanding."</p>
                 <div className="flex items-center gap-3 relative z-10">
-                  <div className="w-10 h-10 bg-neon-cyan/20 rounded-full flex items-center justify-center text-neon-cyan text-sm font-bold border border-neon-cyan/30 shadow-[0_0_10px_rgba(0,240,255,0.2)]">JD</div>
+                  <div className="w-10 h-10 bg-neon-cyan/20 rounded-full flex items-center justify-center text-neon-cyan text-sm font-bold border border-neon-cyan/30 shadow-[0_0_10px_rgba(0,240,255,0.2)]">AC</div>
                   <div>
-                    <p className="text-sm font-bold text-white">John Doe</p>
+                    <p className="text-sm font-bold text-white">Alex Chen</p>
                     <p className="text-xs text-text-muted">CEO, TechCorp</p>
                   </div>
                 </div>
@@ -608,9 +608,9 @@ export default function Home() {
 
                 <p className="text-zinc-300 text-base mb-4 font-light relative z-10">"The Cyber-Luxury aesthetic was exactly what we needed for our brand. Highly recommended."</p>
                 <div className="flex items-center gap-3 relative z-10">
-                  <div className="w-10 h-10 bg-electric-purple/20 rounded-full flex items-center justify-center text-electric-purple text-sm font-bold border border-electric-purple/30 shadow-[0_0_10px_rgba(147,51,234,0.2)]">AS</div>
+                  <div className="w-10 h-10 bg-electric-purple/20 rounded-full flex items-center justify-center text-electric-purple text-sm font-bold border border-electric-purple/30 shadow-[0_0_10px_rgba(147,51,234,0.2)]">SL</div>
                   <div>
-                    <p className="text-sm font-bold text-white">Alice Smith</p>
+                    <p className="text-sm font-bold text-white">Samantha Lee</p>
                     <p className="text-xs text-text-muted">Founder, DesignAgency</p>
                   </div>
                 </div>
@@ -652,7 +652,7 @@ export default function Home() {
 
                 <div className="mt-4 sm:mt-0">
                   <h3 className="text-lg font-bold text-white group-hover:text-neon-cyan transition-colors">
-                    How I built my first website with Nuxt, Tailwind CSS and Vercel
+                    How I built my portfolio with Next.js, Tailwind CSS and Vercel
                   </h3>
 
                   <p className="mt-1 text-xs text-text-muted">By M.R.H. Shuvo</p>
