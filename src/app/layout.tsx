@@ -3,6 +3,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://rakibulhasanshuvo.com"),
   title: "Rakibul Hasan Shuvo | Cyber-Luxury Full-Stack Web Developer & Designer",
   description: "Portfolio of Muhammad Rakibul Hasan Shuvo, a Full-Stack Web Developer & Graphic Designer engineering high-performance, visually stunning Next.js and Supabase experiences.",
   keywords: ["Rakibul Hasan Shuvo", "Full-Stack Developer", "Next.js", "Tailwind CSS v4", "Supabase", "Cyber-Luxury Design", "React Developer", "Bangladesh Developer"],
@@ -42,6 +43,16 @@ export default function RootLayout({
     >
       <head>
         {/* Preload Fontshare stylesheet for Satoshi and Cabinet Grotesk with display=swap to avoid FOUT */}
+        <link
+          rel="preconnect"
+          href="https://api.fontshare.com"
+          crossOrigin="anonymous"
+        />
+        <link
+          href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&f[]=cabinet-grotesk@800&display=swap"
+          rel="preload"
+          as="style"
+        />
         <link 
           href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&f[]=cabinet-grotesk@800&display=swap" 
           rel="stylesheet" 

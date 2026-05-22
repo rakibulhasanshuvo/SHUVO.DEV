@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React from "react";
 import { notFound } from "next/navigation";
 import Link from "next/link";
@@ -164,10 +165,11 @@ export default async function TemplateDetailsPage({ params }: PageProps) {
               <div className="relative bg-[#0F0F12] aspect-[16/10] flex items-center justify-center p-8 transition-all">
                 {/* Simulated frame content */}
                 <div className="w-full h-full rounded-2xl border border-white/10 bg-[#070709] overflow-hidden relative shadow-inner group">
-                  <img
+                  <Image
                     src={template.posterUrl}
                     alt={template.title}
-                    className="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-700"
+                    fill
+                    className="object-cover opacity-80 group-hover:scale-105 transition-transform duration-700"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent flex flex-col justify-end p-8">
                     <span className="text-[11px] font-mono text-neon-cyan tracking-widest uppercase mb-2">LIVE SANDBOX READY</span>
