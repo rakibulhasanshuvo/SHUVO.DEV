@@ -220,7 +220,7 @@ export default function Home() {
 
           {/* Hero Glow */}
           <div className="absolute inset-0 -z-10 flex items-center justify-center">
-            <div className="w-[600px] h-[600px] bg-gradient-to-r from-neon-cyan/10 to-electric-purple/10 rounded-full blur-3xl" />
+            <div className="absolute w-[600px] h-[600px] bg-gradient-to-r from-neon-cyan/10 to-electric-purple/10 rounded-full blur-3xl pointer-events-none" />
           </div>
 
 
@@ -644,10 +644,10 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-            <a href="#" className="block rounded-2xl glass p-6 border border-white/10 bg-gradient-to-br from-white/5 to-transparent shadow-xl hover:border-neon-cyan transition-colors group">
+            <a href="#" aria-label="Read Article" className="block rounded-2xl glass p-6 border border-white/10 bg-gradient-to-br from-white/5 to-transparent shadow-xl hover:border-neon-cyan transition-colors group">
               <div className="sm:flex sm:justify-between sm:gap-4 lg:gap-6">
                 <div className="sm:order-last sm:shrink-0">
-                  <img alt="Blog" src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?auto=format&fit=crop&q=80&w=1160" className="size-16 rounded-full object-cover sm:size-18" />
+                  <img width={64} height={64} alt="Blog" src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?auto=format&fit=crop&q=80&w=1160" className="size-16 rounded-full object-cover sm:size-18" />
                 </div>
 
                 <div className="mt-4 sm:mt-0">
@@ -681,10 +681,10 @@ export default function Home() {
             </a>
 
             {/* Added Blog Card 2 */}
-            <a href="#" className="block rounded-2xl glass p-6 border border-white/10 bg-gradient-to-br from-white/5 to-transparent shadow-xl hover:border-electric-purple transition-colors group">
+            <a href="#" aria-label="Read Article" className="block rounded-2xl glass p-6 border border-white/10 bg-gradient-to-br from-white/5 to-transparent shadow-xl hover:border-electric-purple transition-colors group">
               <div className="sm:flex sm:justify-between sm:gap-4 lg:gap-6">
                 <div className="sm:order-last sm:shrink-0">
-                  <img alt="Blog" src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=1160" className="size-16 rounded-full object-cover sm:size-18" />
+                  <img width={64} height={64} alt="Blog" src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=1160" className="size-16 rounded-full object-cover sm:size-18" />
                 </div>
 
                 <div className="mt-4 sm:mt-0">
@@ -740,7 +740,7 @@ export default function Home() {
           <div className="h-full w-full relative sm:h-[calc(100%-2rem)] sm:self-end">
             <div className="absolute inset-0 bg-gradient-to-l from-cyber-black to-transparent z-10 hidden sm:block" />
             <img
-              alt="Cyber Luxury"
+              width={1160} height={700} alt="Cyber Luxury"
               src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=1160"
               className="h-full w-full object-cover opacity-40 sm:rounded-ss-[30px] md:rounded-ss-[60px]"
             />
@@ -761,9 +761,9 @@ export default function Home() {
                 Engineering high-performance, visually stunning web applications that bridge the gap between design and engineering.
               </p>
               <div className="flex gap-4">
-                <a href="#" className="w-10 h-10 glass rounded-full flex items-center justify-center text-white hover:border-neon-cyan transition-colors font-jetbrains text-xs">GH</a>
-                <a href="#" className="w-10 h-10 glass rounded-full flex items-center justify-center text-white hover:border-neon-cyan transition-colors font-jetbrains text-xs">TW</a>
-                <a href="#" className="w-10 h-10 glass rounded-full flex items-center justify-center text-white hover:border-neon-cyan transition-colors font-jetbrains text-xs">LI</a>
+                <a href="#" aria-label="GitHub" className="w-10 h-10 glass rounded-full flex items-center justify-center text-white hover:border-neon-cyan transition-colors font-jetbrains text-xs">GH</a>
+                <a href="#" aria-label="Twitter" className="w-10 h-10 glass rounded-full flex items-center justify-center text-white hover:border-neon-cyan transition-colors font-jetbrains text-xs">TW</a>
+                <a href="#" aria-label="LinkedIn" className="w-10 h-10 glass rounded-full flex items-center justify-center text-white hover:border-neon-cyan transition-colors font-jetbrains text-xs">LI</a>
               </div>
             </div>
 
