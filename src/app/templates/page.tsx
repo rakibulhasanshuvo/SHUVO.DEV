@@ -136,7 +136,7 @@ export default function TemplatesPage() {
               onChange={(e) => setSearch(e.target.value)}
               className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-xs font-semibold tracking-wide text-white placeholder-white/30 focus:outline-none focus:border-neon-cyan/50 focus:bg-white/[0.08] transition-all"
             />
-            <span className="absolute right-3.5 top-1/2 -translate-y-1/2 text-white/35 font-mono text-[10px]">CMD+K</span>
+            <span className="absolute right-3.5 top-1/2 -translate-y-1/2 text-white/35 font-mono text-[11px]">CMD+K</span>
           </div>
         </section>
 
@@ -169,7 +169,7 @@ export default function TemplatesPage() {
                 <div className="p-6 flex-1 flex flex-col justify-between gap-6">
                   <div>
                     <div className="flex justify-between items-center mb-3">
-                      <span className="text-[10px] font-mono font-bold tracking-widest text-text-muted uppercase">
+                      <span className="text-[11px] font-mono font-bold tracking-widest text-text-muted uppercase">
                         {template.category}
                       </span>
                     </div>
@@ -235,7 +235,7 @@ export default function TemplatesPage() {
             <div className="sticky top-0 z-10 flex items-center justify-between px-6 py-6 border-b border-white/10 bg-[#0B0B0E]/80 backdrop-blur-md">
               <div className="flex items-center gap-4">
                 <h2 className="text-2xl font-bold font-cabinet text-white">All Templates</h2>
-                <span className="text-[10px] font-mono font-bold tracking-widest text-neon-cyan uppercase px-2 py-1 bg-neon-cyan/10 border border-neon-cyan/20 rounded-full">
+                <span className="text-[11px] font-mono font-bold tracking-widest text-neon-cyan uppercase px-2 py-1 bg-neon-cyan/10 border border-neon-cyan/20 rounded-full">
                   {templatesData.length} ITEMS
                 </span>
               </div>

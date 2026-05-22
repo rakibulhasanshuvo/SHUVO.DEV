@@ -148,13 +148,13 @@ export default async function TemplateDetailsPage({ params }: PageProps) {
 
                 {/* Viewport Toggles (Simulated mock buttons) */}
                 <div className="flex gap-2 bg-white/5 p-1 rounded-lg border border-white/5">
-                  <button className="px-3 py-1 bg-white/10 rounded-md text-[10px] font-bold uppercase tracking-wider text-white border border-white/10">
+                  <button className="px-3 py-1 bg-white/10 rounded-md text-[11px] font-bold uppercase tracking-wider text-white border border-white/10">
                     Desktop
                   </button>
-                  <button className="px-3 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider text-text-muted hover:text-white">
+                  <button className="px-3 py-1 rounded-md text-[11px] font-bold uppercase tracking-wider text-text-muted hover:text-white">
                     Tablet
                   </button>
-                  <button className="px-3 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider text-text-muted hover:text-white">
+                  <button className="px-3 py-1 rounded-md text-[11px] font-bold uppercase tracking-wider text-text-muted hover:text-white">
                     Mobile
                   </button>
                 </div>
@@ -170,7 +170,7 @@ export default async function TemplateDetailsPage({ params }: PageProps) {
                     className="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-700"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent flex flex-col justify-end p-8">
-                    <span className="text-[10px] font-mono text-neon-cyan tracking-widest uppercase mb-2">LIVE SANDBOX READY</span>
+                    <span className="text-[11px] font-mono text-neon-cyan tracking-widest uppercase mb-2">LIVE SANDBOX READY</span>
                     <h3 className="text-2xl font-bold font-cabinet text-white mb-2">{template.title}</h3>
                     <p className="text-xs text-text-muted max-w-md font-light leading-relaxed">
                       Click the live preview command to trigger full sandbox instances mapped on pre-warmed clusters.
@@ -209,7 +209,7 @@ export default async function TemplateDetailsPage({ params }: PageProps) {
           <aside className="space-y-8 lg:sticky lg:top-24">
             <div className="glass p-8 rounded-3xl border border-white/5 bg-[#0B0B0E]/60 backdrop-blur-xl shadow-xl space-y-6">
               <div>
-                <span className="text-[10px] font-mono text-text-muted uppercase tracking-widest block mb-1">Single License Pricing</span>
+                <span className="text-[11px] font-mono text-text-muted uppercase tracking-widest block mb-1">Single License Pricing</span>
                 <span className="text-4xl font-bold font-cabinet text-white tracking-tight">{template.price}</span>
               </div>
 
@@ -222,7 +222,7 @@ export default async function TemplateDetailsPage({ params }: PageProps) {
                 </button>
               </div>
 
-              <div className="pt-6 border-t border-white/5 text-[10px] text-text-muted font-light leading-relaxed font-satoshi">
+              <div className="pt-6 border-t border-white/5 text-[11px] text-text-muted font-light leading-relaxed font-satoshi">
                 Includes 6 months of active technical maintenance, secure file checkouts, and complete CC attribution templates files.
               </div>
             </div>

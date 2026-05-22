@@ -129,7 +129,7 @@ export default async function ProjectDetailPage({ params }: PageProps) {
                 Visualizing the dynamic execution thread and transactional lock controls.
               </p>
             </div>
-            <span className="text-[10px] font-mono text-white/40 uppercase tracking-widest border border-white/10 px-3 py-1 bg-white/5 rounded-full">
+            <span className="text-[11px] font-mono text-white/40 uppercase tracking-widest border border-white/10 px-3 py-1 bg-white/5 rounded-full">
               Schema Map V2.6
             </span>
           </div>

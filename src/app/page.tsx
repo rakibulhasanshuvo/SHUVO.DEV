@@ -152,10 +152,10 @@ const features = [
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-cyber-charcoal border border-white/10 px-4 py-2 rounded-full z-20 text-xs font-bold">
             Izzan
           </div>
-          <div className="absolute top-1/4 left-1/4 bg-white/5 border border-white/10 p-2 rounded-full z-20 text-[10px]">Stripe</div>
-          <div className="absolute top-1/4 right-1/4 bg-white/5 border border-white/10 p-2 rounded-full z-20 text-[10px]">PayPal</div>
-          <div className="absolute bottom-1/4 left-1/4 bg-white/5 border border-white/10 p-2 rounded-full z-20 text-[10px]">FedEx</div>
-          <div className="absolute bottom-1/4 right-1/4 bg-white/5 border border-white/10 p-2 rounded-full z-20 text-[10px]">Shopify</div>
+          <div className="absolute top-1/4 left-1/4 bg-white/5 border border-white/10 p-2 rounded-full z-20 text-[11px]">Stripe</div>
+          <div className="absolute top-1/4 right-1/4 bg-white/5 border border-white/10 p-2 rounded-full z-20 text-[11px]">PayPal</div>
+          <div className="absolute bottom-1/4 left-1/4 bg-white/5 border border-white/10 p-2 rounded-full z-20 text-[11px]">FedEx</div>
+          <div className="absolute bottom-1/4 right-1/4 bg-white/5 border border-white/10 p-2 rounded-full z-20 text-[11px]">Shopify</div>
 
           <svg className="absolute inset-0 w-full h-full" viewBox="0 0 400 200">
             <path d="M 100,50 Q 200,100 200,100" fill="none" stroke="currentColor" strokeWidth="1" className="text-white/20" />
@@ -186,7 +186,7 @@ export default function Home() {
 
 
   return (
-    <div className="relative min-h-screen bg-transparent text-white font-sans">
+    <div className="relative min-h-screen bg-transparent text-white font-satoshi">
       {/* Background Grid Overlay */}
       <div className="fixed inset-0 pointer-events-none bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:32px_32px] -z-10" />
 
@@ -357,23 +357,23 @@ export default function Home() {
             <div className="absolute -right-32 top-1/2 -translate-y-1/2 hidden md:flex flex-col gap-4">
               <div className="flex items-center gap-3">
                 <div className="w-2 h-2 rounded-full bg-neon-cyan animate-pulse glow-cyan" />
-                <span className="text-[10px] font-jetbrains text-neon-cyan tracking-widest">SYS_ONLINE</span>
+                <span className="text-[11px] font-jetbrains text-neon-cyan tracking-widest">SYS_ONLINE</span>
               </div>
               <div className="flex items-center gap-3">
                 <div className="w-2 h-2 rounded-full bg-electric-purple animate-pulse glow-purple" />
-                <span className="text-[10px] font-jetbrains text-electric-purple tracking-widest">DATA_SYNC</span>
+                <span className="text-[11px] font-jetbrains text-electric-purple tracking-widest">DATA_SYNC</span>
               </div>
             </div>
 
             <div className="absolute -left-32 top-1/2 -translate-y-1/2 hidden md:flex flex-col gap-4 items-end">
                <div className="flex items-center gap-3">
-                <span className="text-[10px] font-jetbrains text-zinc-400 tracking-widest">MEM: 42%</span>
+                <span className="text-[11px] font-jetbrains text-zinc-400 tracking-widest">MEM: 42%</span>
                 <div className="w-12 h-0.5 bg-white/10 rounded-full overflow-hidden">
                   <div className="h-full bg-neon-cyan w-[42%]" />
                 </div>
               </div>
               <div className="flex items-center gap-3">
-                <span className="text-[10px] font-jetbrains text-zinc-400 tracking-widest">CPU: 18%</span>
+                <span className="text-[11px] font-jetbrains text-zinc-400 tracking-widest">CPU: 18%</span>
                 <div className="w-12 h-0.5 bg-white/10 rounded-full overflow-hidden">
                   <div className="h-full bg-electric-purple w-[18%]" />
                 </div>
@@ -476,7 +476,7 @@ export default function Home() {
                 <div className="md:w-1/2 pl-12">
                   <div className="glass p-6 rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent shadow-xl">
                     <div className="font-cabinet font-bold text-3xl text-neon-cyan/30 mb-2 md:hidden">01</div>
-                    <h3 className="font-bold text-lg mb-2 text-white">Planning & Strategy</h3>
+                    <h3 className="font-bold text-lg mb-2 text-white font-cabinet">Planning & Strategy</h3>
                     <p className="text-zinc-300 text-base font-light">Understanding goals, audience, and technical requirements before touching code.</p>
                   </div>
                 </div>
@@ -492,7 +492,7 @@ export default function Home() {
                 <div className="md:w-1/2 pr-12">
                   <div className="glass p-6 rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent shadow-xl">
                     <div className="font-cabinet font-bold text-3xl text-electric-purple/30 mb-2 md:hidden">02</div>
-                    <h3 className="font-bold text-lg mb-2 text-white">Architecture</h3>
+                    <h3 className="font-bold text-lg mb-2 text-white font-cabinet">Architecture</h3>
                     <p className="text-zinc-300 text-base font-light">Designing database schemas, API routes, and component structures for scale.</p>
                   </div>
                 </div>
@@ -508,7 +508,7 @@ export default function Home() {
                 <div className="md:w-1/2 pl-12">
                   <div className="glass p-6 rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent shadow-xl">
                     <div className="font-cabinet font-bold text-3xl text-neon-cyan/30 mb-2 md:hidden">03</div>
-                    <h3 className="font-bold text-lg mb-2 text-white">Development</h3>
+                    <h3 className="font-bold text-lg mb-2 text-white font-cabinet">Development</h3>
                     <p className="text-zinc-300 text-base font-light mb-4">Writing clean, type-safe code with Next.js and Tailwind CSS.</p>
                     <div className="flex justify-center">
                       <Loader />
@@ -586,7 +586,7 @@ export default function Home() {
                 <div className="absolute -top-20 -right-20 w-40 h-40 bg-neon-cyan/5 blur-3xl rounded-full group-hover:bg-neon-cyan/10 transition-colors duration-500" />
 
                 {/* Large background quote */}
-                <span className="absolute top-2 right-4 text-8xl font-serif text-white/5 select-none">"</span>
+                <span className="absolute top-2 right-4 text-8xl font-cabinet text-white/5 select-none">"</span>
 
                 <p className="text-zinc-300 text-base mb-4 font-light relative z-10">"Shuvo delivered an exceptional project. The attention to detail and performance optimization was outstanding."</p>
                 <div className="flex items-center gap-3 relative z-10">
@@ -604,7 +604,7 @@ export default function Home() {
                 <div className="absolute -top-20 -right-20 w-40 h-40 bg-electric-purple/5 blur-3xl rounded-full group-hover:bg-electric-purple/10 transition-colors duration-500" />
 
                 {/* Large background quote */}
-                <span className="absolute top-2 right-4 text-8xl font-serif text-white/5 select-none">"</span>
+                <span className="absolute top-2 right-4 text-8xl font-cabinet text-white/5 select-none">"</span>
 
                 <p className="text-zinc-300 text-base mb-4 font-light relative z-10">"The Cyber-Luxury aesthetic was exactly what we needed for our brand. Highly recommended."</p>
                 <div className="flex items-center gap-3 relative z-10">
@@ -651,7 +651,7 @@ export default function Home() {
                 </div>
 
                 <div className="mt-4 sm:mt-0">
-                  <h3 className="text-lg font-bold text-white group-hover:text-neon-cyan transition-colors">
+                  <h3 className="text-lg font-bold text-white group-hover:text-neon-cyan transition-colors font-cabinet">
                     How I built my first website with Nuxt, Tailwind CSS and Vercel
                   </h3>
 
@@ -688,7 +688,7 @@ export default function Home() {
                 </div>
 
                 <div className="mt-4 sm:mt-0">
-                  <h3 className="text-lg font-bold text-white group-hover:text-electric-purple transition-colors">
+                  <h3 className="text-lg font-bold text-white group-hover:text-electric-purple transition-colors font-cabinet">
                     The Art of Cyber-Luxury: Aesthetics in Modern Web Design
                   </h3>
 

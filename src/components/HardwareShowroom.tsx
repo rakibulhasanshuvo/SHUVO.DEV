@@ -91,7 +91,7 @@ export default function HardwareShowroom() {
           
           {/* Main Chassis SVG */}
           <svg
-            className="w-full h-full text-gray-800"
+            className="w-full h-full text-white/80"
             viewBox="0 0 500 375"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -122,7 +122,7 @@ export default function HardwareShowroom() {
 
             {/* M.2 SSD Cover */}
             <rect x="300" y="188" width="45" height="15" rx="2" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.1)" strokeWidth="1" />
-            <text x="304" y="199" fill="rgba(255,255,255,0.4)" className="font-mono text-[6px]">PCIe 5.0 M.2</text>
+            <text x="304" y="199" fill="rgba(255,255,255,0.4)" className="font-mono text-[11px]">PCIe 5.0 M.2</text>
             
             {/* GPU (RTX 4090) Giant Block */}
             <rect x="140" y="210" width="220" height="60" rx="6" fill="rgba(20,20,22,0.9)" stroke="rgba(161,0,255,0.3)" strokeWidth="1.5" />
@@ -196,12 +196,12 @@ export default function HardwareShowroom() {
                 
                 <div className="mt-4 space-y-4">
                   <div>
-                    <span className="text-[10px] uppercase font-mono tracking-wider text-[#A100FF] block">Technical Specification</span>
+                    <span className="text-[11px] uppercase font-mono tracking-wider text-[#A100FF] block">Technical Specification</span>
                     <span className="text-white text-sm font-satoshi font-medium block mt-0.5">{activeHotspot.spec}</span>
                   </div>
 
                   <div>
-                    <span className="text-[10px] uppercase font-mono tracking-wider text-gray-500 block">Workspace Application</span>
+                    <span className="text-[11px] uppercase font-mono tracking-wider text-gray-500 block">Workspace Application</span>
                     <p className="text-gray-300 text-xs font-satoshi font-light leading-relaxed mt-0.5">{activeHotspot.purpose}</p>
                   </div>
 

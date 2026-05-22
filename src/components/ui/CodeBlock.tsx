@@ -53,7 +53,7 @@ export default function CodeBlock({
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-neon-cyan opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-neon-cyan"></span>
             </span>
-            <span className="text-[10px] text-neon-cyan uppercase font-bold tracking-widest">{pulseStatus}</span>
+            <span className="text-[11px] text-neon-cyan uppercase font-bold tracking-widest">{pulseStatus}</span>
           </div>
 
           {/* Copy Button */}

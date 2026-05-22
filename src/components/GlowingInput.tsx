@@ -37,7 +37,7 @@ export function GlowingInput({ label, id, ...props }: GlowingInputProps) {
       onMouseLeave={() => setIsHovered(false)}
       className="relative w-full group"
     >
-      <label htmlFor={id} className="block font-mono text-[10px] uppercase tracking-wider text-gray-500 mb-2">
+      <label htmlFor={id} className="block font-mono text-[11px] uppercase tracking-wider text-gray-500 mb-2">
         {label}
       </label>
       <div className="relative rounded-xl overflow-hidden bg-gradient-to-b from-[#111115] to-[#08080a] border border-white/5 transition-colors duration-300">
@@ -106,7 +106,7 @@ export function GlowingTextArea({ label, id, ...props }: GlowingTextAreaProps) {
       onMouseLeave={() => setIsHovered(false)}
       className="relative w-full group"
     >
-      <label htmlFor={id} className="block font-mono text-[10px] uppercase tracking-wider text-gray-500 mb-2">
+      <label htmlFor={id} className="block font-mono text-[11px] uppercase tracking-wider text-gray-500 mb-2">
         {label}
       </label>
       <div className="relative rounded-xl overflow-hidden bg-gradient-to-b from-[#111115] to-[#08080a] border border-white/5 transition-colors duration-300">

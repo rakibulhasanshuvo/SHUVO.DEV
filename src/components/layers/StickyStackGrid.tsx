@@ -117,7 +117,7 @@ const Card: React.FC<CardProps> = ({ card, index, progress, range, targetScale }
           <span className="text-xs font-mono text-white/40 tracking-[0.25em] uppercase bg-white/[0.03] px-3 py-1 rounded-full border border-white/5">
             Registry Unit 0{card.id}
           </span>
-          <h2 className="mt-6 text-4xl md:text-5xl font-bold text-white/90 tracking-tight leading-none">
+          <h2 className="mt-6 text-4xl md:text-5xl font-bold text-white/90 tracking-tight leading-none font-cabinet">
             {card.title}
           </h2>
           <p className="mt-4 text-sm md:text-base text-white/50 font-normal leading-relaxed">

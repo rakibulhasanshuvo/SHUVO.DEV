@@ -121,7 +121,7 @@ export default function ProjectCard({
             {project.icon}
           </div>
           <span className="text-xs font-mono text-white/40 uppercase tracking-widest">{project.subtitle}</span>
-          <h3 className="text-2xl font-bold mt-2 text-white/90 text-pretty">
+          <h3 className="text-2xl font-bold mt-2 text-white/90 text-pretty font-cabinet">
             {/* Heading-link + ::after stretch pattern (Heydon Pickering recommended):
                 The link wraps the title text and its ::after pseudo-element
                 stretches to cover the entire card for full click coverage.
