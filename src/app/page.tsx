@@ -11,7 +11,7 @@ import Loader from "@/components/Loader";
 import HoneycombLoader from "@/components/HoneycombLoader";
 import InteractiveGridBackground from "@/components/InteractiveGridBackground";
 
-import FallingMatrix from "@/components/FallingMatrix";
+import MatrixBackground from "@/components/MatrixBackground";
 import LinkCards from "@/components/LinkCards";
 import ThreeDCarousel from "@/components/ThreeDCarousel";
 import PricingCards from "@/components/PricingCards";
@@ -620,8 +620,8 @@ export default function Home() {
         </section>
         {/* FAQ Section */}
         <section id="faq" className="scroll-mt-24 mt-40 relative overflow-hidden">
-          <div className="absolute inset-0 -z-10 opacity-20">
-            <FallingMatrix />
+          <div className="absolute inset-0 z-0 opacity-20">
+            <MatrixBackground />
           </div>
           <div className="text-center mb-16">
 
