@@ -718,32 +718,60 @@ export default function Home() {
             </a>
           </div>
         </section>
-        <section id="contact" className="scroll-mt-24 overflow-hidden glass rounded-3xl sm:grid sm:grid-cols-2 sm:items-center mt-32 border border-white/10 bg-gradient-to-br from-white/5 to-transparent shadow-xl">
-          <div className="p-8 md:p-12 lg:px-16 lg:py-24">
-            <div className="mx-auto max-w-xl text-center sm:text-left">
-              <h2 className="text-3xl font-cabinet font-bold text-white md:text-4xl mb-4">
+        <section id="contact" className="scroll-mt-24 overflow-hidden glass rounded-3xl sm:grid sm:grid-cols-2 sm:items-center mt-32 border border-white/10 bg-gradient-to-br from-white/5 via-black to-black shadow-xl relative">
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-cyan-900/15 via-black to-black -z-10 pointer-events-none" />
+          <div className="p-8 md:p-12 lg:px-16 lg:py-24 relative z-20">
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ staggerChildren: 0.2 }}
+              viewport={{ once: true }}
+              className="mx-auto max-w-xl text-center sm:text-left"
+            >
+              <motion.h2
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                className="text-3xl font-cabinet font-bold text-white md:text-4xl mb-4"
+              >
                 Let&apos;s Build Something Extraordinary Together
-              </h2>
+              </motion.h2>
 
-              <p className="text-zinc-300 md:mt-4 md:block font-light text-base">
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+                className="text-zinc-300 md:mt-4 md:block font-light text-base"
+              >
                 Ready to elevate your digital presence? Let&apos;s collaborate to create a high-performance, visually stunning experience for your brand.
-              </p>
+              </motion.p>
 
-              <div className="mt-4 md:mt-8">
-                <a href="mailto:contact@example.com" className="inline-flex items-center justify-center bg-cyber-black border border-neon-cyan text-neon-cyan px-8 py-3 rounded-full text-sm font-semibold hover:bg-neon-cyan/10 transition-all glow-cyan-subtle">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+                className="mt-4 md:mt-8"
+              >
+                <a href="mailto:contact@example.com" className="inline-flex items-center justify-center glass backdrop-blur-md bg-cyan-500/10 border border-cyan-500/30 text-white px-8 py-3 rounded-full text-sm font-semibold hover:bg-cyan-500/20 hover:border-cyan-500/50 transition-all glow-cyan-subtle">
                   Get Started Today
                 </a>
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
           </div>
 
           <div className="h-full w-full relative sm:h-[calc(100%-2rem)] sm:self-end">
-            <div className="absolute inset-0 bg-gradient-to-l from-cyber-black to-transparent z-10 hidden sm:block" />
-            <img
-              width={1160} height={700} alt="Cyber Luxury"
-              src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=1160"
-              className="h-full w-full object-cover opacity-40 sm:rounded-ss-[30px] md:rounded-ss-[60px]"
-            />
+            <div className="absolute inset-0 bg-gradient-to-b sm:bg-gradient-to-l from-transparent via-black/50 to-black z-10" />
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent to-black/20 z-10" />
+            <video
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="h-full w-full object-cover opacity-60 sm:rounded-ss-[30px] md:rounded-ss-[60px]"
+            >
+              <source src="/videos/abstract-data-flows.webm" type="video/webm" />
+              <source src="/videos/abstract-data-flows.mp4" type="video/mp4" />
+            </video>
           </div>
         </section>
 
