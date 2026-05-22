@@ -448,12 +448,12 @@ export default function Home() {
         </section>
 
         {/* Work Process (Timeline Flow) */}
-        <section id="process" className="scroll-mt-24 mb-40 max-w-[1440px] mx-auto px-6 relative">
+        <section id="process" className="scroll-mt-24 mb-40 w-full relative">
           {/* Rain Background */}
-          <div className="absolute inset-0 -z-10 opacity-30 overflow-hidden rounded-3xl">
+          <div className="absolute inset-0 -z-10 opacity-30 overflow-hidden" style={{ maskImage: "linear-gradient(to bottom, transparent, black 10%, black 90%, transparent)", WebkitMaskImage: "linear-gradient(to bottom, transparent, black 10%, black 90%, transparent)" }}>
             <RainBackground />
           </div>
-          <div className="text-center mb-16 relative z-10">
+          <div className="text-center mb-16 relative z-10 max-w-5xl mx-auto px-6">
 
             <h2 className="font-cabinet font-bold text-4xl md:text-5xl mb-4 text-white">The Process</h2>
             <p className="text-text-muted max-w-2xl mx-auto font-light">
@@ -461,7 +461,7 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="relative max-w-4xl mx-auto">
+          <div className="relative max-w-4xl mx-auto px-6">
             {/* Center Line */}
             <div className="absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-neon-cyan to-electric-purple opacity-30 hidden md:block" />
 
@@ -474,7 +474,7 @@ export default function Home() {
                 {/* Dot */}
                 <div className="absolute left-1/2 -translate-x-1/2 w-3 h-3 bg-neon-cyan rounded-full border-2 border-cyber-black hidden md:block" />
                 <div className="md:w-1/2 pl-12">
-                  <div className="glass p-6 rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent shadow-xl">
+                  <div className="backdrop-blur-md bg-white/[0.03] border border-white/10 p-6 rounded-2xl shadow-xl">
                     <div className="font-cabinet font-bold text-3xl text-neon-cyan/30 mb-2 md:hidden">01</div>
                     <h3 className="font-bold text-lg mb-2 text-white font-cabinet">Planning & Strategy</h3>
                     <p className="text-zinc-300 text-base font-light">Understanding goals, audience, and technical requirements before touching code.</p>
@@ -490,7 +490,7 @@ export default function Home() {
                 {/* Dot */}
                 <div className="absolute left-1/2 -translate-x-1/2 w-3 h-3 bg-electric-purple rounded-full border-2 border-cyber-black hidden md:block" />
                 <div className="md:w-1/2 pr-12">
-                  <div className="glass p-6 rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent shadow-xl">
+                  <div className="backdrop-blur-md bg-white/[0.03] border border-white/10 p-6 rounded-2xl shadow-xl">
                     <div className="font-cabinet font-bold text-3xl text-electric-purple/30 mb-2 md:hidden">02</div>
                     <h3 className="font-bold text-lg mb-2 text-white font-cabinet">Architecture</h3>
                     <p className="text-zinc-300 text-base font-light">Designing database schemas, API routes, and component structures for scale.</p>
@@ -506,7 +506,7 @@ export default function Home() {
                 {/* Dot */}
                 <div className="absolute left-1/2 -translate-x-1/2 w-3 h-3 bg-neon-cyan rounded-full border-2 border-cyber-black hidden md:block" />
                 <div className="md:w-1/2 pl-12">
-                  <div className="glass p-6 rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent shadow-xl">
+                  <div className="backdrop-blur-md bg-white/[0.03] border border-white/10 p-6 rounded-2xl shadow-xl">
                     <div className="font-cabinet font-bold text-3xl text-neon-cyan/30 mb-2 md:hidden">03</div>
                     <h3 className="font-bold text-lg mb-2 text-white font-cabinet">Development</h3>
                     <p className="text-zinc-300 text-base font-light mb-4">Writing clean, type-safe code with Next.js and Tailwind CSS.</p>
