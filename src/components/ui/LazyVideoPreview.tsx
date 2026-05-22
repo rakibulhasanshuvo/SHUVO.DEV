@@ -1,4 +1,5 @@
 "use client";
+import Image from 'next/image';
 
 import React, { useRef, useState, useEffect } from "react";
 
@@ -58,10 +59,11 @@ export default function LazyVideoPreview({
     >
       {/* Loading Placeholder / Poster Fallback */}
       {(!loaded || !isInView) && (
-        <img
+        <Image
           src={poster}
           alt="Preview Poster"
-          className="absolute inset-0 w-full h-full object-cover z-10 transition-opacity duration-500"
+          fill
+          className="object-cover z-10 transition-opacity duration-500"
           style={{ opacity: loaded && isInView ? 0 : 1 }}
         />
       )}

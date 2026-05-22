@@ -1,21 +1,25 @@
 "use client";
+import Image from "next/image";
 
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
 import { ReactNode } from "react";
+import dynamic from 'next/dynamic';
+
+const MatrixBackground = dynamic(() => import('@/components/MatrixBackground'), { ssr: false });
+const ThreeDCarousel = dynamic(() => import('@/components/ThreeDCarousel'), { ssr: false });
+const InteractiveGridBackground = dynamic(() => import('@/components/InteractiveGridBackground'), { ssr: false });
+const CyberCore = dynamic(() => import('@/components/CyberCore'), { ssr: false });
+const RainBackground = dynamic(() => import('@/components/RainBackground'), { ssr: false });
 import { BentoGrid, BentoCard } from "@/components/magicui/BentoGrid";
 import { Marquee } from "@/components/magicui/Marquee";
 import Loader from "@/components/Loader";
 import HoneycombLoader from "@/components/HoneycombLoader";
-import InteractiveGridBackground from "@/components/InteractiveGridBackground";
 
-import MatrixBackground from "@/components/MatrixBackground";
-import ThreeDCarousel from "@/components/ThreeDCarousel";
+import LinkCards from "@/components/LinkCards";
 import PricingCards from "@/components/PricingCards";
-import CyberCore from "@/components/CyberCore";
-import RainBackground from "@/components/RainBackground";
 import CyberButton from "@/components/CyberButton";
 import AngledGallery from "@/components/AngledGallery";
 import FeaturedWork from "@/components/featured-work/FeaturedWork";
@@ -585,7 +589,7 @@ export default function Home() {
                 <div className="flex items-center gap-3 relative z-10">
                   <div className="w-10 h-10 bg-neon-cyan/20 rounded-full flex items-center justify-center text-neon-cyan text-sm font-bold border border-neon-cyan/30 shadow-[0_0_10px_rgba(0,240,255,0.2)]">JD</div>
                   <div>
-                    <p className="text-sm font-bold text-white">John Doe</p>
+                    <p className="text-sm font-bold text-white">M.R.H. Shuvo</p>
                     <p className="text-xs text-text-muted">CEO, TechCorp</p>
                   </div>
                 </div>
@@ -640,7 +644,7 @@ export default function Home() {
             <a href="#" aria-label="Read Article" className="block rounded-2xl glass p-6 border border-white/10 bg-gradient-to-br from-white/5 to-transparent shadow-xl hover:border-neon-cyan transition-colors group">
               <div className="sm:flex sm:justify-between sm:gap-4 lg:gap-6">
                 <div className="sm:order-last sm:shrink-0">
-                  <img width={64} height={64} alt="Blog" src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?auto=format&fit=crop&q=80&w=1160" className="size-16 rounded-full object-cover sm:size-18" />
+                  <Image width={64} height={64} alt="Blog" src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?auto=format&fit=crop&q=80&w=1160" className="size-16 rounded-full object-cover sm:size-18" />
                 </div>
 
                 <div className="mt-4 sm:mt-0">
@@ -677,7 +681,7 @@ export default function Home() {
             <a href="#" aria-label="Read Article" className="block rounded-2xl glass p-6 border border-white/10 bg-gradient-to-br from-white/5 to-transparent shadow-xl hover:border-electric-purple transition-colors group">
               <div className="sm:flex sm:justify-between sm:gap-4 lg:gap-6">
                 <div className="sm:order-last sm:shrink-0">
-                  <img width={64} height={64} alt="Blog" src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=1160" className="size-16 rounded-full object-cover sm:size-18" />
+                  <Image width={64} height={64} alt="Blog" src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=1160" className="size-16 rounded-full object-cover sm:size-18" />
                 </div>
 
                 <div className="mt-4 sm:mt-0">
@@ -792,11 +796,11 @@ export default function Home() {
             <div>
               <h3 className="font-cabinet font-bold text-sm uppercase tracking-wider mb-6 text-white">Navigation</h3>
               <ul className="space-y-3 text-sm text-text-muted">
-                <li><a href="#work" className="hover:text-neon-cyan transition-colors">Work</a></li>
-                <li><a href="#about" className="hover:text-neon-cyan transition-colors">About</a></li>
-                <li><a href="#process" className="hover:text-neon-cyan transition-colors">Process</a></li>
-                <li><a href="#reviews" className="hover:text-neon-cyan transition-colors">Reviews</a></li>
-                <li><a href="#contact" className="hover:text-neon-cyan transition-colors">Contact</a></li>
+                <li><Link href="/projects" className="hover:text-neon-cyan transition-colors">Work</Link></li>
+                <li><Link href="/about" className="hover:text-neon-cyan transition-colors">About</Link></li>
+                <li><Link href="/#process" className="hover:text-neon-cyan transition-colors">Process</Link></li>
+                <li><Link href="/#reviews" className="hover:text-neon-cyan transition-colors">Reviews</Link></li>
+                <li><Link href="/contact" className="hover:text-neon-cyan transition-colors">Contact</Link></li>
               </ul>
             </div>
 
