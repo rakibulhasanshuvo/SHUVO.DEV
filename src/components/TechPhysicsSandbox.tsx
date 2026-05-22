@@ -323,7 +323,7 @@ export default function TechPhysicsSandbox() {
         className="active:cursor-grabbing"
       />
       <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 pointer-events-none text-center">
-        <span className="text-[10px] text-white/30 font-satoshi font-light">
+        <span className="text-[11px] text-white/30 font-satoshi font-light">
           Click and toss technology pills to simulate elastic gravitational collisions.
         </span>
       </div>

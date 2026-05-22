@@ -150,7 +150,7 @@ export default function FeaturedWork() {
                     {project.icon}
                   </div>
                   <span className="text-xs font-mono text-white/40 uppercase tracking-widest">{project.subtitle}</span>
-                  <h3 className="text-2xl font-bold mt-2 text-white/90 text-pretty">{project.title}</h3>
+                  <h3 className="text-2xl font-bold mt-2 text-white/90 text-pretty font-cabinet">{project.title}</h3>
                   <p className="text-sm text-white/60 mt-2 font-light">{project.description}</p>
                 </div>
 

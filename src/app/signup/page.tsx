@@ -7,7 +7,7 @@ import CyberRain from "@/components/CyberRain";
 
 const SignupPage = () => {
   return (
-    <div className="min-h-screen bg-cyber-black text-white font-sans flex flex-col justify-center items-center relative overflow-hidden">
+    <div className="min-h-screen bg-cyber-black text-white font-satoshi flex flex-col justify-center items-center relative overflow-hidden">
       {/* Cyber Rain Background */}
       <div className="absolute inset-0 -z-10 opacity-50 overflow-hidden">
         <CyberRain />

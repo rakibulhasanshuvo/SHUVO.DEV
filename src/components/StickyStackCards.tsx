@@ -122,7 +122,7 @@ export default function StickyStackCards() {
               className={`w-full rounded-[2rem] p-6 border ${project.borderColor} bg-gradient-to-b ${project.gradient} backdrop-blur-xl flex flex-col justify-between text-white shadow-xl h-[420px]`}
             >
               <div className="flex justify-between items-start">
-                <span className="text-[10px] font-mono text-neon-cyan uppercase tracking-widest bg-cyan-950/40 border border-cyan-500/20 px-2.5 py-1 rounded-full">
+                <span className="text-[11px] font-mono text-neon-cyan uppercase tracking-widest bg-cyan-950/40 border border-cyan-500/20 px-2.5 py-1 rounded-full">
                   {project.subtitle}
                 </span>
                 <span className="text-3xl select-none">{project.icon}</span>
@@ -139,7 +139,7 @@ export default function StickyStackCards() {
                   {project.tech.map((tech) => (
                     <span
                       key={tech}
-                      className="text-[10px] font-mono px-2 py-1 bg-white/5 border border-white/10 rounded-full text-zinc-400"
+                      className="text-[11px] font-mono px-2 py-1 bg-white/5 border border-white/10 rounded-full text-zinc-400"
                     >
                       {tech}
                     </span>

@@ -54,13 +54,13 @@ export default function TASLProvenanceCard({
       {/* TASL Content */}
       <div className="space-y-4 relative z-10">
         <div>
-          <span className="text-[10px] text-text-muted font-mono uppercase block mb-1">Asset Title</span>
+          <span className="text-[11px] text-text-muted font-mono uppercase block mb-1">Asset Title</span>
           <h4 className="text-sm font-bold font-cabinet text-white tracking-wide">{title}</h4>
         </div>
 
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <span className="text-[10px] text-text-muted font-mono uppercase block mb-1">Author</span>
+            <span className="text-[11px] text-text-muted font-mono uppercase block mb-1">Author</span>
             {authorUrl ? (
               <a
                 href={authorUrl}
@@ -76,7 +76,7 @@ export default function TASLProvenanceCard({
           </div>
 
           <div>
-            <span className="text-[10px] text-text-muted font-mono uppercase block mb-1">License</span>
+            <span className="text-[11px] text-text-muted font-mono uppercase block mb-1">License</span>
             <a
               href={licenseUrl}
               target="_blank"
@@ -89,7 +89,7 @@ export default function TASLProvenanceCard({
         </div>
 
         <div>
-          <span className="text-[10px] text-text-muted font-mono uppercase block mb-1">Source Repository</span>
+          <span className="text-[11px] text-text-muted font-mono uppercase block mb-1">Source Repository</span>
           <a
             href={sourceUrl}
             target="_blank"
@@ -103,7 +103,7 @@ export default function TASLProvenanceCard({
 
       {/* Decorative seal watermark */}
       <div className="absolute right-[-20px] bottom-[-20px] w-24 h-24 bg-neon-cyan/5 rounded-full border border-neon-cyan/10 flex items-center justify-center rotate-12 pointer-events-none select-none">
-        <span className="text-[8px] font-mono text-neon-cyan/20 tracking-wider font-bold">CC ORIGINAL</span>
+        <span className="text-[11px] font-mono text-neon-cyan/20 tracking-wider font-bold">CC ORIGINAL</span>
       </div>
     </motion.div>
   );

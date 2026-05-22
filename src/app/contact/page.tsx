@@ -198,7 +198,7 @@ export default function ContactPage() {
                   🎖️
                 </div>
                 <div>
-                  <span className="text-[10px] font-mono text-gray-500 uppercase tracking-widest block">Upwork Verified</span>
+                  <span className="text-[11px] font-mono text-gray-500 uppercase tracking-widest block">Upwork Verified</span>
                   <span className="text-white text-base font-cabinet font-bold block mt-0.5">100% Job Success Score</span>
                 </div>
               </div>
@@ -211,10 +211,10 @@ export default function ContactPage() {
             <div className="glass p-6 rounded-2xl border border-white/10 bg-gradient-to-br from-[#0c0c0e] to-[#040405] relative overflow-hidden shadow-xl">
               <div className="flex justify-between items-start mb-4">
                 <div>
-                  <span className="text-[10px] font-mono text-gray-500 uppercase tracking-widest block">Open Source Pulse</span>
+                  <span className="text-[11px] font-mono text-gray-500 uppercase tracking-widest block">Open Source Pulse</span>
                   <span className="text-white text-base font-cabinet font-bold block mt-0.5">Active Commit Pipelines</span>
                 </div>
-                <span className="text-[10px] bg-green-500/10 text-green-400 font-mono py-0.5 px-2 rounded border border-green-500/20">
+                <span className="text-[11px] bg-green-500/10 text-green-400 font-mono py-0.5 px-2 rounded border border-green-500/20">
                   Online
                 </span>
               </div>
@@ -232,7 +232,7 @@ export default function ContactPage() {
                   );
                 })}
               </div>
-              <div className="flex justify-between items-center text-[8px] font-mono text-gray-600 mt-3 px-1">
+              <div className="flex justify-between items-center text-[11px] font-mono text-gray-600 mt-3 px-1">
                 <span>Less Commits</span>
                 <span>More Neon Commits</span>
               </div>

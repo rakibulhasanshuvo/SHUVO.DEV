@@ -36,7 +36,7 @@ export function BentoCard({
         <div className="bg-zinc-800/80 p-2 rounded-lg inline-block border border-white/5">
           <Icon className="h-6 w-6 text-neon-cyan" />
         </div>
-        <h3 className="text-xl font-bold text-white mt-4">{name}</h3>
+        <h3 className="text-xl font-bold text-white mt-4 font-cabinet">{name}</h3>
         <p className="text-zinc-400 text-sm mt-1">{description}</p>
       </div>
       

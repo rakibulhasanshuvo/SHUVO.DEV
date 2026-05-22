@@ -429,7 +429,7 @@ const ThreeDCarousel = () => {
                 <h4 className="font-cabinet font-bold text-sm tracking-tight text-white line-clamp-1 leading-none mb-1">
                   {card.title}
                 </h4>
-                <p className="text-[10px] font-light text-zinc-400 line-clamp-1">
+                <p className="text-[11px] font-light text-zinc-400 line-clamp-1">
                   {card.subtitle}
                 </p>
               </div>

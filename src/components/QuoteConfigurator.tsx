@@ -261,7 +261,7 @@ export default function QuoteConfigurator({ onSelectSummary }: QuoteConfigurator
               Continue
             </button>
           ) : (
-            <span className="text-[10px] uppercase font-mono tracking-wider text-gray-500 py-2 px-3 border border-white/5 bg-white/[0.01] rounded-lg">
+            <span className="text-[11px] uppercase font-mono tracking-wider text-gray-500 py-2 px-3 border border-white/5 bg-white/[0.01] rounded-lg">
               Steppers Completed
             </span>
           )}
@@ -269,7 +269,7 @@ export default function QuoteConfigurator({ onSelectSummary }: QuoteConfigurator
 
         {/* Investment Counter Frame */}
         <div className="text-right">
-          <span className="text-[10px] font-mono uppercase tracking-wider text-gray-500 block">
+          <span className="text-[11px] font-mono uppercase tracking-wider text-gray-500 block">
             Estimated Investment
           </span>
           <span className="font-mono text-3xl font-bold text-white tracking-tight">
