@@ -12,7 +12,6 @@ import HoneycombLoader from "@/components/HoneycombLoader";
 import InteractiveGridBackground from "@/components/InteractiveGridBackground";
 
 import MatrixBackground from "@/components/MatrixBackground";
-import LinkCards from "@/components/LinkCards";
 import ThreeDCarousel from "@/components/ThreeDCarousel";
 import PricingCards from "@/components/PricingCards";
 import CyberCore from "@/components/CyberCore";
@@ -521,12 +520,6 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Interactive Link Cards */}
-        <section className="mb-40 max-w-[1440px] mx-auto px-6 overflow-hidden">
-          <div className="flex justify-center items-center py-10">
-            <LinkCards />
-          </div>
-        </section>
 
         {/* Pricing Cards Section */}
         <section className="mb-40 max-w-[1440px] mx-auto px-6">
