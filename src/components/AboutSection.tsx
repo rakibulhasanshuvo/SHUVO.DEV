@@ -115,7 +115,7 @@ export default function AboutSection() {
 
       {/* 2. User Portrait (Absolute overlay on the right) */}
       <div className="absolute right-0 bottom-0 w-full max-w-[320px] sm:max-w-[420px] md:max-w-[500px] lg:max-w-[620px] h-[75%] sm:h-[85%] md:h-[95%] lg:h-full z-10 flex items-end justify-end pointer-events-none">
-        <motion.img
+        <motion.img width={764} height={1024}
           initial={{ opacity: 0, x: 80, scale: 0.95 }}
           whileInView={{ opacity: 1, x: 0, scale: 1 }}
           viewport={{ once: true, amount: 0.1 }}
@@ -125,7 +125,7 @@ export default function AboutSection() {
             damping: 20,
             delay: 0.1,
           }}
-          src="/portrait.png"
+          src="/portrait.png" fetchPriority="high"
           alt="Muhammad Rakibul Hasan Shuvo"
           className="h-full w-auto object-contain object-bottom pointer-events-auto filter drop-shadow-[0_0_30px_rgba(0,240,255,0.15)]"
         />
