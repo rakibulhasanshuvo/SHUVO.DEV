@@ -18,7 +18,7 @@ import { Marquee } from "@/components/magicui/Marquee";
 import Loader from "@/components/Loader";
 import HoneycombLoader from "@/components/HoneycombLoader";
 
-import LinkCards from "@/components/LinkCards";
+
 import PricingCards from "@/components/PricingCards";
 import CyberButton from "@/components/CyberButton";
 import AngledGallery from "@/components/AngledGallery";
@@ -524,12 +524,6 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Interactive Link Cards */}
-        <section className="mb-40 max-w-[1440px] mx-auto px-6 overflow-hidden">
-          <div className="flex justify-center items-center py-10">
-            <LinkCards />
-          </div>
-        </section>
 
         {/* Pricing Cards Section */}
         <section className="mb-40 max-w-[1440px] mx-auto px-6">
