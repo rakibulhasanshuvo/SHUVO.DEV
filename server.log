@@ -2,43 +2,4 @@
 > temp-portfolio@0.1.0 dev
 > next dev
 
-▲ Next.js 16.2.6 (Turbopack)
-- Local:         http://localhost:3000
-- Network:       http://192.168.0.2:3000
-✓ Ready in 670ms
-
-○ Compiling / ...
-⨯ Error: Invalid src prop (https://images.unsplash.com/photo-1633332755192-727a05c4013d?auto=format&fit=crop&q=80&w=1160) on `next/image`, hostname "images.unsplash.com" is not configured under images in your `next.config.js`
-See more info: https://nextjs.org/docs/messages/next-image-unconfigured-host
-    at ignore-listed frames {
-  digest: '141553934@E231'
-}
- GET / 500 in 8.4s (next.js: 7.5s, application-code: 916ms)
-[browser] Uncaught Error: Invalid src prop (https://images.unsplash.com/photo-1633332755192-727a05c4013d?auto=format&fit=crop&q=80&w=1160) on `next/image`, hostname "images.unsplash.com" is not configured under images in your `next.config.js`
-See more info: https://nextjs.org/docs/messages/next-image-unconfigured-host
-    at Array.map (<anonymous>)
-    at Home (src/app/page.tsx:653:19)
-  651 |               <div className="sm:flex sm:justify-between sm:gap-4 lg:gap-6">
-  652 |                 <div className="sm:order-last sm:shrink-0">
-> 653 |                   <Image width={64} height={64} alt="Blog" src="https://images.unsplash.c...
-      |                   ^
-  654 |                 </div>
-  655 |
-  656 |                 <div className="mt-4 sm:mt-0">
-⨯ Error: Invalid src prop (https://images.unsplash.com/photo-1633332755192-727a05c4013d?auto=format&fit=crop&q=80&w=1160) on `next/image`, hostname "images.unsplash.com" is not configured under images in your `next.config.js`
-See more info: https://nextjs.org/docs/messages/next-image-unconfigured-host
-    at ignore-listed frames {
-  digest: '141553934@E231'
-}
- GET / 500 in 188ms (next.js: 6ms, application-code: 182ms)
-[browser] Uncaught Error: Invalid src prop (https://images.unsplash.com/photo-1633332755192-727a05c4013d?auto=format&fit=crop&q=80&w=1160) on `next/image`, hostname "images.unsplash.com" is not configured under images in your `next.config.js`
-See more info: https://nextjs.org/docs/messages/next-image-unconfigured-host
-    at Array.map (<anonymous>)
-    at Home (src/app/page.tsx:653:19)
-  651 |               <div className="sm:flex sm:justify-between sm:gap-4 lg:gap-6">
-  652 |                 <div className="sm:order-last sm:shrink-0">
-> 653 |                   <Image width={64} height={64} alt="Blog" src="https://images.unsplash.c...
-      |                   ^
-  654 |                 </div>
-  655 |
-  656 |                 <div className="mt-4 sm:mt-0">
+sh: 1: next: not found
