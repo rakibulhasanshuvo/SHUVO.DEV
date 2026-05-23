@@ -17,8 +17,8 @@ const hotspots: Hotspot[] = [
   {
     id: "cpu",
     name: "AMD Ryzen 9 7950X",
-    x: 48,
-    y: 38,
+    x: 50,
+    y: 37.33,
     spec: "16 Cores / 32 Threads @ 5.7GHz Boost",
     purpose: "Parallel bot scraper orchestrations and ultra-fast Next.js production builds.",
     performanceMetric: "2.4x build compiler speedup",
@@ -26,8 +26,8 @@ const hotspots: Hotspot[] = [
   {
     id: "gpu",
     name: "NVIDIA RTX 4090 24GB",
-    x: 45,
-    y: 65,
+    x: 50,
+    y: 64,
     spec: "24GB GDDR6X / 16,384 CUDA Cores",
     purpose: "Edge-based Satori OG image renders, local LLM experiments, and 3D WebGPU canvas processing.",
     performanceMetric: "0.1ms render latency per frame",
@@ -35,8 +35,8 @@ const hotspots: Hotspot[] = [
   {
     id: "ram",
     name: "64GB DDR5 G.Skill Trident Z5",
-    x: 62,
-    y: 38,
+    x: 63.4,
+    y: 37.33,
     spec: "6400MT/s CL32 Dual Channel",
     purpose: "Smooth multi-container Docker development environments and high-density local database caching.",
     performanceMetric: "Zero micro-stutter compilation loops",
@@ -44,8 +44,8 @@ const hotspots: Hotspot[] = [
   {
     id: "ssd",
     name: "2TB Samsung 990 Pro PCIe 5.0",
-    x: 65,
-    y: 52,
+    x: 64.5,
+    y: 52.13,
     spec: "7,450 MB/s Sequential Reads",
     purpose: "Sub-millisecond access times for massive web scraping log parsing and git workspace indexes.",
     performanceMetric: "14.2 GB/s cached read throughput",
@@ -54,7 +54,7 @@ const hotspots: Hotspot[] = [
     id: "cooling",
     name: "Custom Liquid Loop & Lian Li Fans",
     x: 32,
-    y: 22,
+    y: 12.53,
     spec: "360mm Radiator + Silent Static Pressure Fans",
     purpose: "Sustained high compute loads during heavy web crawling without thermal throttling.",
     performanceMetric: "Under 68°C at 100% full CPU utilization",
@@ -85,14 +85,15 @@ export default function HardwareShowroom() {
 
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 items-center relative z-10">
         {/* Left/Middle Column: SVG Chassis Blueprint */}
-        <div className="lg:col-span-3 relative bg-black/60 rounded-2xl border border-white/5 p-4 aspect-[4/3] flex items-center justify-center overflow-hidden">
+        <div className="lg:col-span-3 relative bg-black/60 rounded-2xl border border-white/5 p-4 flex items-center justify-center overflow-hidden">
           {/* Neon Grid Mesh background */}
           <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
           
           {/* Main Chassis SVG */}
-          <svg
-            className="w-full h-full text-white/80"
-            viewBox="0 0 500 375"
+          <div className="relative w-full aspect-[4/3] max-w-[500px]">
+            <svg
+              className="absolute inset-0 w-full h-full text-white/80"
+              viewBox="0 0 500 375"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
           >
@@ -146,7 +147,7 @@ export default function HardwareShowroom() {
           </svg>
 
           {/* Interactive Hotspot Buttons */}
-          {hotspots.map((hs) => {
+            {hotspots.map((hs) => {
             const isActive = activeHotspot?.id === hs.id;
             return (
               <button
@@ -169,7 +170,8 @@ export default function HardwareShowroom() {
                 }`} />
               </button>
             );
-          })}
+            })}
+          </div>
         </div>
 
         {/* Right Column: Spec Information display */}
