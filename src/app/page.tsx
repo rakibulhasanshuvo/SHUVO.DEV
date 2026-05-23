@@ -26,6 +26,7 @@ import AboutSection from "@/components/AboutSection";
 import AutotypingText from "@/components/ui/AutotypingText";
 import FaqAccordion from "@/components/FaqAccordion";
 import ClientReviews from "@/components/ClientReviews";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 
 
@@ -173,6 +174,7 @@ const features = [
 
 
 export default function Home() {
+  const isMobile = useIsMobile();
 
   return (
     <div className="relative min-h-screen bg-transparent text-white font-satoshi">
@@ -180,7 +182,7 @@ export default function Home() {
       <div className="fixed inset-0 pointer-events-none bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:32px_32px] -z-10" />
 
       {/* Dynamic Quantum Constellation & Matrix Rain Canvas Background */}
-      <InteractiveGridBackground />
+      {isMobile === false && <InteractiveGridBackground />}
 
       {/* Dynamic Glowing Orbs - wrapped to prevent horizontal bleed without breaking position:sticky */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
@@ -299,7 +301,7 @@ export default function Home() {
 
           {/* Column 2: 3D Carousel */}
           <div className="hidden lg:flex justify-center items-center relative z-10">
-            <ThreeDCarousel />
+            {isMobile === false && <ThreeDCarousel />}
           </div>
         </section>
         </div>{/* END hero wrapper */}
@@ -340,7 +342,7 @@ export default function Home() {
             {/* Ambient glow behind the core */}
             <div className="absolute inset-0 bg-neon-cyan/20 blur-[60px] rounded-full -z-10 animate-pulse pointer-events-none" />
 
-            <CyberCore />
+            {isMobile === false && <CyberCore />}
 
             {/* Status indicators */}
             <div className="absolute -right-32 top-1/2 -translate-y-1/2 hidden md:flex flex-col gap-4">
@@ -438,7 +440,7 @@ export default function Home() {
         <section id="process" className="scroll-mt-24 mb-28 md:mb-36 w-full relative">
           {/* Rain Background */}
           <div className="absolute inset-0 -z-10 opacity-30 overflow-hidden" style={{ maskImage: "linear-gradient(to bottom, transparent, black 10%, black 90%, transparent)", WebkitMaskImage: "linear-gradient(to bottom, transparent, black 10%, black 90%, transparent)" }}>
-            <RainBackground />
+            {isMobile === false && <RainBackground />}
           </div>
           <div className="text-center mb-16 relative z-10 max-w-5xl mx-auto px-6">
 
@@ -524,7 +526,7 @@ export default function Home() {
         {/* FAQ Section */}
         <section id="faq" className="scroll-mt-24 mb-28 md:mb-36 relative overflow-hidden">
           <div className="absolute inset-0 z-0 opacity-20">
-            <MatrixBackground />
+            {isMobile === false && <MatrixBackground />}
           </div>
           <div className="text-center mb-16">
 
