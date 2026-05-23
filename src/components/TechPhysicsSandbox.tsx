@@ -149,28 +149,71 @@ export default function TechPhysicsSandbox() {
         }
       });
 
-      // 2. Inter-pill simple circle collision fallback (elastic bounce)
+      // 2. Inter-pill spatial partitioning collision fallback
+      const cellSize = 120; // Grid cell size roughly max pill width
+      const cols = Math.ceil(dimensions.width / cellSize) + 1;
+      const rows = Math.ceil(dimensions.height / cellSize) + 1;
+
+      // Initialize spatial grid
+      const grid: TechPill[][] = Array.from({ length: cols * rows }, () => []);
+
+      // Populate grid
       for (let i = 0; i < pills.length; i++) {
-        for (let j = i + 1; j < pills.length; j++) {
-          const pi = pills[i];
-          const pj = pills[j];
-          const dx = pj.x - pi.x;
-          const dy = pj.y - pi.y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          const minDist = (pi.width + pj.width) / 4 + 10; // Combined average radii
+        const p = pills[i];
+        const cx = Math.max(0, Math.min(cols - 1, Math.floor(p.x / cellSize)));
+        const cy = Math.max(0, Math.min(rows - 1, Math.floor(p.y / cellSize)));
+        grid[cy * cols + cx].push(p);
+      }
 
-          if (dist < minDist) {
-            // Collision response
-            const angle = Math.atan2(dy, dx);
-            const targetX = pi.x + Math.cos(angle) * minDist;
-            const targetY = pi.y + Math.sin(angle) * minDist;
-            const ax = (targetX - pj.x) * 0.1;
-            const ay = (targetY - pj.y) * 0.1;
+      // Check collisions within adjacent cells
+      for (let i = 0; i < pills.length; i++) {
+        const pi = pills[i];
+        const cx = Math.max(0, Math.min(cols - 1, Math.floor(pi.x / cellSize)));
+        const cy = Math.max(0, Math.min(rows - 1, Math.floor(pi.y / cellSize)));
 
-            pi.vx -= ax;
-            pi.vy -= ay;
-            pj.vx += ax;
-            pj.vy += ay;
+        const minX = Math.max(0, cx - 1);
+        const maxX = Math.min(cols - 1, cx + 1);
+        const minY = Math.max(0, cy - 1);
+        const maxY = Math.min(rows - 1, cy + 1);
+
+        for (let ny = minY; ny <= maxY; ny++) {
+          const rowOffset = ny * cols;
+          for (let nx = minX; nx <= maxX; nx++) {
+            const cell = grid[rowOffset + nx];
+            for (let j = 0; j < cell.length; j++) {
+              const pj = cell[j];
+
+              // Using string comparison on text as unique identifier to avoid double processing,
+              // since index inside grid cell doesn't map to global index easily
+              if (pi === pj || pi.text > pj.text) continue;
+
+              const dx = pj.x - pi.x;
+              const dy = pj.y - pi.y;
+              const minDist = (pi.width + pj.width) * 0.25 + 10;
+
+              // Fast AABB bounding box pre-check
+              if (Math.abs(dx) > minDist || Math.abs(dy) > minDist) continue;
+
+              const distSq = dx * dx + dy * dy;
+              if (distSq < minDist * minDist && distSq > 0) {
+                const dist = Math.sqrt(distSq);
+
+                // Collision response using normalized vectors instead of atan2/cos/sin
+                const nxDir = dx / dist;
+                const nyDir = dy / dist;
+
+                const targetX = pi.x + nxDir * minDist;
+                const targetY = pi.y + nyDir * minDist;
+
+                const ax = (targetX - pj.x) * 0.1;
+                const ay = (targetY - pj.y) * 0.1;
+
+                pi.vx -= ax;
+                pi.vy -= ay;
+                pj.vx += ax;
+                pj.vy += ay;
+              }
+            }
           }
         }
       }
