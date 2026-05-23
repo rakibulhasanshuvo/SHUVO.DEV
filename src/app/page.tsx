@@ -2,7 +2,6 @@
 import Image from "next/image";
 
 import { motion } from "framer-motion";
-import { useState, useEffect } from "react";
 import Link from "next/link";
 
 import { ReactNode } from "react";
@@ -16,7 +15,6 @@ const RainBackground = dynamic(() => import('@/components/RainBackground'), { ss
 import { BentoGrid, BentoCard } from "@/components/magicui/BentoGrid";
 import { Marquee } from "@/components/magicui/Marquee";
 import Loader from "@/components/Loader";
-import HoneycombLoader from "@/components/HoneycombLoader";
 
 
 import PricingCards from "@/components/PricingCards";
@@ -175,20 +173,6 @@ const features = [
 
 
 export default function Home() {
-  const [isPageLoading, setIsPageLoading] = useState(false);
-
-  useEffect(() => {
-    const handleClick = (e: globalThis.MouseEvent) => {
-      const target = e.target as HTMLElement;
-      if (target.tagName === 'A' || target.tagName === 'VIDEO' || target.closest('a') || target.closest('video')) {
-        setIsPageLoading(true);
-        setTimeout(() => setIsPageLoading(false), 1000); // Show for 1 second
-      }
-    };
-    document.addEventListener('click', handleClick);
-    return () => document.removeEventListener('click', handleClick);
-  }, []);
-
 
   return (
     <div className="relative min-h-screen bg-transparent text-white font-satoshi">
@@ -751,15 +735,6 @@ export default function Home() {
           </div>
         </footer>
       </div>
-
-
-      {/* Global Page Loader Overlay */}
-      {isPageLoading && (
-
-        <div className="fixed inset-0 bg-cyber-black/80 backdrop-blur-md z-50 flex items-center justify-center">
-          <HoneycombLoader />
-        </div>
-      )}
     </div>
   );
 }
