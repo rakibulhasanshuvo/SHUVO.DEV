@@ -55,6 +55,7 @@ export default function InteractiveGridBackground() {
     // Constellation Particles (Neural/Database nodes theme with 3D Depth Layering)
     const particleCount = 75;
     const particles: Array<{
+      id: number;
       x: number;
       y: number;
       vx: number;
@@ -81,6 +82,7 @@ export default function InteractiveGridBackground() {
         : undefined;
 
       particles.push({
+        id: i,
         x: Math.random() * window.innerWidth,
         y: Math.random() * window.innerHeight,
         vx: (Math.random() - 0.5) * 0.28,
@@ -105,11 +107,43 @@ export default function InteractiveGridBackground() {
       rainSpeeds[x] = Math.random() * 0.8 + 0.4;
     }
 
+    // Spatial hash grid arrays (reused per frame)
+    const maxThreadDist = 110;
+    let gridCols = Math.ceil(window.innerWidth / maxThreadDist);
+    let gridRows = Math.ceil(window.innerHeight / maxThreadDist);
+    let grid = new Int32Array(gridCols * gridRows);
+    const particleNext = new Int32Array(particleCount);
+
     // Draw Loop
     const draw = () => {
       // Semi-transparent overlay to create smooth trails
       ctx.fillStyle = "rgba(0, 0, 0, 0.16)";
       ctx.fillRect(0, 0, width, height);
+
+      // Update grid dimensions if canvas was resized
+      const currentCols = Math.ceil(width / maxThreadDist);
+      const currentRows = Math.ceil(height / maxThreadDist);
+      if (currentCols !== gridCols || currentRows !== gridRows) {
+        gridCols = currentCols;
+        gridRows = currentRows;
+        grid = new Int32Array(gridCols * gridRows);
+      }
+
+      // Clear spatial hash grid
+      grid.fill(-1);
+      particleNext.fill(-1);
+
+      // Populate spatial hash grid
+      for (let i = 0; i < particleCount; i++) {
+        const p = particles[i];
+        const col = Math.floor(p.x / maxThreadDist);
+        const row = Math.floor(p.y / maxThreadDist);
+        if (col >= 0 && col < gridCols && row >= 0 && row < gridRows) {
+          const idx = row * gridCols + col;
+          particleNext[i] = grid[idx];
+          grid[idx] = i;
+        }
+      }
 
       // 1. Draw Spotlight Cursor Lens (ambient backdrop)
       if (mouse.active) {
@@ -164,21 +198,33 @@ export default function InteractiveGridBackground() {
         ctx.fillStyle = p.color + ` ${nodeOpacity})`;
         ctx.fill();
 
-        // Draw connections between neighboring nodes (scaled by mutual depth similarity)
-        for (let j = i + 1; j < particleCount; j++) {
-          const p2 = particles[j];
-          const dist = Math.hypot(p2.x - p.x, p2.y - p.y);
-          const maxThreadDist = 110;
-          
-          if (dist < maxThreadDist) {
-            // Fade connections out based on distance and average depth layers
-            const alpha = ((maxThreadDist - dist) / maxThreadDist) * 0.035 * Math.min(p.z, p2.z);
-            ctx.beginPath();
-            ctx.moveTo(p.x, p.y);
-            ctx.lineTo(p2.x, p2.y);
-            ctx.strokeStyle = `rgba(0, 240, 255, ${alpha})`;
-            ctx.lineWidth = 0.6 * Math.min(p.z, p2.z);
-            ctx.stroke();
+        // Efficient neighborhood search using spatial hash grid
+        const col = Math.floor(p.x / maxThreadDist);
+        const row = Math.floor(p.y / maxThreadDist);
+
+        for (let dRow = -1; dRow <= 1; dRow++) {
+          for (let dCol = -1; dCol <= 1; dCol++) {
+            const c = col + dCol;
+            const r = row + dRow;
+            if (c >= 0 && c < gridCols && r >= 0 && r < gridRows) {
+              let curr = grid[r * gridCols + c];
+              while (curr !== -1) {
+                if (curr > i) {
+                  const p2 = particles[curr];
+                  const dist = Math.hypot(p2.x - p.x, p2.y - p.y);
+                  if (dist < maxThreadDist) {
+                    const alpha = ((maxThreadDist - dist) / maxThreadDist) * 0.035 * Math.min(p.z, p2.z);
+                    ctx.beginPath();
+                    ctx.moveTo(p.x, p.y);
+                    ctx.lineTo(p2.x, p2.y);
+                    ctx.strokeStyle = `rgba(0, 240, 255, ${alpha})`;
+                    ctx.lineWidth = 0.6 * Math.min(p.z, p2.z);
+                    ctx.stroke();
+                  }
+                }
+                curr = particleNext[curr];
+              }
+            }
           }
         }
 
