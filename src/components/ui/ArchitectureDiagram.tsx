@@ -3,43 +3,48 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 
+const nodes = [
+  {
+    id: "scrapers",
+    label: "Puppeteer Workers",
+    sub: "Serverless Ingest",
+    x: 100,
+    y: 100,
+    color: "#00F0FF",
+    glow: "rgba(0, 240, 255, 0.4)",
+    info: "10+ concurrent Puppeteer worker instances executing scrape routines on serverless Edge functions.",
+  },
+  {
+    id: "queue",
+    label: "Redis Queue",
+    sub: "In-Memory buffer",
+    x: 350,
+    y: 100,
+    color: "#A100FF",
+    glow: "rgba(161, 0, 255, 0.4)",
+    info: "Fast, concurrent in-memory Redis LPUSH/RPOP worker queue throttling high density traffic spikes.",
+  },
+  {
+    id: "db",
+    label: "PostgreSQL",
+    sub: "Transactional Lock",
+    x: 600,
+    y: 100,
+    color: "#10B981",
+    glow: "rgba(16, 185, 129, 0.4)",
+    info: "Durable database tier storing version-locked tables, analytics datasets, and index ledger transactions.",
+  },
+];
+
+const nodesById = nodes.reduce((acc, node) => {
+  acc[node.id] = node;
+  return acc;
+}, {} as Record<string, typeof nodes[0]>);
+
 export default function ArchitectureDiagram() {
   const [activeNode, setActiveNode] = useState<string | null>(null);
 
-  const nodes = [
-    {
-      id: "scrapers",
-      label: "Puppeteer Workers",
-      sub: "Serverless Ingest",
-      x: 100,
-      y: 100,
-      color: "#00F0FF",
-      glow: "rgba(0, 240, 255, 0.4)",
-      info: "10+ concurrent Puppeteer worker instances executing scrape routines on serverless Edge functions.",
-    },
-    {
-      id: "queue",
-      label: "Redis Queue",
-      sub: "In-Memory buffer",
-      x: 350,
-      y: 100,
-      color: "#A100FF",
-      glow: "rgba(161, 0, 255, 0.4)",
-      info: "Fast, concurrent in-memory Redis LPUSH/RPOP worker queue throttling high density traffic spikes.",
-    },
-    {
-      id: "db",
-      label: "PostgreSQL",
-      sub: "Transactional Lock",
-      x: 600,
-      y: 100,
-      color: "#10B981",
-      glow: "rgba(16, 185, 129, 0.4)",
-      info: "Durable database tier storing version-locked tables, analytics datasets, and index ledger transactions.",
-    },
-  ];
-
-  const activeNodeData = activeNode ? nodes.find((n) => n.id === activeNode) : null;
+  const activeNodeData = activeNode ? nodesById[activeNode] : null;
 
   return (
     <div className="relative w-full glass rounded-3xl border border-white/10 p-6 md:p-8 bg-[#0D0D10]/50 backdrop-blur-xl overflow-hidden shadow-2xl flex flex-col items-center select-none">
