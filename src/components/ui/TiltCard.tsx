@@ -29,26 +29,37 @@ export const TiltCard = ({ children, className = "", glowColor = "rgba(0, 240, 2
   const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["7.5deg", "-7.5deg"]);
   const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-7.5deg", "7.5deg"]);
 
+  const rectRef = useRef<DOMRect | null>(null);
+  const rafRef = useRef<number>(0);
+
+  React.useEffect(() => {
+    return () => cancelAnimationFrame(rafRef.current);
+  }, []);
+
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!ref.current) return;
+    const clientX = e.clientX;
+    const clientY = e.clientY;
 
-    const rect = ref.current.getBoundingClientRect();
+    cancelAnimationFrame(rafRef.current);
+    rafRef.current = requestAnimationFrame(() => {
+      if (!rectRef.current) return;
 
-    const width = rect.width;
-    const height = rect.height;
+      const width = rectRef.current.width;
+      const height = rectRef.current.height;
 
-    const mouseXPos = e.clientX - rect.left;
-    const mouseYPos = e.clientY - rect.top;
+      const mouseXPos = clientX - rectRef.current.left;
+      const mouseYPos = clientY - rectRef.current.top;
 
-    // Spotlight coordinate update
-    mouseX.set(mouseXPos);
-    mouseY.set(mouseYPos);
+      // Spotlight coordinate update
+      mouseX.set(mouseXPos);
+      mouseY.set(mouseYPos);
 
-    const xPct = mouseXPos / width - 0.5;
-    const yPct = mouseYPos / height - 0.5;
+      const xPct = mouseXPos / width - 0.5;
+      const yPct = mouseYPos / height - 0.5;
 
-    x.set(xPct);
-    y.set(yPct);
+      x.set(xPct);
+      y.set(yPct);
+    });
   };
 
   const handleMouseLeave = () => {
@@ -59,6 +70,9 @@ export const TiltCard = ({ children, className = "", glowColor = "rgba(0, 240, 2
 
   const handleMouseEnter = () => {
     setIsHovered(true);
+    if (ref.current) {
+      rectRef.current = ref.current.getBoundingClientRect();
+    }
   };
 
   return (
