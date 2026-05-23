@@ -17,7 +17,7 @@ export async function POST(request: Request) {
     }
 
     // Mock successful database pipe write or webhook trigger
-    console.log("Valid Contact Request Received:", { name, email, message, quoteSummary });
+
 
     return NextResponse.json({
       success: true,
