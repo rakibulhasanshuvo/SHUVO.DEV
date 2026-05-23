@@ -27,6 +27,7 @@ import StickyStackCards from "@/components/StickyStackCards";
 import AboutSection from "@/components/AboutSection";
 import AutotypingText from "@/components/ui/AutotypingText";
 import FaqAccordion from "@/components/FaqAccordion";
+import ClientReviews from "@/components/ClientReviews";
 
 
 
@@ -536,86 +537,8 @@ export default function Home() {
         </section>
 
         {/* Reviews Section */}
+        <ClientReviews />
 
-
-        <section id="reviews" className="scroll-mt-24 mb-40 max-w-[1440px] mx-auto px-6">
-          <h2 className="font-cabinet font-bold text-3xl mb-12 text-white">Client Reviews</h2>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-            {/* Summary */}
-            <div className="glass p-6 rounded-2xl h-fit border border-white/10 bg-gradient-to-br from-white/5 to-transparent shadow-xl relative overflow-hidden group">
-              {/* Glowing accent */}
-              <div className="absolute -top-20 -left-20 w-40 h-40 bg-neon-cyan/5 blur-3xl rounded-full" />
-
-              <div className="flex items-center mb-5 relative z-10">
-                <p className="bg-neon-cyan/20 text-neon-cyan text-sm font-semibold inline-flex items-center p-1.5 rounded-md shadow-[0_0_10px_rgba(0,240,255,0.2)]">8.7</p>
-                <p className="ms-2 font-medium text-white">Excellent</p>
-                <span className="w-1 h-1 mx-2 rounded-full bg-text-muted"></span>
-                <p className="text-sm font-medium text-text-muted">376 reviews</p>
-              </div>
-
-              <div className="space-y-4 relative z-10">
-                <dl>
-                  <dt className="text-sm font-medium text-text-muted mb-1">Quality of Work</dt>
-                  <dd className="flex items-center">
-                    <div className="w-full bg-white/10 rounded-full h-2.5 me-2 overflow-hidden">
-                      <div className="bg-neon-cyan h-2.5 rounded-full shadow-[0_0_10px_rgba(0,240,255,0.5)]" style={{ width: '88%' }}></div>
-                    </div>
-                    <span className="text-sm font-medium text-white">8.8</span>
-                  </dd>
-                </dl>
-                <dl>
-                  <dt className="text-sm font-medium text-text-muted mb-1">Communication</dt>
-                  <dd className="flex items-center">
-                    <div className="w-full bg-white/10 rounded-full h-2.5 me-2 overflow-hidden">
-                      <div className="bg-electric-purple h-2.5 rounded-full shadow-[0_0_10px_rgba(147,51,234,0.5)]" style={{ width: '92%' }}></div>
-                    </div>
-                    <span className="text-sm font-medium text-white">9.2</span>
-                  </dd>
-                </dl>
-              </div>
-            </div>
-
-            {/* Individual Reviews */}
-            <div className="md:col-span-2 space-y-6">
-              {/* Review 1 */}
-              <div className="glass p-6 rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent shadow-xl relative overflow-hidden group hover:border-neon-cyan/30 transition-all duration-500">
-                {/* Glowing background accent */}
-                <div className="absolute -top-20 -right-20 w-40 h-40 bg-neon-cyan/5 blur-3xl rounded-full group-hover:bg-neon-cyan/10 transition-colors duration-500" />
-
-                {/* Large background quote */}
-                <span className="absolute top-2 right-4 text-8xl font-cabinet text-white/5 select-none">"</span>
-
-                <p className="text-zinc-300 text-base mb-4 font-light relative z-10">"Shuvo delivered an exceptional project. The attention to detail and performance optimization was outstanding."</p>
-                <div className="flex items-center gap-3 relative z-10">
-                  <div className="w-10 h-10 bg-neon-cyan/20 rounded-full flex items-center justify-center text-neon-cyan text-sm font-bold border border-neon-cyan/30 shadow-[0_0_10px_rgba(0,240,255,0.2)]">JD</div>
-                  <div>
-                    <p className="text-sm font-bold text-white">M.R.H. Shuvo</p>
-                    <p className="text-xs text-text-muted">CEO, TechCorp</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Review 2 */}
-              <div className="glass p-6 rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent shadow-xl relative overflow-hidden group hover:border-electric-purple/30 transition-all duration-500">
-                {/* Glowing background accent */}
-                <div className="absolute -top-20 -right-20 w-40 h-40 bg-electric-purple/5 blur-3xl rounded-full group-hover:bg-electric-purple/10 transition-colors duration-500" />
-
-                {/* Large background quote */}
-                <span className="absolute top-2 right-4 text-8xl font-cabinet text-white/5 select-none">"</span>
-
-                <p className="text-zinc-300 text-base mb-4 font-light relative z-10">"The Cyber-Luxury aesthetic was exactly what we needed for our brand. Highly recommended."</p>
-                <div className="flex items-center gap-3 relative z-10">
-                  <div className="w-10 h-10 bg-electric-purple/20 rounded-full flex items-center justify-center text-electric-purple text-sm font-bold border border-electric-purple/30 shadow-[0_0_10px_rgba(147,51,234,0.2)]">AS</div>
-                  <div>
-                    <p className="text-sm font-bold text-white">Alice Smith</p>
-                    <p className="text-xs text-text-muted">Founder, DesignAgency</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
         {/* FAQ Section */}
         <section id="faq" className="scroll-mt-24 mt-40 relative overflow-hidden">
           <div className="absolute inset-0 z-0 opacity-20">
