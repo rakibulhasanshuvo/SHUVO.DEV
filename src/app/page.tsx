@@ -17,15 +17,15 @@ import { Marquee } from "@/components/magicui/Marquee";
 import Loader from "@/components/Loader";
 
 
-import PricingCards from "@/components/PricingCards";
+const PricingCards = dynamic(() => import('@/components/PricingCards'), { ssr: false, loading: () => <div className="hidden">Loading…</div> });
 import CyberButton from "@/components/CyberButton";
-import AngledGallery from "@/components/AngledGallery";
-import FeaturedWork from "@/components/featured-work/FeaturedWork";
-import StickyStackCards from "@/components/StickyStackCards";
-import AboutSection from "@/components/AboutSection";
+const AngledGallery = dynamic(() => import('@/components/AngledGallery'), { ssr: false, loading: () => <div className="hidden">Loading…</div> });
+const FeaturedWork = dynamic(() => import('@/components/featured-work/FeaturedWork'), { ssr: false, loading: () => <div className="hidden">Loading…</div> });
+const StickyStackCards = dynamic(() => import('@/components/StickyStackCards'), { ssr: false, loading: () => <div className="hidden">Loading…</div> });
+const AboutSection = dynamic(() => import('@/components/AboutSection'), { ssr: false, loading: () => <div className="hidden">Loading…</div> });
 import AutotypingText from "@/components/ui/AutotypingText";
-import FaqAccordion from "@/components/FaqAccordion";
-import ClientReviews from "@/components/ClientReviews";
+const FaqAccordion = dynamic(() => import('@/components/FaqAccordion'), { ssr: false, loading: () => <div className="hidden">Loading…</div> });
+const ClientReviews = dynamic(() => import('@/components/ClientReviews'), { ssr: false, loading: () => <div className="hidden">Loading…</div> });
 
 
 
@@ -213,11 +213,12 @@ export default function Home() {
           </div>
 
 
-          <div className="max-w-4xl relative z-10">
+          <div className="max-w-4xl relative z-10 isolate translate-z-0">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
+              className="min-h-[144px] sm:min-h-[192px] will-change-transform will-change-opacity"
             >
               <h1 className="font-cabinet font-bold text-6xl sm:text-8xl mb-6 leading-[0.9] tracking-tight text-balance">
                 Engineering{" "}
@@ -234,7 +235,7 @@ export default function Home() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-text-muted text-lg sm:text-xl max-w-xl mb-10 font-light"
+              className="text-text-muted text-lg sm:text-xl max-w-xl mb-10 font-light will-change-transform will-change-opacity"
             >
               Full-stack developer focused on <AutotypingText />
             </motion.p>
@@ -243,7 +244,7 @@ export default function Home() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
-              className="flex flex-col sm:flex-row gap-5"
+              className="flex flex-col sm:flex-row gap-5 will-change-transform will-change-opacity"
             >
               {/* Primary CTA: View My Work */}
               <a
@@ -335,7 +336,7 @@ export default function Home() {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 1, type: "spring", stiffness: 50 }}
-            className="relative"
+            className="relative min-h-[350px] aspect-[4/3]"
           >
             {/* Ambient glow behind the core */}
             <div className="absolute inset-0 bg-neon-cyan/20 blur-[60px] rounded-full -z-10 animate-pulse pointer-events-none" />

@@ -51,19 +51,19 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <head>
-        {/* Preload Fontshare stylesheet for Satoshi and Cabinet Grotesk with display=swap to avoid FOUT */}
+        {/* Preload Fontshare stylesheet for Satoshi and Cabinet Grotesk with display=optional to avoid FOUT */}
         <link
           rel="preconnect"
           href="https://api.fontshare.com"
           crossOrigin="anonymous"
         />
         <link
-          href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&f[]=cabinet-grotesk@800&display=swap"
+          href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&f[]=cabinet-grotesk@800&display=optional"
           rel="preload"
           as="style"
         />
         <link 
-          href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&f[]=cabinet-grotesk@800&display=swap" 
+          href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&f[]=cabinet-grotesk@800&display=optional"
           rel="stylesheet" 
         />
         {/* JSON-LD Schema markup */}
