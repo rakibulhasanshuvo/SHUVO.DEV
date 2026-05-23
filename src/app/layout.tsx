@@ -10,6 +10,8 @@ export const metadata: Metadata = {
   authors: [{ name: "Muhammad Rakibul Hasan Shuvo" }],
 };
 
+import SmoothScrolling from "@/components/SmoothScrolling";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -65,9 +67,11 @@ export default function RootLayout({
       </head>
       <body className="min-h-full flex flex-col bg-cyber-black text-white font-satoshi selection:bg-neon-cyan/30 selection:text-white overflow-x-hidden">
         <Navbar />
+        <SmoothScrolling>
         <div className="pt-24 flex-1 flex flex-col relative">
           {children}
         </div>
+        </SmoothScrolling>
       </body>
     </html>
   );

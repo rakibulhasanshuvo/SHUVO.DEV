@@ -173,6 +173,7 @@ const features = [
   },
 ];
 
+
 export default function Home() {
   const [isPageLoading, setIsPageLoading] = useState(false);
 
