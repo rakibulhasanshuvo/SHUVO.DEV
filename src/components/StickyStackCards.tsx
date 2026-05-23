@@ -295,11 +295,22 @@ function Card({ i, project, progress }: CardProps) {
     }
   };
 
+  const rafRef = useRef<number>(0);
+
+  useEffect(() => {
+    return () => cancelAnimationFrame(rafRef.current);
+  }, []);
+
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!rectRef.current) return;
-    const x = e.clientX - rectRef.current.left;
-    const y = e.clientY - rectRef.current.top;
-    setCoords({ x, y });
+    const clientX = e.clientX;
+    const clientY = e.clientY;
+    cancelAnimationFrame(rafRef.current);
+    rafRef.current = requestAnimationFrame(() => {
+      if (!rectRef.current) return;
+      const x = clientX - rectRef.current.left;
+      const y = clientY - rectRef.current.top;
+      setCoords({ x, y });
+    });
   };
 
   return (

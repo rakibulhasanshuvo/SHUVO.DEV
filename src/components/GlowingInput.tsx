@@ -21,11 +21,22 @@ export function GlowingInput({ label, id, ...props }: GlowingInputProps) {
     }
   };
 
+  const rafRef = React.useRef<number>(0);
+
+  React.useEffect(() => {
+    return () => cancelAnimationFrame(rafRef.current);
+  }, []);
+
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!rectRef.current) return;
-    setCoords({
-      x: e.clientX - rectRef.current.left,
-      y: e.clientY - rectRef.current.top,
+    const clientX = e.clientX;
+    const clientY = e.clientY;
+    cancelAnimationFrame(rafRef.current);
+    rafRef.current = requestAnimationFrame(() => {
+      if (!rectRef.current) return;
+      setCoords({
+        x: clientX - rectRef.current.left,
+        y: clientY - rectRef.current.top,
+      });
     });
   };
 
@@ -90,11 +101,22 @@ export function GlowingTextArea({ label, id, ...props }: GlowingTextAreaProps) {
     }
   };
 
+  const rafRef = React.useRef<number>(0);
+
+  React.useEffect(() => {
+    return () => cancelAnimationFrame(rafRef.current);
+  }, []);
+
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!rectRef.current) return;
-    setCoords({
-      x: e.clientX - rectRef.current.left,
-      y: e.clientY - rectRef.current.top,
+    const clientX = e.clientX;
+    const clientY = e.clientY;
+    cancelAnimationFrame(rafRef.current);
+    rafRef.current = requestAnimationFrame(() => {
+      if (!rectRef.current) return;
+      setCoords({
+        x: clientX - rectRef.current.left,
+        y: clientY - rectRef.current.top,
+      });
     });
   };
 

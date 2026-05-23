@@ -7,11 +7,11 @@ import Link from "next/link";
 import { ReactNode } from "react";
 import dynamic from 'next/dynamic';
 
-const MatrixBackground = dynamic(() => import('@/components/MatrixBackground'), { ssr: false });
-const ThreeDCarousel = dynamic(() => import('@/components/ThreeDCarousel'), { ssr: false });
-const InteractiveGridBackground = dynamic(() => import('@/components/InteractiveGridBackground'), { ssr: false });
-const CyberCore = dynamic(() => import('@/components/CyberCore'), { ssr: false });
-const RainBackground = dynamic(() => import('@/components/RainBackground'), { ssr: false });
+const MatrixBackground = dynamic(() => import('@/components/MatrixBackground'), { ssr: false, loading: () => <div className="hidden">Loading...</div> });
+const ThreeDCarousel = dynamic(() => import('@/components/ThreeDCarousel'), { ssr: false, loading: () => <div className="hidden">Loading...</div> });
+const InteractiveGridBackground = dynamic(() => import('@/components/InteractiveGridBackground'), { ssr: false, loading: () => <div className="hidden">Loading...</div> });
+const CyberCore = dynamic(() => import('@/components/CyberCore'), { ssr: false, loading: () => <div className="hidden">Loading...</div> });
+const RainBackground = dynamic(() => import('@/components/RainBackground'), { ssr: false, loading: () => <div className="hidden">Loading...</div> });
 import { BentoGrid, BentoCard } from "@/components/magicui/BentoGrid";
 import { Marquee } from "@/components/magicui/Marquee";
 import Loader from "@/components/Loader";
