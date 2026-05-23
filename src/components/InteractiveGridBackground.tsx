@@ -55,7 +55,6 @@ export default function InteractiveGridBackground() {
     // Constellation Particles (Neural/Database nodes theme with 3D Depth Layering)
     const particleCount = 75;
     const particles: Array<{
-      id: number;
       x: number;
       y: number;
       vx: number;
@@ -82,7 +81,6 @@ export default function InteractiveGridBackground() {
         : undefined;
 
       particles.push({
-        id: i,
         x: Math.random() * window.innerWidth,
         y: Math.random() * window.innerHeight,
         vx: (Math.random() - 0.5) * 0.28,

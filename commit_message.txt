@@ -1,6 +1,3 @@
-chore: fix UI/UX issues for home page
+🧪 Test Clipboard Copy Error Handling in CodeBlock
 
-- Replaced "John Doe" and placeholder text with M.R.H. Shuvo and appropriate content
-- Updated invalid dates
-- Added scroll margin to main sections (work, about, process, reviews, faq, blog, contact) for smooth scrolling behind sticky navbar
-- Fixed Hero CTA to point to `#work` correctly
+Added tests to verify the CodeBlock component's copy to clipboard functionality, covering both happy and error paths. Configured Jest for the project and updated package.json scripts to run tests.

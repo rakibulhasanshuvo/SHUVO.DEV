@@ -1,0 +1,11 @@
+## 🎯 What
+Added missing tests for the `CodeBlock` component's copy to clipboard functionality. This ensures that the component gracefully handles errors when copying text fails (e.g. permission denied) and correctly triggers the success state when copying succeeds.
+
+The project was also missing a test setup, so Jest and Testing Library have been added and configured properly.
+
+## 📊 Coverage
+- **Happy Path**: Confirms that clicking the copy button copies the code correctly via `navigator.clipboard.writeText`, sets the copied state, and resets it after 2 seconds.
+- **Error Path**: Confirms that if `navigator.clipboard.writeText` throws an error, the error is caught and logged to the console using `console.error`, preventing unhandled promise rejections.
+
+## ✨ Result
+Increased test coverage and stability. The component now explicitly tests for edge cases related to clipboard interactions, allowing confident refactoring of the CodeBlock UI in the future.
