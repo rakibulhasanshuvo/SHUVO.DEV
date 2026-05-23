@@ -172,7 +172,6 @@ const features = [
   },
 ];
 
-import SmoothScrolling from "@/components/SmoothScrolling";
 
 export default function Home() {
   const [isPageLoading, setIsPageLoading] = useState(false);
@@ -191,7 +190,6 @@ export default function Home() {
 
 
   return (
-    <SmoothScrolling>
     <div className="relative min-h-screen bg-transparent text-white font-satoshi">
       {/* Background Grid Overlay */}
       <div className="fixed inset-0 pointer-events-none bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:32px_32px] -z-10" />
@@ -840,7 +838,6 @@ export default function Home() {
         </div>
       )}
     </div>
-    </SmoothScrolling>
   );
 }
 
