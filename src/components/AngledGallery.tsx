@@ -59,7 +59,7 @@ const GalleryColumn = ({
 export default function AngledGallery() {
   return (
     <section 
-      className="relative w-full min-h-[100vh] overflow-hidden bg-transparent flex items-center justify-center mb-40"
+      className="relative w-full min-h-[100vh] overflow-hidden bg-transparent flex items-center justify-center mb-28 md:mb-36"
     >
       <style>{`
         @keyframes scroll {

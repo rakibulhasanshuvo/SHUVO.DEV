@@ -144,7 +144,7 @@ export default function ContactPage() {
               <GlowingTextArea
                 id="client-message"
                 label="Case Specifications"
-                placeholder="Outline your application requirements, database details, timeline milestones, or design structures..."
+                placeholder="Outline your application requirements, database details, timeline milestones, or design structures…"
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
                 required
@@ -156,7 +156,7 @@ export default function ContactPage() {
                   disabled={status === "loading"}
                   className="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-[#00F0FF] text-black font-cabinet font-bold text-sm tracking-wide hover:shadow-[0_0_20px_rgba(0,240,255,0.4)] active:scale-98 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {status === "loading" ? "Compiling Submission..." : "Transmit Payload"}
+                  {status === "loading" ? "Compiling Submission…" : "Transmit Payload"}
                 </button>
 
                 <AnimatePresence mode="wait">

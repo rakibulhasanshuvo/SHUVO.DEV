@@ -11,7 +11,7 @@ const Loader = () => {
           <div className="control maximize w-[0.6em] h-[0.6em] rounded-full bg-[#0b0]" />
         </div>
       </div>
-      <div className="text inline-block whitespace-nowrap overflow-hidden border-r-[0.2em] border-r-green-500 mt-[1.5em] animate-type-delete animate-blink-cursor">Loading...</div>
+      <div className="text inline-block whitespace-nowrap overflow-hidden border-r-[0.2em] border-r-green-500 mt-[1.5em] animate-type-delete animate-blink-cursor">Loading…</div>
     </div>
   );
 }

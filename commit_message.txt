@@ -1,3 +1,0 @@
-🧪 Test Clipboard Copy Error Handling in CodeBlock
-
-Added tests to verify the CodeBlock component's copy to clipboard functionality, covering both happy and error paths. Configured Jest for the project and updated package.json scripts to run tests.

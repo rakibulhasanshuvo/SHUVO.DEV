@@ -7,11 +7,11 @@ import Link from "next/link";
 import { ReactNode } from "react";
 import dynamic from 'next/dynamic';
 
-const MatrixBackground = dynamic(() => import('@/components/MatrixBackground'), { ssr: false, loading: () => <div className="hidden">Loading...</div> });
-const ThreeDCarousel = dynamic(() => import('@/components/ThreeDCarousel'), { ssr: false, loading: () => <div className="hidden">Loading...</div> });
-const InteractiveGridBackground = dynamic(() => import('@/components/InteractiveGridBackground'), { ssr: false, loading: () => <div className="hidden">Loading...</div> });
-const CyberCore = dynamic(() => import('@/components/CyberCore'), { ssr: false, loading: () => <div className="hidden">Loading...</div> });
-const RainBackground = dynamic(() => import('@/components/RainBackground'), { ssr: false, loading: () => <div className="hidden">Loading...</div> });
+const MatrixBackground = dynamic(() => import('@/components/MatrixBackground'), { ssr: false, loading: () => <div className="hidden">Loading…</div> });
+const ThreeDCarousel = dynamic(() => import('@/components/ThreeDCarousel'), { ssr: false, loading: () => <div className="hidden">Loading…</div> });
+const InteractiveGridBackground = dynamic(() => import('@/components/InteractiveGridBackground'), { ssr: false, loading: () => <div className="hidden">Loading…</div> });
+const CyberCore = dynamic(() => import('@/components/CyberCore'), { ssr: false, loading: () => <div className="hidden">Loading…</div> });
+const RainBackground = dynamic(() => import('@/components/RainBackground'), { ssr: false, loading: () => <div className="hidden">Loading…</div> });
 import { BentoGrid, BentoCard } from "@/components/magicui/BentoGrid";
 import { Marquee } from "@/components/magicui/Marquee";
 import Loader from "@/components/Loader";
@@ -204,7 +204,7 @@ export default function Home() {
       <div className="relative z-10 pt-12 pb-4">
         {/* Full-width Hero Backdrop Wrapper */}
         <div className="relative w-full">
-          <section className="relative mb-40 pt-10 max-w-[1440px] mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <section className="relative mb-28 md:mb-36 pt-10 max-w-[1440px] mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 
 
           {/* Hero Glow */}
@@ -219,7 +219,7 @@ export default function Home() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
             >
-              <h1 className="font-cabinet font-bold text-6xl sm:text-8xl mb-6 leading-[0.9] tracking-tight">
+              <h1 className="font-cabinet font-bold text-6xl sm:text-8xl mb-6 leading-[0.9] tracking-tight text-balance">
                 Engineering{" "}
                 <span 
                   className="text-transparent bg-clip-text bg-gradient-to-r from-neon-cyan to-electric-purple animate-gradient drop-shadow-[0_0_30px_rgba(0,240,255,0.2)]"
@@ -305,7 +305,7 @@ export default function Home() {
         </div>{/* END hero wrapper */}
 
         {/* Cyber Core Showcase */}
-        <section className="relative flex flex-col items-center justify-center py-24 my-20 z-10 overflow-hidden">
+        <section className="relative flex flex-col items-center justify-center py-24 mb-28 md:mb-36 z-10 overflow-hidden">
           {/* Background Elements */}
           <div className="absolute inset-0 bg-cyber-black/50 backdrop-blur-3xl -z-10" />
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-neon-cyan/5 rounded-full blur-[100px] -z-10" />
@@ -373,12 +373,12 @@ export default function Home() {
 
 
         {/* Featured Work (3D Sticky Stack Cards) */}
-        <section id="work" className="scroll-mt-24">
+        <section id="work" className="scroll-mt-24 mb-28 md:mb-36">
           <StickyStackCards />
         </section>
 
         {/* Endless Object Moving (Marquee) */}
-        <div className="relative w-full overflow-hidden">
+        <div className="relative w-full overflow-hidden mb-28 md:mb-36">
         <section className="mb-0 overflow-hidden py-32 relative">
           {/* Gradient Masks to hide vertical cropping */}
           <div className="absolute inset-y-0 left-0 w-1/4 bg-gradient-to-r from-cyber-black to-transparent z-10 pointer-events-none" />
@@ -432,12 +432,10 @@ export default function Home() {
         <AngledGallery />
 
         {/* About Section */}
-        <section id="about" className="scroll-mt-24 mt-40 mb-40">
-          <AboutSection />
-        </section>
+        <AboutSection />
 
         {/* Work Process (Timeline Flow) */}
-        <section id="process" className="scroll-mt-24 mb-40 w-full relative">
+        <section id="process" className="scroll-mt-24 mb-28 md:mb-36 w-full relative">
           {/* Rain Background */}
           <div className="absolute inset-0 -z-10 opacity-30 overflow-hidden" style={{ maskImage: "linear-gradient(to bottom, transparent, black 10%, black 90%, transparent)", WebkitMaskImage: "linear-gradient(to bottom, transparent, black 10%, black 90%, transparent)" }}>
             <RainBackground />
@@ -512,7 +510,7 @@ export default function Home() {
 
 
         {/* Pricing Cards Section */}
-        <section className="mb-40 max-w-[1440px] mx-auto px-6">
+        <section className="scroll-mt-24 mb-28 md:mb-36 max-w-[1440px] mx-auto px-6">
           <div className="text-center mb-12">
             <h2 className="font-cabinet font-bold text-3xl mb-2">Service Tiers</h2>
             <p className="text-text-muted">Choose the perfect plan for your project.</p>
@@ -524,14 +522,14 @@ export default function Home() {
         <ClientReviews />
 
         {/* FAQ Section */}
-        <section id="faq" className="scroll-mt-24 mt-40 relative overflow-hidden">
+        <section id="faq" className="scroll-mt-24 mb-28 md:mb-36 relative overflow-hidden">
           <div className="absolute inset-0 z-0 opacity-20">
             <MatrixBackground />
           </div>
           <div className="text-center mb-16">
 
             <h2 className="font-cabinet font-bold text-4xl md:text-5xl mb-4 text-white">Frequently Asked Questions</h2>
-            <p className="text-text-muted max-w-2xl mx-auto font-light">
+            <p className="text-zinc-200 max-w-2xl mx-auto font-medium relative z-10 drop-shadow-sm">
               Got questions? I&apos;ve got answers. If you don&apos;t find what you're looking for, feel free to reach out.
             </p>
           </div>
@@ -540,7 +538,7 @@ export default function Home() {
         </section>
 
         {/* Blog Section */}
-        <section id="blog" className="scroll-mt-24 mt-40">
+        <section id="blog" className="scroll-mt-24 mb-28 md:mb-36">
           <div className="text-center mb-16">
             <h2 className="font-cabinet font-bold text-4xl md:text-5xl mb-4 text-white">Latest Insights</h2>
             <p className="text-text-muted max-w-2xl mx-auto font-light">
@@ -623,7 +621,7 @@ export default function Home() {
             </a>
           </div>
         </section>
-        <section id="contact" className="scroll-mt-24 overflow-hidden glass rounded-3xl sm:grid sm:grid-cols-2 sm:items-center mt-32 border border-white/10 bg-gradient-to-br from-white/5 via-black to-black shadow-xl relative">
+        <section id="contact" className="scroll-mt-24 overflow-hidden glass rounded-3xl sm:grid sm:grid-cols-2 sm:items-center border border-white/10 bg-gradient-to-br from-white/5 via-black to-black shadow-xl relative mb-20">
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-cyan-900/15 via-black to-black -z-10 pointer-events-none" />
           <div className="p-8 md:p-12 lg:px-16 lg:py-24 relative z-20">
             <motion.div
@@ -690,13 +688,37 @@ export default function Home() {
               <div className="font-cabinet font-bold text-3xl tracking-tight mb-4">
                 SHUVO<span className="text-neon-cyan">.</span>
               </div>
-              <p className="text-text-muted text-sm max-w-sm mb-6 font-light">
+              <p className="text-zinc-300 text-sm max-w-sm mb-6 font-medium leading-relaxed">
                 Engineering high-performance, visually stunning web applications that bridge the gap between design and engineering.
               </p>
               <div className="flex gap-4">
-                <a href="#" aria-label="GitHub" className="w-10 h-10 glass rounded-full flex items-center justify-center text-white hover:border-neon-cyan transition-colors font-jetbrains text-xs">GH</a>
-                <a href="#" aria-label="Twitter" className="w-10 h-10 glass rounded-full flex items-center justify-center text-white hover:border-neon-cyan transition-colors font-jetbrains text-xs">TW</a>
-                <a href="#" aria-label="LinkedIn" className="w-10 h-10 glass rounded-full flex items-center justify-center text-white hover:border-neon-cyan transition-colors font-jetbrains text-xs">LI</a>
+                <a
+                  href="https://github.com/rakibulhasanshuvo"
+                  aria-label="GitHub"
+                  className="w-10 h-10 glass rounded-full flex items-center justify-center text-white hover:border-neon-cyan transition-all duration-300 group focus-visible:ring-2 focus-visible:ring-neon-cyan focus-visible:ring-offset-2 focus-visible:ring-offset-black focus:outline-none"
+                >
+                  <svg className="w-5 h-5 text-zinc-200 group-hover:text-neon-cyan transition-colors" fill="currentColor" viewBox="0 0 24 24">
+                    <path fillRule="evenodd" clipRule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.464-1.11-1.464-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.579.688.481C19.137 20.162 22 16.418 22 12c0-5.523-4.477-10-10-10z" />
+                  </svg>
+                </a>
+                <a
+                  href="#"
+                  aria-label="Twitter"
+                  className="w-10 h-10 glass rounded-full flex items-center justify-center text-white hover:border-neon-cyan transition-all duration-300 group focus-visible:ring-2 focus-visible:ring-neon-cyan focus-visible:ring-offset-2 focus-visible:ring-offset-black focus:outline-none"
+                >
+                  <svg className="w-5 h-5 text-zinc-200 group-hover:text-neon-cyan transition-colors" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                  </svg>
+                </a>
+                <a
+                  href="#"
+                  aria-label="LinkedIn"
+                  className="w-10 h-10 glass rounded-full flex items-center justify-center text-white hover:border-neon-cyan transition-all duration-300 group focus-visible:ring-2 focus-visible:ring-neon-cyan focus-visible:ring-offset-2 focus-visible:ring-offset-black focus:outline-none"
+                >
+                  <svg className="w-5 h-5 text-zinc-200 group-hover:text-neon-cyan transition-colors" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.779-1.75-1.75s.784-1.75 1.75-1.75 1.75.779 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                  </svg>
+                </a>
               </div>
             </div>
 
@@ -704,11 +726,11 @@ export default function Home() {
             <div>
               <h3 className="font-cabinet font-bold text-sm uppercase tracking-wider mb-6 text-white">Navigation</h3>
               <ul className="space-y-3 text-sm text-text-muted">
-                <li><Link href="/projects" className="hover:text-neon-cyan transition-colors">Work</Link></li>
-                <li><Link href="/about" className="hover:text-neon-cyan transition-colors">About</Link></li>
-                <li><Link href="/#process" className="hover:text-neon-cyan transition-colors">Process</Link></li>
-                <li><Link href="/#reviews" className="hover:text-neon-cyan transition-colors">Reviews</Link></li>
-                <li><Link href="/contact" className="hover:text-neon-cyan transition-colors">Contact</Link></li>
+                <li><Link href="/projects" className="hover:text-neon-cyan transition-colors focus-visible:text-neon-cyan focus:outline-none rounded">Work</Link></li>
+                <li><Link href="/about" className="hover:text-neon-cyan transition-colors focus-visible:text-neon-cyan focus:outline-none rounded">About</Link></li>
+                <li><Link href="/#process" className="hover:text-neon-cyan transition-colors focus-visible:text-neon-cyan focus:outline-none rounded">Process</Link></li>
+                <li><Link href="/#reviews" className="hover:text-neon-cyan transition-colors focus-visible:text-neon-cyan focus:outline-none rounded">Reviews</Link></li>
+                <li><Link href="/contact" className="hover:text-neon-cyan transition-colors focus-visible:text-neon-cyan focus:outline-none rounded">Contact</Link></li>
               </ul>
             </div>
 
@@ -716,21 +738,21 @@ export default function Home() {
             <div>
               <h3 className="font-cabinet font-bold text-sm uppercase tracking-wider mb-6 text-white">Services</h3>
               <ul className="space-y-3 text-sm text-text-muted">
-                <li><a href="#" className="hover:text-electric-purple transition-colors">Web Development</a></li>
-                <li><a href="#" className="hover:text-electric-purple transition-colors">UI/UX Design</a></li>
-                <li><a href="#" className="hover:text-electric-purple transition-colors">Performance Optimization</a></li>
-                <li><a href="#" className="hover:text-electric-purple transition-colors">Custom Integration</a></li>
+                <li><a href="#" className="hover:text-electric-purple transition-colors focus-visible:text-electric-purple focus:outline-none rounded">Web Development</a></li>
+                <li><a href="#" className="hover:text-electric-purple transition-colors focus-visible:text-electric-purple focus:outline-none rounded">UI/UX Design</a></li>
+                <li><a href="#" className="hover:text-electric-purple transition-colors focus-visible:text-electric-purple focus:outline-none rounded">Performance Optimization</a></li>
+                <li><a href="#" className="hover:text-electric-purple transition-colors focus-visible:text-electric-purple focus:outline-none rounded">Custom Integration</a></li>
               </ul>
             </div>
           </div>
 
           {/* Bottom Bar */}
-          <div className="flex flex-col md:flex-row justify-between items-center text-text-muted text-xs font-jetbrains border-t border-white/5 pt-8">
+          <div className="flex flex-col md:flex-row justify-between items-center text-text-muted text-xs font-satoshi border-t border-white/5 pt-8">
             <p>© 2026 M.R.H. Shuvo. All rights reserved.</p>
-            <div className="flex gap-6 mt-4 md:mt-0">
-              <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
-              <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
-              <a href="/admin" className="hover:text-white transition-colors">Admin Dashboard</a>
+            <div className="flex gap-6 mt-4 md:mt-0 font-medium">
+              <a href="#" className="hover:text-white transition-colors focus-visible:ring-2 focus-visible:ring-neon-cyan focus-visible:ring-offset-2 focus-visible:ring-offset-black focus:outline-none rounded-lg px-2 py-0.5">Privacy Policy</a>
+              <a href="#" className="hover:text-white transition-colors focus-visible:ring-2 focus-visible:ring-neon-cyan focus-visible:ring-offset-2 focus-visible:ring-offset-black focus:outline-none rounded-lg px-2 py-0.5">Terms of Service</a>
+              <Link href="/dashboard" className="hover:text-white transition-colors focus-visible:ring-2 focus-visible:ring-neon-cyan focus-visible:ring-offset-2 focus-visible:ring-offset-black focus:outline-none rounded-lg px-2 py-0.5">Admin Dashboard</Link>
             </div>
           </div>
         </footer>

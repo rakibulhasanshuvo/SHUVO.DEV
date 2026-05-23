@@ -131,7 +131,7 @@ export default function TemplatesPage() {
           <div className="relative w-full md:max-w-xs">
             <input
               type="text"
-              placeholder="Search assets..."
+              placeholder="Search assets…"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-xs font-semibold tracking-wide text-white placeholder-white/30 focus:outline-none focus:border-neon-cyan/50 focus:bg-white/[0.08] transition-all"

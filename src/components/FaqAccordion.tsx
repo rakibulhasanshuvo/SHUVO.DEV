@@ -16,15 +16,15 @@ const FAQItem = ({ question, answer, isOpen, onClick }: FAQItemProps) => {
       initial={false}
       className={`group glass rounded-xl border transition-all duration-300 overflow-hidden ${
         isOpen
-          ? "border-neon-cyan/40 bg-[#0B0B0C]/95 backdrop-blur-2xl shadow-[0_0_30px_rgba(0,240,255,0.1)]"
-          : "border-white/10 bg-[#0B0B0C]/60 backdrop-blur-xl hover:border-white/20 hover:bg-[#0B0B0C]/80"
+          ? "border-neon-cyan/50 bg-[#050507] shadow-[0_0_30px_rgba(0,240,255,0.15)]"
+          : "border-white/10 bg-[#0B0B0C]/90 backdrop-blur-xl hover:border-white/20 hover:bg-[#0B0B0C]/95"
       }`}
     >
       <button
         onClick={onClick}
-        className="w-full flex items-center justify-between p-5 text-left focus:outline-none"
+        className="w-full flex items-center justify-between p-5 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-neon-cyan focus-visible:ring-offset-2 focus-visible:ring-offset-black rounded-xl"
       >
-        <span className={`font-medium transition-colors duration-300 ${isOpen ? "text-neon-cyan" : "text-white group-hover:text-white/90"}`}>
+        <span className={`font-semibold transition-colors duration-300 ${isOpen ? "text-neon-cyan" : "text-white group-hover:text-white/90"}`}>
           {question}
         </span>
         <motion.div
@@ -46,7 +46,7 @@ const FAQItem = ({ question, answer, isOpen, onClick }: FAQItemProps) => {
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
           >
-            <div className="px-5 pb-5 pt-0 text-text-muted text-sm font-light leading-relaxed">
+            <div className="px-5 pb-5 pt-0 text-zinc-300 text-sm font-medium leading-relaxed">
               {answer}
             </div>
           </motion.div>

@@ -7,7 +7,7 @@ export default function AboutSection() {
   return (
     <section
       id="about"
-      className="relative w-full min-h-[600px] md:min-h-[750px] lg:min-h-[850px] bg-transparent overflow-hidden flex flex-col justify-end px-6 py-12 md:py-20 lg:px-16"
+      className="relative w-full min-h-[600px] md:min-h-[750px] lg:min-h-[850px] bg-transparent overflow-hidden flex flex-col justify-end px-6 py-12 md:py-20 lg:px-16 scroll-mt-24 mb-28 md:mb-36"
     >
       {/* 1. Stretched Background Text "SHUVO" */}
       <div className="absolute inset-0 w-full h-full flex items-center justify-center select-none pointer-events-none z-0">

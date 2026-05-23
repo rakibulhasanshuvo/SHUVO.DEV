@@ -9,6 +9,11 @@
   --neon-cyan: #00F0FF;
   --electric-purple: #A100FF;
   --text-muted: #86868B;
+
+  --darkpan-red: #EB1616;
+  --darkpan-bg: #191C24;
+  --darkpan-black: #000000;
+  --darkpan-slate: #6C7293;
 }
 
 @theme {
@@ -20,6 +25,11 @@
   --color-neon-cyan: var(--neon-cyan);
   --color-electric-purple: var(--electric-purple);
   --color-text-muted: var(--text-muted);
+
+  --color-darkpan-red: var(--darkpan-red);
+  --color-darkpan-bg: var(--darkpan-bg);
+  --color-darkpan-black: var(--darkpan-black);
+  --color-darkpan-slate: var(--darkpan-slate);
   
   /* Fonts */
   --font-cabinet: 'Cabinet Grotesk', system-ui, sans-serif;
@@ -47,6 +57,19 @@ body {
 
 .glow-purple {
   box-shadow: 0 0 30px -5px rgba(161, 0, 255, 0.3);
+}
+
+.glow-red {
+  box-shadow: 0 0 30px -5px rgba(235, 22, 22, 0.3);
+}
+
+.glow-red-sm {
+  box-shadow: 0 0 15px -2px rgba(235, 22, 22, 0.25);
+}
+
+.bg-darkpan-card {
+  background: var(--darkpan-bg);
+  border: 1px solid rgba(235, 22, 22, 0.1);
 }
 
 /* Moving Gradient Animation */

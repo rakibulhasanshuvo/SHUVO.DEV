@@ -33,7 +33,7 @@ export default function Navbar() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-[padding,background-color,border-color] duration-300 ${
         scrolled
           ? "py-3 bg-cyber-black/70 backdrop-blur-md border-b border-neon-cyan/20 shadow-[0_4px_30px_rgba(0,0,0,0.8),0_0_15px_rgba(0,240,255,0.05)]"
           : "py-5 bg-transparent border-b border-transparent"
@@ -42,7 +42,7 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="group flex items-center gap-1.5 text-white font-cabinet font-bold text-2xl tracking-wider select-none">
+          <Link href="/" className="group flex items-center gap-1.5 text-white font-cabinet font-bold text-2xl tracking-wider select-none focus-visible:ring-2 focus-visible:ring-neon-cyan focus-visible:ring-offset-2 focus-visible:ring-offset-black focus:outline-none rounded-lg">
             <span>SHUVO</span>
             <span className="w-2.5 h-2.5 rounded-full bg-neon-cyan shadow-[0_0_10px_#00F0FF] group-hover:scale-125 transition-transform duration-300" />
           </Link>
@@ -57,7 +57,7 @@ export default function Navbar() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`relative px-5 py-2 text-sm font-semibold tracking-wide transition-colors duration-300 rounded-full z-10 ${
+                  className={`relative px-5 py-2 text-sm font-semibold tracking-wide transition-colors duration-300 rounded-full z-10 focus-visible:ring-2 focus-visible:ring-neon-cyan focus-visible:ring-offset-2 focus-visible:ring-offset-black focus:outline-none ${
                     isActive ? "text-white" : "text-text-muted hover:text-white"
                   }`}
                 >
@@ -78,7 +78,7 @@ export default function Navbar() {
           <div className="hidden md:flex items-center gap-4">
             <Link
               href="/contact"
-              className="px-6 py-2 rounded-full text-xs font-bold uppercase tracking-wider text-neon-cyan border border-neon-cyan/50 hover:border-neon-cyan bg-neon-cyan/5 hover:bg-neon-cyan/15 transition-all duration-300 shadow-[0_0_15px_rgba(0,240,255,0.05)] hover:shadow-[0_0_20px_rgba(0,240,255,0.2)]"
+              className="px-6 py-2 rounded-full text-xs font-bold uppercase tracking-wider text-neon-cyan border border-neon-cyan/50 hover:border-neon-cyan bg-neon-cyan/5 hover:bg-neon-cyan/15 transition-all duration-300 shadow-[0_0_15px_rgba(0,240,255,0.05)] hover:shadow-[0_0_20px_rgba(0,240,255,0.2)] focus-visible:ring-2 focus-visible:ring-neon-cyan focus-visible:ring-offset-2 focus-visible:ring-offset-black focus:outline-none"
             >
               Hire Me
             </Link>
@@ -87,7 +87,7 @@ export default function Navbar() {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="md:hidden flex flex-col justify-center items-center gap-1.5 w-8 h-8 rounded-lg border border-white/10 bg-white/5 cursor-pointer focus:outline-none"
+            className="md:hidden flex flex-col justify-center items-center gap-1.5 w-8 h-8 rounded-lg border border-white/10 bg-white/5 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-neon-cyan focus-visible:ring-offset-2 focus-visible:ring-offset-black"
             aria-label="Toggle Menu"
           >
             <span
@@ -127,7 +127,7 @@ export default function Navbar() {
                   <Link
                     key={link.href}
                     href={link.href}
-                    className={`text-lg font-bold tracking-wide transition-colors ${
+                    className={`text-lg font-bold tracking-wide transition-colors focus-visible:ring-2 focus-visible:ring-neon-cyan focus-visible:ring-offset-2 focus-visible:ring-offset-black focus:outline-none rounded-lg px-2 py-1 ${
                       isActive ? "text-neon-cyan" : "text-white/70 hover:text-white"
                     }`}
                   >
@@ -137,7 +137,7 @@ export default function Navbar() {
               })}
               <Link
                 href="/contact"
-                className="mt-4 text-center px-6 py-3 rounded-full text-sm font-bold uppercase tracking-wider text-neon-cyan border border-neon-cyan bg-neon-cyan/5 w-full"
+                className="mt-4 text-center px-6 py-3 rounded-full text-sm font-bold uppercase tracking-wider text-neon-cyan border border-neon-cyan bg-neon-cyan/5 w-full focus-visible:ring-2 focus-visible:ring-neon-cyan focus-visible:ring-offset-2 focus-visible:ring-offset-black focus:outline-none"
               >
                 Hire Me
               </Link>

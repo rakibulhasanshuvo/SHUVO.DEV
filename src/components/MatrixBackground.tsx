@@ -68,8 +68,12 @@ const MatrixBackground = () => {
         ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        // Classic Matrix green/teal
-        ctx.fillStyle = "#00FF41";
+        // Create Cyber-Luxury gradient (Neon Cyan at top, Electric Purple at bottom)
+        const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+        gradient.addColorStop(0, "#00F0FF"); // Neon Cyan top
+        gradient.addColorStop(1, "#A100FF"); // Electric Purple bottom
+
+        ctx.fillStyle = gradient;
         ctx.font = `${fontSize}px monospace`;
 
         for (let i = 0; i < drops.length; i++) {

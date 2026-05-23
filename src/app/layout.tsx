@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Navbar from "@/components/Navbar";
+import RootLayoutClient from "@/components/RootLayoutClient";
 
 import type { Viewport } from "next";
 
@@ -18,7 +18,6 @@ export const viewport: Viewport = {
   maximumScale: 1,
 };
 
-import SmoothScrolling from "@/components/SmoothScrolling";
 
 export default function RootLayout({
   children,
@@ -74,12 +73,7 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-full flex flex-col bg-cyber-black text-white font-satoshi selection:bg-neon-cyan/30 selection:text-white overflow-x-hidden">
-        <Navbar />
-        <SmoothScrolling>
-        <div className="pt-24 flex-1 flex flex-col relative">
-          {children}
-        </div>
-        </SmoothScrolling>
+        <RootLayoutClient>{children}</RootLayoutClient>
       </body>
     </html>
   );

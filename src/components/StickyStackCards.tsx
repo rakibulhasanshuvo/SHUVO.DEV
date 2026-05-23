@@ -198,7 +198,7 @@ export default function StickyStackCards() {
           {!mounted ? (
             /* SSR Skeleton Placeholder matching the desktop stack bounds and position */
             <div className="relative w-full max-w-4xl h-[460px] md:h-[500px] bg-slate-950/20 rounded-[2.5rem] border border-white/5 flex items-center justify-center">
-              <span className="text-zinc-600 font-mono text-xs animate-pulse">Initializing 3D Deck Canvas...</span>
+              <span className="text-zinc-600 font-mono text-xs animate-pulse">Initializing 3D Deck Canvas…</span>
             </div>
           ) : (
             PROJECTS.map((project, index) => (
