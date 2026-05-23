@@ -2,12 +2,20 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 
+import type { Viewport } from "next";
+
 export const metadata: Metadata = {
   metadataBase: new URL("https://rakibulhasanshuvo.com"),
   title: "Rakibul Hasan Shuvo | Cyber-Luxury Full-Stack Web Developer & Designer",
   description: "Portfolio of Muhammad Rakibul Hasan Shuvo, a Full-Stack Web Developer & Graphic Designer engineering high-performance, visually stunning Next.js and Supabase experiences.",
   keywords: ["Rakibul Hasan Shuvo", "Full-Stack Developer", "Next.js", "Tailwind CSS v4", "Supabase", "Cyber-Luxury Design", "React Developer", "Bangladesh Developer"],
   authors: [{ name: "Muhammad Rakibul Hasan Shuvo" }],
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
 };
 
 import SmoothScrolling from "@/components/SmoothScrolling";
