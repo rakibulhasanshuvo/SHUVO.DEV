@@ -4,7 +4,8 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import Link from "next/link";
 
-import { ReactNode } from "react";
+import { ReactNode, useState, useEffect } from "react";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
 import dynamic from 'next/dynamic';
 
 const MatrixBackground = dynamic(() => import('@/components/MatrixBackground'), { ssr: false, loading: () => <div className="hidden">Loading…</div> });
@@ -173,6 +174,13 @@ const features = [
 
 
 export default function Home() {
+  const [mounted, setMounted] = useState(false);
+  const isDesktop = useMediaQuery('(min-width: 1024px)');
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
 
   return (
     <div className="relative min-h-screen bg-transparent text-white font-satoshi">
@@ -298,9 +306,30 @@ export default function Home() {
 
 
           {/* Column 2: 3D Carousel */}
-          <div className="hidden lg:flex justify-center items-center relative z-10">
-            <ThreeDCarousel />
-          </div>
+          {mounted && isDesktop ? (
+            <div className="flex justify-center items-center relative z-10 w-full min-h-[400px]">
+              <ThreeDCarousel />
+            </div>
+          ) : mounted ? (
+            <div className="flex justify-center items-center relative z-10 w-full min-h-[400px]">
+              <motion.div
+                animate={{ scale: [1, 1.05, 1], opacity: [0.8, 1, 0.8] }}
+                transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+                className="w-full max-w-sm mx-auto relative aspect-square"
+              >
+                <Image
+                  src="/3d-fallback.webp"
+                  alt="3D Cyber Structure"
+                  fill
+                  className="object-contain drop-shadow-[0_0_15px_rgba(0,255,255,0.5)]"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  priority
+                />
+              </motion.div>
+            </div>
+          ) : (
+            <div className="flex justify-center items-center relative z-10 w-full min-h-[400px]"></div>
+          )}
         </section>
         </div>{/* END hero wrapper */}
 
