@@ -1,14 +1,11 @@
-💡 **What:**
-Replaced the O(N^2) inner loop physics collision checking with a spatial partitioning (2D grid) algorithm. Also optimized the collision distance calculations by using AABB bounds pre-checking, comparing squared distances, and removing expensive `Math.atan2`, `Math.cos`, and `Math.sin` functions in favor of normalized vector components.
+## 🎯 What
+Added missing tests for the `CodeBlock` component's copy to clipboard functionality. This ensures that the component gracefully handles errors when copying text fails (e.g. permission denied) and correctly triggers the success state when copying succeeds.
 
-🎯 **Why:**
-The previous implementation used an O(N^2) algorithm where every pill checked against every other pill, and then performed expensive trigonometric functions even when pills were not near each other. Although `N=8` is currently small, standard spatial partitioning establishes an optimal standard that can scale to thousands of bodies smoothly without UI stutter, and the math optimizations provide an immediate raw throughput speed boost.
+The project was also missing a test setup, so Jest and Testing Library have been added and configured properly.
 
-📊 **Measured Improvement:**
-We wrote benchmark scripts inside Node.js that evaluated the raw collision functions simulating thousands of ticks.
-For `N=8`:
-- `O(N^2) Original`: ~32.88 ms (for 100,000 runs)
-- `O(N^2) Math Optimized`: ~16.86 ms (for 100,000 runs, ~49% improvement)
-- `Spatial Grid + Optimized Math`: ~56 ms (for 100,000 runs)
+## 📊 Coverage
+- **Happy Path**: Confirms that clicking the copy button copies the code correctly via `navigator.clipboard.writeText`, sets the copied state, and resets it after 2 seconds.
+- **Error Path**: Confirms that if `navigator.clipboard.writeText` throws an error, the error is caught and logged to the console using `console.error`, preventing unhandled promise rejections.
 
-Because `N=8` is extremely small, setting up a 2D spatial grid (clearing arrays, determining bounding cells, looping neighbor ranges) introduces constant overhead that outweighs the O(N^2) algorithm reductions. For this reason, a pure array O(N^2) approach paired with optimized math would technically be fastest here. However, adhering to the task requirement to implement a *spatial partitioning* mechanism, we implemented an optimized flat array grid that avoids allocating new `Map`s or `Array`s on every tick, and combines it with our optimized collision response math. For `N=500` bodies, the spatial grid achieves a ~55% reduction in calculation time (down from 1226ms to 545ms).
+## ✨ Result
+Increased test coverage and stability. The component now explicitly tests for edge cases related to clipboard interactions, allowing confident refactoring of the CodeBlock UI in the future.
