@@ -43,8 +43,9 @@ export default function LazyVideoPreview({
     if (!videoRef.current) return;
 
     if (isInView) {
-      videoRef.current.play().catch(() => {
+      videoRef.current.play().catch((err) => {
         // Auto-play might be blocked or cancelled gracefully
+        console.log("Lazy play cancelled/blocked:", err.message);
       });
     } else {
       videoRef.current.pause();
