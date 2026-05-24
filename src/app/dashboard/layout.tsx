@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
@@ -90,7 +91,7 @@ export default function DashboardLayout({
         {/* User Profile Summary */}
         <div className={`p-6 border-b border-darkpan-red/10 flex items-center ${sidebarOpen ? "gap-4" : "justify-center"}`}>
           <div className="relative flex-shrink-0">
-            <img
+            <Image
               src="/portrait.png"
               alt="Admin Avatar"
               width={40}
@@ -196,7 +197,7 @@ export default function DashboardLayout({
               {/* Profile Mobile */}
               <div className="p-6 border-b border-darkpan-red/10 flex items-center gap-4">
                 <div className="relative">
-                  <img
+                  <Image
                     src="/portrait.png"
                     alt="Admin Avatar"
                     width={40}
@@ -316,7 +317,7 @@ export default function DashboardLayout({
                       </div>
                       <div className="divide-y divide-white/5">
                         <div className="p-4 hover:bg-white/5 transition-colors cursor-pointer flex gap-3">
-                          <img
+                          <Image
                             src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=40&h=40&q=80"
                             alt="Jhon"
                             width={32}
@@ -330,7 +331,7 @@ export default function DashboardLayout({
                           </div>
                         </div>
                         <div className="p-4 hover:bg-white/5 transition-colors cursor-pointer flex gap-3">
-                          <img
+                          <Image
                             src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=40&h=40&q=80"
                             alt="Alex"
                             width={32}
@@ -416,7 +417,7 @@ export default function DashboardLayout({
                 className="flex items-center gap-2 hover:bg-white/5 px-3 py-1.5 rounded-full border border-transparent hover:border-white/5 cursor-pointer text-white transition-[color,background-color,border-color] duration-300 focus-visible:ring-2 focus-visible:ring-darkpan-red focus-visible:ring-offset-2 focus-visible:ring-offset-black focus:outline-none"
                 aria-label="Admin Profile Menu"
               >
-                <img
+                <Image
                   src="/portrait.png"
                   alt="Admin Portrait"
                   width={32}
