@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 
 import React, { useState, useMemo, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -89,11 +90,12 @@ const VideoHoverCard = ({ videoUrl, posterUrl, title }: { videoUrl: string; post
       className="relative aspect-[16/10] w-full overflow-hidden rounded-t-3xl border-none select-none bg-[#09090b]"
     >
       {/* Static cover image */}
-      <img
+      <Image
         src={posterUrl}
         alt={title}
-        loading="lazy"
-        className={`absolute inset-0 w-full h-full object-cover transition-all duration-500 ease-in-out ${
+        fill
+        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+        className={`absolute inset-0 object-cover transition-all duration-500 ease-in-out ${
           isHovered ? "opacity-0" : "opacity-80"
         }`}
       />
