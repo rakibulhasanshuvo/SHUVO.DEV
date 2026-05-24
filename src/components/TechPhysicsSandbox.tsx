@@ -269,7 +269,27 @@ export default function TechPhysicsSandbox() {
       animationId = requestAnimationFrame(tick);
     };
 
-    tick();
+    let isIntersecting = true;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isIntersecting = entry.isIntersecting;
+        if (isIntersecting && !animationId) {
+          tick();
+        } else if (!isIntersecting && animationId) {
+          cancelAnimationFrame(animationId);
+          animationId = 0;
+        }
+      },
+      { threshold: 0 }
+    );
+
+    if (canvasRef.current) {
+      observer.observe(canvasRef.current);
+    }
+
+    if (isIntersecting) {
+      tick();
+    }
 
     // Event Listeners for Clicking/Dragging
     let cachedRect: DOMRect | null = null;
@@ -324,6 +344,7 @@ export default function TechPhysicsSandbox() {
     window.addEventListener("touchend", handleEnd);
 
     return () => {
+      observer.disconnect();
       cancelAnimationFrame(animationId);
       canvas.removeEventListener("mousedown", handleStart);
       canvas.removeEventListener("mousemove", handleMove);

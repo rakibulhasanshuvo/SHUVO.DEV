@@ -672,6 +672,8 @@ export default function Home() {
               muted
               loop
               playsInline
+              poster="/portrait.png"
+              preload="none"
               className="h-full w-full object-cover opacity-60 sm:rounded-ss-[30px] md:rounded-ss-[60px]"
             >
               <source src="/videos/abstract-data-flows.webm" type="video/webm" />
