@@ -17,15 +17,15 @@ import { Marquee } from "@/components/magicui/Marquee";
 import Loader from "@/components/Loader";
 
 
-import PricingCards from "@/components/PricingCards";
-import CyberButton from "@/components/CyberButton";
-import AngledGallery from "@/components/AngledGallery";
-import FeaturedWork from "@/components/featured-work/FeaturedWork";
-import StickyStackCards from "@/components/StickyStackCards";
-import AboutSection from "@/components/AboutSection";
+const PricingCards = dynamic(() => import("@/components/PricingCards"));
+const CyberButton = dynamic(() => import("@/components/CyberButton"));
+const AngledGallery = dynamic(() => import("@/components/AngledGallery"));
+const FeaturedWork = dynamic(() => import("@/components/featured-work/FeaturedWork"));
+const StickyStackCards = dynamic(() => import("@/components/StickyStackCards"));
+const AboutSection = dynamic(() => import("@/components/AboutSection"));
 import AutotypingText from "@/components/ui/AutotypingText";
-import FaqAccordion from "@/components/FaqAccordion";
-import ClientReviews from "@/components/ClientReviews";
+const FaqAccordion = dynamic(() => import("@/components/FaqAccordion"));
+const ClientReviews = dynamic(() => import("@/components/ClientReviews"));
 import { useIsMobile } from "@/hooks/use-mobile";
 
 
@@ -552,7 +552,7 @@ export default function Home() {
             <a href="#" aria-label="Read Article" className="block rounded-2xl glass p-6 border border-white/10 bg-gradient-to-br from-white/5 to-transparent shadow-xl hover:border-neon-cyan transition-colors group">
               <div className="sm:flex sm:justify-between sm:gap-4 lg:gap-6">
                 <div className="sm:order-last sm:shrink-0">
-                  <Image width={64} height={64} alt="Blog" src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?auto=format&fit=crop&q=80&w=1160" className="size-16 rounded-full object-cover sm:size-18" />
+                  <Image width={64} height={64} alt="Blog" src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?auto=format&fit=crop&q=80&w=128" className="size-16 rounded-full object-cover sm:size-18" />
                 </div>
 
                 <div className="mt-4 sm:mt-0">
@@ -589,7 +589,7 @@ export default function Home() {
             <a href="#" aria-label="Read Article" className="block rounded-2xl glass p-6 border border-white/10 bg-gradient-to-br from-white/5 to-transparent shadow-xl hover:border-electric-purple transition-colors group">
               <div className="sm:flex sm:justify-between sm:gap-4 lg:gap-6">
                 <div className="sm:order-last sm:shrink-0">
-                  <Image width={64} height={64} alt="Blog" src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=1160" className="size-16 rounded-full object-cover sm:size-18" />
+                  <Image width={64} height={64} alt="Blog" src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=128" className="size-16 rounded-full object-cover sm:size-18" />
                 </div>
 
                 <div className="mt-4 sm:mt-0">
