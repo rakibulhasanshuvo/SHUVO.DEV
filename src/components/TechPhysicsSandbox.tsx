@@ -30,6 +30,7 @@ export default function TechPhysicsSandbox() {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [reducedMotion, setReducedMotion] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const [dimensions, setDimensions] = useState({ width: 0, height: 400 });
 
   // Check prefers-reduced-motion
@@ -39,6 +40,14 @@ export default function TechPhysicsSandbox() {
     const listener = (e: MediaQueryListEvent) => setReducedMotion(e.matches);
     mediaQuery.addEventListener("change", listener);
     return () => mediaQuery.removeEventListener("change", listener);
+  }, []);
+
+  // Check if mobile viewport
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 1024);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
   // Handle Resize
@@ -57,9 +66,11 @@ export default function TechPhysicsSandbox() {
     return () => window.removeEventListener("resize", updateSize);
   }, []);
 
+  const showFallback = reducedMotion || isMobile;
+
   // Main Canvas Physics Loop
   useEffect(() => {
-    if (reducedMotion || dimensions.width === 0 || !canvasRef.current) return;
+    if (showFallback || dimensions.width === 0 || !canvasRef.current) return;
 
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
@@ -321,9 +332,9 @@ export default function TechPhysicsSandbox() {
       canvas.removeEventListener("touchmove", handleMove);
       window.removeEventListener("touchend", handleEnd);
     };
-  }, [reducedMotion, dimensions]);
+  }, [showFallback, dimensions]);
 
-  if (reducedMotion) {
+  if (showFallback) {
     // Accessible fallback: static grid list
     return (
       <div className="w-full glass rounded-3xl border border-white/5 p-8 bg-[#0A0A0C]/50 backdrop-blur-md">

@@ -51,20 +51,34 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <head>
-        {/* Preload Fontshare stylesheet for Satoshi and Cabinet Grotesk with display=swap to avoid FOUT */}
+        {/* Preload Fontshare stylesheet for Satoshi, Cabinet Grotesk, and Clash Display with display=swap */}
         <link
           rel="preconnect"
           href="https://api.fontshare.com"
           crossOrigin="anonymous"
         />
         <link
-          href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&f[]=cabinet-grotesk@800&display=swap"
+          href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&f[]=cabinet-grotesk@300,400,500,700,800&f[]=clash-display@200,300,400,500,600,700&display=swap"
           rel="preload"
           as="style"
         />
         <link 
-          href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&f[]=cabinet-grotesk@800&display=swap" 
+          href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&f[]=cabinet-grotesk@300,400,500,700,800&f[]=clash-display@200,300,400,500,600,700&display=swap" 
           rel="stylesheet" 
+        />
+        {/* Preconnect and load JetBrains Mono from Google Fonts for developer typography */}
+        <link
+          rel="preconnect"
+          href="https://fonts.googleapis.com"
+        />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
+        <link
+          href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700;800&display=swap"
+          rel="stylesheet"
         />
         {/* JSON-LD Schema markup */}
         <script

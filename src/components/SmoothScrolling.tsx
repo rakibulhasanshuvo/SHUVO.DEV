@@ -9,7 +9,7 @@ export default function SmoothScrolling({ children }: { children: ReactNode }) {
       lerp: 0.07,
       duration: 1.2,
       smoothWheel: true,
-      syncTouch: true,
+      syncTouch: false,
       wheelMultiplier: 1.2
     }}>
       {children}

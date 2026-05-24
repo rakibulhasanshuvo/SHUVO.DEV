@@ -1,16 +1,25 @@
 "use client";
 
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 
 export default function InteractiveGridBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [isMobile, setIsMobile] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    const checkSize = () => setIsMobile(window.innerWidth < 1024);
+    checkSize();
+    window.addEventListener("resize", checkSize);
+    return () => window.removeEventListener("resize", checkSize);
+  }, []);
 
   // Scroll-driven opacity: 100% at top → 5% at 100vh
   const { scrollY } = useScroll();
   const opacity = useTransform(scrollY, [0, typeof window !== "undefined" ? window.innerHeight : 900], [1, 0.05], { clamp: true });
 
   useEffect(() => {
+    if (isMobile) return;
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
@@ -321,7 +330,9 @@ export default function InteractiveGridBackground() {
       window.removeEventListener("mouseleave", handleMouseLeave);
       cancelAnimationFrame(animationFrameId);
     };
-  }, []);
+  }, [isMobile]);
+
+  if (isMobile) return null;
 
   return (
     <motion.canvas

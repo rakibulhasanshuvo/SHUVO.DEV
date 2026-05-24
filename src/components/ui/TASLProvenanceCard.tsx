@@ -24,8 +24,8 @@ export default function TASLProvenanceCard({
 }: TASLProps) {
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.98 }}
-      animate={{ opacity: 1, scale: 1 }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
       className="relative w-full rounded-2xl border border-neon-cyan/20 bg-gradient-to-br from-[#0B0B0E]/90 to-[#040405]/95 backdrop-blur-xl p-6 shadow-[0_20px_50px_rgba(0,0,0,0.6),0_0_30px_rgba(0,240,255,0.02)] overflow-hidden"
     >
       {/* Dynamic Background Grid Pattern */}

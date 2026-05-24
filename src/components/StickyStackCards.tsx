@@ -115,11 +115,10 @@ export default function StickyStackCards() {
             <div
               key={project.id}
               style={{
-                position: "sticky",
-                top: `${80 + index * 16}px`,
+                position: "relative",
                 zIndex: index * 10,
               }}
-              className={`w-full rounded-[2rem] p-6 border ${project.borderColor} bg-gradient-to-b ${project.gradient} backdrop-blur-xl flex flex-col justify-between text-white shadow-xl h-[420px]`}
+              className={`w-full rounded-[2rem] p-6 border ${project.borderColor} bg-gradient-to-b ${project.gradient} max-md:bg-[#070709] max-md:bg-opacity-95 backdrop-blur-xl max-md:backdrop-blur-none flex flex-col justify-between text-white shadow-xl h-[420px]`}
             >
               <div className="flex justify-between items-start">
                 <span className="text-[11px] font-mono text-neon-cyan uppercase tracking-widest bg-cyan-950/40 border border-cyan-500/20 px-2.5 py-1 rounded-full">

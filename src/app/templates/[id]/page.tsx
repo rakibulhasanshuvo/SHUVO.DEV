@@ -1,7 +1,10 @@
+"use client";
+
+import React, { useState, useEffect, use } from "react";
 import Image from "next/image";
-import React from "react";
-import { notFound } from "next/navigation";
 import Link from "next/link";
+import { notFound } from "next/navigation";
+import { motion, AnimatePresence } from "framer-motion";
 import TASLProvenanceCard from "@/components/ui/TASLProvenanceCard";
 
 interface PageProps {
@@ -68,46 +71,73 @@ const templatesDetailsData: Record<string, TemplateDetails> = {
   },
 };
 
-export async function generateStaticParams() {
-  return Object.keys(templatesDetailsData).map((id) => ({
-    id: id,
-  }));
-}
+const templatesStyleConfig = {
+  zenith: {
+    spotlightColor: "rgba(0,240,255,0.15)",
+    glowColor: "rgba(0, 240, 255, 0.2)",
+    borderColor: "border-[#00F0FF]/15 hover:border-[#00F0FF]/40",
+    textColor: "text-[#00F0FF]",
+  },
+  nova: {
+    spotlightColor: "rgba(161,0,255,0.15)",
+    glowColor: "rgba(161, 0, 255, 0.2)",
+    borderColor: "border-[#A100FF]/15 hover:border-[#A100FF]/40",
+    textColor: "text-[#A100FF]",
+  },
+  ethereal: {
+    spotlightColor: "rgba(16,185,129,0.15)",
+    glowColor: "rgba(16, 185, 129, 0.2)",
+    borderColor: "border-emerald-500/15 hover:border-emerald-500/40",
+    textColor: "text-emerald-400",
+  },
+};
 
-export default async function TemplateDetailsPage({ params }: PageProps) {
-  const { id } = await params;
+export default function TemplateDetailsPage({ params }: PageProps) {
+  const resolvedParams = use(params);
+  const id = resolvedParams.id;
   const template = templatesDetailsData[id];
 
   if (!template) {
     notFound();
   }
 
-  // Combined Product and SoftwareApplication JSON-LD Schema
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Product",
-        "@id": `https://rakibulhasanshuvo.com/templates/${template.id}#product`,
-        "name": template.title,
-        "description": template.description,
-        "image": template.posterUrl,
-        "offers": {
-          "@type": "Offer",
-          "price": template.price.replace("$", ""),
-          "priceCurrency": "USD",
-          "availability": "https://schema.org/InStock",
-        },
-      },
-      {
-        "@type": "SoftwareApplication",
-        "@id": `https://rakibulhasanshuvo.com/templates/${template.id}#software`,
-        "name": template.title,
-        "applicationCategory": "DeveloperApplication",
-        "operatingSystem": "All",
-        "description": template.description,
-      },
-    ],
+  const style = templatesStyleConfig[template.id as keyof typeof templatesStyleConfig];
+
+  // Viewport states
+  const [viewport, setViewport] = useState<"desktop" | "tablet" | "mobile">("desktop");
+  
+  // CLI Sandbox Terminal states
+  const [sandboxStatus, setSandboxStatus] = useState<"idle" | "booting" | "ready">("idle");
+  const [cliLogs, setCliLogs] = useState<string[]>([]);
+
+  // Trigger CLI Sandbox boot sequence
+  const startSandbox = () => {
+    if (sandboxStatus !== "idle") return;
+    setSandboxStatus("booting");
+    setCliLogs([]);
+
+    const logSequence = [
+      "[SYS] CONNECTING TO SERVERLESS CONTAINER CLUSTER...",
+      `[SYS] ALLOCATED STANDBY IMAGE INSTANCE: prewarm-node-${template.id}`,
+      `[SYS] MOUNTING DIRECTORY STRUCTURES... OK`,
+      "[SYS] COMPILING REACT COMPILER & ESM BLUEPRINTS...",
+      `[SYS] COMPILING Next.js BUILD (esbuild-wasm in 32ms) ... SUCCESS`,
+      "[SYS] PORT FORWARDING SECURE ENCRYPTED UNIX SOCKET...",
+      `[SYS] MAPPING TUNNEL BRIDGE TO PORT: 3000... ACTIVE`,
+      "[SYS] INTEGRITY CHECKS: 100/100 CORE WEB VITALS",
+      "[SYS] SANDBOX ENVIRONMENT SPIN-UP COMPLETE!"
+    ];
+
+    logSequence.forEach((log, idx) => {
+      setTimeout(() => {
+        setCliLogs((prev) => [...prev, log]);
+        if (idx === logSequence.length - 1) {
+          setTimeout(() => {
+            setSandboxStatus("ready");
+          }, 600);
+        }
+      }, (idx + 1) * 350);
+    });
   };
 
   return (
@@ -116,18 +146,12 @@ export default async function TemplateDetailsPage({ params }: PageProps) {
       <div className="absolute top-0 left-1/4 w-[400px] h-[400px] bg-neon-cyan/5 rounded-full blur-[150px] pointer-events-none" />
       <div className="absolute bottom-12 right-1/4 w-[500px] h-[500px] bg-electric-purple/5 rounded-full blur-[180px] pointer-events-none" />
 
-      {/* Structured schemas */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
-
-      <div className="max-w-7xl mx-auto relative z-10">
+      <div className="max-w-7xl mx-auto relative z-10 space-y-12">
         {/* Navigation Breadcrumb */}
-        <div className="mb-12">
+        <div>
           <Link
             href="/templates"
-            className="group inline-flex items-center gap-2 text-sm text-text-muted hover:text-white transition-colors font-medium font-mono"
+            className="group inline-flex items-center gap-2 text-[11px] text-zinc-500 hover:text-white transition-colors font-bold font-mono tracking-widest"
           >
             <span className="group-hover:-translate-x-1.5 transition-transform duration-300">←</span>
             <span>BACK TO SHELF</span>
@@ -135,11 +159,15 @@ export default async function TemplateDetailsPage({ params }: PageProps) {
         </div>
 
         {/* Layout splits */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
-          {/* Left Column: Interactive viewframe simulator */}
-          <div className="lg:col-span-2 space-y-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+          
+          {/* ==========================================
+              🖥️ LEFT COLUMN: RESPONSIVE VIEWPORT SANDBOX
+             ========================================== */}
+          <div className="lg:col-span-8 space-y-8">
             <div className="glass rounded-3xl border border-white/5 bg-[#08080A]/40 overflow-hidden shadow-2xl">
-              {/* Header Toggles */}
+              
+              {/* Header simulator bar */}
               <div className="px-6 py-4 border-b border-white/5 flex items-center justify-between bg-white/[0.01]">
                 <div className="flex items-center gap-2">
                   <span className="w-2.5 h-2.5 rounded-full bg-red-500/50" />
@@ -147,89 +175,161 @@ export default async function TemplateDetailsPage({ params }: PageProps) {
                   <span className="w-2.5 h-2.5 rounded-full bg-green-500/50" />
                 </div>
 
-                {/* Viewport Toggles (Simulated mock buttons) */}
-                <div className="flex gap-2 bg-white/5 p-1 rounded-lg border border-white/5">
-                  <button className="px-3 py-1 bg-white/10 rounded-md text-[11px] font-bold uppercase tracking-wider text-white border border-white/10">
-                    Desktop
-                  </button>
-                  <button className="px-3 py-1 rounded-md text-[11px] font-bold uppercase tracking-wider text-text-muted hover:text-white">
-                    Tablet
-                  </button>
-                  <button className="px-3 py-1 rounded-md text-[11px] font-bold uppercase tracking-wider text-text-muted hover:text-white">
-                    Mobile
-                  </button>
+                {/* Viewport size triggers */}
+                <div className="flex gap-1 bg-white/5 p-1 rounded-xl border border-white/5 relative">
+                  {(["desktop", "tablet", "mobile"] as const).map((mode) => (
+                    <button
+                      key={mode}
+                      onClick={() => setViewport(mode)}
+                      className={`relative px-4 py-1.5 rounded-lg text-[10px] font-mono font-bold uppercase tracking-[0.15em] transition-colors cursor-pointer z-10 ${
+                        viewport === mode ? "text-white" : "text-zinc-500 hover:text-white"
+                      }`}
+                    >
+                      {viewport === mode && (
+                        <motion.div
+                          layoutId="activeViewport"
+                          className="absolute inset-0 bg-white/10 rounded-lg -z-10"
+                          transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                        />
+                      )}
+                      {mode}
+                    </button>
+                  ))}
                 </div>
               </div>
 
               {/* Viewport Simulator Frame */}
-              <div className="relative bg-[#0F0F12] aspect-[16/10] flex items-center justify-center p-8 transition-all">
-                {/* Simulated frame content */}
-                <div className="w-full h-full rounded-2xl border border-white/10 bg-[#070709] overflow-hidden relative shadow-inner group">
-                  <Image
-                    src={template.posterUrl}
-                    alt={template.title}
-                    fill
-                    className="object-cover opacity-80 group-hover:scale-105 transition-transform duration-700"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent flex flex-col justify-end p-8">
-                    <span className="text-[11px] font-mono text-neon-cyan tracking-widest uppercase mb-2">LIVE SANDBOX READY</span>
-                    <h3 className="text-2xl font-bold font-cabinet text-white mb-2">{template.title}</h3>
-                    <p className="text-xs text-text-muted max-w-md font-light leading-relaxed">
-                      Click the live preview command to trigger full sandbox instances mapped on pre-warmed clusters.
-                    </p>
-                  </div>
+              <div className="relative bg-[#0b0b0d] p-8 flex items-center justify-center min-h-[380px] md:min-h-[440px]">
+                
+                {/* Simulated browser frame (Snaps instantly with zero animation) */}
+                <div
+                  className={`w-full h-[280px] sm:h-[350px] md:h-[400px] rounded-2xl border ${style?.borderColor} bg-[#070709] overflow-hidden relative shadow-inner`}
+                  style={{
+                    maxWidth: viewport === "desktop" ? "100%" : viewport === "tablet" ? "768px" : "375px"
+                  }}
+                >
+                  {/* State 1: Sandbox Terminal is booting */}
+                  {sandboxStatus === "booting" && (
+                    <div className="absolute inset-0 z-20 bg-black p-6 font-mono text-[9px] sm:text-xs text-neon-cyan leading-relaxed flex flex-col justify-end overflow-hidden select-none">
+                      <div className="space-y-1.5">
+                        {cliLogs.map((log, index) => (
+                          <div key={index}>
+                            {log}
+                          </div>
+                        ))}
+                        <span className="inline-block w-1.5 h-3 bg-neon-cyan animate-pulse ml-1" />
+                      </div>
+                    </div>
+                  )}
+
+                  {/* State 2: Sandbox is Ready / Loaded */}
+                  {sandboxStatus === "ready" && (
+                    <div className="absolute inset-0 z-20 bg-[#0A0A0C] flex flex-col items-center justify-center p-8 text-center space-y-4 font-satoshi">
+                      <span className="text-4xl">🚀</span>
+                      <h4 className="font-clash font-extrabold text-xl text-white uppercase tracking-wider">Live sandbox instance loaded</h4>
+                      <p className="text-[13px] text-zinc-400 max-w-sm font-normal leading-relaxed">
+                        Your serverless playground database is fully warm. You are now communicating directly with pre-allocated edge nodes.
+                      </p>
+                      <button
+                        onClick={() => setSandboxStatus("idle")}
+                        className="px-4 py-2 border border-white/10 hover:border-white/20 bg-white/5 rounded-xl text-[10px] font-mono uppercase tracking-widest hover:text-white transition-colors duration-300"
+                      >
+                        Reset Sandbox
+                      </button>
+                    </div>
+                  )}
+
+                  {/* State 3: Static Preview state (Default) */}
+                  {sandboxStatus === "idle" && (
+                    <div className="absolute inset-0 font-satoshi">
+                      <Image
+                        src={template.posterUrl}
+                        alt={template.title}
+                        fill
+                        className="object-cover opacity-80"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent flex flex-col justify-end p-8">
+                        <span className="text-[11px] font-mono text-neon-cyan tracking-[0.2em] uppercase mb-2 font-bold">LIVE SANDBOX READY</span>
+                        <h3 className="text-2xl md:text-3xl font-bold font-clash tracking-tight text-white mb-2 leading-none">{template.title}</h3>
+                        <p className="text-[13px] text-zinc-400 max-w-md font-normal leading-relaxed">
+                          Click the live preview command to trigger full sandbox instances mapped on pre-warmed clusters.
+                        </p>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
 
             {/* Template descriptions & spec */}
-            <div className="space-y-6">
-              <div>
-                <h2 className="text-2xl font-bold font-cabinet text-white tracking-tight">Overview</h2>
-                <p className="text-zinc-300 text-base font-light leading-relaxed mt-3">
+            <div className="space-y-12 font-satoshi">
+              <div className="space-y-3">
+                <h2 className="text-2xl md:text-3xl font-bold font-clash text-white tracking-tight">Overview</h2>
+                <p className="text-zinc-300 text-base sm:text-[17px] font-normal leading-relaxed">
                   {template.description}
                 </p>
               </div>
 
-              <div>
-                <h3 className="text-sm font-bold font-cabinet text-white uppercase tracking-wider mb-3">
+              {/* Reworked: Technical specs structured as premium HUD cards */}
+              <div className="space-y-4">
+                <h3 className="text-xs font-bold font-clash text-zinc-500 uppercase tracking-[0.2em] mb-4">
                   Key Technical Specifications
                 </h3>
-                <ul className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm text-text-muted font-light font-satoshi">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   {template.specs.map((spec, idx) => (
-                    <li key={idx} className="flex items-center gap-2">
-                      <span className="text-neon-cyan select-none">✓</span>
-                      <span>{spec}</span>
-                    </li>
+                    <div
+                      key={idx}
+                      className="p-5 rounded-2xl border border-white/5 bg-[#09090B]/50 flex items-start gap-3.5 shadow-md hover:border-white/10 transition-colors"
+                    >
+                      <span className="text-neon-cyan text-sm select-none mt-0.5 font-bold">✓</span>
+                      <div>
+                        <h4 className="text-[13px] font-bold text-white leading-tight font-clash uppercase tracking-wider mb-1">
+                          {spec.split(" Score")[0].split(" API")[0].split(" Locking")[0]}
+                        </h4>
+                        <p className="text-[11px] font-mono text-zinc-500 leading-relaxed font-semibold">
+                          {spec}
+                        </p>
+                      </div>
+                    </div>
                   ))}
-                </ul>
+                </div>
               </div>
             </div>
           </div>
 
-          {/* Right Column: Sticky Pricing & CC TASL block */}
-          <aside className="space-y-8 lg:sticky lg:top-24">
-            <div className="glass p-8 rounded-3xl border border-white/5 bg-[#0B0B0E]/60 backdrop-blur-xl shadow-xl space-y-6">
+          {/* ==========================================
+              🛒 RIGHT COLUMN: STICKY CHECKOUT & PROVENANCE
+             ========================================== */}
+          <aside className="lg:col-span-4 space-y-8 lg:sticky lg:top-24">
+            
+            {/* Elegant glassmorphic purchase stack */}
+            <div className="glass p-8 rounded-3xl border border-white/5 bg-[#0B0B0E]/60 backdrop-blur-xl shadow-xl space-y-6 font-satoshi">
               <div>
-                <span className="text-[11px] font-mono text-text-muted uppercase tracking-widest block mb-1">Single License Pricing</span>
-                <span className="text-4xl font-bold font-cabinet text-white tracking-tight">{template.price}</span>
+                <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-[0.2em] block mb-2 font-bold">Single License Pricing</span>
+                <span className="text-5xl sm:text-6xl font-bold font-clash text-white tracking-tight font-mono">{template.price}</span>
               </div>
 
-              <div className="space-y-3">
-                <button className="w-full py-4 bg-gradient-to-r from-neon-cyan/80 to-neon-cyan text-cyber-black text-sm font-extrabold uppercase tracking-widest rounded-2xl hover:scale-[1.02] transition-transform duration-300 cursor-pointer shadow-[0_0_20px_rgba(0,240,255,0.2)]">
-                  Add to Cart
+              <div className="space-y-3 pt-2">
+                <button
+                  onClick={startSandbox}
+                  className="w-full py-4 bg-white hover:bg-zinc-100 active:bg-zinc-200 text-cyber-black text-xs font-mono font-extrabold uppercase tracking-widest rounded-2xl transition-all cursor-pointer shadow-md"
+                >
+                  {sandboxStatus === "idle" ? "Pre-warm Sandbox" : sandboxStatus === "booting" ? "Booting..." : "Sandbox Online"}
                 </button>
-                <button className="w-full py-4 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 text-white text-sm font-bold uppercase tracking-widest rounded-2xl transition-all cursor-pointer">
+                <button
+                  onClick={startSandbox}
+                  className="w-full py-4 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 text-white text-xs font-mono font-bold uppercase tracking-widest rounded-2xl transition-all cursor-pointer"
+                >
                   Live Preview
                 </button>
               </div>
 
-              <div className="pt-6 border-t border-white/5 text-[11px] text-text-muted font-light leading-relaxed font-satoshi">
+              <div className="pt-6 border-t border-white/5 text-[11px] text-zinc-400 font-normal leading-relaxed">
                 Includes 6 months of active technical maintenance, secure file checkouts, and complete CC attribution templates files.
               </div>
             </div>
 
-            {/* CC attribution cert widget */}
+            {/* CC attribution provenance cert card */}
             <TASLProvenanceCard
               title={template.title}
               author="Muhammad Rakibul Hasan Shuvo"

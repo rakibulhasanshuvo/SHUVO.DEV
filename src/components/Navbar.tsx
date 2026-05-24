@@ -77,7 +77,7 @@ export default function Navbar() {
           {/* Action Call-to-Action button */}
           <div className="hidden md:flex items-center gap-4">
             <Link
-              href="/contact"
+              href="/hire"
               className="px-6 py-2 rounded-full text-xs font-bold uppercase tracking-wider text-neon-cyan border border-neon-cyan/50 hover:border-neon-cyan bg-neon-cyan/5 hover:bg-neon-cyan/15 transition-all duration-300 shadow-[0_0_15px_rgba(0,240,255,0.05)] hover:shadow-[0_0_20px_rgba(0,240,255,0.2)] focus-visible:ring-2 focus-visible:ring-neon-cyan focus-visible:ring-offset-2 focus-visible:ring-offset-black focus:outline-none"
             >
               Hire Me
@@ -136,7 +136,7 @@ export default function Navbar() {
                 );
               })}
               <Link
-                href="/contact"
+                href="/hire"
                 className="mt-4 text-center px-6 py-3 rounded-full text-sm font-bold uppercase tracking-wider text-neon-cyan border border-neon-cyan bg-neon-cyan/5 w-full focus-visible:ring-2 focus-visible:ring-neon-cyan focus-visible:ring-offset-2 focus-visible:ring-offset-black focus:outline-none"
               >
                 Hire Me

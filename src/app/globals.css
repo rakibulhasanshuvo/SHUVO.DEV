@@ -33,7 +33,9 @@
   
   /* Fonts */
   --font-cabinet: 'Cabinet Grotesk', system-ui, sans-serif;
-  --font-satoshi: 'Satoshi', system-ui, sans-serif;
+  --font-clash: 'Clash Display', 'Cabinet Grotesk', system-ui, sans-serif;
+  --font-satoshi: 'Satoshi', 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
   --font-jetbrains: 'JetBrains Mono', monospace;
 }
 
