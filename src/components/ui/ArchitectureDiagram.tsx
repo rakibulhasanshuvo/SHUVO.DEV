@@ -184,7 +184,7 @@ export default function ArchitectureDiagram() {
 
       {/* Explanatory Details Box */}
       <div className="w-full min-h-[90px] mt-6 px-4 py-4 rounded-2xl border border-white/5 bg-white/[0.01] transition-all duration-300">
-        {activeNode ? (
+        {activeNodeData ? (
           <motion.div
             initial={{ opacity: 0, y: 5 }}
             animate={{ opacity: 1, y: 0 }}
@@ -192,13 +192,13 @@ export default function ArchitectureDiagram() {
           >
             <h4
               className="text-sm font-bold tracking-wide flex items-center gap-2"
-              style={{ color: nodes.find((n) => n.id === activeNode)?.color }}
+              style={{ color: activeNodeData.color }}
             >
-              <span className="w-2 h-2 rounded-full" style={{ backgroundColor: nodes.find((n) => n.id === activeNode)?.color }} />
-              {nodes.find((n) => n.id === activeNode)?.label}
+              <span className="w-2 h-2 rounded-full" style={{ backgroundColor: activeNodeData.color }} />
+              {activeNodeData.label}
             </h4>
             <p className="text-xs text-text-muted leading-relaxed font-satoshi font-light">
-              {nodes.find((n) => n.id === activeNode)?.info}
+              {activeNodeData.info}
             </p>
           </motion.div>
         ) : (
