@@ -163,7 +163,7 @@ export default function ClientReviews() {
                   {reviews[2].initials}
                 </div>
                 <div>
-                  <h6 className="font-bold text-white text-sm font-cabinet">{reviews[2].name}</h6>
+                  <p className="font-bold text-white text-sm font-cabinet">{reviews[2].name}</p>
                   <p className="text-[10px] text-text-muted mt-0.5">{reviews[2].title}</p>
                 </div>
               </div>
@@ -192,7 +192,7 @@ export default function ClientReviews() {
                   {reviews[1].initials}
                 </div>
                 <div>
-                  <h6 className="font-bold text-white text-sm font-cabinet">{reviews[1].name}</h6>
+                  <p className="font-bold text-white text-sm font-cabinet">{reviews[1].name}</p>
                   <p className="text-[10px] text-text-muted mt-0.5">{reviews[1].title}</p>
                 </div>
               </div>
@@ -211,7 +211,7 @@ export default function ClientReviews() {
           <div className="absolute -top-20 -left-20 w-36 h-36 bg-electric-purple/5 blur-3xl rounded-full" />
           
           <div>
-            <h4 className="font-cabinet font-extrabold text-sm uppercase tracking-wider text-white mb-6">Metrics Breakdown</h4>
+            <h3 className="font-cabinet font-extrabold text-sm uppercase tracking-wider text-white mb-6">Metrics Breakdown</h3>
             <div className="space-y-5 relative z-10">
               <dl>
                 <dt className="text-xs font-semibold text-text-muted mb-1.5 uppercase tracking-wider">Quality of Work</dt>

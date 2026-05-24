@@ -458,13 +458,13 @@ export default function Home() {
               {/* Step 1 */}
               <div className="flex flex-col md:flex-row items-center justify-between relative">
                 <div className="md:w-1/2 pr-12 text-right hidden md:block">
-                  <div className="font-cabinet font-bold text-5xl text-neon-cyan/80">01</div>
+                  <div aria-hidden="true" className="font-cabinet font-bold text-5xl text-neon-cyan/30">01</div>
                 </div>
                 {/* Dot */}
                 <div className="absolute left-1/2 -translate-x-1/2 w-3 h-3 bg-neon-cyan rounded-full border-2 border-cyber-black hidden md:block" />
                 <div className="md:w-1/2 pl-12">
                   <div className="backdrop-blur-md bg-white/[0.03] border border-white/10 p-6 rounded-2xl shadow-xl">
-                    <div className="font-cabinet font-bold text-3xl text-neon-cyan/80 mb-2 md:hidden">01</div>
+                    <div aria-hidden="true" className="font-cabinet font-bold text-3xl text-neon-cyan/30 mb-2 md:hidden">01</div>
                     <h3 className="font-bold text-lg mb-2 text-white font-cabinet">Planning & Strategy</h3>
                     <p className="text-zinc-300 text-base font-light">Understanding goals, audience, and technical requirements before touching code.</p>
                   </div>
@@ -474,13 +474,13 @@ export default function Home() {
               {/* Step 2 */}
               <div className="flex flex-col md:flex-row-reverse items-center justify-between relative">
                 <div className="md:w-1/2 pl-12 text-left hidden md:block">
-                  <div className="font-cabinet font-bold text-5xl text-electric-purple/80">02</div>
+                  <div aria-hidden="true" className="font-cabinet font-bold text-5xl text-electric-purple/30">02</div>
                 </div>
                 {/* Dot */}
                 <div className="absolute left-1/2 -translate-x-1/2 w-3 h-3 bg-electric-purple rounded-full border-2 border-cyber-black hidden md:block" />
                 <div className="md:w-1/2 pr-12">
                   <div className="backdrop-blur-md bg-white/[0.03] border border-white/10 p-6 rounded-2xl shadow-xl">
-                    <div className="font-cabinet font-bold text-3xl text-electric-purple/80 mb-2 md:hidden">02</div>
+                    <div aria-hidden="true" className="font-cabinet font-bold text-3xl text-electric-purple/30 mb-2 md:hidden">02</div>
                     <h3 className="font-bold text-lg mb-2 text-white font-cabinet">Architecture</h3>
                     <p className="text-zinc-300 text-base font-light">Designing database schemas, API routes, and component structures for scale.</p>
                   </div>
@@ -490,13 +490,13 @@ export default function Home() {
               {/* Step 3 */}
               <div className="flex flex-col md:flex-row items-center justify-between relative">
                 <div className="md:w-1/2 pr-12 text-right hidden md:block">
-                  <div className="font-cabinet font-bold text-5xl text-neon-cyan/80">03</div>
+                  <div aria-hidden="true" className="font-cabinet font-bold text-5xl text-neon-cyan/30">03</div>
                 </div>
                 {/* Dot */}
                 <div className="absolute left-1/2 -translate-x-1/2 w-3 h-3 bg-neon-cyan rounded-full border-2 border-cyber-black hidden md:block" />
                 <div className="md:w-1/2 pl-12">
                   <div className="backdrop-blur-md bg-white/[0.03] border border-white/10 p-6 rounded-2xl shadow-xl">
-                    <div className="font-cabinet font-bold text-3xl text-neon-cyan/80 mb-2 md:hidden">03</div>
+                    <div aria-hidden="true" className="font-cabinet font-bold text-3xl text-neon-cyan/30 mb-2 md:hidden">03</div>
                     <h3 className="font-bold text-lg mb-2 text-white font-cabinet">Development</h3>
                     <p className="text-zinc-300 text-base font-light mb-4">Writing clean, type-safe code with Next.js and Tailwind CSS.</p>
                     <div className="flex justify-center">
