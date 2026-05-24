@@ -23,9 +23,9 @@ export default function RootLayoutClient({
     <>
       <Navbar />
       <SmoothScrolling>
-        <div className="pt-24 flex-1 flex flex-col relative">
+        <main className="pt-24 flex-1 flex flex-col relative">
           {children}
-        </div>
+        </main>
       </SmoothScrolling>
     </>
   );

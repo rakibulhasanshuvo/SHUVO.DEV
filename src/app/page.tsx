@@ -458,13 +458,13 @@ export default function Home() {
               {/* Step 1 */}
               <div className="flex flex-col md:flex-row items-center justify-between relative">
                 <div className="md:w-1/2 pr-12 text-right hidden md:block">
-                  <div className="font-cabinet font-bold text-5xl text-neon-cyan/30">01</div>
+                  <div aria-hidden="true" className="font-cabinet font-bold text-5xl text-neon-cyan/30">01</div>
                 </div>
                 {/* Dot */}
                 <div className="absolute left-1/2 -translate-x-1/2 w-3 h-3 bg-neon-cyan rounded-full border-2 border-cyber-black hidden md:block" />
                 <div className="md:w-1/2 pl-12">
                   <div className="backdrop-blur-md bg-white/[0.03] border border-white/10 p-6 rounded-2xl shadow-xl">
-                    <div className="font-cabinet font-bold text-3xl text-neon-cyan/30 mb-2 md:hidden">01</div>
+                    <div aria-hidden="true" className="font-cabinet font-bold text-3xl text-neon-cyan/30 mb-2 md:hidden">01</div>
                     <h3 className="font-bold text-lg mb-2 text-white font-cabinet">Planning & Strategy</h3>
                     <p className="text-zinc-300 text-base font-light">Understanding goals, audience, and technical requirements before touching code.</p>
                   </div>
@@ -474,13 +474,13 @@ export default function Home() {
               {/* Step 2 */}
               <div className="flex flex-col md:flex-row-reverse items-center justify-between relative">
                 <div className="md:w-1/2 pl-12 text-left hidden md:block">
-                  <div className="font-cabinet font-bold text-5xl text-electric-purple/30">02</div>
+                  <div aria-hidden="true" className="font-cabinet font-bold text-5xl text-electric-purple/30">02</div>
                 </div>
                 {/* Dot */}
                 <div className="absolute left-1/2 -translate-x-1/2 w-3 h-3 bg-electric-purple rounded-full border-2 border-cyber-black hidden md:block" />
                 <div className="md:w-1/2 pr-12">
                   <div className="backdrop-blur-md bg-white/[0.03] border border-white/10 p-6 rounded-2xl shadow-xl">
-                    <div className="font-cabinet font-bold text-3xl text-electric-purple/30 mb-2 md:hidden">02</div>
+                    <div aria-hidden="true" className="font-cabinet font-bold text-3xl text-electric-purple/30 mb-2 md:hidden">02</div>
                     <h3 className="font-bold text-lg mb-2 text-white font-cabinet">Architecture</h3>
                     <p className="text-zinc-300 text-base font-light">Designing database schemas, API routes, and component structures for scale.</p>
                   </div>
@@ -490,13 +490,13 @@ export default function Home() {
               {/* Step 3 */}
               <div className="flex flex-col md:flex-row items-center justify-between relative">
                 <div className="md:w-1/2 pr-12 text-right hidden md:block">
-                  <div className="font-cabinet font-bold text-5xl text-neon-cyan/30">03</div>
+                  <div aria-hidden="true" className="font-cabinet font-bold text-5xl text-neon-cyan/30">03</div>
                 </div>
                 {/* Dot */}
                 <div className="absolute left-1/2 -translate-x-1/2 w-3 h-3 bg-neon-cyan rounded-full border-2 border-cyber-black hidden md:block" />
                 <div className="md:w-1/2 pl-12">
                   <div className="backdrop-blur-md bg-white/[0.03] border border-white/10 p-6 rounded-2xl shadow-xl">
-                    <div className="font-cabinet font-bold text-3xl text-neon-cyan/30 mb-2 md:hidden">03</div>
+                    <div aria-hidden="true" className="font-cabinet font-bold text-3xl text-neon-cyan/30 mb-2 md:hidden">03</div>
                     <h3 className="font-bold text-lg mb-2 text-white font-cabinet">Development</h3>
                     <p className="text-zinc-300 text-base font-light mb-4">Writing clean, type-safe code with Next.js and Tailwind CSS.</p>
                     <div className="flex justify-center">
@@ -549,7 +549,7 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-            <a href="#" aria-label="Read Article" className="block rounded-2xl glass p-6 border border-white/10 bg-gradient-to-br from-white/5 to-transparent shadow-xl hover:border-neon-cyan transition-colors group">
+            <a href="#" className="block rounded-2xl glass p-6 border border-white/10 bg-gradient-to-br from-white/5 to-transparent shadow-xl hover:border-neon-cyan transition-colors group">
               <div className="sm:flex sm:justify-between sm:gap-4 lg:gap-6">
                 <div className="sm:order-last sm:shrink-0">
                   <Image width={64} height={64} alt="Blog" src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?auto=format&fit=crop&q=80&w=128" className="size-16 rounded-full object-cover sm:size-18" />
@@ -568,7 +568,7 @@ export default function Home() {
                 </div>
               </div>
 
-              <dl className="mt-6 flex gap-4 lg:gap-6 text-xs text-text-muted">
+              <div className="mt-6 flex gap-4 lg:gap-6 text-xs text-text-muted">
                 <div className="flex items-center gap-2">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-4">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5"></path>
@@ -582,11 +582,11 @@ export default function Home() {
                   </svg>
                   <span>12 minutes</span>
                 </div>
-              </dl>
+              </div>
             </a>
 
             {/* Added Blog Card 2 */}
-            <a href="#" aria-label="Read Article" className="block rounded-2xl glass p-6 border border-white/10 bg-gradient-to-br from-white/5 to-transparent shadow-xl hover:border-electric-purple transition-colors group">
+            <a href="#" className="block rounded-2xl glass p-6 border border-white/10 bg-gradient-to-br from-white/5 to-transparent shadow-xl hover:border-electric-purple transition-colors group">
               <div className="sm:flex sm:justify-between sm:gap-4 lg:gap-6">
                 <div className="sm:order-last sm:shrink-0">
                   <Image width={64} height={64} alt="Blog" src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=128" className="size-16 rounded-full object-cover sm:size-18" />
@@ -605,7 +605,7 @@ export default function Home() {
                 </div>
               </div>
 
-              <dl className="mt-6 flex gap-4 lg:gap-6 text-xs text-text-muted">
+              <div className="mt-6 flex gap-4 lg:gap-6 text-xs text-text-muted">
                 <div className="flex items-center gap-2">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-4">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5"></path>
@@ -619,7 +619,7 @@ export default function Home() {
                   </svg>
                   <span>8 minutes</span>
                 </div>
-              </dl>
+              </div>
             </a>
           </div>
         </section>
