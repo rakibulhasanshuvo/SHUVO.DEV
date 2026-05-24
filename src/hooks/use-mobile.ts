@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useEffect } from "react";
 
 const MOBILE_BREAKPOINT = 1024; // Aligning with Tailwind's 'lg' breakpoint

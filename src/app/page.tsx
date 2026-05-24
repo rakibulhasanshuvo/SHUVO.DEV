@@ -1,449 +1,194 @@
-"use client";
 import Image from "next/image";
-
-import { motion } from "framer-motion";
 import Link from "next/link";
 
-import { ReactNode } from "react";
-import dynamic from 'next/dynamic';
-
-const MatrixBackground = dynamic(() => import('@/components/MatrixBackground'), { ssr: false, loading: () => <div className="hidden">Loading…</div> });
-const ThreeDCarousel = dynamic(() => import('@/components/ThreeDCarousel'), { ssr: false, loading: () => <div className="hidden">Loading…</div> });
-const InteractiveGridBackground = dynamic(() => import('@/components/InteractiveGridBackground'), { ssr: false, loading: () => <div className="hidden">Loading…</div> });
-const CyberCore = dynamic(() => import('@/components/CyberCore'), { ssr: false, loading: () => <div className="hidden">Loading…</div> });
-const RainBackground = dynamic(() => import('@/components/RainBackground'), { ssr: false, loading: () => <div className="hidden">Loading…</div> });
 import { BentoGrid, BentoCard } from "@/components/magicui/BentoGrid";
 import { Marquee } from "@/components/magicui/Marquee";
 import Loader from "@/components/Loader";
-
-
-const PricingCards = dynamic(() => import("@/components/PricingCards"));
-const CyberButton = dynamic(() => import("@/components/CyberButton"));
-const AngledGallery = dynamic(() => import("@/components/AngledGallery"));
-const FeaturedWork = dynamic(() => import("@/components/featured-work/FeaturedWork"));
-const StickyStackCards = dynamic(() => import("@/components/StickyStackCards"));
-const AboutSection = dynamic(() => import("@/components/AboutSection"));
 import AutotypingText from "@/components/ui/AutotypingText";
-const FaqAccordion = dynamic(() => import("@/components/FaqAccordion"));
-const ClientReviews = dynamic(() => import("@/components/ClientReviews"));
-import { useIsMobile } from "@/hooks/use-mobile";
 
+// Static data imports
+import { files, features, CodeIcon } from "@/data/homeData";
 
+// Statically imported UI components (RSC handles these perfectly)
+import ThreeDCarousel from "@/components/ThreeDCarousel";
+import PricingCards from "@/components/PricingCards";
+import CyberButton from "@/components/CyberButton";
+import AngledGallery from "@/components/AngledGallery";
+import FeaturedWork from "@/components/featured-work/FeaturedWork";
+import StickyStackCards from "@/components/StickyStackCards";
+import AboutSection from "@/components/AboutSection";
+import FaqAccordion from "@/components/FaqAccordion";
+import ClientReviews from "@/components/ClientReviews";
+import CyberCoreShowcase from "@/components/CyberCoreShowcase";
+import ContactVideo from "@/components/ContactVideo";
 
-
-
-
-
-
-
-
-
-
-
-
-// Fallback Icons (Dumber recreation to avoid missing dependencies)
-const FileTextIcon = () => <span className="text-xl">📄</span>;
-const BellIcon = () => <span className="text-xl">🔔</span>;
-const Share2Icon = () => <span className="text-xl">🔗</span>;
-const CalendarIcon = () => <span className="text-xl">📅</span>;
-const CodeIcon = () => (
-  <svg className="w-4 h-4 text-neon-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
-  </svg>
-);
-
-const files = [
-  {
-    name: "bitcoin.pdf",
-    body: "Bitcoin is a cryptocurrency invented in 2008 by an unknown person or group of people using the name Satoshi Nakamoto.",
-  },
-  {
-    name: "finances.xlsx",
-    body: "A spreadsheet or worksheet is a file made of rows and columns that help sort data, arrange data easily, and calculate numerical data.",
-  },
-  {
-    name: "logo.svg",
-    body: "Scalable Vector Graphics is an Extensible Markup Language-based vector image format for two-dimensional graphics with support for interactivity and animation.",
-  },
-  {
-    name: "keys.gpg",
-    body: "GPG keys are used to encrypt and decrypt email, files, directories, and whole disk partitions and to authenticate messages.",
-  },
-  {
-    name: "seed.txt",
-    body: "A seed phrase, seed recovery phrase or backup seed phrase is a list of words which store all the information needed to recover Bitcoin funds on-chain.",
-  },
-];
-
-const features = [
-  {
-    Icon: FileTextIcon,
-    name: "Real-time Data Scraping",
-    description: "Amolnama tracks national events with 10+ active scraper bots.",
-    href: "#",
-    cta: "Explore Case Study",
-    className: "lg:col-span-2 lg:row-span-1",
-    background: (
-      <div className="absolute inset-0 flex items-center justify-center opacity-30">
-        <svg className="w-full h-32" viewBox="0 0 400 100">
-          <path d="M 10,80 Q 100,20 200,70 T 390,30" fill="none" stroke="currentColor" strokeWidth="2" className="text-neon-cyan" />
-          <path d="M 10,80 Q 100,20 200,70 T 390,30" fill="none" stroke="currentColor" strokeWidth="6" className="text-neon-cyan blur-md opacity-50" />
-          <circle cx="200" cy="70" r="4" fill="var(--neon-cyan)" />
-          <circle cx="200" cy="70" r="8" fill="none" stroke="var(--neon-cyan)" strokeWidth="1" className="animate-ping" />
-        </svg>
-      </div>
-    ),
-  },
-  {
-    Icon: Share2Icon,
-    name: "Component Registry Analytics",
-    description: "Componeo monitors component usage across organizations.",
-    href: "#",
-    cta: "View Registry",
-    className: "lg:col-span-2 lg:row-span-1",
-    background: (
-      <div className="absolute inset-0 flex items-center justify-center opacity-30">
-        <div className="w-3/4 space-y-2 font-mono text-xs">
-          <div className="flex justify-between border-b border-white/10 pb-1">
-            <span className="text-white">Component</span>
-            <span className="text-white">Usage</span>
-          </div>
-          <div className="flex justify-between">
-            <span className="text-text-muted">Buttons.tsx</span>
-            <span className="text-neon-cyan">1.2k</span>
-          </div>
-          <div className="flex justify-between">
-            <span className="text-text-muted">Card.tsx</span>
-            <span className="text-neon-cyan">850</span>
-          </div>
-          <div className="flex justify-between">
-            <span className="text-text-muted">Navbar.tsx</span>
-            <span className="text-neon-cyan">420</span>
-          </div>
-        </div>
-      </div>
-    ),
-  },
-  {
-    Icon: CalendarIcon,
-    name: "Secure Cloud Infrastructure",
-    description: "Vortexa provides encrypted database management.",
-    href: "#",
-    cta: "Read Documentation",
-    className: "lg:col-span-1 lg:row-span-1",
-    background: (
-      <div className="absolute inset-0 flex items-center justify-center opacity-30">
-        <div className="relative">
-          <div className="absolute inset-0 bg-neon-cyan/20 blur-xl rounded-full" />
-          <svg className="w-16 h-16 text-neon-cyan relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-          </svg>
-        </div>
-      </div>
-    ),
-  },
-  {
-    Icon: BellIcon,
-    name: "E-Commerce Ecosystem",
-    description: "Izzan Store connects payment gateways and shipping.",
-    href: "#",
-    cta: "Visit Store",
-    className: "lg:col-span-3 lg:row-span-1",
-    background: (
-      <div className="absolute inset-0 flex items-center justify-center opacity-30">
-        <div className="relative w-full h-full max-w-md">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-cyber-charcoal border border-white/10 px-4 py-2 rounded-full z-20 text-xs font-bold">
-            Izzan
-          </div>
-          <div className="absolute top-1/4 left-1/4 bg-white/5 border border-white/10 p-2 rounded-full z-20 text-[11px]">Stripe</div>
-          <div className="absolute top-1/4 right-1/4 bg-white/5 border border-white/10 p-2 rounded-full z-20 text-[11px]">PayPal</div>
-          <div className="absolute bottom-1/4 left-1/4 bg-white/5 border border-white/10 p-2 rounded-full z-20 text-[11px]">FedEx</div>
-          <div className="absolute bottom-1/4 right-1/4 bg-white/5 border border-white/10 p-2 rounded-full z-20 text-[11px]">Shopify</div>
-
-          <svg className="absolute inset-0 w-full h-full" viewBox="0 0 400 200">
-            <path d="M 100,50 Q 200,100 200,100" fill="none" stroke="currentColor" strokeWidth="1" className="text-white/20" />
-            <path d="M 300,50 Q 200,100 200,100" fill="none" stroke="currentColor" strokeWidth="1" className="text-white/20" />
-            <path d="M 100,150 Q 200,100 200,100" fill="none" stroke="currentColor" strokeWidth="1" className="text-white/20" />
-            <path d="M 300,150 Q 200,100 200,100" fill="none" stroke="currentColor" strokeWidth="1" className="text-white/20" />
-          </svg>
-        </div>
-      </div>
-    ),
-  },
-];
-
+// Dynamic wrappers with ssr: false for heavy background animations
+import DynamicConstellation from "@/components/DynamicConstellation";
+import DynamicRain from "@/components/DynamicRain";
+import DynamicMatrix from "@/components/DynamicMatrix";
 
 export default function Home() {
-  const isMobile = useIsMobile();
-
   return (
     <div className="relative min-h-screen bg-transparent text-white font-satoshi">
       {/* Background Grid Overlay */}
       <div className="fixed inset-0 pointer-events-none bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:32px_32px] -z-10" />
 
-      {/* Dynamic Quantum Constellation & Matrix Rain Canvas Background */}
-      {isMobile === false && <InteractiveGridBackground />}
-
-      {/* Dynamic Glowing Orbs - wrapped to prevent horizontal bleed without breaking position:sticky */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
-        <motion.div
-          animate={{
-            scale: [1, 1.2, 1],
-            opacity: [0.1, 0.2, 0.1]
-          }}
-          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-[-100px] left-1/4 w-[500px] h-[500px] bg-neon-cyan/20 rounded-full blur-3xl"
-        />
-        <motion.div
-          animate={{
-            scale: [1.2, 1, 1.2],
-            opacity: [0.1, 0.15, 0.1]
-          }}
-          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute bottom-[-100px] right-1/4 w-[600px] h-[600px] bg-electric-purple/15 rounded-full blur-3xl"
-        />
+      {/* Dynamic Quantum Constellation Background (Hidden on mobile breakpoints using CSS grid wrappers) */}
+      <div className="hidden lg:block">
+        <DynamicConstellation />
       </div>
+
+      {/* Dynamic Glowing Orbs — CSS hardware-accelerated loops for absolute performance */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+        <div className="absolute top-[-100px] left-1/4 w-[500px] h-[500px] bg-neon-cyan/20 rounded-full blur-3xl animate-orb-1" />
+        <div className="absolute bottom-[-100px] right-1/4 w-[600px] h-[600px] bg-electric-purple/15 rounded-full blur-3xl animate-orb-2" />
+      </div>
+
       <div className="relative z-10 pt-12 pb-4">
-        {/* Full-width Hero Backdrop Wrapper */}
+        {/* Hero Section */}
         <div className="relative w-full">
           <section className="relative mb-28 md:mb-36 pt-10 max-w-[1440px] mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            
+            {/* Hero Ambient Backdrop */}
+            <div className="absolute inset-0 -z-10 flex items-center justify-center">
+              <div className="absolute w-[600px] h-[600px] bg-gradient-to-r from-neon-cyan/10 to-electric-purple/10 rounded-full blur-3xl pointer-events-none" />
+            </div>
 
+            <div className="max-w-4xl relative z-10">
+              <div className="animate-fade-up">
+                <h1 className="font-cabinet font-bold text-6xl sm:text-8xl mb-6 leading-[0.9] tracking-tight text-balance">
+                  Engineering{" "}
+                  <span 
+                    className="text-transparent bg-clip-text bg-gradient-to-r from-neon-cyan to-electric-purple animate-gradient drop-shadow-[0_0_30px_rgba(0,240,255,0.2)]"
+                    style={{ textShadow: "0 0 35px rgba(0, 240, 255, 0.35), 0 0 65px rgba(161, 0, 255, 0.25)" }}
+                  >
+                    Digital Luxury
+                  </span>
+                </h1>
+              </div>
 
-          {/* Hero Glow */}
-          <div className="absolute inset-0 -z-10 flex items-center justify-center">
-            <div className="absolute w-[600px] h-[600px] bg-gradient-to-r from-neon-cyan/10 to-electric-purple/10 rounded-full blur-3xl pointer-events-none" />
-          </div>
+              <p className="text-text-muted text-lg sm:text-xl max-w-xl mb-10 font-light animate-fade-up animation-delay-200">
+                Full-stack developer focused on <AutotypingText />
+              </p>
 
-
-          <div className="max-w-4xl relative z-10">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-            >
-              <h1 className="font-cabinet font-bold text-6xl sm:text-8xl mb-6 leading-[0.9] tracking-tight text-balance">
-                Engineering{" "}
-                <span 
-                  className="text-transparent bg-clip-text bg-gradient-to-r from-neon-cyan to-electric-purple animate-gradient drop-shadow-[0_0_30px_rgba(0,240,255,0.2)]"
-                  style={{ textShadow: "0 0 35px rgba(0, 240, 255, 0.35), 0 0 65px rgba(161, 0, 255, 0.25)" }}
+              <div className="flex flex-col sm:flex-row gap-5 animate-fade-up animation-delay-300">
+                {/* Primary CTA */}
+                <a
+                  href="#work"
+                  className="group relative inline-flex items-center justify-center px-9 py-4 font-cabinet font-bold rounded-full overflow-hidden transition-all duration-300 scale-100 hover:scale-[1.04] active:scale-[0.98] text-center"
                 >
-                  Digital Luxury
-                </span>
-              </h1>
-            </motion.div>
+                  <div className="absolute inset-0 bg-gradient-to-r from-neon-cyan via-blue-500 to-electric-purple opacity-90 transition-opacity duration-300 group-hover:opacity-100 rounded-full" />
+                  <div className="absolute -inset-0.5 bg-gradient-to-r from-neon-cyan to-electric-purple rounded-full blur-md opacity-50 group-hover:opacity-90 transition-opacity duration-300 z-0" />
+                  <div className="absolute inset-[1.5px] bg-cyber-black rounded-full group-hover:bg-cyber-charcoal transition-colors duration-300 z-10" />
+                  
+                  <span className="relative z-20 text-white text-sm uppercase tracking-wider flex items-center gap-2 font-bold">
+                    View My Work
+                    <svg className="w-4 h-4 text-neon-cyan transform group-hover:translate-x-1.5 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                    </svg>
+                  </span>
+                  
+                  <div className="absolute top-0 -inset-full h-full w-1/2 z-20 block transform -skew-x-12 bg-gradient-to-r from-transparent via-white/20 to-transparent group-hover:animate-[shimmer_2s_infinite]" />
+                </a>
 
-            <motion.p
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-text-muted text-lg sm:text-xl max-w-xl mb-10 font-light"
-            >
-              Full-stack developer focused on <AutotypingText />
-            </motion.p>
-
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-              className="flex flex-col sm:flex-row gap-5"
-            >
-              {/* Primary CTA: View My Work */}
-              <a
-                href="#work"
-                className="group relative inline-flex items-center justify-center px-9 py-4 font-cabinet font-bold rounded-full overflow-hidden transition-all duration-300 scale-100 hover:scale-[1.04] active:scale-[0.98] text-center"
-              >
-                {/* Glowing border/background glow */}
-                <div className="absolute inset-0 bg-gradient-to-r from-neon-cyan via-blue-500 to-electric-purple opacity-90 transition-opacity duration-300 group-hover:opacity-100 rounded-full" />
-                
-                {/* Subtle border-lit glow layer */}
-                <div className="absolute -inset-0.5 bg-gradient-to-r from-neon-cyan to-electric-purple rounded-full blur-md opacity-50 group-hover:opacity-90 transition-opacity duration-300 z-0" />
-                
-                {/* Inner button surface: deep charcoal backplate */}
-                <div className="absolute inset-[1.5px] bg-cyber-black rounded-full group-hover:bg-cyber-charcoal transition-colors duration-300 z-10" />
-                
-                {/* Text & Icon content */}
-                <span className="relative z-20 text-white text-sm uppercase tracking-wider flex items-center gap-2 font-bold">
-                  View My Work
-                  <svg className="w-4 h-4 text-neon-cyan transform group-hover:translate-x-1.5 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-                  </svg>
-                </span>
-                
-                {/* Scanning horizontal neon accent bar on hover */}
-                <div className="absolute top-0 -inset-full h-full w-1/2 z-20 block transform -skew-x-12 bg-gradient-to-r from-transparent via-white/20 to-transparent group-hover:animate-[shimmer_2s_infinite]" />
-              </a>
-
-              {/* Secondary CTA: Get in Touch */}
-              <a
-                href="#contact"
-                className="group relative inline-flex items-center justify-center px-9 py-4 font-cabinet font-bold rounded-full overflow-hidden transition-all duration-300 scale-100 hover:scale-[1.04] active:scale-[0.98] text-center"
-              >
-                {/* Outer light border */}
-                <div className="absolute inset-0 border border-white/10 group-hover:border-white/20 rounded-full transition-colors duration-300 z-0" />
-                
-                {/* Glass backplate with light blur */}
-                <div className="absolute inset-0 bg-white/5 group-hover:bg-white/10 backdrop-blur-md rounded-full transition-colors duration-300 z-10" />
-                
-                {/* Inner glow accent */}
-                <div className="absolute inset-0 bg-gradient-to-r from-neon-cyan/0 to-electric-purple/0 group-hover:from-neon-cyan/5 group-hover:to-electric-purple/5 rounded-full transition-all duration-500 z-10" />
-                
-                {/* Text Content */}
-                <span className="relative z-20 text-zinc-300 group-hover:text-white text-sm uppercase tracking-wider flex items-center gap-2">
-                  Get in Touch
-                  <svg className="w-4 h-4 text-zinc-400 group-hover:text-electric-purple group-hover:translate-y-[-1px] group-hover:translate-x-[1px] transition-all duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
-                  </svg>
-                </span>
-              </a>
-            </motion.div>
-          </div>
-
-
-          {/* Column 2: 3D Carousel */}
-          <div className="hidden lg:flex justify-center items-center relative z-10">
-            {isMobile === false && <ThreeDCarousel />}
-          </div>
-        </section>
-        </div>{/* END hero wrapper */}
-
-        {/* Cyber Core Showcase */}
-        <section className="relative flex flex-col items-center justify-center py-24 mb-28 md:mb-36 z-10 overflow-hidden">
-          {/* Background Elements */}
-          <div className="absolute inset-0 bg-cyber-black/50 backdrop-blur-3xl -z-10" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-neon-cyan/5 rounded-full blur-[100px] -z-10" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-electric-purple/10 rounded-full blur-[80px] -z-10" />
-
-          {/* Decorative rotating rings */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[350px] border border-white/5 rounded-full animate-[spin_10s_linear_infinite] -z-10 pointer-events-none" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[450px] h-[450px] border border-white/5 border-dashed rounded-full animate-[spin_15s_linear_infinite_reverse] -z-10 pointer-events-none" />
-
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-3xl md:text-5xl font-cabinet font-bold text-white tracking-tight mb-4">
-              System <span className="text-neon-cyan glow-cyan-text">Core</span>
-            </h2>
-            <p className="text-text-muted max-w-xl mx-auto font-light">
-              The central hub of our digital infrastructure. Monitoring vital stats and ensuring peak performance across all nodes in the network.
-            </p>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1, type: "spring", stiffness: 50 }}
-            className="relative"
-          >
-            {/* Ambient glow behind the core */}
-            <div className="absolute inset-0 bg-neon-cyan/20 blur-[60px] rounded-full -z-10 animate-pulse pointer-events-none" />
-
-            {isMobile === false && <CyberCore />}
-
-            {/* Status indicators */}
-            <div className="absolute -right-32 top-1/2 -translate-y-1/2 hidden md:flex flex-col gap-4">
-              <div className="flex items-center gap-3">
-                <div className="w-2 h-2 rounded-full bg-neon-cyan animate-pulse glow-cyan" />
-                <span className="text-[11px] font-jetbrains text-neon-cyan tracking-widest">SYS_ONLINE</span>
-              </div>
-              <div className="flex items-center gap-3">
-                <div className="w-2 h-2 rounded-full bg-electric-purple animate-pulse glow-purple" />
-                <span className="text-[11px] font-jetbrains text-electric-purple tracking-widest">DATA_SYNC</span>
+                {/* Secondary CTA */}
+                <a
+                  href="#contact"
+                  className="group relative inline-flex items-center justify-center px-9 py-4 font-cabinet font-bold rounded-full overflow-hidden transition-all duration-300 scale-100 hover:scale-[1.04] active:scale-[0.98] text-center"
+                >
+                  <div className="absolute inset-0 border border-white/10 group-hover:border-white/20 rounded-full transition-colors duration-300 z-0" />
+                  <div className="absolute inset-0 bg-white/5 group-hover:bg-white/10 backdrop-blur-md rounded-full transition-colors duration-300 z-10" />
+                  <div className="absolute inset-0 bg-gradient-to-r from-neon-cyan/0 to-electric-purple/0 group-hover:from-neon-cyan/5 group-hover:to-electric-purple/5 rounded-full transition-all duration-500 z-10" />
+                  
+                  <span className="relative z-20 text-zinc-300 group-hover:text-white text-sm uppercase tracking-wider flex items-center gap-2">
+                    Get in Touch
+                    <svg className="w-4 h-4 text-zinc-400 group-hover:text-electric-purple group-hover:translate-y-[-1px] group-hover:translate-x-[1px] transition-all duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
+                    </svg>
+                  </span>
+                </a>
               </div>
             </div>
 
-            <div className="absolute -left-32 top-1/2 -translate-y-1/2 hidden md:flex flex-col gap-4 items-end">
-               <div className="flex items-center gap-3">
-                <span className="text-[11px] font-jetbrains text-zinc-400 tracking-widest">MEM: 42%</span>
-                <div className="w-12 h-0.5 bg-white/10 rounded-full overflow-hidden">
-                  <div className="h-full bg-neon-cyan w-[42%]" />
-                </div>
-              </div>
-              <div className="flex items-center gap-3">
-                <span className="text-[11px] font-jetbrains text-zinc-400 tracking-widest">CPU: 18%</span>
-                <div className="w-12 h-0.5 bg-white/10 rounded-full overflow-hidden">
-                  <div className="h-full bg-electric-purple w-[18%]" />
-                </div>
-              </div>
+            {/* Carousel display, encapsulated in responsive wrapper */}
+            <div className="hidden lg:flex justify-center items-center relative z-10">
+              <ThreeDCarousel />
             </div>
-          </motion.div>
-        </section>
+          </section>
+        </div>
 
+        {/* Dynamic Cyber Core section isolated to a performance Client boundary */}
+        <CyberCoreShowcase />
 
-        {/* Featured Work (3D Sticky Stack Cards) */}
+        {/* Featured Work section */}
         <section id="work" className="scroll-mt-24 mb-28 md:mb-36">
           <StickyStackCards />
         </section>
 
-        {/* Endless Object Moving (Marquee) */}
+        {/* Technical Marquee */}
         <div className="relative w-full overflow-hidden mb-28 md:mb-36">
-        <section className="mb-0 overflow-hidden py-32 relative">
-          {/* Gradient Masks to hide vertical cropping */}
-          <div className="absolute inset-y-0 left-0 w-1/4 bg-gradient-to-r from-cyber-black to-transparent z-10 pointer-events-none" />
-          <div className="absolute inset-y-0 right-0 w-1/4 bg-gradient-to-l from-cyber-black to-transparent z-10 pointer-events-none" />
+          <section className="mb-0 overflow-hidden py-32 relative">
+            <div className="absolute inset-y-0 left-0 w-1/4 bg-gradient-to-r from-cyber-black to-transparent z-10 pointer-events-none" />
+            <div className="absolute inset-y-0 right-0 w-1/4 bg-gradient-to-l from-cyber-black to-transparent z-10 pointer-events-none" />
 
-          <div className="transform -rotate-6 scale-125 space-y-6">
-            {/* Row 1 */}
-            <div className="flex overflow-hidden select-none gap-8">
-              <div className="flex flex-shrink-0 justify-around min-w-full gap-8 animate-marquee [--duration:25s]">
-                {["Next.js", "React", "Supabase", "TypeScript", "Tailwind CSS", "Framer Motion", "Node.js", "PostgreSQL", "Docker", "AWS"].map((tech, idx) => (
-                  <div key={idx} className="flex items-center gap-3 glass px-4 py-2 rounded-xl border border-white/5 hover:border-neon-cyan/20 transition-colors">
-                    <CodeIcon />
-                    <span className="font-cabinet font-bold text-sm text-white">{tech}</span>
-                  </div>
-                ))}
+            <div className="transform -rotate-6 scale-125 space-y-6">
+              {/* Row 1 */}
+              <div className="flex overflow-hidden select-none gap-8">
+                <div className="flex flex-shrink-0 justify-around min-w-full gap-8 animate-marquee [--duration:25s]">
+                  {["Next.js", "React", "Supabase", "TypeScript", "Tailwind CSS", "Framer Motion", "Node.js", "PostgreSQL", "Docker", "AWS"].map((tech, idx) => (
+                    <div key={idx} className="flex items-center gap-3 glass px-4 py-2 rounded-xl border border-white/5 hover:border-neon-cyan/20 transition-colors">
+                      <CodeIcon />
+                      <span className="font-cabinet font-bold text-sm text-white">{tech}</span>
+                    </div>
+                  ))}
+                </div>
+                <div className="flex flex-shrink-0 justify-around min-w-full gap-8 animate-marquee [--duration:25s]">
+                  {["Next.js", "React", "Supabase", "TypeScript", "Tailwind CSS", "Framer Motion", "Node.js", "PostgreSQL", "Docker", "AWS"].map((tech, idx) => (
+                    <div key={idx} className="flex items-center gap-3 glass px-4 py-2 rounded-xl border border-white/5 hover:border-neon-cyan/20 transition-colors">
+                      <CodeIcon />
+                      <span className="font-cabinet font-bold text-sm text-white">{tech}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
-              <div className="flex flex-shrink-0 justify-around min-w-full gap-8 animate-marquee [--duration:25s]">
-                {["Next.js", "React", "Supabase", "TypeScript", "Tailwind CSS", "Framer Motion", "Node.js", "PostgreSQL", "Docker", "AWS"].map((tech, idx) => (
-                  <div key={idx} className="flex items-center gap-3 glass px-4 py-2 rounded-xl border border-white/5 hover:border-neon-cyan/20 transition-colors">
-                    <CodeIcon />
-                    <span className="font-cabinet font-bold text-sm text-white">{tech}</span>
-                  </div>
-                ))}
+
+              {/* Row 2 */}
+              <div className="flex overflow-hidden select-none gap-8">
+                <div className="flex flex-shrink-0 justify-around min-w-full gap-8 animate-marquee-reverse [--duration:30s]">
+                  {["UI/UX", "Optimization", "Database", "Cloud", "Analytics", "Security", "Scalability", "E-Commerce", "Scraping", "API"].map((tech, idx) => (
+                    <div key={idx} className="flex items-center gap-3 glass px-4 py-2 rounded-xl border border-white/5 hover:border-neon-cyan/20 transition-colors">
+                      <CodeIcon />
+                      <span className="font-cabinet font-bold text-sm text-white">{tech}</span>
+                    </div>
+                  ))}
+                </div>
+                <div className="flex flex-shrink-0 justify-around min-w-full gap-8 animate-marquee-reverse [--duration:30s]">
+                  {["UI/UX", "Optimization", "Database", "Cloud", "Analytics", "Security", "Scalability", "E-Commerce", "Scraping", "API"].map((tech, idx) => (
+                    <div key={idx} className="flex items-center gap-3 glass px-4 py-2 rounded-xl border border-white/5 hover:border-neon-cyan/20 transition-colors">
+                      <CodeIcon />
+                      <span className="font-cabinet font-bold text-sm text-white">{tech}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
-
-            {/* Row 2 */}
-            <div className="flex overflow-hidden select-none gap-8">
-              <div className="flex flex-shrink-0 justify-around min-w-full gap-8 animate-marquee-reverse [--duration:30s]">
-                {["UI/UX", "Optimization", "Database", "Cloud", "Analytics", "Security", "Scalability", "E-Commerce", "Scraping", "API"].map((tech, idx) => (
-                  <div key={idx} className="flex items-center gap-3 glass px-4 py-2 rounded-xl border border-white/5 hover:border-neon-cyan/20 transition-colors">
-                    <CodeIcon />
-                    <span className="font-cabinet font-bold text-sm text-white">{tech}</span>
-                  </div>
-                ))}
-              </div>
-              <div className="flex flex-shrink-0 justify-around min-w-full gap-8 animate-marquee-reverse [--duration:30s]">
-                {["UI/UX", "Optimization", "Database", "Cloud", "Analytics", "Security", "Scalability", "E-Commerce", "Scraping", "API"].map((tech, idx) => (
-                  <div key={idx} className="flex items-center gap-3 glass px-4 py-2 rounded-xl border border-white/5 hover:border-neon-cyan/20 transition-colors">
-                    <CodeIcon />
-                    <span className="font-cabinet font-bold text-sm text-white">{tech}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
+          </section>
         </div>
 
-        {/* Angled Scrolling Gallery */}
+        {/* Angled scrolling showcase */}
         <AngledGallery />
 
-        {/* About Section */}
+        {/* Professional About narrative */}
         <AboutSection />
 
-        {/* Work Process (Timeline Flow) */}
+        {/* Process flow section */}
         <section id="process" className="scroll-mt-24 mb-28 md:mb-36 w-full relative">
-          {/* Rain Background */}
           <div className="absolute inset-0 -z-10 opacity-30 overflow-hidden" style={{ maskImage: "linear-gradient(to bottom, transparent, black 10%, black 90%, transparent)", WebkitMaskImage: "linear-gradient(to bottom, transparent, black 10%, black 90%, transparent)" }}>
-            {isMobile === false && <RainBackground />}
+            <div className="hidden lg:block w-full h-full">
+              <DynamicRain />
+            </div>
           </div>
           <div className="text-center mb-16 relative z-10 max-w-5xl mx-auto px-6">
-
             <h2 className="font-cabinet font-bold text-4xl md:text-5xl mb-4 text-white">The Process</h2>
             <p className="text-text-muted max-w-2xl mx-auto font-light">
               How I transform ideas into high-performance digital products.
@@ -451,7 +196,6 @@ export default function Home() {
           </div>
 
           <div className="relative max-w-4xl mx-auto px-6">
-            {/* Center Line */}
             <div className="absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-neon-cyan to-electric-purple opacity-30 hidden md:block" />
 
             <div className="space-y-12">
@@ -460,7 +204,6 @@ export default function Home() {
                 <div className="md:w-1/2 pr-12 text-right hidden md:block">
                   <div aria-hidden="true" className="font-cabinet font-bold text-5xl text-neon-cyan/30">01</div>
                 </div>
-                {/* Dot */}
                 <div className="absolute left-1/2 -translate-x-1/2 w-3 h-3 bg-neon-cyan rounded-full border-2 border-cyber-black hidden md:block" />
                 <div className="md:w-1/2 pl-12">
                   <div className="backdrop-blur-md bg-white/[0.03] border border-white/10 p-6 rounded-2xl shadow-xl">
@@ -476,7 +219,6 @@ export default function Home() {
                 <div className="md:w-1/2 pl-12 text-left hidden md:block">
                   <div aria-hidden="true" className="font-cabinet font-bold text-5xl text-electric-purple/30">02</div>
                 </div>
-                {/* Dot */}
                 <div className="absolute left-1/2 -translate-x-1/2 w-3 h-3 bg-electric-purple rounded-full border-2 border-cyber-black hidden md:block" />
                 <div className="md:w-1/2 pr-12">
                   <div className="backdrop-blur-md bg-white/[0.03] border border-white/10 p-6 rounded-2xl shadow-xl">
@@ -492,7 +234,6 @@ export default function Home() {
                 <div className="md:w-1/2 pr-12 text-right hidden md:block">
                   <div aria-hidden="true" className="font-cabinet font-bold text-5xl text-neon-cyan/30">03</div>
                 </div>
-                {/* Dot */}
                 <div className="absolute left-1/2 -translate-x-1/2 w-3 h-3 bg-neon-cyan rounded-full border-2 border-cyber-black hidden md:block" />
                 <div className="md:w-1/2 pl-12">
                   <div className="backdrop-blur-md bg-white/[0.03] border border-white/10 p-6 rounded-2xl shadow-xl">
@@ -504,14 +245,12 @@ export default function Home() {
                     </div>
                   </div>
                 </div>
-
               </div>
             </div>
           </div>
         </section>
 
-
-        {/* Pricing Cards Section */}
+        {/* Pricing options */}
         <section className="scroll-mt-24 mb-28 md:mb-36 max-w-[1440px] mx-auto px-6">
           <div className="text-center mb-12">
             <h2 className="font-cabinet font-bold text-3xl mb-2">Service Tiers</h2>
@@ -520,16 +259,15 @@ export default function Home() {
           <PricingCards />
         </section>
 
-        {/* Reviews Section */}
+        {/* Verification Reviews */}
         <ClientReviews />
 
-        {/* FAQ Section */}
+        {/* FAQs */}
         <section id="faq" className="scroll-mt-24 mb-28 md:mb-36 relative overflow-hidden">
-          <div className="absolute inset-0 z-0 opacity-20">
-            {isMobile === false && <MatrixBackground />}
+          <div className="absolute inset-0 z-0 opacity-20 hidden lg:block">
+            <DynamicMatrix />
           </div>
           <div className="text-center mb-16">
-
             <h2 className="font-cabinet font-bold text-4xl md:text-5xl mb-4 text-white">Frequently Asked Questions</h2>
             <p className="text-zinc-200 max-w-2xl mx-auto font-medium relative z-10 drop-shadow-sm">
               Got questions? I&apos;ve got answers. If you don&apos;t find what you're looking for, feel free to reach out.
@@ -539,7 +277,7 @@ export default function Home() {
           <FaqAccordion />
         </section>
 
-        {/* Blog Section */}
+        {/* Blog section */}
         <section id="blog" className="scroll-mt-24 mb-28 md:mb-36">
           <div className="text-center mb-16">
             <h2 className="font-cabinet font-bold text-4xl md:text-5xl mb-4 text-white">Latest Insights</h2>
@@ -559,9 +297,7 @@ export default function Home() {
                   <h3 className="text-lg font-bold text-white group-hover:text-neon-cyan transition-colors font-cabinet">
                     How I built my first website with Nuxt, Tailwind CSS and Vercel
                   </h3>
-
                   <p className="mt-1 text-xs text-text-muted">By M.R.H. Shuvo</p>
-
                   <p className="mt-4 line-clamp-2 text-sm text-text-muted font-light">
                     A deep dive into my journey of building a modern portfolio using Next.js, Tailwind CSS, and Vercel for the first time.
                   </p>
@@ -585,7 +321,7 @@ export default function Home() {
               </div>
             </a>
 
-            {/* Added Blog Card 2 */}
+            {/* Blog Card 2 */}
             <a href="#" className="block rounded-2xl glass p-6 border border-white/10 bg-gradient-to-br from-white/5 to-transparent shadow-xl hover:border-electric-purple transition-colors group">
               <div className="sm:flex sm:justify-between sm:gap-4 lg:gap-6">
                 <div className="sm:order-last sm:shrink-0">
@@ -596,9 +332,7 @@ export default function Home() {
                   <h3 className="text-lg font-bold text-white group-hover:text-electric-purple transition-colors font-cabinet">
                     The Art of Cyber-Luxury: Aesthetics in Modern Web Design
                   </h3>
-
                   <p className="mt-1 text-xs text-text-muted">By M.R.H. Shuvo</p>
-
                   <p className="mt-4 line-clamp-2 text-sm text-text-muted font-light">
                     Exploring how to combine high-tech cyber elements with minimalist luxury design principles to create stunning interfaces.
                   </p>
@@ -623,62 +357,32 @@ export default function Home() {
             </a>
           </div>
         </section>
+
+        {/* Lead/Contact capture */}
         <section id="contact" className="scroll-mt-24 overflow-hidden glass rounded-3xl sm:grid sm:grid-cols-2 sm:items-center border border-white/10 bg-gradient-to-br from-white/5 via-black to-black shadow-xl relative mb-20">
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-cyan-900/15 via-black to-black -z-10 pointer-events-none" />
           <div className="p-8 md:p-12 lg:px-16 lg:py-24 relative z-20">
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              transition={{ staggerChildren: 0.2 }}
-              viewport={{ once: true }}
-              className="mx-auto max-w-xl text-center sm:text-left"
-            >
-              <motion.h2
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-                className="text-3xl font-cabinet font-bold text-white md:text-4xl mb-4"
-              >
+            <div className="mx-auto max-w-xl text-center sm:text-left">
+              <h2 className="text-3xl font-cabinet font-bold text-white md:text-4xl mb-4 animate-fade-up">
                 Let&apos;s Build Something Extraordinary Together
-              </motion.h2>
+              </h2>
 
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.1 }}
-                className="text-zinc-300 md:mt-4 md:block font-light text-base"
-              >
+              <p className="text-zinc-300 md:mt-4 md:block font-light text-base animate-fade-up animation-delay-100">
                 Ready to elevate your digital presence? Let&apos;s collaborate to create a high-performance, visually stunning experience for your brand.
-              </motion.p>
+              </p>
 
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.2 }}
-                className="mt-4 md:mt-8"
-              >
+              <div className="mt-4 md:mt-8 animate-fade-up animation-delay-200">
                 <a href="mailto:contact@example.com" className="inline-flex items-center justify-center glass backdrop-blur-md bg-cyan-500/10 border border-cyan-500/30 text-white px-8 py-3 rounded-full text-sm font-semibold hover:bg-cyan-500/20 hover:border-cyan-500/50 transition-all glow-cyan-subtle">
                   Get Started Today
                 </a>
-              </motion.div>
-            </motion.div>
+              </div>
+            </div>
           </div>
 
           <div className="h-full w-full relative sm:h-[calc(100%-2rem)] sm:self-end">
             <div className="absolute inset-0 bg-gradient-to-b sm:bg-gradient-to-l from-transparent via-black/50 to-black z-10" />
             <div className="absolute inset-0 bg-gradient-to-r from-transparent to-black/20 z-10" />
-            <video
-              autoPlay
-              muted
-              loop
-              playsInline
-              poster="/portrait.png"
-              preload="none"
-              className="h-full w-full object-cover opacity-60 sm:rounded-ss-[30px] md:rounded-ss-[60px]"
-            >
-              <source src="/videos/abstract-data-flows.webm" type="video/webm" />
-              <source src="/videos/abstract-data-flows.mp4" type="video/mp4" />
-            </video>
+            <ContactVideo />
           </div>
         </section>
 
@@ -687,7 +391,6 @@ export default function Home() {
           <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[300px] bg-electric-purple/5 rounded-full blur-3xl -z-10" />
 
           <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
-            {/* Brand Column */}
             <div className="md:col-span-2">
               <div className="font-cabinet font-bold text-3xl tracking-tight mb-4">
                 SHUVO<span className="text-neon-cyan">.</span>
@@ -726,7 +429,6 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Quick Links */}
             <div>
               <h3 className="font-cabinet font-bold text-sm uppercase tracking-wider mb-6 text-white">Navigation</h3>
               <ul className="space-y-3 text-sm text-text-muted">
@@ -738,7 +440,6 @@ export default function Home() {
               </ul>
             </div>
 
-            {/* Services */}
             <div>
               <h3 className="font-cabinet font-bold text-sm uppercase tracking-wider mb-6 text-white">Services</h3>
               <ul className="space-y-3 text-sm text-text-muted">
@@ -750,13 +451,11 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Bottom Bar */}
           <div className="flex flex-col md:flex-row justify-between items-center text-text-muted text-xs font-satoshi border-t border-white/5 pt-8">
             <p>© 2026 M.R.H. Shuvo. All rights reserved.</p>
-            <div className="flex gap-6 mt-4 md:mt-0 font-medium">
-              <a href="#" className="hover:text-white transition-colors focus-visible:ring-2 focus-visible:ring-neon-cyan focus-visible:ring-offset-2 focus-visible:ring-offset-black focus:outline-none rounded-lg px-2 py-0.5">Privacy Policy</a>
-              <a href="#" className="hover:text-white transition-colors focus-visible:ring-2 focus-visible:ring-neon-cyan focus-visible:ring-offset-2 focus-visible:ring-offset-black focus:outline-none rounded-lg px-2 py-0.5">Terms of Service</a>
-              <Link href="/dashboard" className="hover:text-white transition-colors focus-visible:ring-2 focus-visible:ring-neon-cyan focus-visible:ring-offset-2 focus-visible:ring-offset-black focus:outline-none rounded-lg px-2 py-0.5">Admin Dashboard</Link>
+            <div className="flex gap-4 mt-4 md:mt-0">
+              <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
+              <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
             </div>
           </div>
         </footer>
@@ -764,4 +463,3 @@ export default function Home() {
     </div>
   );
 }
-

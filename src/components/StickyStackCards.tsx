@@ -72,20 +72,16 @@ const PROJECTS: Project[] = [
   },
 ];
 
+import { useIsMobile } from "@/hooks/use-mobile";
+
 export default function StickyStackCards() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [mounted, setMounted] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
+  const isMobile = useIsMobile();
 
-  // Set up screen-size triggers and verify client mount for Next.js SSR safety
+  // Verify client mount for Next.js SSR safety
   useEffect(() => {
     setTimeout(() => setMounted(true), 0);
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   // Track the scroll progress of the entire section

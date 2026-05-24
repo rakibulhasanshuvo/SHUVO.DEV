@@ -31,12 +31,11 @@
   --color-darkpan-black: var(--darkpan-black);
   --color-darkpan-slate: var(--darkpan-slate);
   
-  /* Fonts */
   --font-cabinet: 'Cabinet Grotesk', system-ui, sans-serif;
   --font-clash: 'Clash Display', 'Cabinet Grotesk', system-ui, sans-serif;
   --font-satoshi: 'Satoshi', 'Plus Jakarta Sans', system-ui, sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
-  --font-jetbrains: 'JetBrains Mono', monospace;
+  --font-mono: var(--font-jetbrains-mono), monospace;
+  --font-jetbrains: var(--font-jetbrains-mono), monospace;
 }
 
 body {
@@ -170,3 +169,59 @@ html.lenis, html.lenis body {
 .lenis.lenis-smooth iframe {
   pointer-events: none;
 }
+
+/* Custom Performance Optimizations: Pure CSS Animations for Server Components */
+@keyframes orb-pulse-1 {
+  0%, 100% { transform: scale(1); opacity: 0.1; }
+  50% { transform: scale(1.2); opacity: 0.2; }
+}
+
+@keyframes orb-pulse-2 {
+  0%, 100% { transform: scale(1.2); opacity: 0.10; }
+  50% { transform: scale(1); opacity: 0.15; }
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-orb-1 {
+  animation: orb-pulse-1 12s ease-in-out infinite;
+}
+
+.animate-orb-2 {
+  animation: orb-pulse-2 15s ease-in-out infinite;
+}
+
+.animate-fade-up {
+  opacity: 0;
+  animation: fade-in-up 0.8s cubic-bezier(0.215, 0.610, 0.355, 1) forwards;
+}
+
+.animation-delay-100 {
+  animation-delay: 100ms;
+}
+
+.animation-delay-200 {
+  animation-delay: 200ms;
+}
+
+.animation-delay-300 {
+  animation-delay: 300ms;
+}
+
+.animation-delay-400 {
+  animation-delay: 400ms;
+}
+
+.animation-delay-500 {
+  animation-delay: 500ms;
+}
+

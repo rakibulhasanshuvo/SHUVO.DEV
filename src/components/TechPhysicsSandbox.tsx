@@ -26,11 +26,13 @@ const techSkills = [
   { text: "Python", color: "#FBBF24", glow: "rgba(251, 191, 36, 0.4)" },
 ];
 
+import { useIsMobile } from "@/hooks/use-mobile";
+
 export default function TechPhysicsSandbox() {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [reducedMotion, setReducedMotion] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
+  const isMobile = useIsMobile();
   const [dimensions, setDimensions] = useState({ width: 0, height: 400 });
 
   // Check prefers-reduced-motion
@@ -40,14 +42,6 @@ export default function TechPhysicsSandbox() {
     const listener = (e: MediaQueryListEvent) => setReducedMotion(e.matches);
     mediaQuery.addEventListener("change", listener);
     return () => mediaQuery.removeEventListener("change", listener);
-  }, []);
-
-  // Check if mobile viewport
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 1024);
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
   // Handle Resize

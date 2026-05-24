@@ -3,6 +3,13 @@ import "./globals.css";
 import RootLayoutClient from "@/components/RootLayoutClient";
 
 import type { Viewport } from "next";
+import { JetBrains_Mono } from "next/font/google";
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-jetbrains-mono",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://rakibulhasanshuvo.com"),
@@ -16,7 +23,6 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
 };
-
 
 export default function RootLayout({
   children,
@@ -57,6 +63,15 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
         <link
+          rel="preconnect"
+          href="https://cdn.fontshare.com"
+          crossOrigin="anonymous"
+        />
+        <link
+          rel="dns-prefetch"
+          href="https://cdn.fontshare.com"
+        />
+        <link
           href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&f[]=cabinet-grotesk@300,400,500,700,800&f[]=clash-display@200,300,400,500,600,700&display=swap"
           rel="preload"
           as="style"
@@ -65,30 +80,15 @@ export default function RootLayout({
           href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&f[]=cabinet-grotesk@300,400,500,700,800&f[]=clash-display@200,300,400,500,600,700&display=swap" 
           rel="stylesheet" 
         />
-        {/* Preconnect and load JetBrains Mono from Google Fonts for developer typography */}
-        <link
-          rel="preconnect"
-          href="https://fonts.googleapis.com"
-        />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700;800&display=swap"
-          rel="stylesheet"
-        />
         {/* JSON-LD Schema markup */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="min-h-full flex flex-col bg-cyber-black text-white font-satoshi selection:bg-neon-cyan/30 selection:text-white overflow-x-hidden">
+      <body className={`${jetbrainsMono.variable} min-h-full flex flex-col bg-cyber-black text-white font-satoshi selection:bg-neon-cyan/30 selection:text-white overflow-x-hidden`}>
         <RootLayoutClient>{children}</RootLayoutClient>
       </body>
     </html>
   );
 }
-

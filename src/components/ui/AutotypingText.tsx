@@ -9,30 +9,31 @@ export default function AutotypingText() {
   const [text, setText] = useState("");
   const [wordIndex, setWordIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
-  const [speed, setSpeed] = useState(150);
 
   useEffect(() => {
-    const handleTyping = () => {
-      const currentWord = words[wordIndex];
-      if (isDeleting) {
-        setText(currentWord.substring(0, text.length - 1));
-        setSpeed(60);
-      } else {
-        setText(currentWord.substring(0, text.length + 1));
-        setSpeed(120);
-      }
+    let timer: NodeJS.Timeout;
+    const currentWord = words[wordIndex];
 
-      if (!isDeleting && text === currentWord) {
-        setTimeout(() => setIsDeleting(true), 2000);
-      } else if (isDeleting && text === "") {
-        setIsDeleting(false);
-        setWordIndex((prev) => (prev + 1) % words.length);
+    const tick = () => {
+      if (isDeleting) {
+        setText((prev) => prev.substring(0, prev.length - 1));
+      } else {
+        setText((prev) => currentWord.substring(0, prev.length + 1));
       }
     };
 
-    const timer = setTimeout(handleTyping, speed);
+    if (!isDeleting && text === currentWord) {
+      timer = setTimeout(() => setIsDeleting(true), 2000);
+    } else if (isDeleting && text === "") {
+      setIsDeleting(false);
+      setWordIndex((prev) => (prev + 1) % words.length);
+    } else {
+      const speed = isDeleting ? 60 : 120;
+      timer = setTimeout(tick, speed);
+    }
+
     return () => clearTimeout(timer);
-  }, [text, isDeleting, wordIndex, speed]);
+  }, [text, isDeleting, wordIndex]);
 
   return (
     <span className="inline-flex items-center">

@@ -20,8 +20,12 @@ const securityHeaders = [
 ];
 
 const nextConfig: NextConfig = {
+  turbopack: {
+    root: process.cwd(),
+  },
   images: {
     minimumCacheTTL: 31536000,
+    formats: ["image/avif", "image/webp"],
     remotePatterns: [
       {
         protocol: "https",
