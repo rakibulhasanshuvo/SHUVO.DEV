@@ -72,12 +72,12 @@ const PROJECTS: Project[] = [
   },
 ];
 
-import { useIsMobile } from "@/hooks/use-mobile";
+
 
 export default function StickyStackCards() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [mounted, setMounted] = useState(false);
-  const isMobile = useIsMobile();
+
 
   // Verify client mount for Next.js SSR safety
   useEffect(() => {
@@ -91,11 +91,12 @@ export default function StickyStackCards() {
   });
 
   // Render Mobile Fallback: beautiful natural vertical scroll cards with subtle sticky stacked offsets
-  if (mounted && isMobile) {
+  /* Mobile Render Flow */
     return (
+    <>
+      {/* Mobile Render Flow */}
       <section
-        ref={containerRef}
-        className="relative w-full bg-transparent py-20 px-4 overflow-visible flex flex-col gap-10"
+        className="relative w-full bg-transparent py-20 px-4 overflow-visible flex flex-col gap-10 lg:hidden"
       >
         <div className="text-center mb-8 px-2">
           <span className="text-xs uppercase tracking-widest text-neon-cyan font-bold bg-neon-cyan/10 px-4 py-1.5 rounded-full border border-neon-cyan/20">
@@ -157,16 +158,13 @@ export default function StickyStackCards() {
           ))}
         </div>
       </section>
-    );
-  }
 
-  // Render Desktop: Spectacular Viewport-Pinned 3D Sticky Stack Deck
-  return (
-    <section
-      ref={containerRef}
-      id="projects-stack"
-      className="relative w-full h-[360vh] bg-transparent overflow-visible"
-    >
+      {/* Render Desktop: Spectacular Viewport-Pinned 3D Sticky Stack Deck */}
+      <section
+        ref={containerRef}
+        id="projects-stack"
+        className="relative w-full h-[360vh] bg-transparent overflow-visible hidden lg:block"
+      >
       <div className="sticky top-0 h-screen w-full flex flex-col justify-between py-16 overflow-hidden">
 
         {/* Section Header */}
@@ -208,6 +206,7 @@ export default function StickyStackCards() {
         </div>
       </div>
     </section>
+    </>
   );
 }
 

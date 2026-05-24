@@ -3,11 +3,8 @@
 import React from "react";
 import { motion } from "framer-motion";
 import CyberCore from "./CyberCore";
-import { useIsMobile } from "@/hooks/use-mobile";
 
 export default function CyberCoreShowcase() {
-  const isMobile = useIsMobile();
-
   return (
     <section className="relative flex flex-col items-center justify-center py-24 mb-28 md:mb-36 z-10 overflow-hidden">
       {/* Background Elements */}
@@ -44,8 +41,8 @@ export default function CyberCoreShowcase() {
         {/* Ambient glow behind the core */}
         <div className="absolute inset-0 bg-neon-cyan/20 blur-[60px] rounded-full -z-10 animate-pulse pointer-events-none" />
 
-        {isMobile === true ? (
-          <div className="flex justify-center items-center h-[280px] w-[280px] relative">
+        {/* Mobile View */}
+          <div className="flex lg:hidden justify-center items-center h-[280px] w-[280px] relative">
             <div className="absolute inset-0 bg-neon-cyan/5 rounded-full blur-[40px] pointer-events-none" />
             <svg width="240" height="240" viewBox="0 0 344 344" className="opacity-90 fill-none stroke-neon-cyan" strokeWidth="1.5">
               <circle cx="172" cy="172" r="100" strokeDasharray="5 5" className="opacity-30" />
@@ -56,9 +53,10 @@ export default function CyberCoreShowcase() {
               <circle cx="172" cy="172" r="5" className="fill-neon-cyan" />
             </svg>
           </div>
-        ) : (
+        {/* Desktop View */}
+        <div className="hidden lg:block">
           <CyberCore />
-        )}
+        </div>
 
         {/* Status indicators */}
         <div className="absolute -right-32 top-1/2 -translate-y-1/2 hidden md:flex flex-col gap-4">
