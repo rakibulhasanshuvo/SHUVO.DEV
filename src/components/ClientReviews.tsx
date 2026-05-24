@@ -129,7 +129,7 @@ export default function ClientReviews() {
                     {reviews[0].initials}
                   </div>
                   <div>
-                    <h5 className="font-bold text-white text-base leading-tight font-cabinet">{reviews[0].name}</h5>
+                    <p className="font-bold text-white text-base leading-tight font-cabinet">{reviews[0].name}</p>
                     <p className="text-xs text-text-muted mt-0.5">{reviews[0].title}</p>
                   </div>
                 </div>
