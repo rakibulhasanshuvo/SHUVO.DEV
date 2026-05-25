@@ -13,7 +13,7 @@ export default function CyberCoreShowcase({ isMobileServer }: { isMobileServer?:
     <section className="relative flex flex-col items-center justify-center py-24 mb-28 md:mb-36 z-10 overflow-hidden">
       {/* Background Elements */}
       <div className="absolute inset-0 bg-cyber-black/50 backdrop-blur-3xl -z-10" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-neon-cyan/5 rounded-full blur-[100px] -z-10" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-neon-cyan/5 rounded-full blur-[100px] -z-10 pointer-events-none" />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-electric-purple/10 rounded-full blur-[80px] -z-10" />
 
       {/* Decorative rotating rings */}

@@ -16,7 +16,7 @@ const SignupPage = () => {
       {/* Glowing Orbs */}
 
       <div className="absolute top-[-100px] left-1/4 w-[500px] h-[500px] bg-neon-cyan/10 rounded-full blur-3xl" />
-      <div className="absolute bottom-[-100px] right-1/4 w-[600px] h-[600px] bg-electric-purple/10 rounded-full blur-3xl" />
+      <div className="absolute bottom-[-100px] right-1/4 w-[600px] h-[600px] bg-electric-purple/10 rounded-full blur-3xl pointer-events-none" />
 
       {/* Back to Home */}
       <Link href="/" className="absolute top-8 left-8 text-white/70 hover:text-white flex items-center gap-2 transition-colors z-20">
