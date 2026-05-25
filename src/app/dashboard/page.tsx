@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import Link from "next/link";
 import { m, AnimatePresence } from "framer-motion";
 import {
   TrendingUp,
@@ -18,6 +19,9 @@ import {
   Filter,
   Search,
   FileCheck2,
+  FolderGit,
+  Download,
+  Cpu,
 } from "lucide-react";
 
 // Mock Database Items
@@ -39,6 +43,64 @@ const mockMessages = [
 export default function DashboardPage() {
   // To-Do Checklist State
   const [todoInput, setTodoInput] = useState("");
+  
+  // Dynamic State telemetry from localStorage
+  const [inboxCount, setInboxCount] = useState(0);
+  const [unreadCount, setUnreadCount] = useState(0);
+  const [projectsCount, setProjectsCount] = useState(0);
+  const [templatesDownloadSum, setTemplatesDownloadSum] = useState(0);
+  const [recentMessages, setRecentMessages] = useState<any[]>([]);
+
+  useEffect(() => {
+    // 1. Inbox
+    const cachedMessages = localStorage.getItem("darkpan_messages");
+    if (cachedMessages) {
+      try {
+        const parsed = JSON.parse(cachedMessages);
+        setInboxCount(parsed.length);
+        setUnreadCount(parsed.filter((m: any) => m.status === "unread").length);
+        setRecentMessages(parsed.slice(0, 3));
+      } catch (e) {
+        console.error(e);
+      }
+    } else {
+      setInboxCount(3);
+      setUnreadCount(1);
+      setRecentMessages([
+        { id: "msg-1", name: "Johnathan Doe", email: "john.doe@techvibe.io", subject: "Custom E-Commerce Platform Query", message: "Hey Rakibul,\n\nI saw your stunning SHUVO.DEV portfolio and the Tier 3 custom interactive experiences...", date: "2026-05-24T14:32:00Z", status: "unread", starred: true, archived: false },
+        { id: "msg-2", name: "Sarah Connor", email: "sarah.c@cyberdyne.org", subject: "Portfolio Development & SEO Support", message: "Hello Shuvo,\n\nI was testing your portfolio speed and was absolutely blown away by the 0.0018s CLS...", date: "2026-05-23T09:15:00Z", status: "read", starred: false, archived: false },
+        { id: "msg-3", name: "Bruce Wayne", email: "bwayne@wayneenterprise.com", subject: "Interactive Showcase App & Templates", message: "Rakibul,\n\nI need a secure, anonymous client portal dashboard built using Supabase...", date: "2026-05-22T23:10:00Z", status: "replied", starred: true, archived: false }
+      ].slice(0, 3));
+    }
+
+    // 2. Projects
+    const cachedProjects = localStorage.getItem("darkpan_projects");
+    if (cachedProjects) {
+      try {
+        const parsed = JSON.parse(cachedProjects);
+        setProjectsCount(parsed.length);
+      } catch (e) {
+        console.error(e);
+      }
+    } else {
+      setProjectsCount(3);
+    }
+
+    // 3. Templates
+    const cachedTemplates = localStorage.getItem("darkpan_templates");
+    if (cachedTemplates) {
+      try {
+        const parsed = JSON.parse(cachedTemplates);
+        const totalDl = parsed.reduce((sum: number, t: any) => sum + (t.downloadCount || 0), 0);
+        setTemplatesDownloadSum(totalDl);
+      } catch (e) {
+        console.error(e);
+      }
+    } else {
+      setTemplatesDownloadSum(1636);
+    }
+  }, []);
+
   const [todos, setTodos] = useState<{ id: number; text: string; completed: boolean }[]>([
     { id: 1, text: "Sync React 19 Framer Motion components", completed: false },
     { id: 2, text: "Audit SEO tags and JSON-LD schema", completed: true },
@@ -153,35 +215,40 @@ export default function DashboardPage() {
       {/* 1. Stat Cards Grid */}
       <section className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6">
         {[
-          { title: "Today Sale", value: "$1,234", change: "+12.5%", icon: TrendingUp },
-          { title: "Total Sale", value: "$45,900", change: "+8.2%", icon: BarChart3 },
-          { title: "Today Revenue", value: "$850", change: "+5.1%", icon: DollarSign },
-          { title: "Total Revenue", value: "$28,450", change: "+14.3%", icon: PieChart },
+          { title: "Lead Inbox", value: `${inboxCount} Leads`, change: `${unreadCount} Unread`, icon: MessageSquare, color: "text-darkpan-red", href: "/dashboard/messages" },
+          { title: "Active Case Studies", value: `${projectsCount} Projects`, change: "CRUD persistent", icon: FolderGit, color: "text-blue-500", href: "/dashboard/projects" },
+          { title: "Template Downloads", value: templatesDownloadSum.toLocaleString(), change: "ZIP telemetry", icon: Download, color: "text-pink-500", href: "/dashboard/templates" },
+          { title: "Scraper Telemetry", value: "98.9% Health", change: "12 nodes live", icon: Cpu, color: "text-emerald-500", href: "/dashboard/analytics" },
         ].map((card, i) => {
           const Icon = card.icon;
           return (
-            <m.div
+            <Link
               key={card.title}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.05 }}
-              whileHover={{ y: -4 }}
-              className="bg-darkpan-bg border border-darkpan-red/10 rounded-2xl p-6 flex items-center justify-between shadow-[0_4px_20px_rgba(0,0,0,0.4)] hover:border-darkpan-red/30 transition-all duration-300 relative group overflow-hidden"
+              href={card.href}
+              className="focus:outline-none"
             >
-              {/* Decorative glow hover corner */}
-              <div className="absolute -top-10 -right-10 w-24 h-24 bg-darkpan-red/5 rounded-full blur-2xl group-hover:bg-darkpan-red/10 transition-colors" />
+              <m.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.05 }}
+                whileHover={{ y: -4 }}
+                className="bg-darkpan-bg border border-darkpan-red/10 rounded-2xl p-6 flex items-center justify-between shadow-[0_4px_20px_rgba(0,0,0,0.4)] hover:border-darkpan-red/30 transition-all duration-300 relative group overflow-hidden cursor-pointer h-full"
+              >
+                {/* Decorative glow hover corner */}
+                <div className="absolute -top-10 -right-10 w-24 h-24 bg-darkpan-red/5 rounded-full blur-2xl group-hover:bg-darkpan-red/10 transition-colors" />
 
-              <div className="space-y-2">
-                <p className="text-xs uppercase tracking-wider font-bold text-darkpan-slate">{card.title}</p>
-                <h3 className="font-cabinet font-black text-2xl tracking-tight text-white">{card.value}</h3>
-                <span className="text-[10px] font-bold text-emerald-500 bg-emerald-500/10 px-2 py-0.5 rounded-full inline-block">
-                  {card.change}
-                </span>
-              </div>
-              <div className="w-12 h-12 bg-black rounded-xl border border-white/5 flex items-center justify-center text-darkpan-red shadow-[0_0_15px_rgba(0,0,0,0.5)] group-hover:shadow-[0_0_15px_rgba(235,22,22,0.15)] group-hover:border-darkpan-red/20 transition-all duration-300">
-                <Icon className="w-6 h-6" />
-              </div>
-            </m.div>
+                <div className="space-y-2">
+                  <p className="text-xs uppercase tracking-wider font-bold text-darkpan-slate">{card.title}</p>
+                  <h3 className="font-cabinet font-black text-2xl tracking-tight text-white">{card.value}</h3>
+                  <span className="text-[10px] font-bold text-darkpan-red bg-darkpan-red/10 px-2 py-0.5 rounded-full inline-block">
+                    {card.change}
+                  </span>
+                </div>
+                <div className={`w-12 h-12 bg-black rounded-xl border border-white/5 flex items-center justify-center ${card.color} shadow-[0_0_15px_rgba(0,0,0,0.5)] group-hover:shadow-[0_0_15px_rgba(235,22,22,0.15)] group-hover:border-darkpan-red/20 transition-all duration-300`}>
+                  <Icon className="w-6 h-6" />
+                </div>
+              </m.div>
+            </Link>
           );
         })}
       </section>
@@ -485,29 +552,44 @@ export default function DashboardPage() {
               <MessageSquare className="w-5 h-5 text-darkpan-red" />
               Incoming Messages
             </h5>
-            <span className="text-[10px] bg-darkpan-red/10 border border-darkpan-red/20 text-darkpan-red font-bold px-2 py-0.5 rounded-full">
+            <span className="text-[10px] bg-darkpan-red/10 border border-darkpan-red/20 text-darkpan-red font-bold px-2 py-0.5 rounded-full animate-pulse">
               Live
             </span>
           </div>
 
           <div className="flex-1 space-y-4 overflow-y-auto pr-1">
-            {mockMessages.map((m) => (
-              <div key={m.id} className="flex gap-3 hover:bg-white/[0.02] p-2.5 rounded-xl border border-transparent hover:border-white/5 transition-all">
-                <div className="w-9 h-9 rounded-full bg-darkpan-red/10 border border-darkpan-red/20 flex items-center justify-center font-bold text-darkpan-red text-xs relative flex-shrink-0">
-                  {m.user.split(" ").map((n) => n[0]).join("")}
-                  <span className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-500 rounded-full border border-darkpan-bg"></span>
-                </div>
-                <div className="space-y-1">
-                  <div className="flex justify-between w-full">
-                    <p className="text-xs font-bold text-white leading-none">{m.user}</p>
-                    <span className="text-[9px] text-darkpan-slate font-medium">{m.time}</span>
-                  </div>
-                  <p className="text-[11px] text-darkpan-slate font-semibold leading-relaxed">
-                    {m.msg}
-                  </p>
-                </div>
+            {recentMessages.length === 0 ? (
+              <div className="py-16 text-center text-darkpan-slate font-bold text-xs">
+                No incoming messages.
               </div>
-            ))}
+            ) : (
+              recentMessages.map((msg) => (
+                <Link
+                  key={msg.id}
+                  href="/dashboard/messages"
+                  className="flex gap-3 hover:bg-white/[0.02] p-2.5 rounded-xl border border-transparent hover:border-white/5 transition-all text-left focus:outline-none cursor-pointer"
+                >
+                  <div className="w-9 h-9 rounded-full bg-darkpan-red/10 border border-darkpan-red/20 flex items-center justify-center font-bold text-darkpan-red text-xs relative flex-shrink-0">
+                    {msg.name.split(" ").map((n: string) => n[0]).join("")}
+                    {msg.status === "unread" && (
+                      <span className="absolute bottom-0 right-0 w-2 h-2 bg-darkpan-red rounded-full border border-darkpan-bg animate-pulse"></span>
+                    )}
+                  </div>
+                  <div className="space-y-1 overflow-hidden flex-1">
+                    <div className="flex justify-between w-full gap-2">
+                      <p className="text-xs font-bold text-white leading-none truncate">{msg.name}</p>
+                      <span className="text-[9px] text-darkpan-slate font-semibold flex-shrink-0">
+                        {new Date(msg.date).toLocaleDateString(undefined, { month: "short", day: "numeric" })}
+                      </span>
+                    </div>
+                    <p className="text-[10px] text-darkpan-red font-bold truncate leading-none mt-0.5">{msg.subject}</p>
+                    <p className="text-[11px] text-darkpan-slate font-semibold leading-relaxed truncate">
+                      {msg.message}
+                    </p>
+                  </div>
+                </Link>
+              ))
+            )}
           </div>
         </m.div>
 

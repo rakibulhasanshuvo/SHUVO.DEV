@@ -9,7 +9,7 @@ const RainBackground = dynamic(() => import('./RainBackground'), { ssr: false })
 export default function DynamicRain() {
   const isMobile = useIsMobile();
 
-  if (isMobile) return null;
+  if (isMobile === undefined || isMobile) return null;
 
   return <RainBackground />;
 }

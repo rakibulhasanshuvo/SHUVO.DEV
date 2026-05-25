@@ -9,7 +9,7 @@ const InteractiveGridBackground = dynamic(() => import('./InteractiveGridBackgro
 export default function DynamicConstellation() {
   const isMobile = useIsMobile();
 
-  if (isMobile) return null;
+  if (isMobile === undefined || isMobile) return null;
 
   return <InteractiveGridBackground />;
 }

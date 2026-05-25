@@ -5,8 +5,9 @@ import { m } from "framer-motion";
 import CyberCore from "./CyberCore";
 import { useIsMobile } from "@/hooks/use-mobile";
 
-export default function CyberCoreShowcase() {
-  const isMobile = useIsMobile();
+export default function CyberCoreShowcase({ isMobileServer }: { isMobileServer?: boolean }) {
+  const isMobileClient = useIsMobile();
+  const isMobile = isMobileServer ?? isMobileClient;
 
   return (
     <section className="relative flex flex-col items-center justify-center py-24 mb-28 md:mb-36 z-10 overflow-hidden">
@@ -44,7 +45,7 @@ export default function CyberCoreShowcase() {
         {/* Ambient glow behind the core */}
         <div className="absolute inset-0 bg-neon-cyan/20 blur-[60px] rounded-full -z-10 animate-pulse pointer-events-none" />
 
-        {isMobile === true ? (
+        {isMobile === undefined || isMobile === true ? (
           <div className="flex justify-center items-center h-[280px] w-[280px] relative">
             <div className="absolute inset-0 bg-neon-cyan/5 rounded-full blur-[40px] pointer-events-none" />
             <svg width="240" height="240" viewBox="0 0 344 344" className="opacity-90 fill-none stroke-neon-cyan" strokeWidth="1.5">

@@ -3,11 +3,23 @@ import "./globals.css";
 import RootLayoutClient from "@/components/RootLayoutClient";
 
 import type { Viewport } from "next";
-import { JetBrains_Mono } from "next/font/google";
+import { JetBrains_Mono, Plus_Jakarta_Sans, Outfit } from "next/font/google";
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
   variable: "--font-jetbrains-mono",
+  display: "swap",
+});
+
+const plusJakartaSans = Plus_Jakarta_Sans({
+  subsets: ["latin"],
+  variable: "--font-satoshi",
+  display: "swap",
+});
+
+const outfit = Outfit({
+  subsets: ["latin"],
+  variable: "--font-cabinet",
   display: "swap",
 });
 
@@ -56,37 +68,13 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <head>
-        {/* Preload Fontshare stylesheet for Satoshi, Cabinet Grotesk, and Clash Display with display=swap */}
-        <link
-          rel="preconnect"
-          href="https://api.fontshare.com"
-          crossOrigin="anonymous"
-        />
-        <link
-          rel="preconnect"
-          href="https://cdn.fontshare.com"
-          crossOrigin="anonymous"
-        />
-        <link
-          rel="dns-prefetch"
-          href="https://cdn.fontshare.com"
-        />
-        <link
-          href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&f[]=cabinet-grotesk@300,400,500,700,800&f[]=clash-display@200,300,400,500,600,700&display=swap"
-          rel="preload"
-          as="style"
-        />
-        <link 
-          href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&f[]=cabinet-grotesk@300,400,500,700,800&f[]=clash-display@200,300,400,500,600,700&display=swap" 
-          rel="stylesheet" 
-        />
         {/* JSON-LD Schema markup */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className={`${jetbrainsMono.variable} min-h-full flex flex-col bg-cyber-black text-white font-satoshi selection:bg-neon-cyan/30 selection:text-white overflow-x-hidden`}>
+      <body className={`${jetbrainsMono.variable} ${plusJakartaSans.variable} ${outfit.variable} min-h-full flex flex-col bg-cyber-black text-white font-satoshi selection:bg-neon-cyan/30 selection:text-white overflow-x-hidden`}>
         <RootLayoutClient>{children}</RootLayoutClient>
       </body>
     </html>

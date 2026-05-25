@@ -7,11 +7,12 @@ import { useIsMobile } from "@/hooks/use-mobile";
 
 const MotionImage = m(Image);
 
-export default function AboutSection() {
-  const isMobile = useIsMobile();
+export default function AboutSection({ isMobileServer }: { isMobileServer?: boolean }) {
+  const isMobileClient = useIsMobile();
+  const isMobile = isMobileServer ?? isMobileClient;
 
   const getVariants = (delay: number): any => {
-    if (isMobile) {
+    if (isMobile === undefined || isMobile) {
       return {
         hidden: { fill: "rgba(21, 21, 21, 1)", stroke: "rgba(0, 240, 255, 0)", strokeWidth: 0, pathLength: 1 },
         visible: { fill: "rgba(21, 21, 21, 1)", stroke: "rgba(0, 240, 255, 0)", strokeWidth: 0, pathLength: 1 }

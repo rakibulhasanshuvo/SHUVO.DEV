@@ -28,11 +28,12 @@ const techSkills = [
 
 import { useIsMobile } from "@/hooks/use-mobile";
 
-export default function TechPhysicsSandbox() {
+export default function TechPhysicsSandbox({ isMobileServer }: { isMobileServer?: boolean }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [reducedMotion, setReducedMotion] = useState(false);
-  const isMobile = useIsMobile();
+  const isMobileClient = useIsMobile();
+  const isMobile = isMobileServer ?? isMobileClient;
   const [dimensions, setDimensions] = useState({ width: 0, height: 400 });
 
   // Check prefers-reduced-motion
@@ -60,7 +61,7 @@ export default function TechPhysicsSandbox() {
     return () => window.removeEventListener("resize", updateSize);
   }, []);
 
-  const showFallback = reducedMotion || isMobile;
+  const showFallback = reducedMotion || isMobile === undefined || isMobile === true;
 
   // Main Canvas Physics Loop
   useEffect(() => {

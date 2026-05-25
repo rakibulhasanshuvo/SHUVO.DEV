@@ -6,11 +6,18 @@ import { m } from "framer-motion";
 const words = ["Digital Luxury", "High Performance", "Unique Experiences"];
 
 export default function AutotypingText() {
-  const [text, setText] = useState("");
+  const [text, setText] = useState("Digital Luxury");
   const [wordIndex, setWordIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isMounted) return;
+
     let timer: NodeJS.Timeout;
     const currentWord = words[wordIndex];
 
@@ -33,7 +40,7 @@ export default function AutotypingText() {
     }
 
     return () => clearTimeout(timer);
-  }, [text, isDeleting, wordIndex]);
+  }, [text, isDeleting, wordIndex, isMounted]);
 
   return (
     <span className="inline-flex items-center">

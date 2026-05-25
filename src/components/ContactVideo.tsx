@@ -3,8 +3,9 @@
 import React from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
 
-export default function ContactVideo() {
-  const isMobile = useIsMobile();
+export default function ContactVideo({ isMobileServer }: { isMobileServer?: boolean }) {
+  const isMobileClient = useIsMobile();
+  const isMobile = isMobileServer ?? isMobileClient;
 
   if (isMobile) {
     return (

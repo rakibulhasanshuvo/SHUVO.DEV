@@ -20,6 +20,10 @@ import {
   CalendarDays,
   FileCheck2,
   X,
+  FolderGit,
+  Grid,
+  Activity,
+  BadgeDollarSign,
 } from "lucide-react";
 
 export default function DashboardLayout({
@@ -57,6 +61,11 @@ export default function DashboardLayout({
 
   const navLinks = [
     { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
+    { href: "/dashboard/messages", label: "Inbox", icon: Mail },
+    { href: "/dashboard/projects", label: "Projects CRUD", icon: FolderGit },
+    { href: "/dashboard/templates", label: "Templates", icon: Grid },
+    { href: "/dashboard/analytics", label: "Analytics & Scrapers", icon: Activity },
+    { href: "/dashboard/services", label: "Services & Quotes", icon: BadgeDollarSign },
     { href: "/dashboard/widgets", label: "Widgets", icon: CalendarDays },
     { href: "/dashboard/forms", label: "Forms", icon: ToggleLeft },
     { href: "/dashboard/tables", label: "Tables", icon: FileSpreadsheet },

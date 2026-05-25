@@ -74,10 +74,11 @@ const PROJECTS: Project[] = [
 
 import { useIsMobile } from "@/hooks/use-mobile";
 
-export default function StickyStackCards() {
+export default function StickyStackCards({ isMobileServer }: { isMobileServer?: boolean }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [mounted, setMounted] = useState(false);
-  const isMobile = useIsMobile();
+  const isMobileClient = useIsMobile();
+  const isMobile = isMobileServer ?? isMobileClient;
 
   // Verify client mount for Next.js SSR safety
   useEffect(() => {
@@ -91,7 +92,7 @@ export default function StickyStackCards() {
   });
 
   // Render Mobile Fallback: beautiful natural vertical scroll cards with subtle sticky stacked offsets
-  if (mounted && isMobile) {
+  if (isMobile) {
     return (
       <section
         ref={containerRef}

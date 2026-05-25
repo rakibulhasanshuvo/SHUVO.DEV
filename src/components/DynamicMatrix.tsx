@@ -9,7 +9,7 @@ const MatrixBackground = dynamic(() => import('./MatrixBackground'), { ssr: fals
 export default function DynamicMatrix() {
   const isMobile = useIsMobile();
 
-  if (isMobile) return null;
+  if (isMobile === undefined || isMobile) return null;
 
   return <MatrixBackground />;
 }

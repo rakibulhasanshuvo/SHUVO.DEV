@@ -40,10 +40,12 @@ export default async function Home() {
       {/* Background Grid Overlay */}
       <div className="fixed inset-0 pointer-events-none bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:32px_32px] -z-10" />
 
-      {/* Dynamic Quantum Constellation Background (Hidden on mobile breakpoints using CSS grid wrappers) */}
-      <div className="hidden lg:block">
-        <DynamicConstellation />
-      </div>
+      {/* Dynamic Quantum Constellation Background (Omitted entirely on server if mobile device) */}
+      {!isMobile && (
+        <div className="hidden lg:block">
+          <DynamicConstellation />
+        </div>
+      )}
 
       {/* Dynamic Glowing Orbs — CSS hardware-accelerated loops for absolute performance */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
@@ -129,11 +131,11 @@ export default async function Home() {
         </div>
 
         {/* Dynamic Cyber Core section isolated to a performance Client boundary */}
-        <CyberCoreShowcase />
+        <CyberCoreShowcase isMobileServer={isMobile} />
 
         {/* Featured Work section */}
         <section id="work" className="scroll-mt-24 mb-28 md:mb-36">
-          <StickyStackCards />
+          <StickyStackCards isMobileServer={isMobile} />
         </section>
 
         {/* Technical Marquee */}
@@ -187,17 +189,19 @@ export default async function Home() {
         </div>
 
         {/* Angled scrolling showcase */}
-        <AngledGallery />
+        {!isMobile && <AngledGallery />}
 
         {/* Professional About narrative */}
-        <AboutSection />
+        <AboutSection isMobileServer={isMobile} />
 
         {/* Process flow section */}
         <section id="process" className="scroll-mt-24 mb-28 md:mb-36 w-full relative">
           <div className="absolute inset-0 -z-10 opacity-30 overflow-hidden" style={{ maskImage: "linear-gradient(to bottom, transparent, black 10%, black 90%, transparent)", WebkitMaskImage: "linear-gradient(to bottom, transparent, black 10%, black 90%, transparent)" }}>
-            <div className="hidden lg:block w-full h-full">
-              <DynamicRain />
-            </div>
+            {!isMobile && (
+              <div className="hidden lg:block w-full h-full">
+                <DynamicRain />
+              </div>
+            )}
           </div>
           <div className="text-center mb-16 relative z-10 max-w-5xl mx-auto px-6">
             <h2 className="font-cabinet font-bold text-4xl md:text-5xl mb-4 text-white">The Process</h2>
@@ -275,9 +279,11 @@ export default async function Home() {
 
         {/* FAQs */}
         <section id="faq" className="scroll-mt-24 mb-28 md:mb-36 relative overflow-hidden">
-          <div className="absolute inset-0 z-0 opacity-20 hidden lg:block">
-            <DynamicMatrix />
-          </div>
+          {!isMobile && (
+            <div className="absolute inset-0 z-0 opacity-20 hidden lg:block">
+              <DynamicMatrix />
+            </div>
+          )}
           <div className="text-center mb-16">
             <h2 className="font-cabinet font-bold text-4xl md:text-5xl mb-4 text-white">Frequently Asked Questions</h2>
             <p className="text-zinc-200 max-w-2xl mx-auto font-medium relative z-10 drop-shadow-sm">
@@ -393,7 +399,7 @@ export default async function Home() {
           <div className="h-full w-full relative sm:h-[calc(100%-2rem)] sm:self-end">
             <div className="absolute inset-0 bg-gradient-to-b sm:bg-gradient-to-l from-transparent via-black/50 to-black z-10" />
             <div className="absolute inset-0 bg-gradient-to-r from-transparent to-black/20 z-10" />
-            <ContactVideo />
+            <ContactVideo isMobileServer={isMobile} />
           </div>
         </section>
 
@@ -464,7 +470,9 @@ export default async function Home() {
 
           <div className="flex flex-col md:flex-row justify-between items-center text-text-muted text-xs font-satoshi border-t border-white/5 pt-8">
             <p>© 2026 M.R.H. Shuvo. All rights reserved.</p>
-            <div className="flex gap-4 mt-4 md:mt-0">
+            <div className="flex gap-4 mt-4 md:mt-0 items-center">
+              <Link href="/dashboard" className="text-neon-cyan hover:underline font-bold transition-all focus-visible:ring-1 focus-visible:ring-neon-cyan rounded px-1">Admin Dashboard</Link>
+              <span className="text-white/10">|</span>
               <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
               <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
             </div>
