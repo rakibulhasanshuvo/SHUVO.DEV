@@ -158,7 +158,7 @@ export default function TemplatesPage() {
           {/* ==========================================
               📊 PLATFORM DIAGNOSTICS HUD PANEL
              ========================================== */}
-          <div className="pt-6 grid grid-cols-3 gap-4 max-w-xl mx-auto font-mono text-[9px] sm:text-[10px] tracking-[0.15em] text-zinc-500 uppercase">
+          <div className="pt-6 grid grid-cols-3 gap-4 max-w-xl mx-auto font-mono text-xs sm:text-xs tracking-[0.15em] text-zinc-500 uppercase">
             <div className="py-3 rounded-2xl border border-white/5 bg-[#0A0A0C]/50">
               <span className="block text-white text-[13px] sm:text-[14px] font-bold tracking-tight mb-0.5">03 Active</span>
               SHELF ASSETS
@@ -211,7 +211,7 @@ export default function TemplatesPage() {
               onChange={(e) => setSearch(e.target.value)}
               className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-[12px] font-mono tracking-wide text-white placeholder-white/20 focus:outline-none focus:border-neon-cyan/40 focus:bg-white/[0.08] transition-all"
             />
-            <span className="absolute right-4 top-1/2 -translate-y-1/2 text-white/25 font-mono text-[9px] uppercase tracking-wider">CMD+K</span>
+            <span className="absolute right-4 top-1/2 -translate-y-1/2 text-white/25 font-mono text-xs uppercase tracking-wider">CMD+K</span>
           </div>
         </section>
 
@@ -251,7 +251,7 @@ export default function TemplatesPage() {
                   <div className="p-6 flex-1 flex flex-col justify-between gap-6">
                     <div className="space-y-3">
                       <div className="flex justify-between items-center border-b border-white/5 pb-2">
-                        <span className="text-[9px] font-mono font-bold tracking-[0.18em] text-zinc-500 uppercase">
+                        <span className="text-xs font-mono font-bold tracking-[0.18em] text-zinc-500 uppercase">
                           {template.category}
                         </span>
                         <span className={`w-1.5 h-1.5 rounded-full ${style?.dotColor} ${style?.dotGlow}`} />
@@ -272,7 +272,7 @@ export default function TemplatesPage() {
                         {template.tags.map((t) => (
                           <span
                             key={t}
-                            className="text-[9px] font-mono tracking-wider font-semibold px-2.5 py-1 bg-white/[0.03] border border-white/5 hover:border-white/15 rounded-lg text-zinc-500 hover:text-zinc-300 transition-colors select-none"
+                            className="text-xs font-mono tracking-wider font-semibold px-2.5 py-1 bg-white/[0.03] border border-white/5 hover:border-white/15 rounded-lg text-zinc-500 hover:text-zinc-300 transition-colors select-none"
                           >
                             {t}
                           </span>

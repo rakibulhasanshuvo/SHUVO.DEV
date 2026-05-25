@@ -276,7 +276,7 @@ export default function TemplatesPage() {
             className="bg-darkpan-bg border border-darkpan-red/10 rounded-2xl overflow-hidden shadow-2xl flex flex-col group relative"
           >
             {/* Status indicator pill absolute */}
-            <span className={`absolute top-4 left-4 text-[9px] uppercase tracking-wider font-extrabold px-2.5 py-1 rounded-full z-10 ${
+            <span className={`absolute top-4 left-4 text-xs uppercase tracking-wider font-extrabold px-2.5 py-1 rounded-full z-10 ${
               temp.status === "active"
                 ? "bg-emerald-500/10 border border-emerald-500/20 text-emerald-400"
                 : temp.status === "draft"
@@ -491,7 +491,7 @@ export default function TemplatesPage() {
                   
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="space-y-1">
-                      <label className="text-[9px] uppercase tracking-wider text-darkpan-slate font-extrabold">Asset Title</label>
+                      <label className="text-xs uppercase tracking-wider text-darkpan-slate font-extrabold">Asset Title</label>
                       <input
                         type="text"
                         value={taslTitle}
@@ -501,7 +501,7 @@ export default function TemplatesPage() {
                       />
                     </div>
                     <div className="space-y-1">
-                      <label className="text-[9px] uppercase tracking-wider text-darkpan-slate font-extrabold">Asset Author</label>
+                      <label className="text-xs uppercase tracking-wider text-darkpan-slate font-extrabold">Asset Author</label>
                       <input
                         type="text"
                         value={taslAuthor}
@@ -514,7 +514,7 @@ export default function TemplatesPage() {
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="space-y-1">
-                      <label className="text-[9px] uppercase tracking-wider text-darkpan-slate font-extrabold">Asset Source URL</label>
+                      <label className="text-xs uppercase tracking-wider text-darkpan-slate font-extrabold">Asset Source URL</label>
                       <input
                         type="text"
                         value={taslSource}
@@ -524,7 +524,7 @@ export default function TemplatesPage() {
                       />
                     </div>
                     <div className="space-y-1">
-                      <label className="text-[9px] uppercase tracking-wider text-darkpan-slate font-extrabold">Asset License criteria</label>
+                      <label className="text-xs uppercase tracking-wider text-darkpan-slate font-extrabold">Asset License criteria</label>
                       <input
                         type="text"
                         value={taslLicense}
@@ -549,7 +549,7 @@ export default function TemplatesPage() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-1">
-                    <label className="text-[9px] uppercase tracking-wider text-darkpan-slate font-extrabold">WebM Preview MP4/WebM Link</label>
+                    <label className="text-xs uppercase tracking-wider text-darkpan-slate font-extrabold">WebM Preview MP4/WebM Link</label>
                     <input
                       type="text"
                       value={previewWebmUrl}
@@ -559,7 +559,7 @@ export default function TemplatesPage() {
                     />
                   </div>
                   <div className="space-y-1">
-                    <label className="text-[9px] uppercase tracking-wider text-darkpan-slate font-extrabold">Zip Download Link</label>
+                    <label className="text-xs uppercase tracking-wider text-darkpan-slate font-extrabold">Zip Download Link</label>
                     <input
                       type="text"
                       value={downloadUrl}

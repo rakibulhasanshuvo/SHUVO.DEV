@@ -268,7 +268,7 @@ export default function DashboardPage() {
 
           <div className="flex-1 min-h-[220px] flex items-end justify-between relative px-2 pt-6 border-b border-white/5 pb-2">
             {/* Grid horizontal markers */}
-            <div className="absolute inset-x-0 bottom-2 top-0 flex flex-col justify-between pointer-events-none text-[9px] text-darkpan-slate/50">
+            <div className="absolute inset-x-0 bottom-2 top-0 flex flex-col justify-between pointer-events-none text-xs text-darkpan-slate/50">
               <div className="border-t border-white/5 w-full pt-1">3k</div>
               <div className="border-t border-white/5 w-full pt-1">2k</div>
               <div className="border-t border-white/5 w-full pt-1">1k</div>
@@ -431,7 +431,7 @@ export default function DashboardPage() {
                 );
               })}
             </svg>
-            <div className="flex justify-between text-[9px] text-darkpan-slate font-bold px-2 mt-1">
+            <div className="flex justify-between text-xs text-darkpan-slate font-bold px-2 mt-1">
               <span>Jan</span>
               <span>Feb</span>
               <span>Mar</span>
@@ -578,7 +578,7 @@ export default function DashboardPage() {
                   <div className="space-y-1 overflow-hidden flex-1">
                     <div className="flex justify-between w-full gap-2">
                       <p className="text-xs font-bold text-white leading-none truncate">{msg.name}</p>
-                      <span className="text-[9px] text-darkpan-slate font-semibold flex-shrink-0">
+                      <span className="text-xs text-darkpan-slate font-semibold flex-shrink-0">
                         {new Date(msg.date).toLocaleDateString(undefined, { month: "short", day: "numeric" })}
                       </span>
                     </div>

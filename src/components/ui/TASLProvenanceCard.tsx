@@ -44,11 +44,11 @@ export default function TASLProvenanceCard({
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
             <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
           </span>
-          <span className="text-[9px] font-mono font-bold tracking-widest text-emerald-400 uppercase">
+          <span className="text-xs font-mono font-bold tracking-widest text-emerald-400 uppercase">
             VERIFIED PROVENANCE
           </span>
         </div>
-        <span className="text-[9px] font-mono text-white/30 uppercase tracking-widest">{certId}</span>
+        <span className="text-xs font-mono text-white/30 uppercase tracking-widest">{certId}</span>
       </div>
 
       {/* TASL Content */}

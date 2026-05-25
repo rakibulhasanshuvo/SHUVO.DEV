@@ -225,7 +225,7 @@ export default function AnalyticsPage() {
                 <button
                   key={tab}
                   onClick={() => setActiveTab(tab)}
-                  className={`text-[9px] uppercase font-bold tracking-wider px-2 py-1 rounded transition-colors cursor-pointer ${
+                  className={`text-xs uppercase font-bold tracking-wider px-2 py-1 rounded transition-colors cursor-pointer ${
                     activeTab === tab
                       ? "text-darkpan-red bg-darkpan-red/15"
                       : "text-darkpan-slate hover:text-white"
@@ -284,7 +284,7 @@ export default function AnalyticsPage() {
                 </div>
 
                 {/* Last crawled timestamp */}
-                <div className="flex justify-between items-center text-[9px] text-darkpan-slate">
+                <div className="flex justify-between items-center text-xs text-darkpan-slate">
                   <span>RAM: {bot.memoryMb} MB</span>
                   <span>Last Run: {bot.lastCrawled}</span>
                 </div>

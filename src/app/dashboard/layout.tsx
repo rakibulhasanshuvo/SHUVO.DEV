@@ -336,7 +336,7 @@ export default function DashboardLayout({
                           <div>
                             <p className="text-xs font-bold text-white">Jhon Doe</p>
                             <p className="text-[11px] text-darkpan-slate truncate max-w-[170px]">Stunning design! Can we schedule a meeting?</p>
-                            <span className="text-[9px] text-darkpan-red font-semibold">15 minutes ago</span>
+                            <span className="text-xs text-darkpan-red font-semibold">15 minutes ago</span>
                           </div>
                         </div>
                         <div className="p-4 hover:bg-white/5 transition-colors cursor-pointer flex gap-3">
@@ -350,7 +350,7 @@ export default function DashboardLayout({
                           <div>
                             <p className="text-xs font-bold text-white">Alex Mercer</p>
                             <p className="text-[11px] text-darkpan-slate truncate max-w-[170px]">Is the client dashboard synced with Supabase?</p>
-                            <span className="text-[9px] text-darkpan-slate">1 hour ago</span>
+                            <span className="text-xs text-darkpan-slate">1 hour ago</span>
                           </div>
                         </div>
                       </div>
@@ -397,11 +397,11 @@ export default function DashboardLayout({
                       <div className="divide-y divide-white/5">
                         <div className="p-4 hover:bg-white/5 transition-colors cursor-pointer">
                           <p className="text-xs font-semibold text-white">Client query received</p>
-                          <span className="text-[9px] text-darkpan-red font-semibold">5 mins ago</span>
+                          <span className="text-xs text-darkpan-red font-semibold">5 mins ago</span>
                         </div>
                         <div className="p-4 hover:bg-white/5 transition-colors cursor-pointer">
                           <p className="text-xs font-semibold text-white">CPU utilization is high (92%)</p>
-                          <span className="text-[9px] text-darkpan-slate">22 mins ago</span>
+                          <span className="text-xs text-darkpan-slate">22 mins ago</span>
                         </div>
                       </div>
                       <div className="p-3 text-center border-t border-white/5 bg-black/20">

@@ -264,7 +264,7 @@ export default function ProjectsCRUDPage() {
               
               {/* Featured Badge */}
               {project.featured && (
-                <span className="absolute top-4 left-4 text-[9px] uppercase tracking-widest font-extrabold px-2.5 py-1 rounded-full bg-darkpan-red text-white shadow-[0_0_10px_rgba(235,22,22,0.5)]">
+                <span className="absolute top-4 left-4 text-xs uppercase tracking-widest font-extrabold px-2.5 py-1 rounded-full bg-darkpan-red text-white shadow-[0_0_10px_rgba(235,22,22,0.5)]">
                   Featured Showcase
                 </span>
               )}
@@ -303,7 +303,7 @@ export default function ProjectsCRUDPage() {
                   {project.techStack.map((tech) => (
                     <span
                       key={tech}
-                      className="text-[9px] font-bold text-darkpan-slate bg-black/40 px-2 py-0.5 rounded border border-white/5"
+                      className="text-xs font-bold text-darkpan-slate bg-black/40 px-2 py-0.5 rounded border border-white/5"
                     >
                       {tech}
                     </span>

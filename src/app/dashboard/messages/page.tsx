@@ -297,7 +297,7 @@ export default function MessagesPage() {
                       <div className="flex items-center justify-between mt-1">
                         <div className="flex items-center gap-1.5">
                           {msg.status === "replied" && (
-                            <span className="text-[9px] font-extrabold uppercase tracking-wide bg-emerald-500/10 text-emerald-400 px-1.5 py-0.5 rounded">
+                            <span className="text-xs font-extrabold uppercase tracking-wide bg-emerald-500/10 text-emerald-400 px-1.5 py-0.5 rounded">
                               Replied
                             </span>
                           )}

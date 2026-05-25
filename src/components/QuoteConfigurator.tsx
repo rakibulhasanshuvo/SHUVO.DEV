@@ -261,7 +261,7 @@ export default function QuoteConfigurator({ onSelectSummary }: QuoteConfigurator
               Continue
             </button>
           ) : (
-            <span className="text-[9px] uppercase font-mono tracking-wider text-zinc-500 py-2.5 px-4 border border-white/5 bg-white/[0.01] rounded-xl font-bold">
+            <span className="text-xs uppercase font-mono tracking-wider text-zinc-500 py-2.5 px-4 border border-white/5 bg-white/[0.01] rounded-xl font-bold">
               Estimator Ready
             </span>
           )}
@@ -273,7 +273,7 @@ export default function QuoteConfigurator({ onSelectSummary }: QuoteConfigurator
             <span className="w-1 h-1 rounded-full bg-[#00F0FF]/40 animate-pulse" />
             READOUT
           </div>
-          <span className="text-[9px] font-mono uppercase tracking-[0.15em] text-zinc-500 block font-bold mt-1">
+          <span className="text-xs font-mono uppercase tracking-[0.15em] text-zinc-500 block font-bold mt-1">
             ESTIMATED INVESTMENT
           </span>
           <span className="font-mono text-3xl font-extrabold text-white tracking-tight block">

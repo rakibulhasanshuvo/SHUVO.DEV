@@ -125,7 +125,7 @@ export default function TablesPage() {
                     <td className="py-4">
                       <span
                         onClick={() => handleToggleStatus(user.id)}
-                        className={`px-2.5 py-0.5 rounded-full text-[9px] font-black uppercase inline-block border cursor-pointer select-none transition-all ${
+                        className={`px-2.5 py-0.5 rounded-full text-xs font-black uppercase inline-block border cursor-pointer select-none transition-all ${
                           user.status === "Active"
                             ? "bg-emerald-500/10 text-emerald-500 border-emerald-500/20 hover:bg-emerald-500/20"
                             : user.status === "Inactive"

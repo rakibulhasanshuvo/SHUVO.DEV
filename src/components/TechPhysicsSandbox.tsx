@@ -378,7 +378,7 @@ export default function TechPhysicsSandbox({ isMobileServer }: { isMobileServer?
       className="relative w-full rounded-3xl border border-white/10 bg-[#070709] overflow-hidden shadow-2xl"
     >
       <div className="absolute top-4 left-6 z-20 pointer-events-none">
-        <span className="text-[9px] font-mono font-bold tracking-widest text-neon-cyan uppercase">
+        <span className="text-xs font-mono font-bold tracking-widest text-neon-cyan uppercase">
           SKILLS SANDBOX v1.2
         </span>
       </div>
