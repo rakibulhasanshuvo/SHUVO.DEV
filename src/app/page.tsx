@@ -10,7 +10,10 @@ import AutotypingText from "@/components/ui/AutotypingText";
 import { files, features, CodeIcon } from "@/data/homeData";
 
 // Statically imported UI components (RSC handles these perfectly)
-import ThreeDCarousel from "@/components/ThreeDCarousel";
+import { headers } from "next/headers";
+import DynamicThreeDCarouselClient from "@/components/DynamicThreeDCarouselClient";
+
+
 import PricingCards from "@/components/PricingCards";
 import CyberButton from "@/components/CyberButton";
 import AngledGallery from "@/components/AngledGallery";
@@ -27,7 +30,11 @@ import DynamicConstellation from "@/components/DynamicConstellation";
 import DynamicRain from "@/components/DynamicRain";
 import DynamicMatrix from "@/components/DynamicMatrix";
 
-export default function Home() {
+export default async function Home() {
+  const headersList = await headers();
+  const deviceType = headersList.get("x-device-type") || "desktop";
+  const isMobile = deviceType === "mobile";
+
   return (
     <div className="relative min-h-screen bg-transparent text-white font-satoshi">
       {/* Background Grid Overlay */}
@@ -112,7 +119,11 @@ export default function Home() {
 
             {/* Carousel display, encapsulated in responsive wrapper */}
             <div className="hidden lg:flex justify-center items-center relative z-10">
-              <ThreeDCarousel />
+              {isMobile ? (
+                <div className="w-full h-full min-h-[400px] bg-gradient-to-b from-neutral-950 to-black rounded-3xl border border-white/5" />
+              ) : (
+                <DynamicThreeDCarouselClient />
+              )}
             </div>
           </section>
         </div>

@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import InteractiveGridBackground from "@/components/InteractiveGridBackground";
 import { TiltCard } from "@/components/ui/TiltCard";
 import { projectsData } from "./data";
@@ -273,30 +273,30 @@ export default function ProjectsPage() {
             📣 HEADER SECTION
            ========================================== */}
         <header className="mb-24 text-center max-w-3xl mx-auto space-y-6">
-          <motion.span
+          <m.span
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
             className="text-xs font-mono font-bold tracking-widest text-neon-cyan uppercase px-4 py-1.5 bg-neon-cyan/10 border border-neon-cyan/20 rounded-full"
           >
             SYSTEM ARCHITECTURES
-          </motion.span>
-          <motion.h1
+          </m.span>
+          <m.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
             className="text-5xl md:text-7xl font-bold font-cabinet tracking-tight text-white leading-none"
           >
             Deep-Dive Projects
-          </motion.h1>
-          <motion.p
+          </m.h1>
+          <m.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-gray-400 text-base sm:text-lg font-light leading-relaxed"
           >
             Explore actual case studies of robust data pipelines, scalable PostgreSQL relations, Pre-warmed container allocations, and ESBuild registries.
-          </motion.p>
+          </m.p>
         </header>
 
         {/* ==========================================

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { m, AnimatePresence } from "framer-motion";
 import {
   TrendingUp,
   BarChart3,
@@ -160,7 +160,7 @@ export default function DashboardPage() {
         ].map((card, i) => {
           const Icon = card.icon;
           return (
-            <motion.div
+            <m.div
               key={card.title}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -181,7 +181,7 @@ export default function DashboardPage() {
               <div className="w-12 h-12 bg-black rounded-xl border border-white/5 flex items-center justify-center text-darkpan-red shadow-[0_0_15px_rgba(0,0,0,0.5)] group-hover:shadow-[0_0_15px_rgba(235,22,22,0.15)] group-hover:border-darkpan-red/20 transition-all duration-300">
                 <Icon className="w-6 h-6" />
               </div>
-            </motion.div>
+            </m.div>
           );
         })}
       </section>
@@ -189,7 +189,7 @@ export default function DashboardPage() {
       {/* 2. Charts Section */}
       <section className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Worldwide Sales SVG Bar Chart */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="bg-darkpan-bg border border-darkpan-red/10 rounded-2xl p-6 shadow-2xl flex flex-col"
@@ -222,19 +222,19 @@ export default function DashboardPage() {
                     {/* Interactive Tooltip popup */}
                     <AnimatePresence>
                       {barHovered === index && (
-                        <motion.div
+                        <m.div
                           initial={{ opacity: 0, y: -5, scale: 0.9 }}
                           animate={{ opacity: 1, y: -25, scale: 1 }}
                           exit={{ opacity: 0, y: -5, scale: 0.9 }}
                           className="absolute -top-6 left-1/2 -translate-x-1/2 bg-black border border-darkpan-red/30 px-2 py-0.5 rounded text-[10px] font-bold text-white z-20 whitespace-nowrap shadow-[0_0_10px_rgba(0,0,0,0.8)]"
                         >
                           ${data.sales}
-                        </motion.div>
+                        </m.div>
                       )}
                     </AnimatePresence>
 
                     {/* Glowing bar */}
-                    <motion.div
+                    <m.div
                       initial={{ height: 0 }}
                       animate={{ height: `${barHeightPct}%` }}
                       transition={{ duration: 0.8, ease: "easeOut" }}
@@ -249,10 +249,10 @@ export default function DashboardPage() {
               );
             })}
           </div>
-        </motion.div>
+        </m.div>
 
         {/* Sales & Revenue Double Area/Line SVG Chart */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="bg-darkpan-bg border border-darkpan-red/10 rounded-2xl p-6 shadow-2xl flex flex-col"
@@ -303,7 +303,7 @@ export default function DashboardPage() {
               />
 
               {/* Line Paths */}
-              <motion.path
+              <m.path
                 initial={{ pathLength: 0 }}
                 animate={{ pathLength: 1 }}
                 transition={{ duration: 1.2 }}
@@ -313,7 +313,7 @@ export default function DashboardPage() {
                 strokeWidth="2.5"
                 className="glow-red-sm"
               />
-              <motion.path
+              <m.path
                 initial={{ pathLength: 0 }}
                 animate={{ pathLength: 1 }}
                 transition={{ duration: 1.2, delay: 0.2 }}
@@ -373,7 +373,7 @@ export default function DashboardPage() {
               <span>Jun</span>
             </div>
           </div>
-        </motion.div>
+        </m.div>
       </section>
 
       {/* 3. Recent Sales Section */}
@@ -427,7 +427,7 @@ export default function DashboardPage() {
             <tbody className="divide-y divide-white/5">
               <AnimatePresence>
                 {filteredSales.map((item, idx) => (
-                  <motion.tr
+                  <m.tr
                     key={item.id}
                     initial={{ opacity: 0, x: -10 }}
                     animate={{ opacity: 1, x: 0 }}
@@ -457,7 +457,7 @@ export default function DashboardPage() {
                         Details
                       </button>
                     </td>
-                  </motion.tr>
+                  </m.tr>
                 ))}
               </AnimatePresence>
               {filteredSales.length === 0 && (
@@ -475,7 +475,7 @@ export default function DashboardPage() {
       {/* 4. Widgets Section Grid */}
       <section className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
         {/* Messages Feed Widget */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="bg-darkpan-bg border border-darkpan-red/10 rounded-2xl p-6 shadow-2xl flex flex-col h-[380px]"
@@ -509,10 +509,10 @@ export default function DashboardPage() {
               </div>
             ))}
           </div>
-        </motion.div>
+        </m.div>
 
         {/* Custom Interactive Calendar Widget */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="bg-darkpan-bg border border-darkpan-red/10 rounded-2xl p-6 shadow-2xl flex flex-col h-[380px]"
@@ -585,10 +585,10 @@ export default function DashboardPage() {
               })}
             </div>
           </div>
-        </motion.div>
+        </m.div>
 
         {/* To-Do Checklist Widget */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="bg-darkpan-bg border border-darkpan-red/10 rounded-2xl p-6 shadow-2xl flex flex-col h-[380px]"
@@ -624,7 +624,7 @@ export default function DashboardPage() {
           <div className="flex-1 overflow-y-auto space-y-2 pr-1">
             <AnimatePresence>
               {todos.map((todo) => (
-                <motion.div
+                <m.div
                   key={todo.id}
                   initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
@@ -656,7 +656,7 @@ export default function DashboardPage() {
                   >
                     <Trash2 className="w-3.5 h-3.5" />
                   </button>
-                </motion.div>
+                </m.div>
               ))}
             </AnimatePresence>
             {todos.length === 0 && (
@@ -665,7 +665,7 @@ export default function DashboardPage() {
               </div>
             )}
           </div>
-        </motion.div>
+        </m.div>
       </section>
     </div>
   );

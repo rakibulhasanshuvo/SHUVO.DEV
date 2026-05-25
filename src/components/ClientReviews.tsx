@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { TiltCard } from "./ui/TiltCard";
 
 const reviews = [
@@ -39,15 +39,15 @@ export default function ClientReviews() {
       
       {/* Section Header */}
       <div className="text-center mb-16">
-        <motion.span 
+        <m.span
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           className="text-xs font-mono font-bold tracking-widest text-neon-cyan uppercase px-3 py-1 bg-neon-cyan/10 border border-neon-cyan/20 rounded-full"
         >
           CLIENT TESTIMONIALS
-        </motion.span>
-        <motion.h2 
+        </m.span>
+        <m.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -55,8 +55,8 @@ export default function ClientReviews() {
           className="text-4xl md:text-5xl font-cabinet font-black text-white tracking-tight mt-6"
         >
           Valued <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-cyan to-electric-purple animate-gradient drop-shadow-[0_0_20px_rgba(0,240,255,0.15)]">Feedback</span>
-        </motion.h2>
-        <motion.p
+        </m.h2>
+        <m.p
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -64,14 +64,14 @@ export default function ClientReviews() {
           className="text-text-muted max-w-xl mx-auto font-light mt-4 text-sm sm:text-base leading-relaxed"
         >
           Read reviews from global product leaders and creators who have collaborated with SHUVO.DEV to engineer high-end web applications.
-        </motion.p>
+        </m.p>
       </div>
 
       {/* Bento Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         
         {/* Bento Cell 1: Overall Score Badge (Left Column) */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
@@ -99,10 +99,10 @@ export default function ClientReviews() {
             <span className="font-medium">Upwork Job Success</span>
             <span className="font-mono text-white font-bold bg-white/5 border border-white/10 px-2.5 py-0.5 rounded-full">100%</span>
           </div>
-        </motion.div>
+        </m.div>
 
         {/* Bento Cell 2: Primary Testimonial (Center-Right Span 2 Columns) */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -140,10 +140,10 @@ export default function ClientReviews() {
               </div>
             </div>
           </TiltCard>
-        </motion.div>
+        </m.div>
 
         {/* Bento Cell 3: Second Testimonial (Left Column) */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -169,10 +169,10 @@ export default function ClientReviews() {
               </div>
             </div>
           </TiltCard>
-        </motion.div>
+        </m.div>
 
         {/* Bento Cell 4: Third Testimonial (Center Column) */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -198,10 +198,10 @@ export default function ClientReviews() {
               </div>
             </div>
           </TiltCard>
-        </motion.div>
+        </m.div>
 
         {/* Bento Cell 5: Stats Rating Breakdown (Right Column) */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
@@ -217,7 +217,7 @@ export default function ClientReviews() {
                 <dt className="text-xs font-semibold text-text-muted mb-1.5 uppercase tracking-wider">Quality of Work</dt>
                 <dd className="flex items-center justify-between gap-3">
                   <div className="w-full bg-white/10 rounded-full h-2 overflow-hidden">
-                    <motion.div
+                    <m.div
                       className="bg-neon-cyan h-2 rounded-full shadow-[0_0_12px_rgba(0,240,255,0.4)]"
                       initial={{ width: 0 }}
                       whileInView={{ width: '96%' }}
@@ -232,7 +232,7 @@ export default function ClientReviews() {
                 <dt className="text-xs font-semibold text-text-muted mb-1.5 uppercase tracking-wider">Communication</dt>
                 <dd className="flex items-center justify-between gap-3">
                   <div className="w-full bg-white/10 rounded-full h-2 overflow-hidden">
-                    <motion.div
+                    <m.div
                       className="bg-electric-purple h-2 rounded-full shadow-[0_0_12px_rgba(161,0,255,0.4)]"
                       initial={{ width: 0 }}
                       whileInView={{ width: '100%' }}
@@ -247,7 +247,7 @@ export default function ClientReviews() {
                 <dt className="text-xs font-semibold text-text-muted mb-1.5 uppercase tracking-wider">On-Time Delivery</dt>
                 <dd className="flex items-center justify-between gap-3">
                   <div className="w-full bg-white/10 rounded-full h-2 overflow-hidden">
-                    <motion.div
+                    <m.div
                       className="bg-gradient-to-r from-neon-cyan to-electric-purple h-2 rounded-full shadow-[0_0_12px_rgba(0,240,255,0.2)]"
                       initial={{ width: 0 }}
                       whileInView={{ width: '98%' }}
@@ -264,7 +264,7 @@ export default function ClientReviews() {
           <div className="pt-6 border-t border-white/5 text-center text-[10px] font-mono text-darkpan-slate uppercase tracking-widest font-bold mt-4">
             Audited May 2026
           </div>
-        </motion.div>
+        </m.div>
 
       </div>
     </section>

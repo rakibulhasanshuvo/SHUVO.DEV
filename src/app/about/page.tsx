@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import TechPhysicsSandbox from "@/components/TechPhysicsSandbox";
 import HardwareShowroom from "@/components/HardwareShowroom";
 
@@ -196,7 +196,7 @@ export default function AboutPage() {
             <div className="absolute left-[9px] md:left-24 top-0 bottom-0 w-0.5 bg-gradient-to-b from-[#00F0FF] via-[#A100FF] to-transparent opacity-30 pointer-events-none" />
 
             {timelineData.map((item, idx) => (
-              <motion.div
+              <m.div
                 key={item.title}
                 initial={{ opacity: 0, y: 15 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -244,7 +244,7 @@ export default function AboutPage() {
                     </div>
                   </div>
                 </div>
-              </motion.div>
+              </m.div>
             ))}
           </div>
         </section>

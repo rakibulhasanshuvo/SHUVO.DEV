@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { m, AnimatePresence } from "framer-motion";
 
 interface FAQItemProps {
   question: string;
@@ -12,7 +12,7 @@ interface FAQItemProps {
 
 const FAQItem = ({ question, answer, isOpen, onClick }: FAQItemProps) => {
   return (
-    <motion.div
+    <m.div
       initial={false}
       className={`group glass rounded-xl border transition-all duration-300 overflow-hidden ${
         isOpen
@@ -27,7 +27,7 @@ const FAQItem = ({ question, answer, isOpen, onClick }: FAQItemProps) => {
         <span className={`font-semibold transition-colors duration-300 ${isOpen ? "text-neon-cyan" : "text-white group-hover:text-white/90"}`}>
           {question}
         </span>
-        <motion.div
+        <m.div
           animate={{ rotate: isOpen ? 180 : 0 }}
           transition={{ duration: 0.3, ease: "easeInOut" }}
           className={`shrink-0 flex items-center justify-center size-6 rounded-full ${isOpen ? "bg-neon-cyan/20 text-neon-cyan" : "bg-white/5 text-white/50 group-hover:text-white/80 group-hover:bg-white/10"} transition-colors`}
@@ -35,12 +35,12 @@ const FAQItem = ({ question, answer, isOpen, onClick }: FAQItemProps) => {
           <svg className="size-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
           </svg>
-        </motion.div>
+        </m.div>
       </button>
 
       <AnimatePresence initial={false}>
         {isOpen && (
-          <motion.div
+          <m.div
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
@@ -49,10 +49,10 @@ const FAQItem = ({ question, answer, isOpen, onClick }: FAQItemProps) => {
             <div className="px-5 pb-5 pt-0 text-zinc-300 text-sm font-medium leading-relaxed">
               {answer}
             </div>
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
-    </motion.div>
+    </m.div>
   );
 };
 

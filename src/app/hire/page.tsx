@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { m, AnimatePresence } from "framer-motion";
 import PricingCards from "@/components/PricingCards";
 import QuoteConfigurator from "@/components/QuoteConfigurator";
 import FaqAccordion from "@/components/FaqAccordion";
@@ -275,24 +275,24 @@ export default function HireMePage() {
 
                   <AnimatePresence mode="wait">
                     {status === "success" && (
-                      <motion.span
+                      <m.span
                         initial={{ opacity: 0, x: -10 }}
                         animate={{ opacity: 1, x: 0 }}
                         exit={{ opacity: 0, x: 10 }}
                         className="text-xs font-mono text-[#00F0FF] font-bold"
                       >
                         ✓ {responseMsg}
-                      </motion.span>
+                      </m.span>
                     )}
                     {status === "error" && (
-                      <motion.span
+                      <m.span
                         initial={{ opacity: 0, x: -10 }}
                         animate={{ opacity: 1, x: 0 }}
                         exit={{ opacity: 0, x: 10 }}
                         className="text-xs font-mono text-red-500 font-bold"
                       >
                         ⚠ {responseMsg}
-                      </motion.span>
+                      </m.span>
                     )}
                   </AnimatePresence>
                 </div>

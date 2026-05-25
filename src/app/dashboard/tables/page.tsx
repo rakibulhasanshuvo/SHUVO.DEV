@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { m, AnimatePresence } from "framer-motion";
 import { FileSpreadsheet, Search, ChevronLeft, ChevronRight, UserMinus, UserCheck, ShieldAlert } from "lucide-react";
 
 // Mock Database Items
@@ -64,7 +64,7 @@ export default function TablesPage() {
       </div>
 
       {/* 1. Database Table Card */}
-      <motion.div
+      <m.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         className="bg-darkpan-bg border border-darkpan-red/10 rounded-2xl p-6 shadow-2xl space-y-6"
@@ -106,7 +106,7 @@ export default function TablesPage() {
             <tbody className="divide-y divide-white/5">
               <AnimatePresence mode="popLayout">
                 {paginatedUsers.map((user, idx) => (
-                  <motion.tr
+                  <m.tr
                     key={user.id}
                     layout
                     initial={{ opacity: 0, y: 10 }}
@@ -157,7 +157,7 @@ export default function TablesPage() {
                         </button>
                       </div>
                     </td>
-                  </motion.tr>
+                  </m.tr>
                 ))}
               </AnimatePresence>
               {paginatedUsers.length === 0 && (
@@ -199,7 +199,7 @@ export default function TablesPage() {
             </div>
           </div>
         )}
-      </motion.div>
+      </m.div>
     </div>
   );
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { m, AnimatePresence } from "framer-motion";
 
 interface CodeBlockProps {
   code: string;
@@ -64,7 +64,7 @@ export default function CodeBlock({
           >
             <AnimatePresence mode="wait">
               {copied ? (
-                <motion.svg
+                <m.svg
                   key="check"
                   initial={{ scale: 0.8, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
@@ -75,9 +75,9 @@ export default function CodeBlock({
                   viewBox="0 0 24 24"
                 >
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7" />
-                </motion.svg>
+                </m.svg>
               ) : (
-                <motion.svg
+                <m.svg
                   key="copy"
                   initial={{ scale: 0.8, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
@@ -93,7 +93,7 @@ export default function CodeBlock({
                     strokeWidth="2"
                     d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"
                   />
-                </motion.svg>
+                </m.svg>
               )}
             </AnimatePresence>
           </button>

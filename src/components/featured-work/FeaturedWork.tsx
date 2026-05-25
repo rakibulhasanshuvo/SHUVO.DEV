@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, startTransition } from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import { m, useReducedMotion } from "framer-motion";
 import Link from "next/link";
 import ProjectCard from "./ProjectCard";
 
@@ -110,7 +110,7 @@ export default function FeaturedWork() {
       </div>
 
       {/* Liquid Bento Grid — Desktop */}
-      <motion.div
+      <m.div
         role="list"
         aria-label="Featured projects"
         className="hidden md:grid gap-6 min-h-[600px]"
@@ -128,7 +128,7 @@ export default function FeaturedWork() {
             onHoverEnd={() => startTransition(() => setHoveredId(null))}
           />
         ))}
-      </motion.div>
+      </m.div>
 
       {/* Mobile Fallback: Stacked Layout with full semantic structure */}
       <div role="list" aria-label="Featured projects" className="grid md:hidden grid-cols-1 gap-6">

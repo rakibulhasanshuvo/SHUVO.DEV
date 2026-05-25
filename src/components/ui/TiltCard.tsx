@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef, useState } from "react";
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { m, useMotionValue, useSpring, useTransform } from "framer-motion";
 
 interface TiltCardProps {
   children: React.ReactNode;
@@ -76,7 +76,7 @@ export const TiltCard = ({ children, className = "", glowColor = "rgba(0, 240, 2
   };
 
   return (
-    <motion.div
+    <m.div
       ref={ref}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
@@ -91,7 +91,7 @@ export const TiltCard = ({ children, className = "", glowColor = "rgba(0, 240, 2
       className={`relative rounded-2xl group ${className}`}
     >
       {/* Interactive Spotlight Glow */}
-      <motion.div
+      <m.div
         className="pointer-events-none absolute -inset-px rounded-2xl opacity-0 transition-opacity duration-300 group-hover:opacity-100 z-10"
         style={{
           background: useTransform(
@@ -108,6 +108,6 @@ export const TiltCard = ({ children, className = "", glowColor = "rgba(0, 240, 2
       <div className="relative h-full z-20" style={{ transform: "translateZ(20px)" }}>
         {children}
       </div>
-    </motion.div>
+    </m.div>
   );
 };
