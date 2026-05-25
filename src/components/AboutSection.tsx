@@ -112,7 +112,7 @@ export default function AboutSection({ isMobileServer }: { isMobileServer?: bool
             damping: 15,
             delay: 0.2,
           }}
-          className="glass p-8 md:p-10 rounded-3xl border border-white/10 bg-gradient-to-br from-[#0e0e10]/90 to-[#050506]/95 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.5),0_0_40px_rgba(0,240,255,0.03)] group hover:border-neon-cyan/20 transition-all duration-500"
+          className="glass p-8 md:p-10 rounded-3xl border border-white/10 bg-gradient-to-br from-[#0e0e10]/95 to-[#050506]/98 md:from-[#0e0e10]/90 md:to-[#050506]/95 backdrop-blur-2xl md:backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.5),0_0_40px_rgba(0,240,255,0.03)] group hover:border-neon-cyan/20 transition-all duration-500"
         >
           <div className="absolute -top-10 -left-10 w-32 h-32 bg-neon-cyan/5 rounded-full blur-3xl pointer-events-none" />
           
