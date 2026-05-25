@@ -4,7 +4,7 @@ import React, { useState, useEffect, use } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { motion, AnimatePresence } from "framer-motion";
+import { m, AnimatePresence } from "framer-motion";
 import TASLProvenanceCard from "@/components/ui/TASLProvenanceCard";
 
 interface PageProps {
@@ -186,7 +186,7 @@ export default function TemplateDetailsPage({ params }: PageProps) {
                       }`}
                     >
                       {viewport === mode && (
-                        <motion.div
+                        <m.div
                           layoutId="activeViewport"
                           className="absolute inset-0 bg-white/10 rounded-lg -z-10"
                           transition={{ type: "spring", stiffness: 380, damping: 30 }}

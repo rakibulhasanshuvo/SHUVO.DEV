@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 
 const PricingCards = () => {
   const [isHovered, setIsHovered] = useState(false);
@@ -68,7 +68,7 @@ const PricingCards = () => {
       {/* Mobile view - simple vertical stack */}
       <div className="md:hidden grid grid-cols-1 gap-8 w-full">
         {tiers.map((tier, idx) => (
-          <motion.div
+          <m.div
             key={`mobile-${idx}`}
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -114,7 +114,7 @@ const PricingCards = () => {
                 </button>
               </div>
             </div>
-          </motion.div>
+          </m.div>
         ))}
       </div>
 
@@ -126,7 +126,7 @@ const PricingCards = () => {
       >
         {tiers.map((tier, idx) => {
           return (
-            <motion.div
+            <m.div
               key={`desktop-${idx}`}
               className="absolute w-[340px] h-[550px] cursor-pointer"
               initial={false}
@@ -193,7 +193,7 @@ const PricingCards = () => {
                   </button>
                 </div>
               </div>
-            </motion.div>
+            </m.div>
           );
         })}
       </div>

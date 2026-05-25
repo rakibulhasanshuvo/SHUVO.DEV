@@ -2,7 +2,7 @@
 import Image from "next/image";
 
 import React, { useState, useMemo, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { m, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 
 interface Template {
@@ -191,7 +191,7 @@ export default function TemplatesPage() {
                 }`}
               >
                 {selectedCategory === category && (
-                  <motion.div
+                  <m.div
                     layoutId="activeCategoryBackdrop"
                     className="absolute inset-0 bg-white/10 border border-white/15 rounded-xl -z-10"
                     transition={{ type: "spring", stiffness: 380, damping: 30 }}
@@ -224,7 +224,7 @@ export default function TemplatesPage() {
               const style = templatesStyleConfig[template.id as keyof typeof templatesStyleConfig];
 
               return (
-                <motion.div
+                <m.div
                   key={template.id}
                   initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -289,7 +289,7 @@ export default function TemplatesPage() {
                       </Link>
                     </div>
                   </div>
-                </motion.div>
+                </m.div>
               );
             })}
           </AnimatePresence>

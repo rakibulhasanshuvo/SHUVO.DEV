@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import CyberCore from "./CyberCore";
 import { useIsMobile } from "@/hooks/use-mobile";
 
@@ -19,7 +19,7 @@ export default function CyberCoreShowcase() {
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[350px] border border-white/5 rounded-full animate-[spin_10s_linear_infinite] -z-10 pointer-events-none" />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[450px] h-[450px] border border-white/5 border-dashed rounded-full animate-[spin_15s_linear_infinite_reverse] -z-10 pointer-events-none" />
 
-      <motion.div
+      <m.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
@@ -32,9 +32,9 @@ export default function CyberCoreShowcase() {
         <p className="text-text-muted max-w-xl mx-auto font-light text-sm sm:text-base">
           The central hub of our digital infrastructure. Monitoring vital stats and ensuring peak performance across all nodes in the network.
         </p>
-      </motion.div>
+      </m.div>
 
-      <motion.div
+      <m.div
         initial={{ opacity: 0, scale: 0.8 }}
         whileInView={{ opacity: 1, scale: 1 }}
         viewport={{ once: true }}
@@ -86,7 +86,7 @@ export default function CyberCoreShowcase() {
             </div>
           </div>
         </div>
-      </motion.div>
+      </m.div>
     </section>
   );
 }

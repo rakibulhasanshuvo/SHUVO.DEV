@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import {
   Cpu,
   Database,
@@ -59,7 +59,7 @@ export default function WidgetsPage() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* 1. Live System Diagnostics (CPU, RAM, Disk) */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="bg-darkpan-bg border border-darkpan-red/10 rounded-2xl p-6 shadow-2xl space-y-6"
@@ -77,7 +77,7 @@ export default function WidgetsPage() {
                 <span className="text-darkpan-red font-bold">{cpu}%</span>
               </div>
               <div className="w-full h-2 bg-black rounded-full overflow-hidden border border-white/5 relative">
-                <motion.div
+                <m.div
                   className="h-full bg-darkpan-red glow-red-sm"
                   animate={{ width: `${cpu}%` }}
                   transition={{ type: "spring", stiffness: 100, damping: 10 }}
@@ -92,7 +92,7 @@ export default function WidgetsPage() {
                 <span className="text-white font-bold">{ram}%</span>
               </div>
               <div className="w-full h-2 bg-black rounded-full overflow-hidden border border-white/5 relative">
-                <motion.div
+                <m.div
                   className="h-full bg-white"
                   animate={{ width: `${ram}%` }}
                   transition={{ type: "spring", stiffness: 100, damping: 10 }}
@@ -107,7 +107,7 @@ export default function WidgetsPage() {
                 <span className="text-darkpan-slate font-bold">{disk}%</span>
               </div>
               <div className="w-full h-2 bg-black rounded-full overflow-hidden border border-white/5 relative">
-                <motion.div
+                <m.div
                   className="h-full bg-darkpan-slate"
                   animate={{ width: `${disk}%` }}
                   transition={{ type: "spring", stiffness: 100, damping: 10 }}
@@ -130,10 +130,10 @@ export default function WidgetsPage() {
               Disk
             </div>
           </div>
-        </motion.div>
+        </m.div>
 
         {/* 2. Admin Scratchpad Notepad */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.05 }}
@@ -159,10 +159,10 @@ export default function WidgetsPage() {
             placeholder="Write notes, clipboard blocks, or rapid ideas here. Automatically persists inside your local storage!"
             className="flex-1 bg-black border border-white/10 focus:border-darkpan-red/40 rounded-2xl p-4 text-xs focus:outline-none transition-all placeholder:text-darkpan-slate text-white leading-relaxed resize-none min-h-[140px]"
           />
-        </motion.div>
+        </m.div>
 
         {/* 3. Glowing Weather Panel Widget */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
@@ -188,10 +188,10 @@ export default function WidgetsPage() {
             <div className="absolute inset-0 bg-darkpan-red/10 rounded-full blur-xl group-hover:bg-darkpan-red/15 transition-colors" />
             <CloudSun className="w-16 h-16 text-darkpan-red relative z-10 drop-shadow-[0_0_15px_rgba(235,22,22,0.3)] animate-bounce" style={{ animationDuration: "3s" }} />
           </div>
-        </motion.div>
+        </m.div>
 
         {/* 4. Project Server Status Widget */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.15 }}
@@ -214,7 +214,7 @@ export default function WidgetsPage() {
           <div className="w-20 h-20 bg-black rounded-2xl border border-white/5 flex items-center justify-center text-emerald-500 shadow-[0_0_15px_rgba(0,0,0,0.5)]">
             <Database className="w-10 h-10 drop-shadow-[0_0_10px_rgba(16,185,129,0.2)]" />
           </div>
-        </motion.div>
+        </m.div>
       </div>
     </div>
   );

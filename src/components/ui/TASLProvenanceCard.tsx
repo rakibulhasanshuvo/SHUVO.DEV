@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 
 interface TASLProps {
   title: string;
@@ -23,7 +23,7 @@ export default function TASLProvenanceCard({
   certId = "CERT-2026-SHUVO-00X"
 }: TASLProps) {
   return (
-    <motion.div
+    <m.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       className="relative w-full rounded-2xl border border-neon-cyan/20 bg-gradient-to-br from-[#0B0B0E]/90 to-[#040405]/95 backdrop-blur-xl p-6 shadow-[0_20px_50px_rgba(0,0,0,0.6),0_0_30px_rgba(0,240,255,0.02)] overflow-hidden"
@@ -105,6 +105,6 @@ export default function TASLProvenanceCard({
       <div className="absolute right-[-20px] bottom-[-20px] w-24 h-24 bg-neon-cyan/5 rounded-full border border-neon-cyan/10 flex items-center justify-center rotate-12 pointer-events-none select-none">
         <span className="text-[11px] font-mono text-neon-cyan/20 tracking-wider font-bold">CC ORIGINAL</span>
       </div>
-    </motion.div>
+    </m.div>
   );
 }

@@ -4,7 +4,7 @@ import Image from "next/image";
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { motion, AnimatePresence } from "framer-motion";
+import { m, AnimatePresence } from "framer-motion";
 import {
   LayoutDashboard,
   Menu,
@@ -77,13 +77,13 @@ export default function DashboardLayout({
               DP
             </span>
             {sidebarOpen && (
-              <motion.span
+              <m.span
                 initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
                 className="font-cabinet font-black text-xl tracking-wider text-darkpan-red"
               >
                 DARKPAN
-              </motion.span>
+              </m.span>
             )}
           </Link>
         </div>
@@ -105,14 +105,14 @@ export default function DashboardLayout({
             <span className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-500 rounded-full border border-darkpan-bg"></span>
           </div>
           {sidebarOpen && (
-            <motion.div
+            <m.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               className="overflow-hidden whitespace-nowrap"
             >
               <h6 className="font-bold text-sm tracking-wide text-white">Rakibul Shuvo</h6>
               <span className="text-xs text-darkpan-slate font-medium">Administrator</span>
-            </motion.div>
+            </m.div>
           )}
         </div>
 
@@ -133,7 +133,7 @@ export default function DashboardLayout({
               >
                 {/* Active side indicator */}
                 {isActive && (
-                  <motion.div
+                  <m.div
                     layoutId="sidebar-active-indicator"
                     className="absolute left-0 top-3 bottom-3 w-1 bg-darkpan-red rounded-r-md"
                   />
@@ -160,7 +160,7 @@ export default function DashboardLayout({
         {mobileSidebarOpen && (
           <>
             {/* Backdrop */}
-            <motion.div
+            <m.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 0.5 }}
               exit={{ opacity: 0 }}
@@ -168,7 +168,7 @@ export default function DashboardLayout({
               className="fixed inset-0 bg-black z-45 lg:hidden"
             />
             {/* Drawer */}
-            <motion.aside
+            <m.aside
               initial={{ x: "-100%" }}
               animate={{ x: 0 }}
               exit={{ x: "-100%" }}
@@ -242,7 +242,7 @@ export default function DashboardLayout({
                   © SHUVO.DEV Admin
                 </span>
               </div>
-            </motion.aside>
+            </m.aside>
           </>
         )}
       </AnimatePresence>
@@ -305,7 +305,7 @@ export default function DashboardLayout({
                 {messageOpen && (
                   <>
                     <div className="fixed inset-0 z-40" onClick={() => setMessageOpen(false)} />
-                    <motion.div
+                    <m.div
                       initial={{ opacity: 0, y: 10, scale: 0.95 }}
                       animate={{ opacity: 1, y: 0, scale: 1 }}
                       exit={{ opacity: 0, y: 10, scale: 0.95 }}
@@ -350,7 +350,7 @@ export default function DashboardLayout({
                           See all messages
                         </Link>
                       </div>
-                    </motion.div>
+                    </m.div>
                   </>
                 )}
               </AnimatePresence>
@@ -375,7 +375,7 @@ export default function DashboardLayout({
                 {notificationOpen && (
                   <>
                     <div className="fixed inset-0 z-40" onClick={() => setNotificationOpen(false)} />
-                    <motion.div
+                    <m.div
                       initial={{ opacity: 0, y: 10, scale: 0.95 }}
                       animate={{ opacity: 1, y: 0, scale: 1 }}
                       exit={{ opacity: 0, y: 10, scale: 0.95 }}
@@ -400,7 +400,7 @@ export default function DashboardLayout({
                           See all notifications
                         </Link>
                       </div>
-                    </motion.div>
+                    </m.div>
                   </>
                 )}
               </AnimatePresence>
@@ -435,7 +435,7 @@ export default function DashboardLayout({
                 {profileOpen && (
                   <>
                     <div className="fixed inset-0 z-40" onClick={() => setProfileOpen(false)} />
-                    <motion.div
+                    <m.div
                       initial={{ opacity: 0, y: 10, scale: 0.95 }}
                       animate={{ opacity: 1, y: 0, scale: 1 }}
                       exit={{ opacity: 0, y: 10, scale: 0.95 }}
@@ -468,7 +468,7 @@ export default function DashboardLayout({
                           Exit Dashboard
                         </Link>
                       </div>
-                    </motion.div>
+                    </m.div>
                   </>
                 )}
               </AnimatePresence>

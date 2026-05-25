@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { m, AnimatePresence } from "framer-motion";
 import { GlowingInput, GlowingTextArea } from "@/components/GlowingInput";
 import QuoteConfigurator from "@/components/QuoteConfigurator";
 
@@ -173,24 +173,24 @@ export default function ContactPage() {
 
               <AnimatePresence mode="wait">
                 {status === "success" && (
-                  <motion.span
+                  <m.span
                     initial={{ opacity: 0, x: -10 }}
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: 10 }}
                     className="text-xs font-mono text-[#00F0FF]"
                   >
                     ✓ {responseMsg}
-                  </motion.span>
+                  </m.span>
                 )}
                 {status === "error" && (
-                  <motion.span
+                  <m.span
                     initial={{ opacity: 0, x: -10 }}
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: 10 }}
                     className="text-xs font-mono text-red-500"
                   >
                     ⚠ {responseMsg}
-                  </motion.span>
+                  </m.span>
                 )}
               </AnimatePresence>
             </div>

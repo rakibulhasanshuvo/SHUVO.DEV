@@ -2,12 +2,12 @@
 
 import React from 'react';
 import styles from './ThreeDCarousel.module.css';
-import { useIsMobile } from "@/hooks/use-mobile";
+
 
 const ThreeDCarousel = () => {
-  const isMobile = useIsMobile();
 
-  if (isMobile) return null;
+
+
   // Array of 10 high-fidelity cyber-luxury cards representing Shuvo's engineering and design stack
   const cards = [
     {

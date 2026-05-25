@@ -1,11 +1,11 @@
 "use client";
 
 import React from "react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import Image from "next/image";
 import { useIsMobile } from "@/hooks/use-mobile";
 
-const MotionImage = motion(Image);
+const MotionImage = m(Image);
 
 export default function AboutSection() {
   const isMobile = useIsMobile();
@@ -39,7 +39,7 @@ export default function AboutSection() {
     >
       {/* 1. Stretched Background Text "SHUVO" */}
       <div className="absolute inset-0 w-full h-full flex items-center justify-center select-none pointer-events-none z-0">
-        <motion.svg
+        <m.svg
           className="w-full h-full"
           viewBox="0 0 1000 400"
           preserveAspectRatio="none"
@@ -49,36 +49,36 @@ export default function AboutSection() {
           viewport={{ once: true, amount: 0.2 }}
         >
           {/* S */}
-          <motion.path
+          <m.path
             d="M 30,0 L 190,0 L 190,140 L 140,140 L 140,50 L 80,50 L 80,175 L 190,175 L 190,400 L 30,400 L 30,260 L 80,260 L 80,350 L 140,350 L 140,225 L 30,225 Z"
             variants={getVariants(0.0)}
           />
           
           {/* H */}
-          <motion.path
+          <m.path
             d="M 220,0 L 270,0 L 270,175 L 330,175 L 330,0 L 380,0 L 380,400 L 330,400 L 330,225 L 270,225 L 270,400 L 220,400 Z"
             variants={getVariants(0.2)}
           />
           
           {/* U */}
-          <motion.path
+          <m.path
             d="M 410,0 L 460,0 L 460,350 L 520,350 L 520,0 L 570,0 L 570,400 L 410,400 Z"
             variants={getVariants(0.4)}
           />
           
           {/* V */}
-          <motion.path
+          <m.path
             d="M 600,0 L 650,0 L 680,270 L 710,0 L 760,0 L 700,400 L 660,400 Z"
             variants={getVariants(0.6)}
           />
           
           {/* O */}
-          <motion.path
+          <m.path
             fillRule="evenodd"
             d="M 790,0 L 950,0 L 950,400 L 790,400 Z M 840,50 L 840,350 L 900,350 L 900,50 Z"
             variants={getVariants(0.8)}
           />
-        </motion.svg>
+        </m.svg>
       </div>
 
       {/* 2. User Portrait (Absolute overlay on the right) */}
@@ -101,7 +101,7 @@ export default function AboutSection() {
 
       {/* 3. Sleek Floating Description Card (Rectangle on the bottom-left) */}
       <div className="relative w-full max-w-xl z-20 mt-auto md:mb-6">
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.1 }}
@@ -155,7 +155,7 @@ export default function AboutSection() {
               </span>
             </a>
           </div>
-        </motion.div>
+        </m.div>
       </div>
 
       {/* Dynamic Ambient neon cyan glow behind portrait */}

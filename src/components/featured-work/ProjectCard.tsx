@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef, useState, useCallback, useEffect } from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import { m, useReducedMotion } from "framer-motion";
 import Link from "next/link";
 
 interface Project {
@@ -80,7 +80,7 @@ export default function ProjectCard({
         : 1;
 
   return (
-    <motion.div
+    <m.div
       ref={cardRef}
       role="listitem"
       onMouseMove={onMouseMove}
@@ -108,7 +108,7 @@ export default function ProjectCard({
       <div className={`absolute inset-0 bg-gradient-to-br ${project.color} opacity-20 group-hover:opacity-30 transition-opacity duration-500`} />
 
       {/* Semantic card content with animated opacity */}
-      <motion.article
+      <m.article
         animate={{ opacity: contentOpacity }}
         transition={{ duration: 0.3 }}
         className="relative z-10 flex flex-col justify-between h-full w-full p-8"
@@ -142,7 +142,7 @@ export default function ProjectCard({
             Explore Case Study &rarr;
           </span>
         </div>
-      </motion.article>
-    </motion.div>
+      </m.article>
+    </m.div>
   );
 }

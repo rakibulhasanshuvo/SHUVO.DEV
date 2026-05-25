@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { ToggleLeft, HelpCircle, Lock, User, Mail, Upload, File } from "lucide-react";
 
 export default function FormsPage() {
@@ -37,7 +37,7 @@ export default function FormsPage() {
 
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
         {/* 1. Basic Admin Account Form */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="bg-darkpan-bg border border-darkpan-red/10 rounded-2xl p-6 shadow-2xl space-y-6"
@@ -120,10 +120,10 @@ export default function FormsPage() {
               </button>
             </div>
           </form>
-        </motion.div>
+        </m.div>
 
         {/* 2. Advanced Controls & Upload Toggles */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.05 }}
@@ -147,7 +147,7 @@ export default function FormsPage() {
                   formData.newsletter ? "bg-darkpan-red" : "bg-white/10"
                 }`}
               >
-                <motion.div
+                <m.div
                   layout
                   className="w-5 h-5 rounded-full bg-white shadow-md"
                   animate={{ x: formData.newsletter ? 16 : 0 }}
@@ -191,7 +191,7 @@ export default function FormsPage() {
               </div>
             </div>
           </div>
-        </motion.div>
+        </m.div>
       </div>
     </div>
   );

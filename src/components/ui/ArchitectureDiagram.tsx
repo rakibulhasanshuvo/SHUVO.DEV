@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 
 const nodes = [
   {
@@ -66,7 +66,7 @@ export default function ArchitectureDiagram() {
           strokeWidth="4"
           strokeLinecap="round"
         />
-        <motion.path
+        <m.path
           d="M 175,100 L 275,100"
           fill="none"
           stroke="url(#cyanPurpleGrad)"
@@ -85,7 +85,7 @@ export default function ArchitectureDiagram() {
           strokeWidth="4"
           strokeLinecap="round"
         />
-        <motion.path
+        <m.path
           d="M 425,100 L 525,100"
           fill="none"
           stroke="url(#purpleGreenGrad)"
@@ -119,7 +119,7 @@ export default function ArchitectureDiagram() {
               onMouseLeave={() => setActiveNode(null)}
             >
               {/* Outer Glow Circle */}
-              <motion.circle
+              <m.circle
                 cx={node.x}
                 cy={node.y}
                 r="46"
@@ -146,7 +146,7 @@ export default function ArchitectureDiagram() {
               />
 
               {/* Hotspot Pulse */}
-              <motion.circle
+              <m.circle
                 cx={node.x}
                 cy={node.y}
                 r="3"
@@ -185,7 +185,7 @@ export default function ArchitectureDiagram() {
       {/* Explanatory Details Box */}
       <div className="w-full min-h-[90px] mt-6 px-4 py-4 rounded-2xl border border-white/5 bg-white/[0.01] transition-all duration-300">
         {activeNodeData ? (
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 5 }}
             animate={{ opacity: 1, y: 0 }}
             className="flex flex-col gap-1.5"
@@ -200,7 +200,7 @@ export default function ArchitectureDiagram() {
             <p className="text-xs text-text-muted leading-relaxed font-satoshi font-light">
               {activeNodeData.info}
             </p>
-          </motion.div>
+          </m.div>
         ) : (
           <div className="flex flex-col items-center justify-center h-full text-center py-2">
             <p className="text-xs text-white/30 font-satoshi font-light">
