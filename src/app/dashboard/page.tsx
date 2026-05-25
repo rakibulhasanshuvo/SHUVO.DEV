@@ -520,7 +520,7 @@ export default function DashboardPage() {
                       </span>
                     </td>
                     <td className="py-4 pr-4 text-right">
-                      <button className="px-3 py-1 rounded-full text-[10px] font-bold text-white border border-white/10 hover:border-darkpan-red hover:bg-darkpan-red/10 transition-all duration-300">
+                      <button aria-label="View invoice details" className="px-3 py-1 rounded-full text-[10px] font-bold text-white border border-white/10 hover:border-darkpan-red hover:bg-darkpan-red/10 transition-all duration-300">
                         Details
                       </button>
                     </td>
@@ -606,12 +606,14 @@ export default function DashboardPage() {
             </h5>
             <div className="flex gap-2">
               <button
+                aria-label="Previous Month"
                 onClick={() => setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1))}
                 className="w-6 h-6 rounded bg-black border border-white/5 flex items-center justify-center cursor-pointer text-white hover:bg-white/5"
               >
                 <ChevronLeft className="w-3.5 h-3.5" />
               </button>
               <button
+                aria-label="Next Month"
                 onClick={() => setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1))}
                 className="w-6 h-6 rounded bg-black border border-white/5 flex items-center justify-center cursor-pointer text-white hover:bg-white/5"
               >
@@ -652,6 +654,7 @@ export default function DashboardPage() {
                 return (
                   <button
                     key={`day-${day}`}
+                    aria-label={`Select ${day} ${monthNames[currentDate.getMonth()]} ${currentDate.getFullYear()}`}
                     onClick={() => setSelectedDay(day)}
                     className={`w-8 h-8 mx-auto rounded-full flex items-center justify-center cursor-pointer transition-all ${
                       isSelected
@@ -696,6 +699,7 @@ export default function DashboardPage() {
             />
             <button
               type="submit"
+              aria-label="Add Task"
               className="w-8 h-8 rounded-xl bg-darkpan-red hover:bg-darkpan-red/90 flex items-center justify-center cursor-pointer text-white shadow-[0_0_10px_rgba(235,22,22,0.2)] transition-colors flex-shrink-0 animate-pulse"
             >
               <Plus className="w-4 h-4" />
@@ -716,6 +720,7 @@ export default function DashboardPage() {
                   <div className="flex items-center gap-3">
                     <button
                       type="button"
+                      aria-label={`Toggle task ${todo.text}`}
                       onClick={() => toggleTodo(todo.id)}
                       className={`w-4 h-4 rounded border flex items-center justify-center cursor-pointer transition-colors ${
                         todo.completed
@@ -733,6 +738,7 @@ export default function DashboardPage() {
                   </div>
                   <button
                     type="button"
+                    aria-label={`Delete task ${todo.text}`}
                     onClick={() => deleteTodo(todo.id)}
                     className="opacity-0 group-hover:opacity-100 text-darkpan-slate hover:text-darkpan-red transition-opacity cursor-pointer p-0.5 rounded"
                   >
