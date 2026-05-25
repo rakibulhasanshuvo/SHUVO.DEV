@@ -36,7 +36,7 @@ export default function AboutSection({ isMobileServer }: { isMobileServer?: bool
   return (
     <section
       id="about"
-      className="relative w-full min-h-[600px] md:min-h-[750px] lg:min-h-[850px] bg-transparent overflow-hidden flex flex-col justify-end px-6 py-12 md:py-20 lg:px-16 scroll-mt-24 mb-28 md:mb-36"
+      className="relative w-full min-h-[700px] md:min-h-[750px] lg:min-h-[850px] bg-transparent overflow-hidden flex flex-col justify-start md:justify-end px-6 py-16 md:py-20 lg:px-16 scroll-mt-24 mb-28 md:mb-36 pt-24 md:pt-12"
     >
       {/* 1. Stretched Background Text "SHUVO" */}
       <div className="absolute inset-0 w-full h-full flex items-center justify-center select-none pointer-events-none z-0">
@@ -83,7 +83,7 @@ export default function AboutSection({ isMobileServer }: { isMobileServer?: bool
       </div>
 
       {/* 2. User Portrait (Absolute overlay on the right) */}
-      <div className="absolute right-0 bottom-0 w-full max-w-[320px] sm:max-w-[420px] md:max-w-[500px] lg:max-w-[620px] h-[75%] sm:h-[85%] md:h-[95%] lg:h-full z-10 flex items-end justify-end pointer-events-none">
+      <div className="absolute right-0 bottom-0 w-full max-w-[320px] sm:max-w-[420px] md:max-w-[500px] lg:max-w-[620px] h-[60%] sm:h-[70%] md:h-[95%] lg:h-full z-10 flex items-end justify-center md:justify-end pointer-events-none">
         <MotionImage width={764} height={1024}
           initial={{ opacity: 0, x: 80, scale: 0.95 }}
           whileInView={{ opacity: 1, x: 0, scale: 1 }}
@@ -101,7 +101,7 @@ export default function AboutSection({ isMobileServer }: { isMobileServer?: bool
       </div>
 
       {/* 3. Sleek Floating Description Card (Rectangle on the bottom-left) */}
-      <div className="relative w-full max-w-xl z-20 mt-auto md:mb-6">
+      <div className="relative w-full max-w-xl z-20 mt-8 md:mt-auto md:mb-6 mx-auto md:mx-0">
         <m.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
