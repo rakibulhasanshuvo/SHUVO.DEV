@@ -210,7 +210,7 @@ export default function TemplateDetailsPage({ params }: PageProps) {
                 >
                   {/* State 1: Sandbox Terminal is booting */}
                   {sandboxStatus === "booting" && (
-                    <div className="absolute inset-0 z-20 bg-black p-6 font-mono text-[9px] sm:text-xs text-neon-cyan leading-relaxed flex flex-col justify-end overflow-hidden select-none">
+                    <div className="absolute inset-0 z-20 bg-black p-6 font-mono text-xs sm:text-xs text-neon-cyan leading-relaxed flex flex-col justify-end overflow-hidden select-none">
                       <div className="space-y-1.5">
                         {cliLogs.map((log, index) => (
                           <div key={index}>

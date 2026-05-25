@@ -105,7 +105,7 @@ export default function HardwareShowroom() {
               <line x1="80" y1="295" x2="80" y2="345" stroke="rgba(255,255,255,0.1)" strokeWidth="1" strokeDasharray="3 3" />
               <line x1="110" y1="295" x2="110" y2="345" stroke="rgba(255,255,255,0.1)" strokeWidth="1" strokeDasharray="3 3" />
               <line x1="140" y1="295" x2="140" y2="345" stroke="rgba(255,255,255,0.1)" strokeWidth="1" strokeDasharray="3 3" />
-              <text x="60" y="325" fill="rgba(255,255,255,0.3)" className="font-mono text-[9px]">1200W PSU</text>
+              <text x="60" y="325" fill="rgba(255,255,255,0.3)" className="font-mono text-xs">1200W PSU</text>
               
               {/* Motherboard Tray Outline */}
               <rect x="120" y="60" width="280" height="220" rx="8" fill="rgba(12,12,14,0.7)" stroke="rgba(255,255,255,0.1)" strokeWidth="1" />
@@ -130,7 +130,7 @@ export default function HardwareShowroom() {
               <circle cx="190" cy="240" r="18" stroke="rgba(255,255,255,0.1)" strokeWidth="1" />
               <circle cx="250" cy="240" r="18" stroke="rgba(255,255,255,0.1)" strokeWidth="1" />
               <circle cx="310" cy="240" r="18" stroke="rgba(255,255,255,0.1)" strokeWidth="1" />
-              <text x="155" y="243" fill="rgba(255,255,255,0.5)" className="font-mono text-[9px] tracking-widest font-bold">RTX 4090</text>
+              <text x="155" y="243" fill="rgba(255,255,255,0.5)" className="font-mono text-xs tracking-widest font-bold">RTX 4090</text>
               
               {/* Liquid Cooling Tubes (flowing layout) */}
               <path d="M 230,120 C 230,80 140,80 140,110 L 140,180" fill="none" stroke="rgba(0,240,255,0.2)" strokeWidth="4" />
@@ -178,7 +178,7 @@ export default function HardwareShowroom() {
           {activeHotspot ? (
             <div className="glass p-6 rounded-2xl border border-white/10 bg-gradient-to-br from-[#0c0c0e] to-[#040405] backdrop-blur-xl relative overflow-hidden">
               {/* Small indicator light */}
-              <div className="absolute top-4 right-4 flex items-center gap-1.5 font-mono text-[9px] uppercase tracking-widest text-[#00F0FF] font-bold">
+              <div className="absolute top-4 right-4 flex items-center gap-1.5 font-mono text-xs uppercase tracking-widest text-[#00F0FF] font-bold">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#00F0FF] animate-pulse" />
                 Live Spec
               </div>
@@ -200,11 +200,11 @@ export default function HardwareShowroom() {
 
                 <div className="pt-3 border-t border-white/5 flex items-center justify-between">
                   <div>
-                    <span className="text-[9px] uppercase font-mono tracking-widest text-[#00F0FF] block font-bold">Benchmarked Index</span>
+                    <span className="text-xs uppercase font-mono tracking-widest text-[#00F0FF] block font-bold">Benchmarked Index</span>
                     <span className="text-[#00F0FF] text-[11px] font-mono font-bold block mt-0.5">{activeHotspot.performanceMetric}</span>
                   </div>
                   
-                  <span className="text-[9px] bg-white/5 text-zinc-400 font-mono py-1 px-2.5 rounded-md border border-white/5 uppercase tracking-wider font-bold">
+                  <span className="text-xs bg-white/5 text-zinc-400 font-mono py-1 px-2.5 rounded-md border border-white/5 uppercase tracking-wider font-bold">
                     100% OK
                   </span>
                 </div>

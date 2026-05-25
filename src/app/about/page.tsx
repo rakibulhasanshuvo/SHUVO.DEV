@@ -80,11 +80,11 @@ export default function AboutPage() {
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
                 </span>
-                <span className="text-[9px] font-mono font-bold tracking-widest text-emerald-400 uppercase">
+                <span className="text-xs font-mono font-bold tracking-widest text-emerald-400 uppercase">
                   OPERATOR DIAGNOSTIC
                 </span>
               </div>
-              <span className="text-[9px] font-mono text-white/30 uppercase tracking-widest">SYS ACTIVE</span>
+              <span className="text-xs font-mono text-white/30 uppercase tracking-widest">SYS ACTIVE</span>
             </div>
 
             {/* Core Stats Inventory */}
@@ -128,7 +128,7 @@ export default function AboutPage() {
                 <path d="M 60,60 L 240,60 M 150,10 L 150,110" stroke="currentColor" strokeWidth="0.5" strokeDasharray="5 5" />
                 <rect x="135" y="45" width="30" height="30" rx="3" stroke="currentColor" strokeWidth="1" />
               </svg>
-              <div className="relative z-10 text-center font-mono text-[9px] text-zinc-500 uppercase tracking-[0.2em] font-bold leading-normal">
+              <div className="relative z-10 text-center font-mono text-xs text-zinc-500 uppercase tracking-[0.2em] font-bold leading-normal">
                 BIOMETRIC IDENTITY VERIFIED<br />
                 <span className="text-[#00F0FF] text-[10px] font-bold mt-1 inline-block">SECURE NODE // SHUVO.DEV</span>
               </div>
@@ -166,7 +166,7 @@ export default function AboutPage() {
           {/* Gravity Simulator Console */}
           <div className="relative rounded-3xl border border-white/5 bg-[#0A0A0C]/40 p-4 sm:p-6 shadow-2xl">
             {/* Console Header Bar */}
-            <div className="flex items-center justify-between pb-3 border-b border-white/5 mb-5 font-mono text-[9px] sm:text-[10px] text-zinc-500 uppercase tracking-widest">
+            <div className="flex items-center justify-between pb-3 border-b border-white/5 mb-5 font-mono text-xs sm:text-xs text-zinc-500 uppercase tracking-widest">
               <div className="flex items-center gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
                 <span>GRAVITY VECTOR SIMULATOR v1.2 // ENGINE ACTIVE</span>
@@ -236,7 +236,7 @@ export default function AboutPage() {
                       {item.tags.map((tag) => (
                         <span
                           key={tag}
-                          className="font-mono text-[9px] tracking-wider font-semibold px-2.5 py-1 bg-white/[0.03] border border-white/5 rounded-lg text-zinc-500 select-none group-hover:text-zinc-300 group-hover:border-white/10 transition-colors"
+                          className="font-mono text-xs tracking-wider font-semibold px-2.5 py-1 bg-white/[0.03] border border-white/5 rounded-lg text-zinc-500 select-none group-hover:text-zinc-300 group-hover:border-white/10 transition-colors"
                         >
                           {tag}
                         </span>

@@ -365,7 +365,7 @@ export default function ProjectsPage() {
                         <span className="block text-2xl font-bold font-cabinet text-white font-mono leading-none tracking-tight">
                           {metric.value}
                         </span>
-                        <span className="block text-[9px] font-mono text-zinc-500 uppercase tracking-widest font-bold mt-2 leading-none">
+                        <span className="block text-xs font-mono text-zinc-500 uppercase tracking-widest font-bold mt-2 leading-none">
                           {metric.label}
                         </span>
                       </div>

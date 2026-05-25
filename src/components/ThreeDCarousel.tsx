@@ -419,7 +419,7 @@ const ThreeDCarousel = () => {
             <div className={`${styles.img} p-6 flex flex-col justify-between h-full w-full select-none text-left`}>
               {/* Header inside the card */}
               <div className="flex justify-between items-center opacity-80">
-                <span className="text-[9px] font-mono tracking-widest px-2 py-0.5 rounded border border-white/5 bg-white/5 font-semibold text-zinc-300" style={{ color: `rgb(${card.color})` }}>
+                <span className="text-xs font-mono tracking-widest px-2 py-0.5 rounded border border-white/5 bg-white/5 font-semibold text-zinc-300" style={{ color: `rgb(${card.color})` }}>
                   {card.tag}
                 </span>
                 <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ backgroundColor: `rgb(${card.color})`, boxShadow: `0 0 8px rgb(${card.color})` }} />

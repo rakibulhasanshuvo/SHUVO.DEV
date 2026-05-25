@@ -229,7 +229,7 @@ export default function HireMePage() {
                     {quoteSummary && (
                       <div className="p-3 bg-[#00F0FF]/5 border border-[#00F0FF]/20 rounded-xl relative overflow-hidden">
                         <div className="absolute inset-y-0 left-0 w-1 bg-[#00F0FF]" />
-                        <span className="text-[9px] font-mono uppercase tracking-[0.18em] text-[#00F0FF] block font-bold">
+                        <span className="text-xs font-mono uppercase tracking-[0.18em] text-[#00F0FF] block font-bold">
                           Active Telemetry Configuration
                         </span>
                         <p className="text-zinc-200 text-xs font-mono mt-1 font-medium leading-relaxed">

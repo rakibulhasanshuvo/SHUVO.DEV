@@ -131,7 +131,7 @@ export default function ContactPage() {
 
                 {quoteSummary && (
                   <div className="p-3 bg-[#00F0FF]/5 border border-[#00F0FF]/25 rounded-xl">
-                    <span className="text-[9px] font-mono uppercase tracking-[0.15em] text-[#00F0FF] block font-bold">Active Estimator Configuration</span>
+                    <span className="text-xs font-mono uppercase tracking-[0.15em] text-[#00F0FF] block font-bold">Active Estimator Configuration</span>
                     <p className="text-white text-xs font-mono mt-1 font-semibold leading-relaxed">{quoteSummary}</p>
                   </div>
                 )}
@@ -212,7 +212,7 @@ export default function ContactPage() {
                 🎖️
               </div>
               <div>
-                <span className="text-[9px] font-mono font-bold text-zinc-500 uppercase tracking-[0.2em] block">Upwork Verified</span>
+                <span className="text-xs font-mono font-bold text-zinc-500 uppercase tracking-[0.2em] block">Upwork Verified</span>
                 <span className="text-white text-base font-clash font-bold block mt-0.5">100% Job Success Score</span>
               </div>
             </div>
@@ -225,7 +225,7 @@ export default function ContactPage() {
           <div className="glass p-6 rounded-3xl border border-white/5 bg-gradient-to-br from-[#0C0C0E]/90 to-[#040405]/95 relative overflow-hidden shadow-xl group hover:border-[#00F0FF]/15 transition-all duration-300 flex flex-col justify-between min-h-[180px]">
             <div className="flex justify-between items-start mb-3 relative z-10">
               <div>
-                <span className="text-[9px] font-mono font-bold text-zinc-500 uppercase tracking-[0.2em] block">Open Source Pulse</span>
+                <span className="text-xs font-mono font-bold text-zinc-500 uppercase tracking-[0.2em] block">Open Source Pulse</span>
                 <span className="text-white text-base font-clash font-bold block mt-0.5">Active Commit Pipelines</span>
               </div>
               <div className="flex items-center gap-1 font-mono text-[8px] text-emerald-400 font-bold bg-emerald-500/10 border border-emerald-500/20 px-1.5 py-0.5 rounded">

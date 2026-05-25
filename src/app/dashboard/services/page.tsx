@@ -400,7 +400,7 @@ export default function ServicesPage() {
                     <td className="p-4">
                       <div className="space-y-0.5">
                         <p className="text-white">{quote.scale} scale</p>
-                        <p className="text-[9px] text-darkpan-red font-bold uppercase">{quote.urgency}</p>
+                        <p className="text-xs text-darkpan-red font-bold uppercase">{quote.urgency}</p>
                       </div>
                     </td>
                     <td className="p-4 text-white font-extrabold">
@@ -422,7 +422,7 @@ export default function ServicesPage() {
                     <td className="p-4 text-right" onClick={(e) => e.stopPropagation()}>
                       <button
                         onClick={() => handleOpenQuoteModal(quote)}
-                        className="px-2.5 py-1.5 rounded bg-black border border-white/10 hover:border-darkpan-red/20 text-white hover:text-darkpan-red transition-all text-[9px] font-bold cursor-pointer"
+                        className="px-2.5 py-1.5 rounded bg-black border border-white/10 hover:border-darkpan-red/20 text-white hover:text-darkpan-red transition-all text-xs font-bold cursor-pointer"
                       >
                         Inspect
                       </button>
@@ -542,7 +542,7 @@ export default function ServicesPage() {
                 <div className="flex items-center justify-between p-4 bg-black/40 rounded-xl border border-white/5">
                   <div className="space-y-0.5">
                     <p className="text-xs font-bold text-white">Active Service Tier Status</p>
-                    <p className="text-[9px] text-darkpan-slate">Controls public visibility on pricing section lists.</p>
+                    <p className="text-xs text-darkpan-slate">Controls public visibility on pricing section lists.</p>
                   </div>
                   <button
                     type="button"
@@ -617,11 +617,11 @@ export default function ServicesPage() {
               <div className="space-y-4 text-xs">
                 <div className="grid grid-cols-2 gap-4">
                   <div className="bg-black/30 border border-white/5 p-3 rounded-xl">
-                    <p className="text-[9px] uppercase font-bold text-darkpan-slate">Sender</p>
+                    <p className="text-xs uppercase font-bold text-darkpan-slate">Sender</p>
                     <p className="text-white font-bold truncate mt-0.5">{activeQuote.senderEmail}</p>
                   </div>
                   <div className="bg-black/30 border border-white/5 p-3 rounded-xl">
-                    <p className="text-[9px] uppercase font-bold text-darkpan-slate">Subscribed category</p>
+                    <p className="text-xs uppercase font-bold text-darkpan-slate">Subscribed category</p>
                     <p className="text-white font-bold truncate mt-0.5">{activeQuote.category}</p>
                   </div>
                 </div>
@@ -633,7 +633,7 @@ export default function ServicesPage() {
                   </div>
                   <div className="bg-black/30 border border-white/5 p-2 rounded-xl">
                     <p className="text-[8px] uppercase font-bold text-darkpan-slate">Urgency</p>
-                    <p className="text-darkpan-red font-bold mt-0.5 uppercase tracking-wide text-[9px]">{activeQuote.urgency}</p>
+                    <p className="text-darkpan-red font-bold mt-0.5 uppercase tracking-wide text-xs">{activeQuote.urgency}</p>
                   </div>
                   <div className="bg-black/30 border border-white/5 p-2 rounded-xl">
                     <p className="text-[8px] uppercase font-bold text-darkpan-slate">Est. Budget</p>
@@ -642,7 +642,7 @@ export default function ServicesPage() {
                 </div>
 
                 <div className="space-y-1">
-                  <p className="text-[9px] uppercase font-bold text-darkpan-slate">Functional Project Scope Requirements</p>
+                  <p className="text-xs uppercase font-bold text-darkpan-slate">Functional Project Scope Requirements</p>
                   <div className="bg-[#0a0a0c] border border-white/5 p-4 rounded-2xl text-darkpan-slate leading-relaxed max-h-40 overflow-y-auto whitespace-pre-wrap font-medium">
                     {activeQuote.details}
                   </div>
@@ -655,7 +655,7 @@ export default function ServicesPage() {
                     Estimate Compatibility Matcher
                   </p>
                   <div className="space-y-2">
-                    <div className="flex justify-between text-[9px] text-darkpan-slate font-bold">
+                    <div className="flex justify-between text-xs text-darkpan-slate font-bold">
                       <span>BUDGET MATCH STATUS</span>
                       <span className="text-emerald-400 font-extrabold">92% MATCH</span>
                     </div>
@@ -668,13 +668,13 @@ export default function ServicesPage() {
 
               {/* Status Update selectors buttons */}
               <div className="border-t border-white/5 pt-4 space-y-3">
-                <p className="text-[9px] uppercase font-bold text-darkpan-slate">Change Lead status workflow</p>
+                <p className="text-xs uppercase font-bold text-darkpan-slate">Change Lead status workflow</p>
                 <div className="flex gap-2 flex-wrap">
                   {(["Pending", "Reviewed", "Approved", "Contacted"] as const).map((status) => (
                     <button
                       key={status}
                       onClick={() => handleUpdateQuoteStatus(activeQuote.id, status)}
-                      className={`text-[9px] uppercase font-bold tracking-wider px-3 py-1.5 rounded-lg border transition-all cursor-pointer ${
+                      className={`text-xs uppercase font-bold tracking-wider px-3 py-1.5 rounded-lg border transition-all cursor-pointer ${
                         activeQuote.status === status
                           ? "text-darkpan-red bg-darkpan-red/10 border-darkpan-red/20 font-black"
                           : "text-darkpan-slate border-white/5 bg-black hover:text-white"
