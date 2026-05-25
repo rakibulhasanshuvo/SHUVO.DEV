@@ -50,7 +50,7 @@ export default async function Home() {
       {/* Dynamic Glowing Orbs — CSS hardware-accelerated loops for absolute performance */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
         <div className="absolute top-[-100px] left-1/4 w-[500px] h-[500px] bg-neon-cyan/20 rounded-full blur-3xl animate-orb-1" />
-        <div className="absolute bottom-[-100px] right-1/4 w-[600px] h-[600px] bg-electric-purple/15 rounded-full blur-3xl animate-orb-2" />
+        <div className="absolute bottom-[-100px] right-1/4 w-[600px] h-[600px] bg-electric-purple/15 rounded-full blur-3xl animate-orb-2 pointer-events-none" />
       </div>
 
       <div className="relative z-10 pt-12 pb-4">
@@ -59,8 +59,8 @@ export default async function Home() {
           <section className="relative mb-28 md:mb-36 pt-10 max-w-[1440px] mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             
             {/* Hero Ambient Backdrop */}
-            <div className="absolute inset-0 -z-10 flex items-center justify-center">
-              <div className="absolute w-[600px] h-[600px] bg-gradient-to-r from-neon-cyan/10 to-electric-purple/10 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute inset-0 -z-10 flex items-center justify-center overflow-hidden">
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-r from-neon-cyan/10 to-electric-purple/10 rounded-full blur-3xl pointer-events-none" />
             </div>
 
             <div className="max-w-4xl relative z-10">
@@ -122,7 +122,7 @@ export default async function Home() {
             {/* Carousel display, encapsulated in responsive wrapper */}
             <div className="hidden lg:flex justify-center items-center relative z-10">
               {isMobile ? (
-                <div className="w-full h-full min-h-[400px] bg-gradient-to-b from-neutral-950 to-black rounded-3xl border border-white/5" />
+                <div className="w-full h-[600px] bg-gradient-to-b from-neutral-950 to-black rounded-3xl border border-white/5" />
               ) : (
                 <DynamicThreeDCarouselClient />
               )}
