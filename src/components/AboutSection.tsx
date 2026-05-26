@@ -43,7 +43,7 @@ export default function AboutSection({ isMobileServer }: { isMobileServer?: bool
   return (
     <section
       id="about"
-      className="relative w-full min-h-screen bg-transparent overflow-hidden px-6 py-20 lg:px-16 scroll-mt-24 mb-20 md:mb-28 flex items-center justify-center"
+      className="relative w-full min-h-screen bg-transparent overflow-hidden px-6 py-20 scroll-mt-24 mb-20 md:mb-28 flex items-center justify-center"
     >
       {/* Dynamic Ambient cyber dot background pattern */}
       <div className="absolute inset-0 bg-[radial-gradient(rgba(0,240,255,0.02)_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none z-0" />
@@ -91,9 +91,9 @@ export default function AboutSection({ isMobileServer }: { isMobileServer?: bool
           />
         </m.svg>
       </div>
-
+ 
       {/* Main Grid Container */}
-      <div className="relative w-full max-w-7xl mx-auto z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+      <div className="relative w-full max-w-[1440px] mx-auto z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
         
         {/* 2. Left Column: Sleek Description, Stats & Tech chips */}
         <m.div
