@@ -112,6 +112,12 @@ export default function DashboardPage() {
   const [templatesDownloadSum, setTemplatesDownloadSum] = useState(0);
   const [recentMessages, setRecentMessages] = useState<any[]>([]);
 
+  const [todos, setTodos] = useState<{ id: number; text: string; completed: boolean }[]>([
+    { id: 1, text: "Sync React 19 Framer Motion components", completed: false },
+    { id: 2, text: "Audit SEO tags and JSON-LD schema", completed: true },
+    { id: 3, text: "Build premium DarkPan custom widgets", completed: false },
+  ]);
+
   useEffect(() => {
     const syncDashboardData = async () => {
       try {
@@ -152,6 +158,8 @@ export default function DashboardPage() {
             setUnreadCount(1);
             setRecentMessages([
               { id: "msg-1", name: "Johnathan Doe", email: "john.doe@techvibe.io", subject: "Custom E-Commerce Platform Query", message: "Hey Rakibul,\n\nI saw your stunning SHUVO.DEV portfolio and the Tier 3 custom interactive experiences...", date: "2026-05-24T14:32:00Z", status: "unread", starred: true, archived: false },
+
+
               { id: "msg-2", name: "Sarah Connor", email: "sarah.c@cyberdyne.org", subject: "Portfolio Development & SEO Support", message: "Hello Shuvo,\n\nI was testing your portfolio speed and was absolutely blown away by the 0.0018s CLS...", date: "2026-05-23T09:15:00Z", status: "read", starred: false, archived: false },
               { id: "msg-3", name: "Bruce Wayne", email: "bwayne@wayneenterprise.com", subject: "Interactive Showcase App & Templates", message: "Rakibul,\n\nI need a secure, anonymous client portal dashboard built using Supabase...", date: "2026-05-22T23:10:00Z", status: "replied", starred: true, archived: false }
             ].slice(0, 3));
@@ -218,12 +226,6 @@ export default function DashboardPage() {
 
     syncDashboardData();
   }, []);
-
-  const [todos, setTodos] = useState<{ id: number; text: string; completed: boolean }[]>([
-    { id: 1, text: "Sync React 19 Framer Motion components", completed: false },
-    { id: 2, text: "Audit SEO tags and JSON-LD schema", completed: true },
-    { id: 3, text: "Build premium DarkPan custom widgets", completed: false },
-  ]);
 
   // Save Todos helper
   const saveTodos = async (newTodos: typeof todos, lastUpdatedTodo?: { id: number; text: string; completed: boolean; action: "add" | "update" | "delete" }) => {
