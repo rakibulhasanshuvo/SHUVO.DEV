@@ -95,37 +95,7 @@ export default function AboutSection({ isMobileServer }: { isMobileServer?: bool
       {/* Main Grid Container */}
       <div className="relative w-full max-w-7xl mx-auto z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
         
-        {/* 2. Left Column: Beautifully Framed Cyber Avatar */}
-        <m.div
-          initial={{ opacity: 0, x: -50, scale: 0.95 }}
-          whileInView={{ opacity: 1, x: 0, scale: 1 }}
-          viewport={{ once: true, amount: 0.1 }}
-          transition={{ type: "spring", stiffness: 50, damping: 20, delay: 0.2 }}
-          className="lg:col-span-5 flex items-center justify-center relative"
-        >
-          {/* Cyber Circular Glow Backdrop */}
-          <div className="absolute w-[300px] h-[300px] sm:w-[400px] sm:h-[400px] bg-neon-cyan/5 rounded-full blur-[80px] pointer-events-none z-0 animate-pulse" />
-
-          {/* Avatar container */}
-          <div className="relative w-full max-w-[420px] sm:max-w-[480px] group">
-            {/* User Portrait Image */}
-            <Image
-              src="/portrait.png"
-              alt="Muhammad Rakibul Hasan Shuvo"
-              width={480}
-              height={600}
-              sizes="(max-w-768px) 420px, 480px"
-              priority
-              fetchPriority="high"
-              className="w-full h-auto object-contain transition-transform duration-700 group-hover:scale-105 pointer-events-auto filter drop-shadow-[0_0_30px_rgba(0,240,255,0.15)]"
-              onError={(e) => {
-                e.currentTarget.src = "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=500&q=80";
-              }}
-            />
-          </div>
-        </m.div>
-
-        {/* 3. Right Column: Sleek Description, Stats & Tech chips */}
+        {/* 2. Left Column: Sleek Description, Stats & Tech chips */}
         <m.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -134,10 +104,14 @@ export default function AboutSection({ isMobileServer }: { isMobileServer?: bool
           className="lg:col-span-7 flex flex-col justify-center space-y-6 text-left"
         >
           {/* Section Indicator Badge */}
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-3">
             <span className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-neon-cyan/10 border border-neon-cyan/20 text-xs font-bold text-neon-cyan uppercase tracking-widest font-mono">
               <Sparkles className="w-3.5 h-3.5" />
               Who is Shuvo?
+            </span>
+            <span className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs font-mono uppercase text-neon-cyan font-bold tracking-wider">
+              <Terminal className="w-3.5 h-3.5 text-neon-cyan animate-pulse" />
+              Dhaka, BD
             </span>
           </div>
 
@@ -218,6 +192,36 @@ export default function AboutSection({ isMobileServer }: { isMobileServer?: bool
                 </svg>
               </span>
             </a>
+          </div>
+        </m.div>
+
+        {/* 3. Right Column: Beautifully Framed Cyber Avatar */}
+        <m.div
+          initial={{ opacity: 0, x: 50, scale: 0.95 }}
+          whileInView={{ opacity: 1, x: 0, scale: 1 }}
+          viewport={{ once: true, amount: 0.1 }}
+          transition={{ type: "spring", stiffness: 50, damping: 20, delay: 0.2 }}
+          className="lg:col-span-5 flex items-center justify-center relative"
+        >
+          {/* Cyber Circular Glow Backdrop */}
+          <div className="absolute w-[300px] h-[300px] sm:w-[400px] sm:h-[400px] bg-neon-cyan/5 rounded-full blur-[80px] pointer-events-none z-0 animate-pulse" />
+
+          {/* Avatar container */}
+          <div className="relative w-full max-w-[420px] sm:max-w-[480px] group">
+            {/* User Portrait Image */}
+            <Image
+              src="/portrait.png"
+              alt="Muhammad Rakibul Hasan Shuvo"
+              width={480}
+              height={600}
+              sizes="(max-w-768px) 420px, 480px"
+              priority
+              fetchPriority="high"
+              className="w-full h-auto object-contain transition-transform duration-700 group-hover:scale-105 pointer-events-auto filter drop-shadow-[0_0_30px_rgba(0,240,255,0.15)]"
+              onError={(e) => {
+                e.currentTarget.src = "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=500&q=80";
+              }}
+            />
           </div>
         </m.div>
 
