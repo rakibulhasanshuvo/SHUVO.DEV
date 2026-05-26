@@ -142,29 +142,105 @@ export default function ServicesPage() {
   const [tierDesc, setTierDesc] = useState("");
   const [tierError, setTierError] = useState("");
 
-  // Load state from localStorage
+  // Load state from localStorage & Supabase
   useEffect(() => {
-    const cachedTiers = localStorage.getItem("darkpan_tiers");
-    const cachedQuotes = localStorage.getItem("darkpan_quotes");
+    const syncDashboardData = async () => {
+      try {
+        const { createClient } = await import("@/lib/supabase/client");
+        const supabase = createClient();
 
-    if (cachedTiers) {
-      try { setTiers(JSON.parse(cachedTiers)); } catch (e) { setTiers(DEFAULT_TIERS); }
-    } else {
-      setTiers(DEFAULT_TIERS);
-      localStorage.setItem("darkpan_tiers", JSON.stringify(DEFAULT_TIERS));
-    }
+        // 1. Fetch Dynamic Service Tiers if table exists
+        const { data: dbTiers, error: tierError } = await supabase
+          .from("service_tiers")
+          .select("*")
+          .order("created_at", { ascending: true });
 
-    if (cachedQuotes) {
-      try { setQuotes(JSON.parse(cachedQuotes)); } catch (e) { setQuotes(DEFAULT_QUOTES); }
-    } else {
-      setQuotes(DEFAULT_QUOTES);
-      localStorage.setItem("darkpan_quotes", JSON.stringify(DEFAULT_QUOTES));
-    }
+        if (dbTiers && dbTiers.length > 0 && !tierError) {
+          setTiers(dbTiers.map((t: any) => ({
+            id: t.id,
+            name: t.name,
+            price: Number(t.price) || 0,
+            timeframe: t.timeframe,
+            status: t.status as "active" | "inactive",
+            features: t.features || [],
+            description: t.description
+          })));
+        } else {
+          const cached = localStorage.getItem("darkpan_tiers");
+          setTiers(cached ? JSON.parse(cached) : DEFAULT_TIERS);
+        }
+
+        // 2. Query Live Quotes from the Contact Leads Table
+        const { data: dbLeads, error: leadError } = await supabase
+          .from("leads")
+          .select("*")
+          .order("created_at", { ascending: false });
+
+        if (dbLeads && !leadError) {
+          const mappedQuotes: CustomQuote[] = dbLeads.map((lead: any) => {
+            let budget = lead.estimated_budget || 0;
+            let calculatedScale: CustomQuote["scale"] = "Medium";
+            if (budget > 10000) calculatedScale = "Enterprise";
+            else if (budget > 5000) calculatedScale = "Large";
+            else if (budget < 2500) calculatedScale = "Small";
+
+            let quoteStatus: CustomQuote["status"] = "Pending";
+            if (lead.status === "contacted") quoteStatus = "Contacted";
+            else if (lead.status === "negotiating") quoteStatus = "Reviewed";
+            else if (lead.status === "archived") quoteStatus = "Approved";
+
+            return {
+              id: lead.id,
+              created_at: lead.created_at,
+              category: lead.subject && lead.subject !== "Direct Contact Form Submission" ? lead.subject : (lead.service_tier === "premium" ? "High-End Experience" : lead.service_tier === "fullstack" ? "Full-Stack Integration" : "Core UI Showcase"),
+              scale: calculatedScale,
+              urgency: lead.subject && lead.subject.includes("Urgent") ? "Urgent" : "Standard",
+              budgetEst: budget,
+              senderEmail: lead.email,
+              status: quoteStatus,
+              details: lead.message || "No additional brief details supplied."
+            };
+          });
+          setQuotes(mappedQuotes);
+        } else {
+          const cached = localStorage.getItem("darkpan_quotes");
+          setQuotes(cached ? JSON.parse(cached) : DEFAULT_QUOTES);
+        }
+      } catch (err) {
+        console.warn("Supabase Configurator Sync bypassed, running cache loops:", err);
+        const cachedTiers = localStorage.getItem("darkpan_tiers");
+        const cachedQuotes = localStorage.getItem("darkpan_quotes");
+        setTiers(cachedTiers ? JSON.parse(cachedTiers) : DEFAULT_TIERS);
+        setQuotes(cachedQuotes ? JSON.parse(cachedQuotes) : DEFAULT_QUOTES);
+      }
+    };
+
+    syncDashboardData();
   }, []);
 
-  const saveTiers = (updated: ServiceTier[]) => {
+  const saveTiers = async (updated: ServiceTier[]) => {
     setTiers(updated);
     localStorage.setItem("darkpan_tiers", JSON.stringify(updated));
+
+    try {
+      const { createClient } = await import("@/lib/supabase/client");
+      const supabase = createClient();
+      for (const tier of updated) {
+        await supabase
+          .from("service_tiers")
+          .upsert({
+            id: tier.id,
+            name: tier.name,
+            price: tier.price,
+            timeframe: tier.timeframe,
+            status: tier.status,
+            features: tier.features,
+            description: tier.description
+          });
+      }
+    } catch (err) {
+      // Bypassed if table does not exist
+    }
   };
 
   const saveQuotes = (updated: CustomQuote[]) => {
@@ -197,11 +273,22 @@ export default function ServicesPage() {
     setIsTierDrawerOpen(true);
   };
 
-  const handleDeleteTier = (id: string, e: React.MouseEvent) => {
+  const handleDeleteTier = async (id: string, e: React.MouseEvent) => {
     e.stopPropagation();
     if (confirm("Are you sure you want to delete this service pricing tier?")) {
       const updated = tiers.filter((t) => t.id !== id);
-      saveTiers(updated);
+      await saveTiers(updated);
+
+      try {
+        const { createClient } = await import("@/lib/supabase/client");
+        const supabase = createClient();
+        await supabase
+          .from("service_tiers")
+          .delete()
+          .eq("id", id);
+      } catch (err) {
+        // Bypassed if table does not exist
+      }
     }
   };
 
@@ -256,13 +343,32 @@ export default function ServicesPage() {
     setIsQuoteModalOpen(true);
   };
 
-  const handleUpdateQuoteStatus = (id: string, newStatus: CustomQuote["status"]) => {
+  const handleUpdateQuoteStatus = async (id: string, newStatus: CustomQuote["status"]) => {
+    // 1. Optimistic UI update
     const updated = quotes.map((q) =>
       q.id === id ? { ...q, status: newStatus } : q
     );
     saveQuotes(updated);
     if (activeQuote && activeQuote.id === id) {
       setActiveQuote({ ...activeQuote, status: newStatus });
+    }
+
+    // 2. Sync to Supabase leads table
+    try {
+      const { createClient } = await import("@/lib/supabase/client");
+      const supabase = createClient();
+      
+      let dbStatus = "new";
+      if (newStatus === "Contacted") dbStatus = "contacted";
+      else if (newStatus === "Reviewed") dbStatus = "negotiating";
+      else if (newStatus === "Approved") dbStatus = "archived";
+
+      await supabase
+        .from("leads")
+        .update({ status: dbStatus })
+        .eq("id", id);
+    } catch (err) {
+      console.warn("Could not sync quote status update to Supabase leads table:", err);
     }
   };
 

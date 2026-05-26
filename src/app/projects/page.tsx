@@ -252,15 +252,46 @@ const miniProjects = [
 
 export default function ProjectsPage() {
   const [hoveredRow, setHoveredRow] = useState<number | null>(null);
+  const [projectsList, setProjectsList] = useState<any[]>(Object.values(projectsData));
+
+  React.useEffect(() => {
+    const fetchDynamicProjects = async () => {
+      try {
+        const { createClient } = await import("@/lib/supabase/client");
+        const supabase = createClient();
+        const { data, error } = await supabase.from("projects").select("*");
+        if (data && data.length > 0 && !error) {
+          const merged = data.map((dbProj: any) => {
+            const localProj = projectsData[dbProj.slug] || {};
+            return {
+              ...localProj,
+              ...dbProj,
+              codeSnippet: dbProj.codeSnippet || {
+                code: dbProj.code_snippet?.code || "",
+                language: dbProj.code_snippet?.language || "typescript",
+                highlightedLines: dbProj.code_snippet?.highlightedLines || [],
+              }
+            };
+          });
+          setProjectsList(merged);
+        }
+      } catch (err) {
+        console.warn("Supabase database inactive, defaulting to high-fidelity static cases:", err);
+      }
+    };
+    
+    fetchDynamicProjects();
+  }, []);
 
   // Combine static styling details with rich database entries
-  const mappedProjects = Object.values(projectsData).map((project) => {
+  const mappedProjects = projectsList.map((project) => {
     const config = projectsStyleConfig[project.slug as keyof typeof projectsStyleConfig];
     return {
       ...project,
       ...config,
     };
   });
+
 
   return (
     <div className="min-h-screen bg-[#000000] text-white py-20 px-6 md:px-12 lg:px-24 relative overflow-hidden font-satoshi">
@@ -357,7 +388,7 @@ export default function ProjectsPage() {
 
                   {/* Detailed Performance Metrics Subgrid */}
                   <div className="grid grid-cols-2 gap-4">
-                    {project.metrics.map((metric) => (
+                    {project.metrics.map((metric: any) => (
                       <div
                         key={metric.label}
                         className="p-4 rounded-xl border border-white/5 bg-gradient-to-br from-white/[0.01] to-transparent text-left"
@@ -374,7 +405,7 @@ export default function ProjectsPage() {
 
                   {/* Tech Stack Badges */}
                   <div className="flex flex-wrap gap-2 pt-2">
-                    {project.tech.map((tech) => (
+                    {project.tech.map((tech: any) => (
                       <span
                         key={tech}
                         className="text-xs font-mono px-3.5 py-1.5 bg-white/5 border border-white/10 rounded-full text-zinc-400 hover:text-white hover:border-white/20 transition-all duration-300 select-none"

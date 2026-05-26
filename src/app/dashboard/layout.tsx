@@ -40,24 +40,114 @@ export default function DashboardLayout({
   const [notificationOpen, setNotificationOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
 
-  // Auto-collapse sidebar on smaller screens
+  // Dynamic User & Database-driven notifications states
+  const [userEmail, setUserEmail] = useState("");
+  const [notifications, setNotifications] = useState<{ id: string; title: string; time: string }[]>([]);
+  const [latestMessages, setLatestMessages] = useState<{ id: string; name: string; text: string; time: string; avatarUrl: string }[]>([]);
+
   useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth < 1024) {
-        setSidebarOpen(false);
-      } else {
-        setSidebarOpen(true);
+    const fetchUserData = async () => {
+      try {
+        const { createClient } = await import("@/lib/supabase/client");
+        const supabase = createClient();
+        
+        // 1. Get active user session
+        const { data: { user } } = await supabase.auth.getUser();
+        if (user?.email) {
+          setUserEmail(user.email);
+        }
+
+        // 2. Get unread templates requests and contact enquiries (leads status 'new')
+        const { data: leads, error } = await supabase
+          .from("leads")
+          .select("id, name, subject, created_at")
+          .eq("status", "new")
+          .order("created_at", { ascending: false })
+          .limit(5);
+
+        if (leads && !error) {
+          const formatted = leads.map((lead: any) => {
+            const date = new Date(lead.created_at);
+            const diffMs = Date.now() - date.getTime();
+            const diffMins = Math.round(diffMs / 60000);
+            const diffHours = Math.round(diffMins / 60);
+            
+            let timeStr = "Just now";
+            if (diffMins > 0 && diffMins < 60) {
+              timeStr = `${diffMins}m ago`;
+            } else if (diffHours > 0 && diffHours < 24) {
+              timeStr = `${diffHours}h ago`;
+            } else if (diffHours >= 24) {
+              timeStr = date.toLocaleDateString();
+            }
+
+            return {
+              id: lead.id,
+              title: `${lead.name}: ${lead.subject}`,
+              time: timeStr,
+            };
+          });
+          setNotifications(formatted);
+        }
+
+        // 3. Get latest inbox messages (leads from any client contact or request)
+        const { data: dbMessages, error: msgError } = await supabase
+          .from("leads")
+          .select("id, name, message, created_at")
+          .order("created_at", { ascending: false })
+          .limit(4);
+
+        if (dbMessages && !msgError) {
+          const formattedMsgs = dbMessages.map((msg: any, idx: number) => {
+            const date = new Date(msg.created_at);
+            const diffMs = Date.now() - date.getTime();
+            const diffMins = Math.round(diffMs / 60000);
+            const diffHours = Math.round(diffMins / 60);
+            
+            let timeStr = "Just now";
+            if (diffMins > 0 && diffMins < 60) {
+              timeStr = `${diffMins}m ago`;
+            } else if (diffHours > 0 && diffHours < 24) {
+              timeStr = `${diffHours}h ago`;
+            } else if (diffHours >= 24) {
+              timeStr = date.toLocaleDateString();
+            }
+
+            const avatarUrls = [
+              "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=80&h=80&q=80",
+              "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=80&h=80&q=80",
+              "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=80&h=80&q=80",
+              "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=80&h=80&q=80"
+            ];
+
+            return {
+              id: msg.id,
+              name: msg.name,
+              text: msg.message,
+              time: timeStr,
+              avatarUrl: avatarUrls[idx % avatarUrls.length]
+            };
+          });
+          setLatestMessages(formattedMsgs);
+        }
+      } catch (err) {
+        console.warn("Could not dynamically resolve admin session or leads data:", err);
       }
     };
-    handleResize(); // Call on mount
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  // Force close mobile sidebar on path change
-  useEffect(() => {
-    setMobileSidebarOpen(false);
+    fetchUserData();
   }, [pathname]);
+
+  const handleLogout = async () => {
+    try {
+      const { createClient } = await import("@/lib/supabase/client");
+      const supabase = createClient();
+      await supabase.auth.signOut();
+      window.location.href = "/";
+    } catch (err) {
+      console.error("Sign out error:", err);
+      window.location.href = "/";
+    }
+  };
 
   const navLinks = [
     { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
@@ -66,9 +156,6 @@ export default function DashboardLayout({
     { href: "/dashboard/templates", label: "Templates", icon: Grid },
     { href: "/dashboard/analytics", label: "Analytics & Scrapers", icon: Activity },
     { href: "/dashboard/services", label: "Services & Quotes", icon: BadgeDollarSign },
-    { href: "/dashboard/widgets", label: "Widgets", icon: CalendarDays },
-    { href: "/dashboard/forms", label: "Forms", icon: ToggleLeft },
-    { href: "/dashboard/tables", label: "Tables", icon: FileSpreadsheet },
   ];
 
   return (
@@ -89,9 +176,9 @@ export default function DashboardLayout({
               <m.span
                 initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
-                className="font-cabinet font-black text-xl tracking-wider text-darkpan-red"
+                className="font-cabinet font-black text-sm tracking-widest text-darkpan-red uppercase"
               >
-                DARKPAN
+                SHUVO.DEV
               </m.span>
             )}
           </Link>
@@ -117,10 +204,12 @@ export default function DashboardLayout({
             <m.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="overflow-hidden whitespace-nowrap"
+              className="overflow-hidden whitespace-nowrap w-full"
             >
               <h6 className="font-bold text-sm tracking-wide text-white">Rakibul Shuvo</h6>
-              <span className="text-xs text-darkpan-slate font-medium">Administrator</span>
+              <span className="text-[10px] text-darkpan-slate font-mono font-medium truncate block max-w-[120px]">
+                {userEmail || "Administrator"}
+              </span>
             </m.div>
           )}
         </div>
@@ -190,8 +279,8 @@ export default function DashboardLayout({
                   <span className="w-8 h-8 rounded-lg bg-darkpan-red flex items-center justify-center font-bold text-white shadow-[0_0_15px_rgba(235,22,22,0.6)]">
                     DP
                   </span>
-                  <span className="font-cabinet font-black text-xl tracking-wider text-darkpan-red">
-                    DARKPAN
+                  <span className="font-cabinet font-black text-sm tracking-widest text-darkpan-red uppercase">
+                    SHUVO.DEV
                   </span>
                 </Link>
                 <button
@@ -307,7 +396,11 @@ export default function DashboardLayout({
                 aria-label="View Messages"
               >
                 <Mail className="w-4.5 h-4.5" />
-                <span className="absolute top-2 right-2 w-2 h-2 bg-darkpan-red rounded-full animate-pulse shadow-[0_0_5px_#EB1616]"></span>
+                {latestMessages.length > 0 && (
+                  <span className="absolute -top-1 -right-1 w-4 h-4 bg-darkpan-red rounded-full text-[8px] font-bold flex items-center justify-center text-white border border-black animate-pulse shadow-[0_0_5px_#EB1616]">
+                    {latestMessages.length}
+                  </span>
+                )}
               </button>
 
               <AnimatePresence>
@@ -322,40 +415,36 @@ export default function DashboardLayout({
                     >
                       <div className="p-4 border-b border-white/5 flex justify-between items-center bg-black/40">
                         <h6 className="font-bold text-xs uppercase tracking-wider text-darkpan-slate">Messages</h6>
-                        <span className="text-[10px] bg-darkpan-red/15 text-darkpan-red font-bold px-2 py-0.5 rounded-full">3 New</span>
+                        <span className="text-[10px] bg-darkpan-red/15 text-darkpan-red font-mono font-bold px-2 py-0.5 rounded-full">{latestMessages.length} New</span>
                       </div>
-                      <div className="divide-y divide-white/5">
-                        <div className="p-4 hover:bg-white/5 transition-colors cursor-pointer flex gap-3">
-                          <Image
-                            src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=40&h=40&q=80"
-                            alt="Jhon"
-                            width={32}
-                            height={32}
-                            className="w-8 h-8 rounded-full object-cover"
-                          />
-                          <div>
-                            <p className="text-xs font-bold text-white">Jhon Doe</p>
-                            <p className="text-[11px] text-darkpan-slate truncate max-w-[170px]">Stunning design! Can we schedule a meeting?</p>
-                            <span className="text-[9px] text-darkpan-red font-semibold">15 minutes ago</span>
+                      <div className="divide-y divide-white/5 max-h-64 overflow-y-auto">
+                        {latestMessages.length > 0 ? (
+                          latestMessages.map((msg) => (
+                            <Link key={msg.id} href="/dashboard/messages" onClick={() => setMessageOpen(false)} className="p-4 hover:bg-white/5 transition-colors cursor-pointer flex gap-3 text-left block">
+                              <div className="relative flex-shrink-0 w-8 h-8">
+                                <Image
+                                  src={msg.avatarUrl}
+                                  alt={msg.name}
+                                  fill
+                                  sizes="32px"
+                                  className="rounded-full object-cover"
+                                />
+                              </div>
+                              <div className="flex-1 min-w-0">
+                                <p className="text-xs font-bold text-white truncate">{msg.name}</p>
+                                <p className="text-[11px] text-darkpan-slate truncate leading-relaxed">{msg.text}</p>
+                                <span className="text-[9px] text-darkpan-red font-semibold font-mono mt-1 block">{msg.time}</span>
+                              </div>
+                            </Link>
+                          ))
+                        ) : (
+                          <div className="p-6 text-center text-xs text-darkpan-slate">
+                            No unread messages in your inbox.
                           </div>
-                        </div>
-                        <div className="p-4 hover:bg-white/5 transition-colors cursor-pointer flex gap-3">
-                          <Image
-                            src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=40&h=40&q=80"
-                            alt="Alex"
-                            width={32}
-                            height={32}
-                            className="w-8 h-8 rounded-full object-cover"
-                          />
-                          <div>
-                            <p className="text-xs font-bold text-white">Alex Mercer</p>
-                            <p className="text-[11px] text-darkpan-slate truncate max-w-[170px]">Is the client dashboard synced with Supabase?</p>
-                            <span className="text-[9px] text-darkpan-slate">1 hour ago</span>
-                          </div>
-                        </div>
+                        )}
                       </div>
                       <div className="p-3 text-center border-t border-white/5 bg-black/20">
-                        <Link href="/dashboard" onClick={() => setMessageOpen(false)} className="text-xs text-darkpan-red font-bold hover:underline">
+                        <Link href="/dashboard/messages" onClick={() => setMessageOpen(false)} className="text-xs text-darkpan-red font-bold hover:underline font-mono">
                           See all messages
                         </Link>
                       </div>
@@ -377,7 +466,11 @@ export default function DashboardLayout({
                 aria-label="View Notifications"
               >
                 <Bell className="w-4.5 h-4.5" />
-                <span className="absolute top-2.5 right-2.5 w-1.5 h-1.5 bg-darkpan-red rounded-full"></span>
+                {notifications.length > 0 && (
+                  <span className="absolute -top-1 -right-1 w-4 h-4 bg-darkpan-red rounded-full text-[8px] font-bold flex items-center justify-center text-white border border-black animate-pulse shadow-[0_0_5px_#EB1616]">
+                    {notifications.length}
+                  </span>
+                )}
               </button>
 
               <AnimatePresence>
@@ -392,17 +485,21 @@ export default function DashboardLayout({
                     >
                       <div className="p-4 border-b border-white/5 flex justify-between items-center bg-black/40">
                         <h6 className="font-bold text-xs uppercase tracking-wider text-darkpan-slate">Notifications</h6>
-                        <span className="text-[10px] text-darkpan-red font-bold">Clear All</span>
+                        <span className="text-[10px] text-darkpan-red font-mono font-bold">{notifications.length} New</span>
                       </div>
-                      <div className="divide-y divide-white/5">
-                        <div className="p-4 hover:bg-white/5 transition-colors cursor-pointer">
-                          <p className="text-xs font-semibold text-white">Client query received</p>
-                          <span className="text-[9px] text-darkpan-red font-semibold">5 mins ago</span>
-                        </div>
-                        <div className="p-4 hover:bg-white/5 transition-colors cursor-pointer">
-                          <p className="text-xs font-semibold text-white">CPU utilization is high (92%)</p>
-                          <span className="text-[9px] text-darkpan-slate">22 mins ago</span>
-                        </div>
+                      <div className="divide-y divide-white/5 max-h-64 overflow-y-auto">
+                        {notifications.length > 0 ? (
+                          notifications.map((item) => (
+                            <Link key={item.id} href="/dashboard/messages" onClick={() => setNotificationOpen(false)} className="block p-4 hover:bg-white/5 transition-colors cursor-pointer text-left">
+                              <p className="text-xs font-semibold text-white line-clamp-2 leading-relaxed">{item.title}</p>
+                              <span className="text-[9px] text-darkpan-red font-semibold font-mono block mt-1">{item.time}</span>
+                            </Link>
+                          ))
+                        ) : (
+                          <div className="p-6 text-center text-xs text-darkpan-slate">
+                            No unread template requests or messages.
+                          </div>
+                        )}
                       </div>
                       <div className="p-3 text-center border-t border-white/5 bg-black/20">
                         <Link href="/dashboard" onClick={() => setNotificationOpen(false)} className="text-xs text-darkpan-red font-bold hover:underline">
@@ -448,8 +545,12 @@ export default function DashboardLayout({
                       initial={{ opacity: 0, y: 10, scale: 0.95 }}
                       animate={{ opacity: 1, y: 0, scale: 1 }}
                       exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                      className="absolute right-0 mt-3 w-48 bg-darkpan-bg border border-darkpan-red/10 rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,0.8),0_0_15px_rgba(235,22,22,0.05)] z-50 overflow-hidden"
+                      className="absolute right-0 mt-3 w-52 bg-darkpan-bg border border-darkpan-red/10 rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,0.8),0_0_15px_rgba(235,22,22,0.05)] z-50 overflow-hidden"
                     >
+                      <div className="p-3 border-b border-white/5 bg-black/40 text-left">
+                        <p className="text-[10px] uppercase tracking-wider text-darkpan-slate font-extrabold">Active Session</p>
+                        <p className="text-xs font-mono text-white truncate mt-0.5">{userEmail || "admin@shuvo.dev"}</p>
+                      </div>
                       <div className="p-2 space-y-1">
                         <Link
                           href="/dashboard"
@@ -468,14 +569,13 @@ export default function DashboardLayout({
                           Settings
                         </Link>
                         <hr className="border-white/5 mx-2" />
-                        <Link
-                          href="/"
-                          onClick={() => setProfileOpen(false)}
-                          className="flex items-center gap-3 px-4 py-2.5 text-xs text-darkpan-red hover:bg-darkpan-red/10 rounded-xl transition-colors font-bold focus-visible:ring-2 focus-visible:ring-darkpan-red focus-visible:ring-offset-1 focus-visible:ring-offset-black focus:outline-none"
+                        <button
+                          onClick={handleLogout}
+                          className="w-full text-left flex items-center gap-3 px-4 py-2.5 text-xs text-darkpan-red hover:bg-darkpan-red/10 rounded-xl transition-colors font-bold focus-visible:ring-2 focus-visible:ring-darkpan-red focus-visible:ring-offset-1 focus-visible:ring-offset-black focus:outline-none cursor-pointer"
                         >
                           <LogOut className="w-4 h-4" />
                           Exit Dashboard
-                        </Link>
+                        </button>
                       </div>
                     </m.div>
                   </>

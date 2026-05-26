@@ -1,22 +1,59 @@
+import { createServerClient } from "@supabase/ssr";
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { userAgent } from 'next/server';
 
-export function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest) {
   const { device } = userAgent(request);
+  const deviceType = device.type === 'mobile' ? 'mobile' : 'desktop';
 
-  const headers = new Headers(request.headers);
-  headers.set('x-device-type', device.type === 'mobile' ? 'mobile' : 'desktop');
+  // 1. Create a request headers clone so we can inject x-device-type
+  const requestHeaders = new Headers(request.headers);
+  requestHeaders.set('x-device-type', deviceType);
 
-  return NextResponse.next({
+  // 2. Create the initial response with the injected request headers
+  let response = NextResponse.next({
     request: {
-      headers,
+      headers: requestHeaders,
     },
   });
+
+  // 3. Initialize Supabase SSR Client for middleware cookie syncing
+  const supabase = createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        getAll() {
+          return request.cookies.getAll();
+        },
+        setAll(cookiesToSet) {
+          cookiesToSet.forEach(({ name, value }) => request.cookies.set(name, value));
+          response = NextResponse.next({
+            request: {
+              headers: requestHeaders,
+            },
+          });
+          cookiesToSet.forEach(({ name, value, options }) =>
+            response.cookies.set(name, value, options)
+          );
+        },
+      },
+    }
+  );
+
+  // 4. Authenticate User Session on the Edge
+  const { data: { user } } = await supabase.auth.getUser();
+
+  // 5. Protect Admin Dashboard routes from unauthenticated access
+  // BYPASS: Permits unrestricted access during local development so you don't need a Supabase user session
+  if (request.nextUrl.pathname.startsWith("/dashboard") && !user && process.env.NODE_ENV !== "development") {
+    return NextResponse.redirect(new URL("/signup", request.url));
+  }
+
+  return response;
 }
 
-// Optionally, configure matcher to only run on specific paths if needed,
-// but since we want device type globally, we can apply to most non-static routes.
 export const config = {
   matcher: [
     /*
@@ -30,3 +67,4 @@ export const config = {
     '/((?!api|_next/static|_next/image|favicon.ico|images/).*)',
   ],
 };
+

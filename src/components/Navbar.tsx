@@ -11,6 +11,7 @@ const links = [
   { href: "/templates", label: "Templates" },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
+  { href: "/dashboard", label: "Dashboard" },
 ];
 
 export default function Navbar() {
@@ -87,7 +88,7 @@ export default function Navbar() {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="md:hidden flex flex-col justify-center items-center gap-1.5 w-8 h-8 rounded-lg border border-white/10 bg-white/5 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-neon-cyan focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+            className="md:hidden flex flex-col justify-center items-center gap-1.5 w-11 h-11 rounded-lg border border-white/10 bg-white/5 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-neon-cyan focus-visible:ring-offset-2 focus-visible:ring-offset-black"
             aria-label="Toggle Menu"
           >
             <span
@@ -127,7 +128,7 @@ export default function Navbar() {
                   <Link
                     key={link.href}
                     href={link.href}
-                    className={`text-lg font-bold tracking-wide transition-colors focus-visible:ring-2 focus-visible:ring-neon-cyan focus-visible:ring-offset-2 focus-visible:ring-offset-black focus:outline-none rounded-lg px-2 py-1 ${
+                    className={`text-lg font-bold tracking-wide transition-colors focus-visible:ring-2 focus-visible:ring-neon-cyan focus-visible:ring-offset-2 focus-visible:ring-offset-black focus:outline-none rounded-lg px-4 py-3 block ${
                       isActive ? "text-neon-cyan" : "text-white/70 hover:text-white"
                     }`}
                   >

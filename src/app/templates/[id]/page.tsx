@@ -95,13 +95,8 @@ const templatesStyleConfig = {
 export default function TemplateDetailsPage({ params }: PageProps) {
   const resolvedParams = use(params);
   const id = resolvedParams.id;
-  const template = templatesDetailsData[id];
-
-  if (!template) {
-    notFound();
-  }
-
-  const style = templatesStyleConfig[template.id as keyof typeof templatesStyleConfig];
+  const [template, setTemplate] = useState<TemplateDetails | null>(null);
+  const [loading, setLoading] = useState(true);
 
   // Viewport states
   const [viewport, setViewport] = useState<"desktop" | "tablet" | "mobile">("desktop");
@@ -109,6 +104,121 @@ export default function TemplateDetailsPage({ params }: PageProps) {
   // CLI Sandbox Terminal states
   const [sandboxStatus, setSandboxStatus] = useState<"idle" | "booting" | "ready">("idle");
   const [cliLogs, setCliLogs] = useState<string[]>([]);
+
+  // Template Request Modal states
+  const [isRequestModalOpen, setIsRequestModalOpen] = useState(false);
+  const [requestName, setRequestName] = useState("");
+  const [requestEmail, setRequestEmail] = useState("");
+  const [requestMessage, setRequestMessage] = useState("");
+  const [honeypot, setHoneypot] = useState("");
+  const [requestLoading, setRequestLoading] = useState(false);
+  const [requestSuccess, setRequestSuccess] = useState(false);
+  const [requestError, setRequestError] = useState("");
+
+  const handleTriggerRequest = () => {
+    if (!template) return;
+    setRequestName("");
+    setRequestEmail("");
+    setRequestMessage(`Hi Shuvo, I would like to request the commercial license and zip files for the "${template.title}" template. Please email me the bundle!`);
+    setHoneypot("");
+    setRequestError("");
+    setRequestSuccess(false);
+    setIsRequestModalOpen(true);
+  };
+
+  const handleSendRequest = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!requestName.trim() || !requestEmail.trim() || !requestMessage.trim()) {
+      setRequestError("All fields are required.");
+      return;
+    }
+
+    setRequestLoading(true);
+    setRequestError("");
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: requestName.trim(),
+          email: requestEmail.trim(),
+          message: requestMessage.trim(),
+          quoteSummary: `Template Request: ${template?.id} (${template?.title})`,
+          confirm_corporate_website: honeypot, // Honeypot bot trap
+        }),
+      });
+      
+      const data = await res.json();
+      if (data.success) {
+        setRequestSuccess(true);
+      } else {
+        setRequestError(data.error || "Failed to submit request.");
+      }
+    } catch (err: any) {
+      setRequestError("Network error occurred. Please try again.");
+    } finally {
+      setRequestLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    const fetchTemplateDetails = async () => {
+      try {
+        const { createClient } = await import("@/lib/supabase/client");
+        const supabase = createClient();
+        const { data, error } = await supabase
+          .from("templates")
+          .select("*")
+          .eq("id", id)
+          .single();
+          
+        if (data && !error) {
+          setTemplate({
+            id: data.id,
+            title: data.title,
+            category: data.category,
+            price: typeof data.price === 'number' ? `$${Math.round(data.price)}.00` : `$${data.price}`,
+            description: data.description,
+            tags: data.tags || [],
+            posterUrl: data.poster_url || data.posterUrl,
+            sourceUrl: data.source_url || data.sourceUrl || `https://github.com/rakibulhasanshuvo/${data.id}-template`,
+            license: data.license || "Creative Commons Attribution 4.0 International (CC BY 4.0)",
+            licenseUrl: data.license_url || data.licenseUrl || "https://creativecommons.org/licenses/by/4.0/",
+            specs: data.features || data.specs || [],
+            iframePlaceholderUrl: data.iframe_placeholder_url || data.iframePlaceholderUrl || "https://rakibulhasanshuvo.com",
+          });
+          setLoading(false);
+          return;
+        }
+      } catch (err) {
+        console.warn("Could not retrieve template from database, utilizing static resource fallback:", err);
+      }
+      
+      // Fallback to static
+      setTemplate(templatesDetailsData[id] || null);
+      setLoading(false);
+    };
+
+    fetchTemplateDetails();
+  }, [id]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-cyber-black text-white flex items-center justify-center font-mono text-xs uppercase tracking-widest">
+        <span className="w-1.5 h-1.5 rounded-full bg-neon-cyan animate-pulse mr-2" />
+        Synchronizing assets...
+      </div>
+    );
+  }
+
+  if (!template) {
+    notFound();
+  }
+
+
+  const style = templatesStyleConfig[template.id as keyof typeof templatesStyleConfig];
+
 
   // Trigger CLI Sandbox boot sequence
   const startSandbox = () => {
@@ -311,21 +421,29 @@ export default function TemplateDetailsPage({ params }: PageProps) {
 
               <div className="space-y-3 pt-2">
                 <button
-                  onClick={startSandbox}
-                  className="w-full py-4 bg-white hover:bg-zinc-100 active:bg-zinc-200 text-cyber-black text-xs font-mono font-extrabold uppercase tracking-widest rounded-2xl transition-all cursor-pointer shadow-md"
+                  onClick={handleTriggerRequest}
+                  className="w-full py-4 bg-gradient-to-r from-neon-cyan via-blue-500 to-electric-purple text-white text-xs font-mono font-extrabold uppercase tracking-widest rounded-2xl hover:opacity-90 active:opacity-80 transition-all cursor-pointer shadow-[0_0_20px_rgba(0,240,255,0.15)] flex items-center justify-center gap-2"
                 >
-                  {sandboxStatus === "idle" ? "Pre-warm Sandbox" : sandboxStatus === "booting" ? "Booting..." : "Sandbox Online"}
+                  Get Blueprint Bundle
                 </button>
-                <button
-                  onClick={startSandbox}
-                  className="w-full py-4 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 text-white text-xs font-mono font-bold uppercase tracking-widest rounded-2xl transition-all cursor-pointer"
-                >
-                  Live Preview
-                </button>
+                <div className="flex gap-2">
+                  <button
+                    onClick={startSandbox}
+                    className="flex-1 py-3.5 bg-white hover:bg-zinc-100 active:bg-zinc-200 text-cyber-black text-[10px] font-mono font-extrabold uppercase tracking-wider rounded-xl transition-all cursor-pointer shadow-md"
+                  >
+                    {sandboxStatus === "idle" ? "Warm Sandbox" : sandboxStatus === "booting" ? "Booting..." : "Online"}
+                  </button>
+                  <button
+                    onClick={startSandbox}
+                    className="flex-1 py-3.5 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 text-white text-[10px] font-mono font-bold uppercase tracking-wider rounded-xl transition-all cursor-pointer"
+                  >
+                    Live Preview
+                  </button>
+                </div>
               </div>
 
               <div className="pt-6 border-t border-white/5 text-[11px] text-zinc-400 font-normal leading-relaxed">
-                Includes 6 months of active technical maintenance, secure file checkouts, and complete CC attribution templates files.
+                Sends template ZIP bundle directly to your email. Includes 6 months of manual technical support & updates.
               </div>
             </div>
 
@@ -341,6 +459,133 @@ export default function TemplateDetailsPage({ params }: PageProps) {
           </aside>
         </div>
       </div>
+
+      {/* ==========================================
+          📬 CLIENT DIRECT REQUEST MODAL
+         ========================================== */}
+      <AnimatePresence>
+        {isRequestModalOpen && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+            {/* Backdrop */}
+            <m.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.6 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsRequestModalOpen(false)}
+              className="fixed inset-0 bg-black cursor-pointer"
+            />
+
+            {/* Modal Box */}
+            <m.div
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              className="bg-[#0B0B0E] border border-white/10 rounded-3xl p-6 md:p-8 shadow-[0_0_50px_rgba(0,0,0,0.8)] w-full max-w-lg z-10 space-y-6 max-h-[90vh] overflow-y-auto"
+            >
+              {requestSuccess ? (
+                <div className="text-center py-8 space-y-4">
+                  <span className="text-5xl">✉️</span>
+                  <h3 className="font-clash font-extrabold text-2xl text-white">Request Placed!</h3>
+                  <p className="text-sm text-zinc-400 leading-relaxed max-w-md mx-auto">
+                    Thank you! Your request for the **{template.title}** bundle has been securely logged. 
+                    Shuvo will manually email you the commercial license and ZIP file at **{requestEmail}** shortly.
+                  </p>
+                  <button
+                    onClick={() => setIsRequestModalOpen(false)}
+                    className="px-6 py-2.5 rounded-xl bg-white text-black hover:bg-zinc-200 text-xs font-mono font-extrabold uppercase tracking-widest transition-all cursor-pointer mt-4"
+                  >
+                    Close Portal
+                  </button>
+                </div>
+              ) : (
+                <form onSubmit={handleSendRequest} className="space-y-4">
+                  <div className="flex items-center justify-between border-b border-white/5 pb-4">
+                    <div>
+                      <h3 className="font-clash font-extrabold text-lg text-white">Request Blueprint</h3>
+                      <p className="text-[10px] text-zinc-500 font-mono tracking-wider uppercase mt-1">Manual Email Delivery Setup</p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => setIsRequestModalOpen(false)}
+                      className="w-8 h-8 rounded-full border border-white/10 hover:border-white/20 bg-white/5 flex items-center justify-center text-white cursor-pointer transition-colors"
+                    >
+                      ✕
+                    </button>
+                  </div>
+
+                  {requestError && (
+                    <div className="p-3 text-xs bg-red-500/10 border border-red-500/20 text-red-400 rounded-lg font-bold">
+                      {requestError}
+                    </div>
+                  )}
+
+                  <div className="space-y-1">
+                    <label className="text-[9px] uppercase tracking-wider text-zinc-400 font-mono font-extrabold">Your Name</label>
+                    <input
+                      type="text"
+                      required
+                      value={requestName}
+                      onChange={(e) => setRequestName(e.target.value)}
+                      placeholder="e.g. John Doe"
+                      className="w-full bg-white/5 border border-white/10 focus:border-neon-cyan/40 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none transition-all"
+                    />
+                  </div>
+
+                  <div className="space-y-1">
+                    <label className="text-[9px] uppercase tracking-wider text-zinc-400 font-mono font-extrabold">Delivery Email Address</label>
+                    <input
+                      type="email"
+                      required
+                      value={requestEmail}
+                      onChange={(e) => setRequestEmail(e.target.value)}
+                      placeholder="e.g. john@yourcompany.com"
+                      className="w-full bg-white/5 border border-white/10 focus:border-neon-cyan/40 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none transition-all"
+                    />
+                  </div>
+
+                  {/* Honeypot field (hidden from users, bot trap) */}
+                  <input
+                    type="text"
+                    value={honeypot}
+                    onChange={(e) => setHoneypot(e.target.value)}
+                    className="hidden"
+                    tabIndex={-1}
+                    autoComplete="off"
+                  />
+
+                  <div className="space-y-1">
+                    <label className="text-[9px] uppercase tracking-wider text-zinc-400 font-mono font-extrabold">Message Prompt</label>
+                    <textarea
+                      rows={4}
+                      required
+                      value={requestMessage}
+                      onChange={(e) => setRequestMessage(e.target.value)}
+                      className="w-full bg-white/5 border border-white/10 focus:border-neon-cyan/40 rounded-xl p-3 text-xs text-white focus:outline-none transition-all resize-none font-satoshi"
+                    ></textarea>
+                  </div>
+
+                  <div className="pt-4 flex items-center justify-end gap-3 border-t border-white/5">
+                    <button
+                      type="button"
+                      onClick={() => setIsRequestModalOpen(false)}
+                      className="px-4 py-2.5 rounded-xl border border-white/10 bg-white/5 text-white font-bold text-xs cursor-pointer transition-colors"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      type="submit"
+                      disabled={requestLoading}
+                      className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-neon-cyan to-blue-500 text-white font-mono font-extrabold text-xs uppercase tracking-widest cursor-pointer transition-all flex items-center gap-2 shadow-[0_0_15px_rgba(0,240,255,0.15)] disabled:opacity-50"
+                    >
+                      {requestLoading ? "SENDING..." : "Submit Request"}
+                    </button>
+                  </div>
+                </form>
+              )}
+            </m.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

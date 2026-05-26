@@ -4,6 +4,7 @@ import Link from "next/link";
 import { projectsData } from "../data";
 import CodeBlock from "@/components/ui/CodeBlock";
 import ArchitectureDiagram from "@/components/ui/ArchitectureDiagram";
+import { createServerSupabaseClient } from "@/lib/supabase/server";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -17,11 +18,40 @@ export async function generateStaticParams() {
 
 export default async function ProjectDetailPage({ params }: PageProps) {
   const { slug } = await params;
-  const project = projectsData[slug];
+  
+  // 1. Attempt to fetch project dynamic metadata from Supabase
+  let dbProject = null;
+  try {
+    const supabase = await createServerSupabaseClient();
+    const { data, error } = await supabase
+      .from("projects")
+      .select("*")
+      .eq("slug", slug)
+      .single();
+      
+    if (data && !error) {
+      dbProject = data;
+    }
+  } catch (err) {
+    console.warn("Supabase connection unconfigured or failed, bypassing to local registry:", err);
+  }
+
+  // 2. Fetch project with local fallback
+  const fallbackProject = projectsData[slug];
+  const project = dbProject ? {
+    ...dbProject,
+    // Map snake_case database schema attributes to frontend camelCase formats
+    codeSnippet: dbProject.codeSnippet || {
+      code: dbProject.code_snippet?.code || "",
+      language: dbProject.code_snippet?.language || "typescript",
+      highlightedLines: dbProject.code_snippet?.highlightedLines || [],
+    }
+  } : fallbackProject;
 
   if (!project) {
     notFound();
   }
+
 
   // Structured Data Schema for Software Application
   const jsonLd = {
@@ -76,9 +106,8 @@ export default async function ProjectDetailPage({ params }: PageProps) {
           </p>
         </header>
 
-        {/* Key Performance Metrics Bento Grid */}
         <section className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-20">
-          {project.metrics.map((metric, idx) => (
+          {project.metrics.map((metric: any, idx: number) => (
             <div
               key={idx}
               className="glass p-6 rounded-2xl border border-white/5 bg-white/[0.01] hover:border-white/10 hover:bg-white/[0.02] transition-all duration-300"

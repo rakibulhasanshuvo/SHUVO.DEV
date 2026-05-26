@@ -17,7 +17,9 @@ import {
   Play,
   Eye,
   CheckCircle,
-  AlertCircle
+  AlertCircle,
+  Upload,
+  Loader2
 } from "lucide-react";
 
 interface WebTemplate {
@@ -34,6 +36,7 @@ interface WebTemplate {
   previewWebmUrl: string;
   downloadUrl: string;
   description: string;
+  posterUrl: string;
 }
 
 const DEFAULT_TEMPLATES: WebTemplate[] = [
@@ -50,7 +53,8 @@ const DEFAULT_TEMPLATES: WebTemplate[] = [
     taslLicense: "Creative Commons BY-NC 4.0",
     previewWebmUrl: "https://assets.mixkit.co/videos/preview/mixkit-futuristic-subway-station-with-neon-lights-43950-large.mp4",
     downloadUrl: "/templates/neocyber-v1.zip",
-    description: "Ultra-luxury retro-future web blueprint utilizing customizable neon grid arrays, self-hosted outfits, and custom hydration safe-guards."
+    description: "Ultra-luxury retro-future web blueprint utilizing customizable neon grid arrays, self-hosted outfits, and custom hydration safe-guards.",
+    posterUrl: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=800"
   },
   {
     id: "temp-2",
@@ -65,7 +69,8 @@ const DEFAULT_TEMPLATES: WebTemplate[] = [
     taslLicense: "MIT License",
     previewWebmUrl: "https://assets.mixkit.co/videos/preview/mixkit-abstract-glowing-lines-animation-43184-large.mp4",
     downloadUrl: "/templates/glassmorphic-deck.zip",
-    description: "Responsive React 19 Framer Motion component library optimized for card slides and smooth mobile transition swipes."
+    description: "Responsive React 19 Framer Motion component library optimized for card slides and smooth mobile transition swipes.",
+    posterUrl: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=800"
   },
   {
     id: "temp-3",
@@ -80,7 +85,8 @@ const DEFAULT_TEMPLATES: WebTemplate[] = [
     taslLicense: "CC BY 3.0",
     previewWebmUrl: "https://assets.mixkit.co/videos/preview/mixkit-green-binary-code-screen-background-39877-large.mp4",
     downloadUrl: "/templates/matrix-rain.zip",
-    description: "WebGL canvas segment streaming random characters in cyber-luxury dark green/charcoal layers."
+    description: "WebGL canvas segment streaming random characters in cyber-luxury dark green/charcoal layers.",
+    posterUrl: "https://images.unsplash.com/photo-1639762681485-074b7f938ba0?auto=format&fit=crop&q=80&w=800"
   }
 ];
 
@@ -104,28 +110,93 @@ export default function TemplatesPage() {
   const [description, setDescription] = useState("");
   const [previewWebmUrl, setPreviewWebmUrl] = useState("");
   const [downloadUrl, setDownloadUrl] = useState("");
+  const [posterUrl, setPosterUrl] = useState("");
   
   const [formError, setFormError] = useState("");
+  const [isUploading, setIsUploading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const [isImageUploading, setIsImageUploading] = useState(false);
+  const [imageUploadProgress, setImageUploadProgress] = useState(0);
 
-  // Load from LocalStorage
+  // Load from Supabase or LocalStorage fallback
   useEffect(() => {
-    const cached = localStorage.getItem("darkpan_templates");
-    if (cached) {
+    const fetchTemplates = async () => {
       try {
-        setTemplates(JSON.parse(cached));
-      } catch (e) {
-        console.error(e);
-        setTemplates(DEFAULT_TEMPLATES);
+        const { createClient } = await import("@/lib/supabase/client");
+        const supabase = createClient();
+        const { data, error } = await supabase.from("templates").select("*");
+        if (data && data.length > 0 && !error) {
+          const formatted = data.map((dbTemp: any) => ({
+            id: dbTemp.id,
+            title: dbTemp.title,
+            price: Number(dbTemp.price) || 0,
+            downloadCount: dbTemp.downloads_count || dbTemp.downloadCount || 0,
+            likes: dbTemp.likes || 0,
+            status: dbTemp.status || "active",
+            taslTitle: dbTemp.tasl_title || dbTemp.taslTitle || "",
+            taslAuthor: dbTemp.tasl_author || dbTemp.taslAuthor || "",
+            taslSource: dbTemp.tasl_source || dbTemp.taslSource || "",
+            taslLicense: dbTemp.tasl_license || dbTemp.taslLicense || "",
+            previewWebmUrl: dbTemp.video_url || dbTemp.videoUrl || "",
+            downloadUrl: dbTemp.source_url || dbTemp.sourceUrl || "",
+            description: dbTemp.description || "",
+            posterUrl: dbTemp.poster_url || dbTemp.posterUrl || "",
+          }));
+          setTemplates(formatted);
+          return;
+        }
+      } catch (err) {
+        console.warn("Could not query storefront templates from Supabase, bypassing:", err);
       }
-    } else {
-      setTemplates(DEFAULT_TEMPLATES);
-      localStorage.setItem("darkpan_templates", JSON.stringify(DEFAULT_TEMPLATES));
-    }
+
+      const cached = localStorage.getItem("darkpan_templates");
+      if (cached) {
+        try {
+          setTemplates(JSON.parse(cached));
+        } catch (e) {
+          console.error(e);
+          setTemplates(DEFAULT_TEMPLATES);
+        }
+      } else {
+        setTemplates(DEFAULT_TEMPLATES);
+        localStorage.setItem("darkpan_templates", JSON.stringify(DEFAULT_TEMPLATES));
+      }
+    };
+    fetchTemplates();
   }, []);
 
-  const saveTemplates = (updated: WebTemplate[]) => {
+  const saveTemplates = async (updated: WebTemplate[]) => {
     setTemplates(updated);
     localStorage.setItem("darkpan_templates", JSON.stringify(updated));
+
+    try {
+      const { createClient } = await import("@/lib/supabase/client");
+      const supabase = createClient();
+      for (const temp of updated) {
+        const dbPayload = {
+          id: temp.id,
+          title: temp.title,
+          price: Number(temp.price) || 0,
+          downloads_count: temp.downloadCount,
+          likes: temp.likes,
+          status: temp.status,
+          tasl_title: temp.taslTitle,
+          tasl_author: temp.taslAuthor,
+          tasl_source: temp.taslSource,
+          tasl_license: temp.taslLicense,
+          video_url: temp.previewWebmUrl,
+          source_url: temp.downloadUrl,
+          description: temp.description,
+          poster_url: temp.posterUrl,
+          category: "E-Commerce"
+        };
+        await supabase
+          .from("templates")
+          .upsert(dbPayload, { onConflict: "id" });
+      }
+    } catch (err) {
+      console.warn("Could not sync templates to Supabase storefront table:", err);
+    }
   };
 
   const handleOpenCreateModal = () => {
@@ -140,6 +211,7 @@ export default function TemplatesPage() {
     setDescription("");
     setPreviewWebmUrl("");
     setDownloadUrl("/templates/new-theme.zip");
+    setPosterUrl("");
     setFormError("");
     setIsModalOpen(true);
   };
@@ -156,15 +228,157 @@ export default function TemplatesPage() {
     setDescription(template.description);
     setPreviewWebmUrl(template.previewWebmUrl);
     setDownloadUrl(template.downloadUrl);
+    setPosterUrl(template.posterUrl || "");
     setFormError("");
     setIsModalOpen(true);
   };
 
-  const handleDeleteTemplate = (id: string, e: React.MouseEvent) => {
+  const handleDeleteTemplate = async (id: string, e: React.MouseEvent) => {
     e.stopPropagation();
     if (confirm("Are you sure you want to delete this storefront template?")) {
       const updated = templates.filter((t) => t.id !== id);
       saveTemplates(updated);
+
+      try {
+        const { createClient } = await import("@/lib/supabase/client");
+        const supabase = createClient();
+        await supabase
+          .from("templates")
+          .delete()
+          .eq("id", id);
+      } catch (err) {
+        console.warn("Could not delete storefront template from Supabase:", err);
+      }
+    }
+  };
+
+  const handleCloudinaryImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (file.size > 10 * 1024 * 1024) {
+      setFormError("Image file is too large. Keep it under 10MB.");
+      return;
+    }
+
+    setIsImageUploading(true);
+    setImageUploadProgress(0);
+    setFormError("");
+
+    const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME || "dv2tnlb40";
+    
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("upload_preset", "ml_default");
+
+      const xhr = new XMLHttpRequest();
+      xhr.open("POST", `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`);
+
+      xhr.upload.onprogress = (event) => {
+        if (event.lengthComputable) {
+          const percentComplete = Math.round((event.loaded / event.total) * 100);
+          setImageUploadProgress(percentComplete);
+        }
+      };
+
+      xhr.onload = () => {
+        if (xhr.status === 200) {
+          const response = JSON.parse(xhr.responseText);
+          let optimizedUrl = response.secure_url;
+          
+          if (optimizedUrl.includes("/image/upload/")) {
+            optimizedUrl = optimizedUrl.replace("/image/upload/", "/image/upload/w_800,c_scale,f_auto,q_auto/");
+          }
+          
+          setPosterUrl(optimizedUrl);
+          setIsImageUploading(false);
+          setImageUploadProgress(0);
+        } else {
+          try {
+            const response = JSON.parse(xhr.responseText);
+            setFormError(`Upload failed: ${response.error?.message || "Verify unsigned uploads are enabled in Cloudinary"}`);
+          } catch {
+            setFormError("Upload failed. Verify your Cloudinary upload preset settings.");
+          }
+          setIsImageUploading(false);
+        }
+      };
+
+      xhr.onerror = () => {
+        setFormError("Network error occurred during image upload.");
+        setIsImageUploading(false);
+      };
+
+      xhr.send(formData);
+    } catch (err: any) {
+      setFormError(`Upload failed: ${err.message}`);
+      setIsImageUploading(false);
+    }
+  };
+
+  const handleCloudinaryUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (file.size > 40 * 1024 * 1024) {
+      setFormError("Video file is too large. Keep it under 40MB.");
+      return;
+    }
+
+    setIsUploading(true);
+    setUploadProgress(0);
+    setFormError("");
+
+    const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME || "dv2tnlb40";
+    
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("upload_preset", "ml_default");
+
+      const xhr = new XMLHttpRequest();
+      xhr.open("POST", `https://api.cloudinary.com/v1_1/${cloudName}/video/upload`);
+
+      xhr.upload.onprogress = (event) => {
+        if (event.lengthComputable) {
+          const percentComplete = Math.round((event.loaded / event.total) * 100);
+          setUploadProgress(percentComplete);
+        }
+      };
+
+      xhr.onload = () => {
+        if (xhr.status === 200) {
+          const response = JSON.parse(xhr.responseText);
+          let optimizedUrl = response.secure_url;
+          
+          if (optimizedUrl.includes("/video/upload/")) {
+            optimizedUrl = optimizedUrl.replace("/video/upload/", "/video/upload/f_auto,q_auto/");
+          }
+          
+          setPreviewWebmUrl(optimizedUrl);
+          setIsUploading(false);
+          setUploadProgress(0);
+        } else {
+          try {
+            const response = JSON.parse(xhr.responseText);
+            setFormError(`Upload failed: ${response.error?.message || "Verify unsigned uploads are enabled in Cloudinary"}`);
+          } catch {
+            setFormError("Upload failed. Verify your Cloudinary upload preset settings.");
+          }
+          setIsUploading(false);
+        }
+      };
+
+      xhr.onerror = () => {
+        setFormError("Network error occurred during video upload.");
+        setIsUploading(false);
+      };
+
+      xhr.send(formData);
+    } catch (err: any) {
+      setFormError(`Upload failed: ${err.message}`);
+      setIsUploading(false);
     }
   };
 
@@ -193,6 +407,7 @@ export default function TemplatesPage() {
               description: description.trim(),
               previewWebmUrl: previewWebmUrl.trim(),
               downloadUrl: downloadUrl.trim(),
+              posterUrl: posterUrl.trim(),
             }
           : t
       );
@@ -212,6 +427,7 @@ export default function TemplatesPage() {
         description: description.trim(),
         previewWebmUrl: previewWebmUrl.trim() || "https://assets.mixkit.co/videos/preview/mixkit-futuristic-subway-station-with-neon-lights-43950-large.mp4",
         downloadUrl: downloadUrl.trim() || "/templates/new-theme.zip",
+        posterUrl: posterUrl.trim() || "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=800",
       };
       updated = [newTemplate, ...templates];
     }
@@ -547,17 +763,117 @@ export default function TemplatesPage() {
                   ></textarea>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div className="space-y-1">
-                    <label className="text-[9px] uppercase tracking-wider text-darkpan-slate font-extrabold">WebM Preview MP4/WebM Link</label>
-                    <input
-                      type="text"
-                      value={previewWebmUrl}
-                      onChange={(e) => setPreviewWebmUrl(e.target.value)}
-                      placeholder="e.g. https://assets..."
-                      className="w-full bg-black border border-white/10 focus:border-darkpan-red/40 rounded-xl px-3 py-2 text-[11px] text-white focus:outline-none transition-all"
-                    />
+                <div className="space-y-4 p-4 bg-black/40 rounded-2xl border border-white/5">
+                  <p className="text-xs font-bold text-white flex items-center gap-1.5 border-b border-white/5 pb-2">
+                    <Upload className="w-3.5 h-3.5 text-darkpan-red" />
+                    Visual Assets (Cloudinary)
+                  </p>
+                  
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {/* Image Poster Upload Zone */}
+                    <div className="space-y-2">
+                      <label className="text-[9px] uppercase tracking-wider text-darkpan-slate font-extrabold block">1. Cover Poster Image</label>
+                      <div className="relative border-2 border-dashed border-white/10 hover:border-darkpan-red/30 rounded-xl p-3 flex flex-col items-center justify-center text-center transition-all bg-black/20 group h-32 overflow-hidden">
+                        {isImageUploading ? (
+                          <div className="space-y-1.5 flex flex-col items-center">
+                            <Loader2 className="w-5 h-5 text-darkpan-red animate-spin" />
+                            <p className="text-[10px] text-white font-bold">Uploading image...</p>
+                            <span className="text-[9px] text-darkpan-slate font-mono">{imageUploadProgress}%</span>
+                          </div>
+                        ) : posterUrl ? (
+                          <div className="absolute inset-0 rounded-lg overflow-hidden group">
+                            <img src={posterUrl} alt="Poster preview" className="w-full h-full object-cover opacity-60" />
+                            <label className="absolute inset-0 bg-black/75 opacity-0 group-hover:opacity-100 flex flex-col items-center justify-center cursor-pointer transition-opacity">
+                              <Upload className="w-5 h-5 text-white" />
+                              <span className="text-[10px] text-white font-bold mt-1">Replace Image</span>
+                              <input
+                                type="file"
+                                accept="image/*"
+                                onChange={handleCloudinaryImageUpload}
+                                className="hidden"
+                              />
+                            </label>
+                          </div>
+                        ) : (
+                          <label className="cursor-pointer flex flex-col items-center py-1 w-full">
+                            <Upload className="w-5 h-5 text-darkpan-slate group-hover:text-white transition-colors mb-1" />
+                            <span className="text-[11px] text-white font-bold">Upload Poster</span>
+                            <span className="text-[8px] text-darkpan-slate">PNG/JPG (Max 10MB)</span>
+                            <input
+                              type="file"
+                              accept="image/*"
+                              onChange={handleCloudinaryImageUpload}
+                              className="hidden"
+                            />
+                          </label>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Video Loop Upload Zone */}
+                    <div className="space-y-2">
+                      <label className="text-[9px] uppercase tracking-wider text-darkpan-slate font-extrabold block">2. Hover Video Loop</label>
+                      <div className="relative border-2 border-dashed border-white/10 hover:border-darkpan-red/30 rounded-xl p-3 flex flex-col items-center justify-center text-center transition-all bg-black/20 group h-32 overflow-hidden">
+                        {isUploading ? (
+                          <div className="space-y-1.5 flex flex-col items-center">
+                            <Loader2 className="w-5 h-5 text-darkpan-red animate-spin" />
+                            <p className="text-[10px] text-white font-bold">Uploading video...</p>
+                            <span className="text-[9px] text-darkpan-slate font-mono">{uploadProgress}%</span>
+                          </div>
+                        ) : previewWebmUrl ? (
+                          <div className="absolute inset-0 rounded-lg overflow-hidden group">
+                            <video src={previewWebmUrl} muted playsInline loop autoPlay className="w-full h-full object-cover opacity-40" />
+                            <label className="absolute inset-0 bg-black/75 opacity-0 group-hover:opacity-100 flex flex-col items-center justify-center cursor-pointer transition-opacity">
+                              <Upload className="w-5 h-5 text-white" />
+                              <span className="text-[10px] text-white font-bold mt-1">Replace Video</span>
+                              <input
+                                type="file"
+                                accept="video/*"
+                                onChange={handleCloudinaryUpload}
+                                className="hidden"
+                              />
+                            </label>
+                          </div>
+                        ) : (
+                          <label className="cursor-pointer flex flex-col items-center py-1 w-full">
+                            <Upload className="w-5 h-5 text-darkpan-slate group-hover:text-white transition-colors mb-1" />
+                            <span className="text-[11px] text-white font-bold">Upload Video</span>
+                            <span className="text-[8px] text-darkpan-slate">MP4/WebM (Max 40MB)</span>
+                            <input
+                              type="file"
+                              accept="video/*"
+                              onChange={handleCloudinaryUpload}
+                              className="hidden"
+                            />
+                          </label>
+                        )}
+                      </div>
+                    </div>
                   </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                    <div className="space-y-1">
+                      <label className="text-[9px] uppercase tracking-wider text-darkpan-slate font-extrabold">Poster URL Link</label>
+                      <input
+                        type="text"
+                        value={posterUrl}
+                        onChange={(e) => setPosterUrl(e.target.value)}
+                        placeholder="e.g. https://res.cloudinary.com/..."
+                        className="w-full bg-black border border-white/10 focus:border-darkpan-red/40 rounded-xl px-3 py-2 text-[11px] text-white focus:outline-none transition-all"
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <label className="text-[9px] uppercase tracking-wider text-darkpan-slate font-extrabold">Video URL Link</label>
+                      <input
+                        type="text"
+                        value={previewWebmUrl}
+                        onChange={(e) => setPreviewWebmUrl(e.target.value)}
+                        placeholder="e.g. https://res.cloudinary.com/..."
+                        className="w-full bg-black border border-white/10 focus:border-darkpan-red/40 rounded-xl px-3 py-2 text-[11px] text-white focus:outline-none transition-all"
+                      />
+                    </div>
+                  </div>
+
                   <div className="space-y-1">
                     <label className="text-[9px] uppercase tracking-wider text-darkpan-slate font-extrabold">Zip Download Link</label>
                     <input

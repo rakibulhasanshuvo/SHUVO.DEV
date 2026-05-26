@@ -78,34 +78,67 @@ export default function MessagesPage() {
   const [isSending, setIsSending] = useState(false);
   const [sendSuccess, setSendSuccess] = useState(false);
 
-  // Load messages from localStorage or use defaults
+  // Load messages from Supabase or localStorage fallback
   useEffect(() => {
-    const cached = localStorage.getItem("darkpan_messages");
-    if (cached) {
+    const fetchMessages = async () => {
       try {
-        const parsed = JSON.parse(cached);
-        setMessages(parsed);
-        if (parsed.length > 0) setSelectedId(parsed[0].id);
-      } catch (e) {
-        console.error(e);
+        const { createClient } = await import("@/lib/supabase/client");
+        const supabase = createClient();
+        const { data, error } = await supabase
+          .from("leads")
+          .select("*")
+          .order("created_at", { ascending: false });
+          
+        if (data && !error) {
+          const formatted: ContactMessage[] = data.map((lead: any) => ({
+            id: lead.id,
+            name: lead.name,
+            email: lead.email,
+            subject: lead.subject || "Direct Query",
+            message: lead.message,
+            date: lead.created_at,
+            status: (lead.status === "new" ? "unread" : lead.status === "contacted" ? "read" : "replied") as "unread" | "read" | "replied",
+            starred: lead.status === "active" || lead.status === "negotiating",
+            archived: lead.status === "archived",
+          }));
+          setMessages(formatted);
+          if (formatted.length > 0) setSelectedId(formatted[0].id);
+          return;
+        }
+      } catch (err) {
+        console.warn("Supabase messages fetch bypassed, falling back to local simulation:", err);
+      }
+
+      // Local Fallback
+      const cached = localStorage.getItem("darkpan_messages");
+      if (cached) {
+        try {
+          const parsed = JSON.parse(cached);
+          setMessages(parsed);
+          if (parsed.length > 0) setSelectedId(parsed[0].id);
+        } catch (e) {
+          setMessages(DEFAULT_MESSAGES);
+          if (DEFAULT_MESSAGES.length > 0) setSelectedId(DEFAULT_MESSAGES[0].id);
+        }
+      } else {
         setMessages(DEFAULT_MESSAGES);
+        localStorage.setItem("darkpan_messages", JSON.stringify(DEFAULT_MESSAGES));
         if (DEFAULT_MESSAGES.length > 0) setSelectedId(DEFAULT_MESSAGES[0].id);
       }
-    } else {
-      setMessages(DEFAULT_MESSAGES);
-      localStorage.setItem("darkpan_messages", JSON.stringify(DEFAULT_MESSAGES));
-      if (DEFAULT_MESSAGES.length > 0) setSelectedId(DEFAULT_MESSAGES[0].id);
-    }
+    };
+
+    fetchMessages();
   }, []);
 
-  const saveMessages = (updated: ContactMessage[]) => {
+  const saveMessages = async (updated: ContactMessage[]) => {
     setMessages(updated);
     localStorage.setItem("darkpan_messages", JSON.stringify(updated));
   };
 
-  const handleSelectMessage = (id: string) => {
+  const handleSelectMessage = async (id: string) => {
     setSelectedId(id);
-    // Mark as read if it was unread
+    
+    // 1. Optimistic UI Update
     const updated = messages.map((m) => {
       if (m.id === id && m.status === "unread") {
         return { ...m, status: "read" as const };
@@ -113,23 +146,57 @@ export default function MessagesPage() {
       return m;
     });
     saveMessages(updated);
+
+    // 2. Sync to Supabase Database
+    try {
+      const msg = messages.find((m) => m.id === id);
+      if (msg && msg.status === "unread") {
+        const { createClient } = await import("@/lib/supabase/client");
+        const supabase = createClient();
+        await supabase
+          .from("leads")
+          .update({ status: "contacted" })
+          .eq("id", id);
+      }
+    } catch (err) {
+      console.warn("Could not sync message read state to Supabase:", err);
+    }
+    
     // Reset reply form
     setReplyText("");
     setSendSuccess(false);
   };
 
-  const toggleStar = (id: string, e: React.MouseEvent) => {
+  const toggleStar = async (id: string, e: React.MouseEvent) => {
     e.stopPropagation();
+    
+    // 1. Optimistic UI update
+    const isStarred = !messages.find((m) => m.id === id)?.starred;
     const updated = messages.map((m) =>
-      m.id === id ? { ...m, starred: !m.starred } : m
+      m.id === id ? { ...m, starred: isStarred } : m
     );
     saveMessages(updated);
+
+    // 2. Sync to Supabase Database
+    try {
+      const { createClient } = await import("@/lib/supabase/client");
+      const supabase = createClient();
+      await supabase
+        .from("leads")
+        .update({ status: isStarred ? "negotiating" : "contacted" })
+        .eq("id", id);
+    } catch (err) {
+      console.warn("Could not sync message starred state to Supabase:", err);
+    }
   };
 
-  const toggleArchive = (id: string, e: React.MouseEvent) => {
+  const toggleArchive = async (id: string, e: React.MouseEvent) => {
     e.stopPropagation();
+    
+    // 1. Optimistic UI update
+    const isArchived = !messages.find((m) => m.id === id)?.archived;
     const updated = messages.map((m) =>
-      m.id === id ? { ...m, archived: !m.archived } : m
+      m.id === id ? { ...m, archived: isArchived } : m
     );
     saveMessages(updated);
     
@@ -138,15 +205,41 @@ export default function MessagesPage() {
       const remaining = updated.filter(m => activeTab === "archived" ? m.archived : !m.archived);
       setSelectedId(remaining.length > 0 ? remaining[0].id : null);
     }
+
+    // 2. Sync to Supabase Database
+    try {
+      const { createClient } = await import("@/lib/supabase/client");
+      const supabase = createClient();
+      await supabase
+        .from("leads")
+        .update({ status: isArchived ? "archived" : "contacted" })
+        .eq("id", id);
+    } catch (err) {
+      console.warn("Could not sync message archived state to Supabase:", err);
+    }
   };
 
-  const deleteMessage = (id: string, e: React.MouseEvent) => {
+  const deleteMessage = async (id: string, e: React.MouseEvent) => {
     e.stopPropagation();
+    
+    // 1. Optimistic UI update
     const updated = messages.filter((m) => m.id !== id);
     saveMessages(updated);
     
     if (selectedId === id) {
       setSelectedId(updated.length > 0 ? updated[0].id : null);
+    }
+
+    // 2. Sync to Supabase Database
+    try {
+      const { createClient } = await import("@/lib/supabase/client");
+      const supabase = createClient();
+      await supabase
+        .from("leads")
+        .delete()
+        .eq("id", id);
+    } catch (err) {
+      console.warn("Could not delete message from Supabase leads table:", err);
     }
   };
 
@@ -156,22 +249,35 @@ export default function MessagesPage() {
     setTimeout(() => setCopiedEmail(false), 2000);
   };
 
-  const handleSendReply = (e: React.FormEvent) => {
+  const handleSendReply = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!replyText.trim() || !selectedId) return;
 
     setIsSending(true);
+    
+    // 1. Update message status in memory
+    const updated = messages.map((m) =>
+      m.id === selectedId ? { ...m, status: "replied" as const } : m
+    );
+    saveMessages(updated);
+
+    // 2. Sync to Supabase Database
+    try {
+      const { createClient } = await import("@/lib/supabase/client");
+      const supabase = createClient();
+      await supabase
+        .from("leads")
+        .update({ status: "active", admin_notes: `Replied: ${replyText.trim()}` })
+        .eq("id", selectedId);
+    } catch (err) {
+      console.warn("Could not sync replied state to Supabase leads:", err);
+    }
+
     setTimeout(() => {
       setIsSending(false);
       setSendSuccess(true);
       setReplyText("");
-
-      // Update message status to "replied"
-      const updated = messages.map((m) =>
-        m.id === selectedId ? { ...m, status: "replied" as const } : m
-      );
-      saveMessages(updated);
-    }, 1500);
+    }, 1200);
   };
 
   // Filter criteria

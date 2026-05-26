@@ -1,11 +1,71 @@
 "use client";
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import CyberRain from "@/components/CyberRain";
 
-
 const SignupPage = () => {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  
+  const [errorMsg, setErrorMsg] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+  
+  const router = useRouter();
+
+  const handleRegisterSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (loading) return;
+    setErrorMsg("");
+    setSuccess(false);
+
+    if (!email.trim() || !password.trim()) {
+      setErrorMsg("Email and password are required.");
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      setErrorMsg("Passwords do not match.");
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const { createClient } = await import("@/lib/supabase/client");
+      const supabase = createClient();
+      const { error } = await supabase.auth.signUp({
+        email: email.trim(),
+        password: password.trim(),
+        options: {
+          data: {
+            first_name: firstName.trim(),
+            last_name: lastName.trim(),
+          }
+        }
+      });
+
+      if (error) {
+        throw new Error(error.message);
+      }
+
+      setSuccess(true);
+      setTimeout(() => {
+        router.push("/dashboard");
+      }, 1500);
+    } catch (err: any) {
+      console.error("Supabase Auth error:", err);
+      setErrorMsg(err.message || "Failed to compile admin registration.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-cyber-black text-white font-satoshi flex flex-col justify-center items-center relative overflow-hidden">
       {/* Cyber Rain Background */}
@@ -14,7 +74,6 @@ const SignupPage = () => {
       </div>
       
       {/* Glowing Orbs */}
-
       <div className="absolute top-[-100px] left-1/4 w-[500px] h-[500px] bg-neon-cyan/10 rounded-full blur-3xl" />
       <div className="absolute bottom-[-100px] right-1/4 w-[600px] h-[600px] bg-electric-purple/10 rounded-full blur-3xl pointer-events-none" />
 
@@ -26,135 +85,157 @@ const SignupPage = () => {
         Back to Home
       </Link>
 
-      <div className="relative z-10">
+      <div className="relative z-10 w-full max-w-[380px] px-4">
         <style>{`
           .form {
             display: flex;
             flex-direction: column;
-            gap: 10px;
-            max-width: 350px;
-            padding: 20px;
-            border-radius: 20px;
+            gap: 12px;
+            width: 100%;
+            padding: 24px;
+            border-radius: 24px;
             position: relative;
-            background-color: #1a1a1a;
+            background-color: #0b0b0d;
             color: #fff;
-            border: 1px solid #333;
-            box-shadow: 0 0 20px rgba(0, 240, 255, 0.1);
+            border: 1px solid rgba(235, 22, 22, 0.15);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8), 0 0 20px rgba(235, 22, 22, 0.05);
           }
 
           .title {
-            font-size: 28px;
-            font-weight: 600;
-            letter-spacing: -1px;
+            font-size: 26px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
             position: relative;
             display: flex;
             align-items: center;
-            padding-left: 30px;
-            color: #00bfff;
+            padding-left: 28px;
+            color: #ffffff;
+            font-family: var(--font-cabinet, sans-serif);
           }
 
           .title::before {
-            width: 18px;
-            height: 18px;
+            width: 14px;
+            height: 14px;
           }
 
           .title::after {
-            width: 18px;
-            height: 18px;
-            animation: pulse 1s linear infinite;
+            width: 14px;
+            height: 14px;
+            animation: pulse 1.2s linear infinite;
           }
 
           .title::before,
           .title::after {
             position: absolute;
             content: "";
-            height: 16px;
-            width: 16px;
+            height: 12px;
+            width: 12px;
             border-radius: 50%;
             left: 0px;
-            background-color: #00bfff;
+            background-color: #eb1616;
           }
 
           .message, 
           .signin {
-            font-size: 14.5px;
-            color: rgba(255, 255, 255, 0.7);
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.6);
+            font-weight: 500;
           }
 
           .signin {
             text-align: center;
+            margin-top: 6px;
           }
 
           .signin a:hover {
-            text-decoration: underline royalblue;
+            color: #eb1616;
+            text-decoration: underline;
           }
 
           .signin a {
-            color: #00bfff;
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: bold;
+            transition: color 0.2s;
           }
 
           .flex {
             display: flex;
             width: 100%;
-            gap: 6px;
+            gap: 10px;
           }
 
           .form label {
             position: relative;
+            width: 100%;
           }
 
           .form label .input {
-            background-color: #333;
+            background-color: #030303;
             color: #fff;
             width: 100%;
-            padding: 20px 05px 05px 10px;
+            padding: 18px 10px 6px 12px;
             outline: 0;
-            border: 1px solid rgba(105, 105, 105, 0.397);
-            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            transition: border-color 0.3s;
+          }
+
+          .form label .input:focus {
+            border-color: rgba(235, 22, 22, 0.4);
           }
 
           .form label .input + span {
-            color: rgba(255, 255, 255, 0.5);
+            color: rgba(255, 255, 255, 0.4);
             position: absolute;
-            left: 10px;
-            top: 0px;
-            font-size: 0.9em;
+            left: 12px;
+            top: 4px;
+            font-size: 0.8em;
             cursor: text;
             transition: 0.3s ease;
+            pointer-events: none;
           }
 
           .form label .input:placeholder-shown + span {
-            top: 12.5px;
-            font-size: 0.9em;
+            top: 12px;
+            font-size: 0.85em;
           }
 
           .form label .input:focus + span,
-          .form label .input:valid + span {
-            color: #00bfff;
-            top: 0px;
-            font-size: 0.7em;
-            font-weight: 600;
+          .form label .input:not(:placeholder-shown) + span {
+            color: #eb1616;
+            top: 2px;
+            font-size: 0.65em;
+            font-weight: bold;
           }
 
           .input {
-            font-size: medium;
+            font-size: 13px;
           }
 
           .submit {
             border: none;
             outline: none;
-            padding: 10px;
-            border-radius: 10px;
+            padding: 12px;
+            border-radius: 12px;
             color: #fff;
-            font-size: 16px;
+            font-size: 13px;
+            font-weight: 800;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
             transition: .3s ease;
-            background-color: #00bfff;
+            background-color: #eb1616;
             cursor: pointer;
+            box-shadow: 0 4px 15px rgba(235, 22, 22, 0.2);
           }
 
-          .submit:hover {
-            background-color: #00bfff96;
-            box-shadow: 0 0 10px rgba(0, 191, 255, 0.5);
+          .submit:hover:not(:disabled) {
+            background-color: #c71212;
+            box-shadow: 0 4px 15px rgba(235, 22, 22, 0.3);
+          }
+
+          .submit:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
           }
 
           @keyframes pulse {
@@ -170,33 +251,88 @@ const SignupPage = () => {
           }
         `}</style>
 
-        <form className="form">
-          <p className="title">Register </p>
-          <p className="message">Signup now and get full access to our app. </p>
+        <form className="form" onSubmit={handleRegisterSubmit}>
+          <p className="title">Register</p>
+          <p className="message">Signup now to configure the administrative portfolio dashboard.</p>
+          
+          {errorMsg && (
+            <div className="p-3 rounded-xl bg-red-500/10 border border-red-500/20 text-red-500 text-[11px] font-bold">
+              ⚠ {errorMsg}
+            </div>
+          )}
+
+          {success && (
+            <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[11px] font-bold">
+              ✓ Admin compilation success! Redirecting...
+            </div>
+          )}
+
           <div className="flex">
             <label>
-              <input className="input" type="text" placeholder=" " required />
+              <input 
+                className="input" 
+                type="text" 
+                placeholder=" " 
+                required 
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+              />
               <span>Firstname</span>
             </label>
             <label>
-              <input className="input" type="text" placeholder=" " required />
+              <input 
+                className="input" 
+                type="text" 
+                placeholder=" " 
+                required 
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
+              />
               <span>Lastname</span>
             </label>
           </div>  
+          
           <label>
-            <input className="input" type="email" placeholder=" " required />
+            <input 
+              className="input" 
+              type="email" 
+              placeholder=" " 
+              required 
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
             <span>Email</span>
           </label> 
+          
           <label>
-            <input className="input" type="password" placeholder=" " required />
+            <input 
+              className="input" 
+              type="password" 
+              placeholder=" " 
+              required 
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
             <span>Password</span>
           </label>
+          
           <label>
-            <input className="input" type="password" placeholder=" " required />
+            <input 
+              className="input" 
+              type="password" 
+              placeholder=" " 
+              required 
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+            />
             <span>Confirm password</span>
           </label>
-          <button className="submit" type="button">Submit</button>
-          <p className="signin">Already have an acount ? <a href="#">Signin</a> </p>
+          
+          <button className="submit" type="submit" disabled={loading}>
+            {loading ? "Compiling..." : "Submit"}
+          </button>
+          
+          <p className="signin">Already have an account? <Link href="/dashboard">Signin</Link></p>
         </form>
       </div>
     </div>

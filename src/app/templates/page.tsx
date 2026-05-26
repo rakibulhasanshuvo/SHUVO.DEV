@@ -118,9 +118,37 @@ const VideoHoverCard = ({ videoUrl, posterUrl, title }: { videoUrl: string; post
 export default function TemplatesPage() {
   const [search, setSearch] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
+  const [templatesList, setTemplatesList] = useState<Template[]>(templatesData);
+
+  useEffect(() => {
+    const fetchTemplates = async () => {
+      try {
+        const { createClient } = await import("@/lib/supabase/client");
+        const supabase = createClient();
+        const { data, error } = await supabase.from("templates").select("*");
+        if (data && data.length > 0 && !error) {
+          const formatted = data.map((dbTemp: any) => ({
+            id: dbTemp.id,
+            title: dbTemp.title,
+            category: dbTemp.category,
+            price: typeof dbTemp.price === 'number' ? `$${Math.round(dbTemp.price)}` : `$${dbTemp.price}`,
+            description: dbTemp.description,
+            tags: dbTemp.tags || [],
+            posterUrl: dbTemp.poster_url || dbTemp.posterUrl,
+            videoUrl: dbTemp.video_url || dbTemp.videoUrl,
+            features: dbTemp.features || [],
+          }));
+          setTemplatesList(formatted);
+        }
+      } catch (err) {
+        console.warn("Could not query dynamic templates, retaining static models:", err);
+      }
+    };
+    fetchTemplates();
+  }, []);
 
   const filteredTemplates = useMemo(() => {
-    return templatesData.filter((template) => {
+    return templatesList.filter((template) => {
       const matchesSearch =
         template.title.toLowerCase().includes(search.toLowerCase()) ||
         template.description.toLowerCase().includes(search.toLowerCase()) ||
@@ -131,7 +159,8 @@ export default function TemplatesPage() {
 
       return matchesSearch && matchesCategory;
     });
-  }, [search, selectedCategory]);
+  }, [search, selectedCategory, templatesList]);
+
 
   return (
     <div className="min-h-screen bg-cyber-black text-white py-20 px-6 font-satoshi relative overflow-hidden">

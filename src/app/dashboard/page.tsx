@@ -52,53 +52,110 @@ export default function DashboardPage() {
   const [recentMessages, setRecentMessages] = useState<any[]>([]);
 
   useEffect(() => {
-    // 1. Inbox
-    const cachedMessages = localStorage.getItem("darkpan_messages");
-    if (cachedMessages) {
+    const syncDashboardData = async () => {
       try {
-        const parsed = JSON.parse(cachedMessages);
-        setInboxCount(parsed.length);
-        setUnreadCount(parsed.filter((m: any) => m.status === "unread").length);
-        setRecentMessages(parsed.slice(0, 3));
-      } catch (e) {
-        console.error(e);
-      }
-    } else {
-      setInboxCount(3);
-      setUnreadCount(1);
-      setRecentMessages([
-        { id: "msg-1", name: "Johnathan Doe", email: "john.doe@techvibe.io", subject: "Custom E-Commerce Platform Query", message: "Hey Rakibul,\n\nI saw your stunning SHUVO.DEV portfolio and the Tier 3 custom interactive experiences...", date: "2026-05-24T14:32:00Z", status: "unread", starred: true, archived: false },
-        { id: "msg-2", name: "Sarah Connor", email: "sarah.c@cyberdyne.org", subject: "Portfolio Development & SEO Support", message: "Hello Shuvo,\n\nI was testing your portfolio speed and was absolutely blown away by the 0.0018s CLS...", date: "2026-05-23T09:15:00Z", status: "read", starred: false, archived: false },
-        { id: "msg-3", name: "Bruce Wayne", email: "bwayne@wayneenterprise.com", subject: "Interactive Showcase App & Templates", message: "Rakibul,\n\nI need a secure, anonymous client portal dashboard built using Supabase...", date: "2026-05-22T23:10:00Z", status: "replied", starred: true, archived: false }
-      ].slice(0, 3));
-    }
+        const { createClient } = await import("@/lib/supabase/client");
+        const supabase = createClient();
 
-    // 2. Projects
-    const cachedProjects = localStorage.getItem("darkpan_projects");
-    if (cachedProjects) {
-      try {
-        const parsed = JSON.parse(cachedProjects);
-        setProjectsCount(parsed.length);
-      } catch (e) {
-        console.error(e);
-      }
-    } else {
-      setProjectsCount(3);
-    }
+        // 1. Fetch Dynamic Leads
+        const { data: leadsData, error: leadsError } = await supabase
+          .from("leads")
+          .select("*")
+          .order("created_at", { ascending: false });
 
-    // 3. Templates
-    const cachedTemplates = localStorage.getItem("darkpan_templates");
-    if (cachedTemplates) {
-      try {
-        const parsed = JSON.parse(cachedTemplates);
-        const totalDl = parsed.reduce((sum: number, t: any) => sum + (t.downloadCount || 0), 0);
-        setTemplatesDownloadSum(totalDl);
-      } catch (e) {
-        console.error(e);
+        if (leadsData && !leadsError) {
+          setInboxCount(leadsData.length);
+          setUnreadCount(leadsData.filter((l: any) => l.status === "new").length);
+          
+          // Map to recentMessages layout format
+          const formattedRecent = leadsData.slice(0, 3).map((l: any) => ({
+            id: l.id,
+            name: l.name,
+            email: l.email,
+            subject: l.subject || "Direct Query",
+            message: l.message,
+            date: l.created_at,
+            status: l.status === "new" ? "unread" : l.status === "contacted" ? "read" : "replied"
+          }));
+          setRecentMessages(formattedRecent);
+        } else {
+          // LocalStorage fallback
+          const cachedMessages = localStorage.getItem("darkpan_messages");
+          if (cachedMessages) {
+            const parsed = JSON.parse(cachedMessages);
+            setInboxCount(parsed.length);
+            setUnreadCount(parsed.filter((m: any) => m.status === "unread").length);
+            setRecentMessages(parsed.slice(0, 3));
+          } else {
+            setInboxCount(3);
+            setUnreadCount(1);
+            setRecentMessages([
+              { id: "msg-1", name: "Johnathan Doe", email: "john.doe@techvibe.io", subject: "Custom E-Commerce Platform Query", message: "Hey Rakibul,\n\nI saw your stunning SHUVO.DEV portfolio and the Tier 3 custom interactive experiences...", date: "2026-05-24T14:32:00Z", status: "unread", starred: true, archived: false },
+              { id: "msg-2", name: "Sarah Connor", email: "sarah.c@cyberdyne.org", subject: "Portfolio Development & SEO Support", message: "Hello Shuvo,\n\nI was testing your portfolio speed and was absolutely blown away by the 0.0018s CLS...", date: "2026-05-23T09:15:00Z", status: "read", starred: false, archived: false },
+              { id: "msg-3", name: "Bruce Wayne", email: "bwayne@wayneenterprise.com", subject: "Interactive Showcase App & Templates", message: "Rakibul,\n\nI need a secure, anonymous client portal dashboard built using Supabase...", date: "2026-05-22T23:10:00Z", status: "replied", starred: true, archived: false }
+            ].slice(0, 3));
+          }
+        }
+
+        // 2. Fetch Projects CRUD stats
+        const { data: projectsData, error: projectsError } = await supabase
+          .from("projects")
+          .select("id");
+
+        if (projectsData && !projectsError) {
+          setProjectsCount(projectsData.length);
+        } else {
+          const cachedProjects = localStorage.getItem("darkpan_projects");
+          if (cachedProjects) {
+            setProjectsCount(JSON.parse(cachedProjects).length);
+          } else {
+            setProjectsCount(3);
+          }
+        }
+
+        // 3. Fetch Templates Downloads sum
+        const { data: templatesData, error: templatesError } = await supabase
+          .from("templates")
+          .select("downloads_count, downloadCount");
+
+        if (templatesData && !templatesError) {
+          const totalDl = templatesData.reduce((sum: number, t: any) => sum + (t.downloads_count || t.downloadCount || 0), 0);
+          setTemplatesDownloadSum(totalDl);
+        } else {
+          const cachedTemplates = localStorage.getItem("darkpan_templates");
+          if (cachedTemplates) {
+            const parsed = JSON.parse(cachedTemplates);
+            const totalDl = parsed.reduce((sum: number, t: any) => sum + (t.downloadCount || 0), 0);
+            setTemplatesDownloadSum(totalDl);
+          } else {
+            setTemplatesDownloadSum(1636);
+          }
+        }
+
+        // 4. Fetch Todos if table exists
+        const { data: todosData, error: todosError } = await supabase
+          .from("todos")
+          .select("*")
+          .order("created_at", { ascending: true });
+
+        if (todosData && !todosError) {
+          setTodos(todosData.map((t: any) => ({
+            id: t.id,
+            text: t.text,
+            completed: t.completed
+          })));
+        } else {
+          const saved = localStorage.getItem("darkpan_todos");
+          if (saved) {
+            setTodos(JSON.parse(saved));
+          }
+        }
+      } catch (err) {
+        console.warn("Dashboard metrics sync bypassed, loading cache loops:", err);
       }
-    } else {
-      setTemplatesDownloadSum(1636);
-    }
+    };
+
+    syncDashboardData();
   }, []);
 
   const [todos, setTodos] = useState<{ id: number; text: string; completed: boolean }[]>([
@@ -107,22 +164,35 @@ export default function DashboardPage() {
     { id: 3, text: "Build premium DarkPan custom widgets", completed: false },
   ]);
 
-  // Load Todos from LocalStorage on mount
-  useEffect(() => {
-    const saved = localStorage.getItem("darkpan_todos");
-    if (saved) {
-      try {
-        setTodos(JSON.parse(saved));
-      } catch (e) {
-        console.error(e);
-      }
-    }
-  }, []);
-
   // Save Todos helper
-  const saveTodos = (newTodos: typeof todos) => {
+  const saveTodos = async (newTodos: typeof todos, lastUpdatedTodo?: { id: number; text: string; completed: boolean; action: "add" | "update" | "delete" }) => {
     setTodos(newTodos);
     localStorage.setItem("darkpan_todos", JSON.stringify(newTodos));
+
+    // Optional: Sync to Supabase `todos` table
+    try {
+      const { createClient } = await import("@/lib/supabase/client");
+      const supabase = createClient();
+      
+      if (lastUpdatedTodo) {
+        if (lastUpdatedTodo.action === "add" || lastUpdatedTodo.action === "update") {
+          await supabase
+            .from("todos")
+            .upsert({
+              id: lastUpdatedTodo.id,
+              text: lastUpdatedTodo.text,
+              completed: lastUpdatedTodo.completed
+            });
+        } else if (lastUpdatedTodo.action === "delete") {
+          await supabase
+            .from("todos")
+            .delete()
+            .eq("id", lastUpdatedTodo.id);
+        }
+      }
+    } catch (err) {
+      // Bypassed if table does not exist
+    }
   };
 
   const handleAddTodo = (e: React.FormEvent) => {
@@ -133,18 +203,22 @@ export default function DashboardPage() {
       text: todoInput.trim(),
       completed: false,
     };
-    saveTodos([...todos, newTodo]);
+    const updated = [...todos, newTodo];
+    saveTodos(updated, { ...newTodo, action: "add" });
     setTodoInput("");
   };
 
   const toggleTodo = (id: number) => {
-    const updated = todos.map((t) => (t.id === id ? { ...t, completed: !t.completed } : t));
-    saveTodos(updated);
+    const todo = todos.find((t) => t.id === id);
+    if (!todo) return;
+    const updatedTodo = { ...todo, completed: !todo.completed };
+    const updated = todos.map((t) => (t.id === id ? updatedTodo : t));
+    saveTodos(updated, { ...updatedTodo, action: "update" });
   };
 
   const deleteTodo = (id: number) => {
     const updated = todos.filter((t) => t.id !== id);
-    saveTodos(updated);
+    saveTodos(updated, { id, text: "", completed: false, action: "delete" });
   };
 
   // Recent Sales Table Search and Filter State
