@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { userAgent } from 'next/server';
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const { device } = userAgent(request);
   const deviceType = device.type === 'mobile' ? 'mobile' : 'desktop';
 
