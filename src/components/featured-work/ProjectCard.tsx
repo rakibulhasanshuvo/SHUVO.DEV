@@ -91,7 +91,7 @@ export default function ProjectCard({
       layout
       className={`
         group relative overflow-hidden rounded-2xl bg-[#0a0a0c]/60 backdrop-blur-xl
-        border border-white/5 cursor-pointer h-full
+        border border-white/5 cursor-pointer h-full glass
         [contain:paint]
         transition-colors duration-500 group-hover:border-white/10
         has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-neon-cyan has-[:focus-visible]:ring-offset-2 has-[:focus-visible]:ring-offset-black
@@ -110,7 +110,7 @@ export default function ProjectCard({
       {/* Semantic card content with animated opacity */}
       <m.article
         animate={{ opacity: contentOpacity }}
-        transition={{ duration: 0.3 }}
+        transition={{ type: "spring", stiffness: 400, damping: 25 }}
         className="relative z-10 flex flex-col justify-between h-full w-full p-8"
       >
         <div>

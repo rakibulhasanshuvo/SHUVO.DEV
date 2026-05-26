@@ -281,7 +281,6 @@ export default async function Home() {
         <section id="faq" className="scroll-mt-24 mb-28 md:mb-36 relative overflow-hidden">
           {!isMobile && (
             <div className="absolute inset-0 z-0 opacity-20 hidden lg:block">
-              <DynamicMatrix />
             </div>
           )}
           <div className="text-center mb-16">
@@ -376,8 +375,8 @@ export default async function Home() {
         </section>
 
         {/* Lead/Contact capture */}
-        <section id="contact" className="scroll-mt-24 overflow-hidden glass rounded-3xl sm:grid sm:grid-cols-2 sm:items-center border border-white/10 bg-gradient-to-br from-white/5 via-black to-black shadow-xl relative mb-20">
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-cyan-900/15 via-black to-black -z-10 pointer-events-none" />
+        <section id="contact" className="scroll-mt-24 overflow-hidden glass rounded-3xl sm:grid sm:grid-cols-2 sm:items-center glass bg-cyber-black/40 shadow-xl relative mb-20">
+          <div className="absolute inset-0 bg-cyber-black -z-10" />
           <div className="p-8 md:p-12 lg:px-16 lg:py-24 relative z-20">
             <div className="mx-auto max-w-xl text-center sm:text-left">
               <h2 className="text-3xl font-cabinet font-bold text-white md:text-4xl mb-4 animate-fade-up">
@@ -389,7 +388,7 @@ export default async function Home() {
               </p>
 
               <div className="mt-4 md:mt-8 animate-fade-up animation-delay-200">
-                <Link href="/contact" className="inline-flex items-center justify-center glass backdrop-blur-md bg-cyan-500/10 border border-cyan-500/30 text-white px-8 py-3 rounded-full text-sm font-semibold hover:bg-cyan-500/20 hover:border-cyan-500/50 transition-all glow-cyan-subtle">
+                <Link href="/contact" className="inline-flex items-center justify-center glass bg-cyan-500/5 border border-cyan-500/20 text-white px-8 py-3 rounded-full text-sm font-semibold hover:bg-cyan-500/20 hover:border-cyan-500/50 transition-all glow-cyan-subtle">
                   Get Started Today
                 </Link>
               </div>
