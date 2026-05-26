@@ -4,8 +4,7 @@ import React from "react";
 import { m } from "framer-motion";
 import Image from "next/image";
 import { useIsMobile } from "@/hooks/use-mobile";
-
-const MotionImage = m(Image);
+import { Sparkles, Terminal, Code, Cpu, Award, Zap } from "lucide-react";
 
 export default function AboutSection({ isMobileServer }: { isMobileServer?: boolean }) {
   const isMobileClient = useIsMobile();
@@ -33,13 +32,24 @@ export default function AboutSection({ isMobileServer }: { isMobileServer?: bool
     };
   };
 
+  const stats = [
+    { label: "Design & Dev", value: "5+ Years", desc: "Pixel-perfect layouts & frontend engineering", icon: Award },
+    { label: "Performance", value: "99%", desc: "PageSpeed optimization & quick loads", icon: Zap },
+    { label: "Deliveries", value: "40+ Projects", desc: "Premium case studies & custom apps", icon: Code }
+  ];
+
+  const techStack = ["React 19", "Next.js 15", "Supabase", "Cloudinary", "Tailwind CSS v4", "Framer Motion"];
+
   return (
     <section
       id="about"
-      className="relative w-full min-h-[600px] md:min-h-[750px] lg:min-h-[850px] bg-transparent overflow-hidden flex flex-col justify-end px-6 py-12 md:py-20 lg:px-16 scroll-mt-24 mb-28 md:mb-36"
+      className="relative w-full min-h-screen bg-transparent overflow-hidden px-6 py-20 lg:px-16 scroll-mt-24 mb-20 md:mb-28 flex items-center justify-center"
     >
-      {/* 1. Stretched Background Text "SHUVO" */}
-      <div className="absolute inset-0 w-full h-full flex items-center justify-center select-none pointer-events-none z-0">
+      {/* Dynamic Ambient cyber dot background pattern */}
+      <div className="absolute inset-0 bg-[radial-gradient(rgba(0,240,255,0.02)_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none z-0" />
+      
+      {/* 1. Stretched Background Text "SHUVO" (Moved to z-0, opacity controlled) */}
+      <div className="absolute inset-0 w-full h-full flex items-center justify-center select-none pointer-events-none z-0 opacity-[0.25] sm:opacity-40">
         <m.svg
           className="w-full h-full"
           viewBox="0 0 1000 400"
@@ -82,55 +92,78 @@ export default function AboutSection({ isMobileServer }: { isMobileServer?: bool
         </m.svg>
       </div>
 
-      {/* 2. User Portrait (Absolute overlay on the right) */}
-      <div className="absolute right-0 bottom-0 w-full max-w-[320px] sm:max-w-[420px] md:max-w-[500px] lg:max-w-[620px] h-[75%] sm:h-[85%] md:h-[95%] lg:h-full z-10 flex items-end justify-end pointer-events-none">
-        <MotionImage width={764} height={1024}
-          initial={{ opacity: 0, x: 80, scale: 0.95 }}
-          whileInView={{ opacity: 1, x: 0, scale: 1 }}
-          viewport={{ once: true, amount: 0.1 }}
-          transition={{
-            type: "spring",
-            stiffness: 50,
-            damping: 20,
-            delay: 0.1,
-          }}
-          src="/portrait.png" fetchPriority="high"
-          alt="Muhammad Rakibul Hasan Shuvo" priority={true}
-          className="h-full w-auto object-contain object-bottom pointer-events-auto filter drop-shadow-[0_0_30px_rgba(0,240,255,0.15)]"
-        />
-      </div>
-
-      {/* 3. Sleek Floating Description Card (Rectangle on the bottom-left) */}
-      <div className="relative w-full max-w-xl z-20 mt-auto md:mb-6">
+      {/* Main Grid Container */}
+      <div className="relative w-full max-w-7xl mx-auto z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+        
+        {/* 2. Left Column: Sleek Description, Stats & Tech chips */}
         <m.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.1 }}
-          transition={{
-            type: "spring",
-            stiffness: 60,
-            damping: 15,
-            delay: 0.2,
-          }}
-          className="glass p-8 md:p-10 rounded-3xl border border-white/10 bg-gradient-to-br from-[#0e0e10]/95 to-[#050506]/98 md:from-[#0e0e10]/90 md:to-[#050506]/95 backdrop-blur-2xl md:backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.5),0_0_40px_rgba(0,240,255,0.03)] group hover:border-neon-cyan/20 transition-all duration-500"
+          transition={{ type: "spring", stiffness: 60, damping: 15, delay: 0.1 }}
+          className="lg:col-span-7 flex flex-col justify-center space-y-6 text-left"
         >
-          <div className="absolute -top-10 -left-10 w-32 h-32 bg-neon-cyan/5 rounded-full blur-3xl pointer-events-none" />
-          
-          <h2 className="font-cabinet font-bold text-3xl md:text-4xl text-white mb-6 tracking-tight leading-tight">
-            Engineering <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-cyan to-white">
-              High-Performance UIs.
+          {/* Section Indicator Badge */}
+          <div className="flex items-center gap-2">
+            <span className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-neon-cyan/10 border border-neon-cyan/20 text-xs font-bold text-neon-cyan uppercase tracking-widest font-mono">
+              <Sparkles className="w-3.5 h-3.5" />
+              Who is Shuvo?
             </span>
+          </div>
+
+          {/* Headline */}
+          <h2 className="font-cabinet font-black text-4xl sm:text-5xl text-white tracking-tight leading-none">
+            Engineering{" "}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-cyan via-cyan-200 to-white">
+              High-Performance
+            </span>{" "}
+            UIs.
           </h2>
-          
-          <p className="text-[#86868B] text-base md:text-lg font-light leading-relaxed font-satoshi space-y-4">
-            My journey started in graphic design, focusing on pixel-perfect layouts. 
-            After a gap dedicated to self-taught upskilling, I wanted to build the actual 
-            logic behind the designs. Today, I use a &ldquo;Vibe Coding&rdquo; workflow to 
-            build high-performance React components.
+
+          {/* Bio Description */}
+          <p className="text-[#86868B] text-base sm:text-lg font-light leading-relaxed font-satoshi max-w-2xl">
+            My journey started in graphic design, focusing on pixel-perfect layouts. After a gap dedicated to self-taught upskilling, I wanted to build the actual logic behind the designs. Today, I use a &ldquo;Vibe Coding&rdquo; workflow to engineer state-of-the-art React components, ultra-responsive storefronts, and premium serverless dashboard infrastructures.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 mt-8">
+          {/* Stats Bento Cards */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4">
+            {stats.map((stat, i) => {
+              const Icon = stat.icon;
+              return (
+                <m.div
+                  key={stat.label}
+                  whileHover={{ y: -4, borderColor: "rgba(0, 240, 255, 0.2)" }}
+                  className="bg-gradient-to-br from-[#0e0e10]/80 to-[#050506]/90 border border-white/5 p-5 rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,0.5)] transition-all duration-300 relative overflow-hidden group text-left"
+                >
+                  <div className="absolute -top-6 -right-6 w-12 h-12 bg-neon-cyan/5 rounded-full blur-xl group-hover:bg-neon-cyan/10 transition-colors" />
+                  <div className="w-8 h-8 rounded-lg bg-black border border-white/5 flex items-center justify-center text-neon-cyan mb-3">
+                    <Icon className="w-4 h-4" />
+                  </div>
+                  <h4 className="font-cabinet font-black text-xl text-white tracking-tight leading-none">{stat.value}</h4>
+                  <p className="text-xs text-white/95 font-bold uppercase tracking-wider font-mono mt-1">{stat.label}</p>
+                  <p className="text-[10px] text-darkpan-slate font-medium leading-normal mt-1 max-w-[150px]">{stat.desc}</p>
+                </m.div>
+              );
+            })}
+          </div>
+
+          {/* Tech stack tags */}
+          <div className="space-y-2 pt-2">
+            <span className="text-[10px] uppercase font-bold text-darkpan-slate tracking-wider block font-mono">Specialized Core Tech Stack</span>
+            <div className="flex flex-wrap gap-2">
+              {techStack.map((tech) => (
+                <span
+                  key={tech}
+                  className="px-3.5 py-1.5 rounded-xl bg-white/5 border border-white/5 text-xs text-white/90 font-semibold font-satoshi hover:border-neon-cyan/30 hover:bg-neon-cyan/5 transition-all duration-300 cursor-default"
+                >
+                  {tech}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          {/* Call to Actions */}
+          <div className="flex flex-col sm:flex-row gap-4 pt-6">
             <a
               href="#contact"
               className="relative inline-flex items-center justify-center px-8 py-3.5 bg-neon-cyan hover:bg-cyan-400 text-black font-cabinet font-bold rounded-full overflow-hidden hover:scale-[1.03] transition-all shadow-[0_0_25px_rgba(0,240,255,0.25)] hover:shadow-[0_0_35px_rgba(0,240,255,0.45)] group/btn text-center"
@@ -157,10 +190,74 @@ export default function AboutSection({ isMobileServer }: { isMobileServer?: bool
             </a>
           </div>
         </m.div>
-      </div>
 
-      {/* Dynamic Ambient neon cyan glow behind portrait */}
-      <div className="absolute right-0 bottom-0 w-[400px] h-[400px] bg-neon-cyan/5 rounded-full blur-[120px] pointer-events-none z-0" />
+        {/* 3. Right Column: Beautifully Framed Cyber Avatar */}
+        <m.div
+          initial={{ opacity: 0, x: 50, scale: 0.95 }}
+          whileInView={{ opacity: 1, x: 0, scale: 1 }}
+          viewport={{ once: true, amount: 0.1 }}
+          transition={{ type: "spring", stiffness: 50, damping: 20, delay: 0.2 }}
+          className="lg:col-span-5 flex items-center justify-center relative"
+        >
+          {/* Cyber Circular Glow Backdrop */}
+          <div className="absolute w-[300px] h-[300px] sm:w-[400px] sm:h-[400px] bg-neon-cyan/5 rounded-full blur-[80px] pointer-events-none z-0 animate-pulse" />
+
+          {/* Futuristic framed avatar container */}
+          <div className="relative w-full max-w-[340px] sm:max-w-[400px] aspect-[4/5] rounded-[32px] overflow-hidden border border-white/10 bg-gradient-to-b from-white/5 to-transparent backdrop-blur-md shadow-[0_20px_50px_rgba(0,0,0,0.8),0_0_30px_rgba(0,240,255,0.03)] hover:border-neon-cyan/30 transition-colors duration-500 group">
+            {/* Corner Cyber Lines */}
+            <div className="absolute top-4 left-4 w-4 h-4 border-t-2 border-l-2 border-neon-cyan/30 group-hover:border-neon-cyan/60 transition-colors" />
+            <div className="absolute top-4 right-4 w-4 h-4 border-t-2 border-r-2 border-neon-cyan/30 group-hover:border-neon-cyan/60 transition-colors" />
+            <div className="absolute bottom-4 left-4 w-4 h-4 border-b-2 border-l-2 border-neon-cyan/30 group-hover:border-neon-cyan/60 transition-colors" />
+            <div className="absolute bottom-4 right-4 w-4 h-4 border-b-2 border-r-2 border-neon-cyan/30 group-hover:border-neon-cyan/60 transition-colors" />
+
+            {/* Ambient image gradient layer */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent z-10 pointer-events-none" />
+
+            {/* User Portrait Image */}
+            <Image
+              src="/portrait.png"
+              alt="Muhammad Rakibul Hasan Shuvo"
+              fill
+              sizes="(max-w-768px) 340px, 400px"
+              priority
+              fetchPriority="high"
+              className="object-cover object-bottom transition-transform duration-700 group-hover:scale-105 pointer-events-auto filter drop-shadow-[0_0_30px_rgba(0,240,255,0.15)]"
+              onError={(e) => {
+                e.currentTarget.src = "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=500&q=80";
+              }}
+            />
+
+            {/* Floating Overlay Badge: Frontend Architect */}
+            <m.div
+              initial={{ y: 20, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.4 }}
+              className="absolute top-6 left-6 z-20 px-3.5 py-1.5 rounded-xl bg-black/75 border border-neon-cyan/20 backdrop-blur-md shadow-2xl flex items-center gap-1.5"
+            >
+              <Cpu className="w-3.5 h-3.5 text-neon-cyan" />
+              <span className="text-[10px] font-cabinet font-black uppercase text-white tracking-widest">
+                UI/UX Engineer
+              </span>
+            </m.div>
+
+            {/* Floating Overlay Badge: Location/Origin */}
+            <m.div
+              initial={{ y: -20, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.5 }}
+              className="absolute bottom-6 right-6 z-20 px-3.5 py-1.5 rounded-xl bg-black/75 border border-white/10 backdrop-blur-md shadow-2xl flex items-center gap-1.5"
+            >
+              <Terminal className="w-3.5 h-3.5 text-neon-cyan animate-pulse" />
+              <span className="text-[9px] font-mono uppercase text-neon-cyan font-bold tracking-wider">
+                Dhaka, BD
+              </span>
+            </m.div>
+          </div>
+        </m.div>
+
+      </div>
     </section>
   );
 }
