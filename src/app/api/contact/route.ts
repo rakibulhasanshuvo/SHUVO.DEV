@@ -69,7 +69,7 @@ export async function POST(request: Request) {
     });
 
     if (error) {
-      console.error("Supabase error inserting contact lead:", error);
+      console.error("Supabase error inserting contact lead:", error.message);
       throw new Error(error.message);
     }
 
@@ -78,7 +78,7 @@ export async function POST(request: Request) {
       message: "Your message has been securely compiled and delivered to Muhammad Rakibul Hasan Shuvo's pipeline.",
     });
   } catch (error: any) {
-    console.error("API Error in secure contact handler:", error);
+    console.error("API Error in secure contact handler:", error.message || "Unknown error");
     return NextResponse.json(
       { success: false, error: "Internal compilation failure." },
       { status: 500 }
