@@ -116,7 +116,7 @@ export default function FeaturedWork() {
         className="hidden md:grid gap-6 min-h-[600px]"
         style={getGridTemplate()}
         animate={getGridTemplate()}
-        transition={shouldReduceMotion ? { duration: 0 } : { type: "spring", stiffness: 300, damping: 30 }}
+        transition={shouldReduceMotion ? { duration: 0 } : { type: "spring", stiffness: 400, damping: 25 }}
       >
         {projects.map((project) => (
           <ProjectCard

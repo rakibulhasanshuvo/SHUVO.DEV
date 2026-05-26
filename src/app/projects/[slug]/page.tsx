@@ -71,9 +71,6 @@ export default async function ProjectDetailPage({ params }: PageProps) {
 
   return (
     <div className="min-h-screen bg-cyber-black text-white py-20 px-6 font-satoshi relative overflow-hidden">
-      {/* Background neon accent glows */}
-      <div className="absolute top-0 left-1/4 w-[400px] h-[400px] bg-neon-cyan/5 rounded-full blur-[150px] pointer-events-none" />
-      <div className="absolute bottom-12 right-1/4 w-[500px] h-[500px] bg-electric-purple/5 rounded-full blur-[180px] pointer-events-none" />
 
       {/* JSON-LD Rich Schema */}
       <script
@@ -167,7 +164,7 @@ export default async function ProjectDetailPage({ params }: PageProps) {
 
         {/* ADR Decisions Section */}
         <section className="mb-20">
-          <div className="glass p-8 md:p-10 rounded-3xl border border-white/5 bg-[#0B0B0E]/60 backdrop-blur-xl relative">
+          <div className="glass p-8 md:p-10 rounded-3xl relative">
             <div className="absolute top-6 right-8 text-xs font-mono font-bold text-emerald-400 border border-emerald-400/20 bg-emerald-400/10 px-3 py-1 rounded-full uppercase">
               {project.adr.status}
             </div>

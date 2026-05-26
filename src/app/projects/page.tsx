@@ -547,10 +547,7 @@ export default function ProjectsPage() {
             ⚡️ FUTURISTIC CTA BANNER
            ========================================== */}
         <section className="mt-48 mb-24 w-full relative z-20">
-          <div className="w-full rounded-[2.5rem] border border-white/10 bg-gradient-to-br from-[#0c0c0e]/80 via-black to-black p-10 md:p-16 relative overflow-hidden shadow-2xl">
-            {/* Ambient Background Glow Orbs */}
-            <div className="absolute top-[-100px] left-1/4 w-[350px] h-[350px] bg-neon-cyan/10 rounded-full blur-[100px] pointer-events-none -z-10" />
-            <div className="absolute bottom-[-100px] right-1/4 w-[350px] h-[350px] bg-electric-purple/10 rounded-full blur-[100px] pointer-events-none -z-10" />
+          <div className="w-full rounded-[2.5rem] glass bg-cyber-black/60 p-10 md:p-16 relative overflow-hidden shadow-2xl">
             
             <div className="max-w-3xl mx-auto text-center space-y-8 relative z-10 flex flex-col items-center">
               <span className="text-[10px] font-mono font-bold tracking-widest text-neon-cyan bg-neon-cyan/10 border border-neon-cyan/20 px-3.5 py-1.5 rounded-full uppercase">

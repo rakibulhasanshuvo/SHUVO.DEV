@@ -102,7 +102,7 @@ export const TiltCard = ({ children, className = "", glowColor = "rgba(0, 240, 2
       />
       {/* Content wrapper with base glass styling, preserving 3d transform for inner elements */}
       <div
-        className="absolute inset-0 rounded-2xl border border-white/5 bg-white/[0.02] backdrop-blur-md transition-colors group-hover:bg-white/[0.04]"
+        className="absolute inset-0 rounded-2xl border border-white/5 glass bg-white/[0.01] transition-colors group-hover:bg-white/[0.04]"
         style={{ transform: "translateZ(0)" }}
       />
       <div className="relative h-full z-20" style={{ transform: "translateZ(20px)" }}>

@@ -204,7 +204,7 @@ export default function AboutSection({ isMobileServer }: { isMobileServer?: bool
           className="lg:col-span-5 flex items-center justify-center relative"
         >
           {/* Cyber Circular Glow Backdrop */}
-          <div className="absolute w-[300px] h-[300px] sm:w-[400px] sm:h-[400px] bg-neon-cyan/5 rounded-full blur-[80px] pointer-events-none z-0 animate-pulse" />
+
 
           {/* Avatar container */}
           <div className="relative w-full max-w-[420px] sm:max-w-[480px] group">

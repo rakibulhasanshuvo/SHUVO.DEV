@@ -26,7 +26,7 @@ export default function TASLProvenanceCard({
     <m.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="relative w-full rounded-2xl border border-neon-cyan/20 bg-gradient-to-br from-[#0B0B0E]/90 to-[#040405]/95 backdrop-blur-xl p-6 shadow-[0_20px_50px_rgba(0,0,0,0.6),0_0_30px_rgba(0,240,255,0.02)] overflow-hidden"
+      className="relative w-full rounded-2xl border border-neon-cyan/20 bg-cyber-black backdrop-blur-xl p-6 shadow-none overflow-hidden"
     >
       {/* Dynamic Background Grid Pattern */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.01)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.01)_1px,transparent_1px)] bg-[size:16px_16px] pointer-events-none" />

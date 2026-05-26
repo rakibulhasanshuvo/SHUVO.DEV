@@ -46,26 +46,26 @@ body {
 
 /* Glassmorphism utility */
 .glass {
-  background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 /* Neon Glow utility */
 .glow-cyan {
-  box-shadow: 0 0 30px -5px rgba(0, 240, 255, 0.3);
+  box-shadow: 0 0 10px -2px rgba(0, 240, 255, 0.4);
 }
 
 .glow-purple {
-  box-shadow: 0 0 30px -5px rgba(161, 0, 255, 0.3);
+  box-shadow: 0 0 10px -2px rgba(161, 0, 255, 0.4);
 }
 
 .glow-red {
-  box-shadow: 0 0 30px -5px rgba(235, 22, 22, 0.3);
+  box-shadow: 0 0 10px -2px rgba(235, 22, 22, 0.4);
 }
 
 .glow-red-sm {
-  box-shadow: 0 0 15px -2px rgba(235, 22, 22, 0.25);
+  box-shadow: 0 0 5px -1px rgba(235, 22, 22, 0.4);
 }
 
 .bg-darkpan-card {
