@@ -149,7 +149,7 @@ export default function CyberCoreShowcase({ isMobileServer }: { isMobileServer?:
         className="text-center mb-16"
       >
         <h2 className="text-4xl md:text-5xl font-cabinet font-bold text-white tracking-tight mb-4">
-          System <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-cyan to-electric-purple animate-gradient drop-shadow-[0_0_30px_rgba(0,240,255,0.2)]">Core</span>
+          System <span className="text-neon-cyan drop-shadow-[0_0_30px_rgba(0,240,255,0.2)]">Core</span>
         </h2>
         <p className="text-text-muted max-w-xl mx-auto font-light text-sm sm:text-base">
           The central hub of our digital infrastructure. Monitoring vital stats and ensuring peak performance across all nodes in the network.
@@ -280,8 +280,6 @@ export default function CyberCoreShowcase({ isMobileServer }: { isMobileServer?:
           <div className="lg:col-span-4 flex flex-col justify-center items-center relative order-1 lg:order-2">
             
             {/* Heavy Volumetric Neon ambient glow background */}
-            <div className="absolute w-[240px] h-[240px] bg-gradient-to-tr from-neon-cyan/20 to-electric-purple/10 blur-[60px] rounded-full animate-pulse pointer-events-none" />
-            <div className="absolute w-[180px] h-[180px] bg-electric-purple/5 blur-[45px] rounded-full pointer-events-none" />
             
             {/* Blueprint mechanical concentric rotating rings */}
             <div className="absolute w-[320px] h-[320px] border border-white/[0.03] rounded-full animate-[spin_40s_linear_infinite]" />

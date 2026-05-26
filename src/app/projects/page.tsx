@@ -2,7 +2,6 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { m } from "framer-motion";
 import InteractiveGridBackground from "@/components/InteractiveGridBackground";
 import { TiltCard } from "@/components/ui/TiltCard";
 import { projectsData } from "./data";
@@ -304,30 +303,21 @@ export default function ProjectsPage() {
             📣 HEADER SECTION
            ========================================== */}
         <header className="mb-24 text-center max-w-3xl mx-auto space-y-6">
-          <m.span
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="text-xs font-mono font-bold tracking-widest text-neon-cyan uppercase px-4 py-1.5 bg-neon-cyan/10 border border-neon-cyan/20 rounded-full"
+          <span
+            className="text-xs font-mono font-bold text-neon-cyan uppercase px-4 py-1.5 bg-neon-cyan/10 border border-neon-cyan/20 rounded-full"
           >
             SYSTEM ARCHITECTURES
-          </m.span>
-          <m.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-5xl md:text-7xl font-bold font-cabinet tracking-tight text-white leading-none"
+          </span>
+          <h1
+            className="text-5xl md:text-7xl font-bold font-cabinet text-white leading-none"
           >
             Deep-Dive Projects
-          </m.h1>
-          <m.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+          </h1>
+          <p
             className="text-gray-400 text-base sm:text-lg font-light leading-relaxed"
           >
             Explore actual case studies of robust data pipelines, scalable PostgreSQL relations, Pre-warmed container allocations, and ESBuild registries.
-          </m.p>
+          </p>
         </header>
 
         {/* ==========================================
@@ -353,21 +343,21 @@ export default function ProjectsPage() {
                   <div className="flex items-center justify-between border-b border-white/5 pb-4">
                     <div className="flex items-center gap-3">
                       <span className={`w-2 h-2 rounded-full ${project.dotColor} ${project.dotGlow}`} />
-                      <span className="text-[10px] font-mono font-bold tracking-widest text-zinc-400 uppercase">
+                      <span className="text-[10px] font-mono font-bold text-zinc-400 uppercase">
                         {project.category}
                       </span>
                     </div>
-                    <span className="font-cabinet text-3xl font-extrabold text-white/10 font-mono tracking-tighter">
+                    <span className="font-cabinet text-3xl font-extrabold text-white/10 font-mono">
                       {project.number}
                     </span>
                   </div>
 
                   {/* Title & Subtitle */}
                   <div className="space-y-3">
-                    <h2 className={`text-3xl md:text-5xl font-bold font-cabinet tracking-tight text-transparent bg-clip-text bg-gradient-to-r ${project.gradientText}`}>
+                    <h2 className={`text-3xl md:text-5xl font-bold font-cabinet text-transparent bg-clip-text bg-gradient-to-r ${project.gradientText}`}>
                       {project.title}
                     </h2>
-                    <p className="text-[#86868B] font-cabinet font-semibold text-sm uppercase tracking-wide">
+                    <p className="text-[#86868B] font-cabinet font-semibold text-sm uppercase">
                       {project.subtitle}
                     </p>
                   </div>
@@ -381,7 +371,7 @@ export default function ProjectsPage() {
                   <div className={`p-5 rounded-2xl border border-white/5 bg-white/[0.02] flex items-center gap-4 shadow-md`}>
                     <span className="text-2xl select-none">📈</span>
                     <div>
-                      <h4 className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest font-bold mb-0.5">Value Realization</h4>
+                      <h4 className="text-[10px] font-mono text-zinc-500 uppercase font-bold mb-0.5">Value Realization</h4>
                       <p className="text-sm font-semibold text-white">{project.roi}</p>
                     </div>
                   </div>
@@ -393,10 +383,10 @@ export default function ProjectsPage() {
                         key={metric.label}
                         className="p-4 rounded-xl border border-white/5 bg-gradient-to-br from-white/[0.01] to-transparent text-left"
                       >
-                        <span className="block text-2xl font-bold font-cabinet text-white font-mono leading-none tracking-tight">
+                        <span className="block text-2xl font-bold font-cabinet text-white font-mono leading-none">
                           {metric.value}
                         </span>
-                        <span className="block text-[9px] font-mono text-zinc-500 uppercase tracking-widest font-bold mt-2 leading-none">
+                        <span className="block text-[9px] font-mono text-zinc-500 uppercase font-bold mt-2 leading-none">
                           {metric.label}
                         </span>
                       </div>
@@ -421,7 +411,7 @@ export default function ProjectsPage() {
                       href={`/projects/${project.slug}`}
                       className="group/btn relative inline-flex items-center gap-3 px-8 py-3.5 bg-white text-black font-cabinet font-bold rounded-full overflow-hidden hover:scale-[1.04] active:scale-[0.98] transition-all shadow-md"
                     >
-                      <span className="text-xs tracking-wider uppercase font-extrabold">Explore Case Study</span>
+                      <span className="text-xs uppercase font-extrabold">Explore Case Study</span>
                       <svg className="w-3.5 h-3.5 stroke-black stroke-[2.5] fill-none group-hover/btn:translate-x-1 transition-transform duration-300" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
                       </svg>
@@ -441,7 +431,7 @@ export default function ProjectsPage() {
                     glowColor={project.spotlightColor}
                     className="w-full max-w-[500px] h-[340px] md:h-[380px]"
                   >
-                    <div className={`p-8 md:p-10 h-full w-full rounded-[2.5rem] border ${project.borderColor} bg-gradient-to-br from-[#0c0c0e]/90 to-[#040405]/95 backdrop-blur-xl flex items-center justify-center relative overflow-hidden transition-all duration-500`}>
+                    <div className={`p-8 md:p-10 h-full w-full rounded-[2.5rem] border border-white/5 bg-[#0c0c0e] flex items-center justify-center relative overflow-hidden transition-all duration-500`}>
                       {/* Ambient corner light shadow reflection */}
                       <div className="absolute top-0 right-0 w-48 h-48 bg-white/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
                       
@@ -465,8 +455,8 @@ export default function ProjectsPage() {
            ========================================== */}
         <section className="mt-48 border-t border-white/5 pt-32 space-y-16">
           <header className="space-y-3">
-            <span className="text-xs font-mono font-bold tracking-widest text-[#A100FF] uppercase">CHRONOLOGICAL LOGS</span>
-            <h2 className="text-3xl md:text-5xl font-bold font-cabinet text-white tracking-tight">
+            <span className="text-xs font-mono font-bold text-[#A100FF] uppercase">CHRONOLOGICAL LOGS</span>
+            <h2 className="text-3xl md:text-5xl font-bold font-cabinet text-white">
               Other Explorations
             </h2>
             <p className="text-gray-400 font-satoshi text-base font-light max-w-xl">
@@ -492,7 +482,7 @@ export default function ProjectsPage() {
 
                 {/* Left block (Year, Title, Tech Badges) */}
                 <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-8 relative z-10 flex-1">
-                  <span className="text-zinc-500 font-mono text-sm tracking-widest font-extrabold w-12 sm:w-16">
+                  <span className="text-zinc-500 font-mono text-sm font-extrabold w-12 sm:w-16">
                     {item.year}
                   </span>
                   <div className="space-y-1 flex-1 max-w-lg">
@@ -516,7 +506,7 @@ export default function ProjectsPage() {
                     ))}
                   </div>
 
-                  <span className="text-zinc-500 group-hover:text-zinc-300 text-xs font-mono font-bold tracking-widest uppercase text-left md:text-right md:w-36">
+                  <span className="text-zinc-500 group-hover:text-zinc-300 text-xs font-mono font-bold uppercase text-left md:text-right md:w-36">
                     {item.category}
                   </span>
                   
@@ -547,16 +537,16 @@ export default function ProjectsPage() {
             ⚡️ FUTURISTIC CTA BANNER
            ========================================== */}
         <section className="mt-48 mb-24 w-full relative z-20">
-          <div className="w-full rounded-[2.5rem] border border-white/10 bg-gradient-to-br from-[#0c0c0e]/80 via-black to-black p-10 md:p-16 relative overflow-hidden shadow-2xl">
+          <div className="w-full rounded-[2.5rem] border border-white/10 bg-cyber-black p-10 md:p-16 relative overflow-hidden">
             {/* Ambient Background Glow Orbs */}
             <div className="absolute top-[-100px] left-1/4 w-[350px] h-[350px] bg-neon-cyan/10 rounded-full blur-[100px] pointer-events-none -z-10" />
             <div className="absolute bottom-[-100px] right-1/4 w-[350px] h-[350px] bg-electric-purple/10 rounded-full blur-[100px] pointer-events-none -z-10" />
             
             <div className="max-w-3xl mx-auto text-center space-y-8 relative z-10 flex flex-col items-center">
-              <span className="text-[10px] font-mono font-bold tracking-widest text-neon-cyan bg-neon-cyan/10 border border-neon-cyan/20 px-3.5 py-1.5 rounded-full uppercase">
+              <span className="text-[10px] font-mono font-bold text-neon-cyan bg-neon-cyan/10 border border-neon-cyan/20 px-3.5 py-1.5 rounded-full uppercase">
                 ARCHITECTURAL DIALOGUE
               </span>
-              <h2 className="text-3xl md:text-5xl font-bold font-cabinet text-white tracking-tight leading-tight">
+              <h2 className="text-3xl md:text-5xl font-bold font-cabinet text-white leading-tight">
                 Interested in the architecture behind these builds?
               </h2>
               <p className="text-gray-400 font-satoshi text-base md:text-lg font-light max-w-xl">
@@ -565,7 +555,7 @@ export default function ProjectsPage() {
               <div className="pt-4 w-full flex justify-center">
                 <Link
                   href="/contact"
-                  className="group/btn relative inline-flex items-center gap-2.5 px-9 py-4 bg-transparent text-white border border-white/10 hover:border-neon-cyan/40 hover:bg-neon-cyan/[0.02] transition-all rounded-full font-cabinet font-bold uppercase tracking-wider text-xs tracking-widest shadow-[0_0_20px_rgba(0,0,0,0.5)] glow-cyan-subtle"
+                  className="group/btn relative inline-flex items-center gap-2.5 px-9 py-4 bg-transparent text-white border border-white/10 hover:border-neon-cyan/40 hover:bg-neon-cyan/[0.02] transition-all rounded-full font-cabinet font-bold uppercase text-xs shadow-[0_0_20px_rgba(0,0,0,0.5)] glow-cyan-subtle"
                 >
                   <span>Get in Touch</span>
                   <svg className="w-3.5 h-3.5 stroke-white group-hover/btn:stroke-neon-cyan group-hover/btn:translate-x-0.5 group-hover/btn:translate-y-[-0.5px] transition-all duration-300" viewBox="0 0 24 24" strokeWidth="2.5" fill="none">

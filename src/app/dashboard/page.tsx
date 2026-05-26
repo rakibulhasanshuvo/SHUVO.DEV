@@ -112,6 +112,11 @@ export default function DashboardPage() {
   const [templatesDownloadSum, setTemplatesDownloadSum] = useState(0);
   const [recentMessages, setRecentMessages] = useState<any[]>([]);
 
+  const [todos, setTodos] = useState<{ id: number; text: string; completed: boolean }[]>([
+    { id: 1, text: "Sync React 19 Framer Motion components", completed: false },
+    { id: 2, text: "Audit SEO tags and JSON-LD schema", completed: true },
+    { id: 3, text: "Build premium DarkPan custom widgets", completed: false },
+  ]);
   useEffect(() => {
     const syncDashboardData = async () => {
       try {
@@ -219,11 +224,6 @@ export default function DashboardPage() {
     syncDashboardData();
   }, []);
 
-  const [todos, setTodos] = useState<{ id: number; text: string; completed: boolean }[]>([
-    { id: 1, text: "Sync React 19 Framer Motion components", completed: false },
-    { id: 2, text: "Audit SEO tags and JSON-LD schema", completed: true },
-    { id: 3, text: "Build premium DarkPan custom widgets", completed: false },
-  ]);
 
   // Save Todos helper
   const saveTodos = async (newTodos: typeof todos, lastUpdatedTodo?: { id: number; text: string; completed: boolean; action: "add" | "update" | "delete" }) => {

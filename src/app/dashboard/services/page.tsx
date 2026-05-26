@@ -178,7 +178,7 @@ export default function ServicesPage() {
 
         if (dbLeads && !leadError) {
           const mappedQuotes: CustomQuote[] = dbLeads.map((lead: any) => {
-            let budget = lead.estimated_budget || 0;
+            const budget = lead.estimated_budget || 0;
             let calculatedScale: CustomQuote["scale"] = "Medium";
             if (budget > 10000) calculatedScale = "Enterprise";
             else if (budget > 5000) calculatedScale = "Large";
