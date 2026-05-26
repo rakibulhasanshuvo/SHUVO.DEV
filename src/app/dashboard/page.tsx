@@ -22,16 +22,77 @@ import {
   FolderGit,
   Download,
   Cpu,
+  X,
 } from "lucide-react";
 
 // Mock Database Items
 const initialSales = [
-  { id: "INV-0123", date: "23 May 2026", customer: "John Doe", amount: 123.00, status: "Paid" },
-  { id: "INV-0124", date: "22 May 2026", customer: "Sarah Connor", amount: 450.50, status: "Paid" },
-  { id: "INV-0125", date: "21 May 2026", customer: "Bruce Wayne", amount: 1200.00, status: "Pending" },
-  { id: "INV-0126", date: "20 May 2026", customer: "Tony Stark", amount: 8900.00, status: "Paid" },
-  { id: "INV-0127", date: "19 May 2026", customer: "Clark Kent", amount: 75.00, status: "Overdue" },
-  { id: "INV-0128", date: "18 May 2026", customer: "Peter Parker", amount: 15.00, status: "Pending" },
+  { 
+    id: "INV-0123", 
+    date: "23 May 2026", 
+    customer: "John Doe", 
+    email: "john.doe@gmail.com",
+    amount: 123.00, 
+    status: "Paid",
+    item: "Futuristic 3D Developer Portfolio Template",
+    paymentMethod: "PayPal Wallet",
+    description: "Manual request checkout for full developer license portfolio workspace. High-speed caching + dynamic SEO layers enabled."
+  },
+  { 
+    id: "INV-0124", 
+    date: "22 May 2026", 
+    customer: "Sarah Connor", 
+    email: "sarah.c@cyberdyne.org",
+    amount: 450.50, 
+    status: "Paid",
+    item: "Premium Cyberpunk Landing Page Blueprint",
+    paymentMethod: "Credit Card (Visa ending in 8894)",
+    description: "Corporate license acquisition. Custom structural components, interactive Canvas layouts, and fully loaded with Framer Motion transitions."
+  },
+  { 
+    id: "INV-0125", 
+    date: "21 May 2026", 
+    customer: "Bruce Wayne", 
+    email: "bwayne@wayneenterprise.com",
+    amount: 1200.00, 
+    status: "Pending",
+    item: "Bento SaaS Platform Dashboard Kit",
+    paymentMethod: "Wire Transfer / SWIFT",
+    description: "Corporate wide deployment. Includes dark mode Tailwind v4 templates, charts telemetry modules, and Supabase Auth schemas integration."
+  },
+  { 
+    id: "INV-0126", 
+    date: "20 May 2026", 
+    customer: "Tony Stark", 
+    email: "tony@stark.io",
+    amount: 8900.00, 
+    status: "Paid",
+    item: "Ultra Premium 3D Portfolio Experience Bundle",
+    paymentMethod: "Ethereum (0.15 ETH)",
+    description: "Unlimited commercial license for all current and future 3D templates. Loaded with customized WebGPU shader configurations and custom models."
+  },
+  { 
+    id: "INV-0127", 
+    date: "19 May 2026", 
+    customer: "Clark Kent", 
+    email: "ckent@dailyplanet.com",
+    amount: 75.00, 
+    status: "Overdue",
+    item: "Personal Agency One-Page Portfolio Template",
+    paymentMethod: "Credit Card (Mastercard ending in 1029)",
+    description: "Single developer license. Fast response, glassmorphism card layouts, contact pipeline connected."
+  },
+  { 
+    id: "INV-0128", 
+    date: "18 May 2026", 
+    customer: "Peter Parker", 
+    email: "pparker@dailybugle.com",
+    amount: 15.00, 
+    status: "Pending",
+    item: "Minimal Stark Blog Template Addon",
+    paymentMethod: "PayPal Wallet",
+    description: "Standard personal blogging theme expansion. Loaded with dark mode elements and search optimizations."
+  },
 ];
 
 const mockMessages = [
@@ -225,6 +286,29 @@ export default function DashboardPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("All");
   const [sales, setSales] = useState(initialSales);
+
+  // Invoice Details Modal State
+  const [selectedInvoice, setSelectedInvoice] = useState<typeof initialSales[0] | null>(null);
+  const [invoiceModalOpen, setInvoiceModalOpen] = useState(false);
+
+  const handleViewInvoiceDetails = (item: typeof initialSales[0]) => {
+    setSelectedInvoice(item);
+    setInvoiceModalOpen(true);
+  };
+
+  const handleUpdateInvoiceStatus = (invoiceId: string, newStatus: string) => {
+    const updatedSales = sales.map((sale) => {
+      if (sale.id === invoiceId) {
+        const updated = { ...sale, status: newStatus };
+        if (selectedInvoice && selectedInvoice.id === invoiceId) {
+          setSelectedInvoice(updated);
+        }
+        return updated;
+      }
+      return sale;
+    });
+    setSales(updatedSales);
+  };
 
   const filteredSales = sales.filter((item) => {
     const matchesSearch = item.customer.toLowerCase().includes(searchTerm.toLowerCase()) || item.id.toLowerCase().includes(searchTerm.toLowerCase());
@@ -594,7 +678,11 @@ export default function DashboardPage() {
                       </span>
                     </td>
                     <td className="py-4 pr-4 text-right">
-                      <button aria-label="View invoice details" className="px-3 py-1 rounded-full text-[10px] font-bold text-white border border-white/10 hover:border-darkpan-red hover:bg-darkpan-red/10 transition-all duration-300">
+                      <button
+                        onClick={() => handleViewInvoiceDetails(item)}
+                        aria-label="View invoice details"
+                        className="px-3 py-1 rounded-full text-[10px] font-bold text-white border border-white/10 hover:border-darkpan-red hover:bg-darkpan-red/10 transition-all duration-300 cursor-pointer"
+                      >
                         Details
                       </button>
                     </td>
@@ -829,6 +917,145 @@ export default function DashboardPage() {
           </div>
         </m.div>
       </section>
+
+      {/* Invoice Details Modal */}
+      <AnimatePresence>
+        {invoiceModalOpen && selectedInvoice && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+            {/* Backdrop */}
+            <m.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.6 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setInvoiceModalOpen(false)}
+              className="fixed inset-0 bg-black/80 backdrop-blur-md"
+            />
+
+            {/* Modal Box */}
+            <m.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              transition={{ type: "spring", duration: 0.4 }}
+              className="relative w-full max-w-lg bg-darkpan-bg border border-darkpan-red/20 rounded-3xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.9),0_0_30px_rgba(235,22,22,0.1)] flex flex-col max-h-[90vh]"
+            >
+              {/* Header */}
+              <div className="p-6 border-b border-white/5 flex justify-between items-center bg-black/40">
+                <div>
+                  <span className="text-[10px] uppercase font-extrabold tracking-widest text-darkpan-red font-mono">Invoice Records</span>
+                  <h4 className="font-cabinet font-black text-xl text-white mt-0.5">{selectedInvoice.id}</h4>
+                </div>
+                <button
+                  onClick={() => setInvoiceModalOpen(false)}
+                  className="w-8 h-8 rounded-full bg-white/5 border border-white/10 hover:border-darkpan-red hover:bg-darkpan-red/10 transition-colors flex items-center justify-center text-white cursor-pointer focus:outline-none"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+
+              {/* Content area */}
+              <div className="p-6 overflow-y-auto space-y-6 text-left">
+                {/* Meta details grid */}
+                <div className="grid grid-cols-2 gap-4 bg-black/30 border border-white/5 rounded-2xl p-4">
+                  <div>
+                    <span className="text-[9px] uppercase font-bold text-darkpan-slate tracking-wider block">Customer</span>
+                    <span className="text-xs font-bold text-white mt-1 block">{selectedInvoice.customer}</span>
+                  </div>
+                  <div>
+                    <span className="text-[9px] uppercase font-bold text-darkpan-slate tracking-wider block">Email Address</span>
+                    <span className="text-xs font-mono text-darkpan-slate hover:text-white mt-1 block truncate">{selectedInvoice.email}</span>
+                  </div>
+                  <div>
+                    <span className="text-[9px] uppercase font-bold text-darkpan-slate tracking-wider block">Billing Date</span>
+                    <span className="text-xs font-semibold text-white mt-1 block">{selectedInvoice.date}</span>
+                  </div>
+                  <div>
+                    <span className="text-[9px] uppercase font-bold text-darkpan-slate tracking-wider block">Total Amount</span>
+                    <span className="text-xs font-extrabold text-darkpan-red mt-1 block font-mono">${selectedInvoice.amount.toFixed(2)}</span>
+                  </div>
+                </div>
+
+                {/* Purchased item */}
+                <div className="space-y-2">
+                  <span className="text-[9px] uppercase font-bold text-darkpan-slate tracking-wider block">Purchased Item</span>
+                  <div className="p-3.5 rounded-xl bg-black/20 border border-white/5 flex justify-between items-center gap-3">
+                    <span className="text-xs font-bold text-white">{selectedInvoice.item}</span>
+                    <span className="text-[10px] bg-darkpan-red/10 border border-darkpan-red/20 text-darkpan-red font-mono px-2 py-0.5 rounded-full font-bold">Storefront</span>
+                  </div>
+                </div>
+
+                {/* Payment method */}
+                <div className="space-y-2">
+                  <span className="text-[9px] uppercase font-bold text-darkpan-slate tracking-wider block">Payment Gateway Details</span>
+                  <div className="text-xs text-white font-semibold flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                    <span>{selectedInvoice.paymentMethod}</span>
+                  </div>
+                </div>
+
+                {/* Description info */}
+                <div className="space-y-2">
+                  <span className="text-[9px] uppercase font-bold text-darkpan-slate tracking-wider block">Transactional Logs / Details</span>
+                  <p className="text-xs text-darkpan-slate leading-relaxed bg-black/20 p-3 rounded-xl border border-white/5 font-semibold">
+                    {selectedInvoice.description}
+                  </p>
+                </div>
+
+                {/* Status manager */}
+                <div className="space-y-3 pt-2">
+                  <span className="text-[9px] uppercase font-bold text-darkpan-slate tracking-wider block">Update Transaction Status</span>
+                  <div className="flex flex-wrap gap-2">
+                    {["Paid", "Pending", "Overdue"].map((status) => {
+                      const isActive = selectedInvoice.status === status;
+                      return (
+                        <button
+                          key={status}
+                          type="button"
+                          onClick={() => handleUpdateInvoiceStatus(selectedInvoice.id, status)}
+                          className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all duration-300 flex items-center gap-1.5 cursor-pointer border ${
+                            isActive
+                              ? status === "Paid"
+                                ? "bg-emerald-500/10 text-emerald-500 border-emerald-500/30 shadow-[0_0_10px_rgba(16,185,129,0.1)]"
+                                : status === "Pending"
+                                ? "bg-amber-500/10 text-amber-500 border-amber-500/30 shadow-[0_0_10px_rgba(245,158,11,0.1)]"
+                                : "bg-darkpan-red/10 text-darkpan-red border-darkpan-red/30 shadow-[0_0_10px_rgba(235,22,22,0.1)]"
+                              : "bg-black/40 text-darkpan-slate hover:text-white hover:bg-white/5 border-white/5 hover:border-white/10"
+                          }`}
+                        >
+                          <span className={`w-1.5 h-1.5 rounded-full ${
+                            status === "Paid"
+                              ? "bg-emerald-500"
+                              : status === "Pending"
+                              ? "bg-amber-500"
+                              : "bg-darkpan-red"
+                          }`} />
+                          <span>{status}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="p-6 border-t border-white/5 bg-black/40 flex justify-between items-center gap-3">
+                <button
+                  onClick={() => window.print()}
+                  className="px-4 py-2 border border-white/10 hover:border-white/20 hover:bg-white/5 text-white font-bold rounded-xl text-xs transition-colors cursor-pointer"
+                >
+                  Print Log
+                </button>
+                <button
+                  onClick={() => setInvoiceModalOpen(false)}
+                  className="px-5 py-2 bg-darkpan-red hover:bg-darkpan-red/90 text-white font-bold rounded-xl text-xs transition-all shadow-[0_0_15px_rgba(235,22,22,0.2)] cursor-pointer"
+                >
+                  Close Record
+                </button>
+              </div>
+            </m.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
