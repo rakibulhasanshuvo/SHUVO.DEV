@@ -17,7 +17,6 @@ export async function POST(request: Request) {
 
     // 2. Perform Honeypot verification (silently discard bots)
     if (rawData.confirm_corporate_website) {
-      console.warn("Honeypot triggered! Bot submission rejected silently.");
       return NextResponse.json({
         success: true,
         message: "Message processed successfully. Secure thread opened.",
