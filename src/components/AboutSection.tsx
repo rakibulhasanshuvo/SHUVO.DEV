@@ -95,7 +95,37 @@ export default function AboutSection({ isMobileServer }: { isMobileServer?: bool
       {/* Main Grid Container */}
       <div className="relative w-full max-w-7xl mx-auto z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
         
-        {/* 2. Left Column: Sleek Description, Stats & Tech chips */}
+        {/* 2. Left Column: Beautifully Framed Cyber Avatar */}
+        <m.div
+          initial={{ opacity: 0, x: -50, scale: 0.95 }}
+          whileInView={{ opacity: 1, x: 0, scale: 1 }}
+          viewport={{ once: true, amount: 0.1 }}
+          transition={{ type: "spring", stiffness: 50, damping: 20, delay: 0.2 }}
+          className="lg:col-span-5 flex items-center justify-center relative"
+        >
+          {/* Cyber Circular Glow Backdrop */}
+          <div className="absolute w-[300px] h-[300px] sm:w-[400px] sm:h-[400px] bg-neon-cyan/5 rounded-full blur-[80px] pointer-events-none z-0 animate-pulse" />
+
+          {/* Avatar container */}
+          <div className="relative w-full max-w-[420px] sm:max-w-[480px] group">
+            {/* User Portrait Image */}
+            <Image
+              src="/portrait.png"
+              alt="Muhammad Rakibul Hasan Shuvo"
+              width={480}
+              height={600}
+              sizes="(max-w-768px) 420px, 480px"
+              priority
+              fetchPriority="high"
+              className="w-full h-auto object-contain transition-transform duration-700 group-hover:scale-105 pointer-events-auto filter drop-shadow-[0_0_30px_rgba(0,240,255,0.15)]"
+              onError={(e) => {
+                e.currentTarget.src = "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=500&q=80";
+              }}
+            />
+          </div>
+        </m.div>
+
+        {/* 3. Right Column: Sleek Description, Stats & Tech chips */}
         <m.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -188,72 +218,6 @@ export default function AboutSection({ isMobileServer }: { isMobileServer?: bool
                 </svg>
               </span>
             </a>
-          </div>
-        </m.div>
-
-        {/* 3. Right Column: Beautifully Framed Cyber Avatar */}
-        <m.div
-          initial={{ opacity: 0, x: 50, scale: 0.95 }}
-          whileInView={{ opacity: 1, x: 0, scale: 1 }}
-          viewport={{ once: true, amount: 0.1 }}
-          transition={{ type: "spring", stiffness: 50, damping: 20, delay: 0.2 }}
-          className="lg:col-span-5 flex items-center justify-center relative"
-        >
-          {/* Cyber Circular Glow Backdrop */}
-          <div className="absolute w-[300px] h-[300px] sm:w-[400px] sm:h-[400px] bg-neon-cyan/5 rounded-full blur-[80px] pointer-events-none z-0 animate-pulse" />
-
-          {/* Futuristic framed avatar container */}
-          <div className="relative w-full max-w-[340px] sm:max-w-[400px] aspect-[4/5] rounded-[32px] overflow-hidden border border-white/10 bg-gradient-to-b from-white/5 to-transparent backdrop-blur-md shadow-[0_20px_50px_rgba(0,0,0,0.8),0_0_30px_rgba(0,240,255,0.03)] hover:border-neon-cyan/30 transition-colors duration-500 group">
-            {/* Corner Cyber Lines */}
-            <div className="absolute top-4 left-4 w-4 h-4 border-t-2 border-l-2 border-neon-cyan/30 group-hover:border-neon-cyan/60 transition-colors" />
-            <div className="absolute top-4 right-4 w-4 h-4 border-t-2 border-r-2 border-neon-cyan/30 group-hover:border-neon-cyan/60 transition-colors" />
-            <div className="absolute bottom-4 left-4 w-4 h-4 border-b-2 border-l-2 border-neon-cyan/30 group-hover:border-neon-cyan/60 transition-colors" />
-            <div className="absolute bottom-4 right-4 w-4 h-4 border-b-2 border-r-2 border-neon-cyan/30 group-hover:border-neon-cyan/60 transition-colors" />
-
-            {/* Ambient image gradient layer */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent z-10 pointer-events-none" />
-
-            {/* User Portrait Image */}
-            <Image
-              src="/portrait.png"
-              alt="Muhammad Rakibul Hasan Shuvo"
-              fill
-              sizes="(max-w-768px) 340px, 400px"
-              priority
-              fetchPriority="high"
-              className="object-cover object-bottom transition-transform duration-700 group-hover:scale-105 pointer-events-auto filter drop-shadow-[0_0_30px_rgba(0,240,255,0.15)]"
-              onError={(e) => {
-                e.currentTarget.src = "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=500&q=80";
-              }}
-            />
-
-            {/* Floating Overlay Badge: Frontend Architect */}
-            <m.div
-              initial={{ y: 20, opacity: 0 }}
-              whileInView={{ y: 0, opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.4 }}
-              className="absolute top-6 left-6 z-20 px-3.5 py-1.5 rounded-xl bg-black/75 border border-neon-cyan/20 backdrop-blur-md shadow-2xl flex items-center gap-1.5"
-            >
-              <Cpu className="w-3.5 h-3.5 text-neon-cyan" />
-              <span className="text-[10px] font-cabinet font-black uppercase text-white tracking-widest">
-                UI/UX Engineer
-              </span>
-            </m.div>
-
-            {/* Floating Overlay Badge: Location/Origin */}
-            <m.div
-              initial={{ y: -20, opacity: 0 }}
-              whileInView={{ y: 0, opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.5 }}
-              className="absolute bottom-6 right-6 z-20 px-3.5 py-1.5 rounded-xl bg-black/75 border border-white/10 backdrop-blur-md shadow-2xl flex items-center gap-1.5"
-            >
-              <Terminal className="w-3.5 h-3.5 text-neon-cyan animate-pulse" />
-              <span className="text-[9px] font-mono uppercase text-neon-cyan font-bold tracking-wider">
-                Dhaka, BD
-              </span>
-            </m.div>
           </div>
         </m.div>
 
