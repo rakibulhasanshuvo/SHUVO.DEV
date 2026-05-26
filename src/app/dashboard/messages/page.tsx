@@ -329,7 +329,7 @@ export default function MessagesPage() {
               <Search className="absolute left-3 w-4 h-4 text-darkpan-slate" />
               <input
                 type="search"
-                placeholder="Search inbox..."
+                placeholder="Search inbox…"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="w-full bg-black border border-white/10 focus:border-darkpan-red/40 rounded-xl pl-9 pr-4 py-2 text-xs focus:outline-none transition-all placeholder:text-darkpan-slate"

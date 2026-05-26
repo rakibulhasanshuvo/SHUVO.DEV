@@ -1014,7 +1014,7 @@ export default function DashboardLayout({
                       {isSavingSettings ? (
                         <>
                           <div className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                          <span>Saving...</span>
+                          <span>Saving…</span>
                         </>
                       ) : (
                         <span>Save Changes</span>

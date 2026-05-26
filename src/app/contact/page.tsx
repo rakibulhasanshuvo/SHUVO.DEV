@@ -669,7 +669,7 @@ export default function ContactPage() {
   return (
     <Suspense fallback={
       <div className="w-full min-h-screen bg-black text-white flex items-center justify-center font-mono text-sm">
-        BOOTING TRANSMISSION PIPELINE...
+        BOOTING TRANSMISSION PIPELINE…
       </div>
     }>
       <ContactPageContent />
