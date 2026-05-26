@@ -332,20 +332,26 @@ export default function TemplateDetailsPage({ params }: PageProps) {
                     </div>
                   )}
 
-                  {/* State 2: Sandbox is Ready / Loaded */}
+                  {/* State 2: Sandbox is Ready / Loaded (Renders direct interactive iframe preview) */}
                   {sandboxStatus === "ready" && (
-                    <div className="absolute inset-0 z-20 bg-[#0A0A0C] flex flex-col items-center justify-center p-8 text-center space-y-4 font-satoshi">
-                      <span className="text-4xl">🚀</span>
-                      <h4 className="font-clash font-extrabold text-xl text-white uppercase tracking-wider">Live sandbox instance loaded</h4>
-                      <p className="text-[13px] text-zinc-400 max-w-sm font-normal leading-relaxed">
-                        Your serverless playground database is fully warm. You are now communicating directly with pre-allocated edge nodes.
-                      </p>
-                      <button
-                        onClick={() => setSandboxStatus("idle")}
-                        className="px-4 py-2 border border-white/10 hover:border-white/20 bg-white/5 rounded-xl text-[10px] font-mono uppercase tracking-widest hover:text-white transition-colors duration-300"
-                      >
-                        Reset Sandbox
-                      </button>
+                    <div className="absolute inset-0 z-20 bg-black w-full h-full relative group">
+                      {/* Floating high-tech overlay controller */}
+                      <div className="absolute top-4 right-4 z-30 opacity-80 hover:opacity-100 transition-opacity">
+                        <button
+                          onClick={() => setSandboxStatus("idle")}
+                          className="px-4.5 py-2.5 rounded-xl bg-black/90 hover:bg-black text-white font-mono text-[9px] font-extrabold uppercase tracking-widest border border-white/10 hover:border-neon-cyan/40 shadow-xl cursor-pointer hover:scale-105 active:scale-95 transition-all duration-300"
+                        >
+                          Reset Sandbox
+                        </button>
+                      </div>
+
+                      {/* Live preview iframe */}
+                      <iframe 
+                        src={template.iframePlaceholderUrl} 
+                        className="w-full h-full border-none bg-black relative z-10" 
+                        title={`${template.title} Live Preview`}
+                        sandbox="allow-scripts allow-same-origin allow-popups"
+                      />
                     </div>
                   )}
 

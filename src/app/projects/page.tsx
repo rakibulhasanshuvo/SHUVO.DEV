@@ -222,7 +222,7 @@ const miniProjects = [
     category: "UI Experiment",
     desc: "A futuristic administrative panel featuring low-latency real-time canvas widgets.",
     tech: ["Next.js", "Framer Motion", "CSS-in-JS"],
-    link: "#",
+    link: "/dashboard",
   },
   {
     year: "2025",
@@ -230,7 +230,7 @@ const miniProjects = [
     category: "Data Pipeline",
     desc: "A highly parallelized data crawler pipeline optimized for serverless ingestion.",
     tech: ["TypeScript", "Node.js", "Redis"],
-    link: "#",
+    link: "/projects/amolnama",
   },
   {
     year: "2025",
@@ -238,7 +238,7 @@ const miniProjects = [
     category: "Design System",
     desc: "A modern visual component package built on custom neon design tokens.",
     tech: ["React", "PostCSS", "Tailwind"],
-    link: "#",
+    link: "/projects/componeo",
   },
   {
     year: "2024",
@@ -246,7 +246,7 @@ const miniProjects = [
     category: "Freelance Sprint",
     desc: "Refactored transactional locking schemas to scale e-commerce checkout checkouts.",
     tech: ["Prisma", "PostgreSQL", "React"],
-    link: "#",
+    link: "/projects/izzan",
   },
 ];
 

@@ -3,7 +3,11 @@
 import React, { useState } from 'react';
 import { m } from 'framer-motion';
 
-const PricingCards = () => {
+interface PricingCardsProps {
+  onSelectTier?: (tierIndex: number) => void;
+}
+
+const PricingCards = ({ onSelectTier }: PricingCardsProps) => {
   const [isHovered, setIsHovered] = useState(false);
 
   const tiers = [
@@ -108,6 +112,7 @@ const PricingCards = () => {
                   ))}
                 </ul>
                 <button
+                  onClick={() => onSelectTier?.(idx + 1)}
                   className={`w-full py-3 px-6 rounded-full font-semibold transition-all duration-300 bg-black/40 backdrop-blur-md border ${tier.border} ${tier.buttonText} ${tier.buttonGlow} hover:bg-black/60 hover:shadow-none`}
                 >
                   Book a Call
@@ -187,6 +192,7 @@ const PricingCards = () => {
                   </ul>
 
                   <button
+                    onClick={() => onSelectTier?.(idx + 1)}
                     className={`w-full py-3 px-6 rounded-full font-semibold transition-all duration-300 bg-white/5 backdrop-blur-md border ${tier.border} ${tier.buttonText} ${tier.buttonGlow} hover:bg-white/10 hover:shadow-none mt-auto`}
                   >
                     Book a Call

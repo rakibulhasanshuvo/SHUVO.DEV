@@ -3,6 +3,7 @@
 import React from "react";
 import { usePathname } from "next/navigation";
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 import SmoothScrolling from "@/components/SmoothScrolling";
 import { LazyMotion, domAnimation } from "framer-motion";
 
@@ -31,6 +32,7 @@ export default function RootLayoutClient({
       <SmoothScrolling>
         <main className="pt-24 flex-1 flex flex-col relative">
           {children}
+          <Footer />
         </main>
       </SmoothScrolling>
     </LazyMotion>

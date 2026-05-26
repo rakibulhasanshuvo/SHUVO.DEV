@@ -86,174 +86,29 @@ const SignupPage = () => {
       </Link>
 
       <div className="relative z-10 w-full max-w-[380px] px-4">
-        <style>{`
-          .form {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            width: 100%;
-            padding: 24px;
-            border-radius: 24px;
-            position: relative;
-            background-color: #0b0b0d;
-            color: #fff;
-            border: 1px solid rgba(235, 22, 22, 0.15);
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8), 0 0 20px rgba(235, 22, 22, 0.05);
-          }
+        <form 
+          className="flex flex-col gap-5 w-full p-8 rounded-3xl relative bg-[#0b0b0d]/90 text-white border border-[#00F0FF]/20 shadow-[0_20px_50px_rgba(0,0,0,0.8),0_0_30px_rgba(0,240,255,0.03)] backdrop-blur-xl" 
+          onSubmit={handleRegisterSubmit}
+        >
+          {/* Cyber Corner Marks */}
+          <div className="absolute top-0 left-0 w-2.5 h-2.5 border-t-2 border-l-2 border-neon-cyan/40" />
+          <div className="absolute top-0 right-0 w-2.5 h-2.5 border-t-2 border-r-2 border-neon-cyan/40" />
+          <div className="absolute bottom-0 left-0 w-2.5 h-2.5 border-b-2 border-l-2 border-neon-cyan/40" />
+          <div className="absolute bottom-0 right-0 w-2.5 h-2.5 border-b-2 border-r-2 border-neon-cyan/40" />
 
-          .title {
-            font-size: 26px;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-            position: relative;
-            display: flex;
-            align-items: center;
-            padding-left: 28px;
-            color: #ffffff;
-            font-family: var(--font-cabinet, sans-serif);
-          }
-
-          .title::before {
-            width: 14px;
-            height: 14px;
-          }
-
-          .title::after {
-            width: 14px;
-            height: 14px;
-            animation: pulse 1.2s linear infinite;
-          }
-
-          .title::before,
-          .title::after {
-            position: absolute;
-            content: "";
-            height: 12px;
-            width: 12px;
-            border-radius: 50%;
-            left: 0px;
-            background-color: #eb1616;
-          }
-
-          .message, 
-          .signin {
-            font-size: 12px;
-            color: rgba(255, 255, 255, 0.6);
-            font-weight: 500;
-          }
-
-          .signin {
-            text-align: center;
-            margin-top: 6px;
-          }
-
-          .signin a:hover {
-            color: #eb1616;
-            text-decoration: underline;
-          }
-
-          .signin a {
-            color: rgba(255, 255, 255, 0.8);
-            font-weight: bold;
-            transition: color 0.2s;
-          }
-
-          .flex {
-            display: flex;
-            width: 100%;
-            gap: 10px;
-          }
-
-          .form label {
-            position: relative;
-            width: 100%;
-          }
-
-          .form label .input {
-            background-color: #030303;
-            color: #fff;
-            width: 100%;
-            padding: 18px 10px 6px 12px;
-            outline: 0;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 12px;
-            transition: border-color 0.3s;
-          }
-
-          .form label .input:focus {
-            border-color: rgba(235, 22, 22, 0.4);
-          }
-
-          .form label .input + span {
-            color: rgba(255, 255, 255, 0.4);
-            position: absolute;
-            left: 12px;
-            top: 4px;
-            font-size: 0.8em;
-            cursor: text;
-            transition: 0.3s ease;
-            pointer-events: none;
-          }
-
-          .form label .input:placeholder-shown + span {
-            top: 12px;
-            font-size: 0.85em;
-          }
-
-          .form label .input:focus + span,
-          .form label .input:not(:placeholder-shown) + span {
-            color: #eb1616;
-            top: 2px;
-            font-size: 0.65em;
-            font-weight: bold;
-          }
-
-          .input {
-            font-size: 13px;
-          }
-
-          .submit {
-            border: none;
-            outline: none;
-            padding: 12px;
-            border-radius: 12px;
-            color: #fff;
-            font-size: 13px;
-            font-weight: 800;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
-            transition: .3s ease;
-            background-color: #eb1616;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(235, 22, 22, 0.2);
-          }
-
-          .submit:hover:not(:disabled) {
-            background-color: #c71212;
-            box-shadow: 0 4px 15px rgba(235, 22, 22, 0.3);
-          }
-
-          .submit:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-          }
-
-          @keyframes pulse {
-            from {
-              transform: scale(0.9);
-              opacity: 1;
-            }
-
-            to {
-              transform: scale(1.8);
-              opacity: 0;
-            }
-          }
-        `}</style>
-
-        <form className="form" onSubmit={handleRegisterSubmit}>
-          <p className="title">Register</p>
-          <p className="message">Signup now to configure the administrative portfolio dashboard.</p>
+          <div className="flex items-center gap-3 pl-1 mb-1">
+            <span className="relative flex h-2.5 w-2.5">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-neon-cyan opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-neon-cyan"></span>
+            </span>
+            <h2 className="font-cabinet font-extrabold text-2xl tracking-tight text-white uppercase">
+              Register
+            </h2>
+          </div>
+          
+          <p className="text-xs text-zinc-400 font-medium leading-relaxed -mt-3 pl-1 mb-2">
+            Signup now to configure the administrative portfolio dashboard.
+          </p>
           
           {errorMsg && (
             <div className="p-3 rounded-xl bg-red-500/10 border border-red-500/20 text-red-500 text-[11px] font-bold">
@@ -267,72 +122,81 @@ const SignupPage = () => {
             </div>
           )}
 
-          <div className="flex">
-            <label>
+          <div className="grid grid-cols-2 gap-3.5">
+            <label className="relative flex flex-col gap-1 w-full">
+              <span className="text-[10px] font-mono font-bold tracking-wider text-zinc-500 uppercase">First Name</span>
               <input 
-                className="input" 
+                className="w-full bg-[#030303] border border-white/10 hover:border-white/20 focus:border-[#00F0FF]/40 rounded-xl px-3.5 py-2.5 text-xs font-mono text-white placeholder-zinc-700 outline-none transition-all duration-300"
                 type="text" 
-                placeholder=" " 
+                placeholder="Satoshi" 
                 required 
                 value={firstName}
                 onChange={(e) => setFirstName(e.target.value)}
               />
-              <span>Firstname</span>
             </label>
-            <label>
+            <label className="relative flex flex-col gap-1 w-full">
+              <span className="text-[10px] font-mono font-bold tracking-wider text-zinc-500 uppercase">Last Name</span>
               <input 
-                className="input" 
+                className="w-full bg-[#030303] border border-white/10 hover:border-white/20 focus:border-[#00F0FF]/40 rounded-xl px-3.5 py-2.5 text-xs font-mono text-white placeholder-zinc-700 outline-none transition-all duration-300"
                 type="text" 
-                placeholder=" " 
+                placeholder="Nakamoto" 
                 required 
                 value={lastName}
                 onChange={(e) => setLastName(e.target.value)}
               />
-              <span>Lastname</span>
             </label>
           </div>  
           
-          <label>
+          <label className="relative flex flex-col gap-1 w-full">
+            <span className="text-[10px] font-mono font-bold tracking-wider text-zinc-500 uppercase">Corporate Email</span>
             <input 
-              className="input" 
+              className="w-full bg-[#030303] border border-white/10 hover:border-white/20 focus:border-[#00F0FF]/40 rounded-xl px-3.5 py-2.5 text-xs font-mono text-white placeholder-zinc-700 outline-none transition-all duration-300"
               type="email" 
-              placeholder=" " 
+              placeholder="satoshi@bitcoin.org" 
               required 
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
-            <span>Email</span>
           </label> 
           
-          <label>
+          <label className="relative flex flex-col gap-1 w-full">
+            <span className="text-[10px] font-mono font-bold tracking-wider text-zinc-500 uppercase">Password</span>
             <input 
-              className="input" 
+              className="w-full bg-[#030303] border border-white/10 hover:border-white/20 focus:border-[#00F0FF]/40 rounded-xl px-3.5 py-2.5 text-xs font-mono text-white placeholder-zinc-700 outline-none transition-all duration-300"
               type="password" 
-              placeholder=" " 
+              placeholder="••••••••" 
               required 
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-            <span>Password</span>
           </label>
           
-          <label>
+          <label className="relative flex flex-col gap-1 w-full">
+            <span className="text-[10px] font-mono font-bold tracking-wider text-zinc-500 uppercase">Confirm Password</span>
             <input 
-              className="input" 
+              className="w-full bg-[#030303] border border-white/10 hover:border-white/20 focus:border-[#00F0FF]/40 rounded-xl px-3.5 py-2.5 text-xs font-mono text-white placeholder-zinc-700 outline-none transition-all duration-300"
               type="password" 
-              placeholder=" " 
+              placeholder="••••••••" 
               required 
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
             />
-            <span>Confirm password</span>
           </label>
           
-          <button className="submit" type="submit" disabled={loading}>
+          <button 
+            className="w-full mt-2 py-3 px-4 rounded-xl text-black bg-[#00F0FF] hover:bg-[#00F0FF]/90 font-mono text-xs font-bold uppercase tracking-widest cursor-pointer hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_0_20px_rgba(0,240,255,0.15)] hover:shadow-[0_0_25px_rgba(0,240,255,0.3)]" 
+            type="submit" 
+            disabled={loading}
+          >
             {loading ? "Compiling..." : "Submit"}
           </button>
           
-          <p className="signin">Already have an account? <Link href="/dashboard">Signin</Link></p>
+          <p className="text-center text-xs text-zinc-400 font-medium mt-1">
+            Already have an account?{" "}
+            <Link href="/dashboard" className="text-white hover:text-[#00F0FF] hover:underline font-bold transition-colors">
+              Signin
+            </Link>
+          </p>
         </form>
       </div>
     </div>

@@ -55,7 +55,7 @@ export default function RootLayout({
     },
     "sameAs": [
       "https://github.com/rakibulhasanshuvo",
-      "https://linkedin.com", // Fallback
+      "https://linkedin.com/in/rakibulhasanshuvo",
       "https://upwork.com" // Fallback
     ],
     "priceRange": "$$"

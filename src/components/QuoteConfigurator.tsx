@@ -79,14 +79,22 @@ const scaleOptions: Option[] = [
 
 interface QuoteConfiguratorProps {
   onSelectSummary: (summary: string) => void;
+  preselectedTier?: number;
 }
 
-export default function QuoteConfigurator({ onSelectSummary }: QuoteConfiguratorProps) {
+export default function QuoteConfigurator({ onSelectSummary, preselectedTier }: QuoteConfiguratorProps) {
   const [step, setStep] = useState(1);
   const [selectedService, setSelectedService] = useState<Option>(serviceTiers[0]);
   const [selectedTimeline, setSelectedTimeline] = useState<Option>(timelines[0]);
   const [selectedScale, setSelectedScale] = useState<Option>(scaleOptions[0]);
   const [estimatedCost, setEstimatedCost] = useState(1500);
+
+  useEffect(() => {
+    if (preselectedTier && preselectedTier >= 1 && preselectedTier <= 3) {
+      setSelectedService(serviceTiers[preselectedTier - 1]);
+      setStep(1);
+    }
+  }, [preselectedTier]);
 
   // Live Price Calculator
   useEffect(() => {
