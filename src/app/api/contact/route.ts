@@ -107,25 +107,26 @@ export async function POST(request: Request) {
       throw new Error(error.message);
     }
 
-    // 7. Fire off background email notification
+    // 7. Fire off email notification (awaited to ensure serverless execution is not terminated prematurely)
     if (process.env.RESEND_API_KEY && process.env.ADMIN_EMAIL) {
-      // Intentionally avoiding await so we don't block the API response
-      resend.emails.send({
-        from: 'Portfolio Contact <onboarding@resend.dev>',
-        to: [process.env.ADMIN_EMAIL],
-        subject: `New Lead: ${name} - ${quoteSummary || 'Direct Contact'}`,
-        html: `
-          <h3>New Contact Form Submission</h3>
-          <p><strong>Name:</strong> ${name}</p>
-          <p><strong>Email:</strong> ${email}</p>
-          <p><strong>Service Tier:</strong> ${service_tier}</p>
-          <p><strong>Estimated Budget:</strong> $${estimated_budget}</p>
-          <p><strong>Message:</strong></p>
-          <p>${message}</p>
-        `
-      }).catch(err => {
-         console.error("Failed to send background email notification:", err?.message || err);
-      });
+      try {
+        await resend.emails.send({
+          from: 'Portfolio Contact <onboarding@resend.dev>',
+          to: [process.env.ADMIN_EMAIL],
+          subject: `New Lead: ${name} - ${quoteSummary || 'Direct Contact'}`,
+          html: `
+            <h3>New Contact Form Submission</h3>
+            <p><strong>Name:</strong> ${name}</p>
+            <p><strong>Email:</strong> ${email}</p>
+            <p><strong>Service Tier:</strong> ${service_tier}</p>
+            <p><strong>Estimated Budget:</strong> $${estimated_budget}</p>
+            <p><strong>Message:</strong></p>
+            <p>${message}</p>
+          `
+        });
+      } catch (err: any) {
+        console.error("Failed to send email notification:", err?.message || err);
+      }
     }
 
     return NextResponse.json({

@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
 import { headers } from "next/headers";
-import { createServerSupabaseClient } from "@/lib/supabase/server";
+import { createAdminSupabaseClient } from "@/lib/supabase/admin";
 
 // Initialize Stripe instance. Pass a fallback key so the server build doesn't crash if env var is missing.
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "sk_test_mock123", {
@@ -35,8 +35,8 @@ export async function POST(req: Request) {
       case "checkout.session.completed": {
         const session = event.data.object as Stripe.Checkout.Session;
 
-        // Connect to Supabase
-        const supabase = await createServerSupabaseClient();
+        // Connect to Supabase using admin client to bypass cookie context constraints
+        const supabase = createAdminSupabaseClient();
 
         // Example: Update lead or create a new order record based on session data
         // For now, we'll just log it. In a real app, you'd match the session.client_reference_id
