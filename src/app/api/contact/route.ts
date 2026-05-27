@@ -1,24 +1,14 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { createServerSupabaseClient } from "@/lib/supabase/server";
-import { Resend } from 'resend';
-
-// Provide a mock fallback so tests don't crash when initializing Resend
-const resend = new Resend(process.env.RESEND_API_KEY || "re_mock_123");
-
-// 0. Lightweight memory-based rate limiting map
-// Maps IP address to an array of request timestamps
-const rateLimitMap = new Map<string, number[]>();
-const RATE_LIMIT_WINDOW_MS = 15 * 60 * 1000; // 15 minutes
-const MAX_REQUESTS_PER_WINDOW = 5; // 5 requests per 15 minutes
+import { createAdminSupabaseClient } from "@/lib/supabase/admin";
 
 // 1. Establish Zod schema for runtime payload validation
 const contactSchema = z.object({
-  name: z.string().min(2, { message: "Name must be at least 2 characters." }),
-  email: z.string().email({ message: "Please enter a valid corporate email address." }),
-  message: z.string().min(10, { message: "Message must be at least 10 characters." }),
-  quoteSummary: z.string().optional(),
-  confirm_corporate_website: z.string().optional(),
+  name: z.string().min(2, { message: "Name must be at least 2 characters." }).max(100, { message: "Name is too long." }),
+  email: z.string().email({ message: "Please enter a valid corporate email address." }).max(150, { message: "Email is too long." }),
+  message: z.string().min(10, { message: "Message must be at least 10 characters." }).max(2000, { message: "Message is too long." }),
+  quoteSummary: z.string().max(1000, { message: "Quote summary is too long." }).optional(),
+  confirm_corporate_website: z.string().max(200, { message: "Confirm URL is too long." }).optional(),
 });
 
 export async function POST(request: Request) {
@@ -50,7 +40,7 @@ export async function POST(request: Request) {
 
     // 2. Perform Honeypot verification (silently discard bots)
     if (rawData.confirm_corporate_website) {
-      console.warn("Honeypot triggered! Bot submission rejected silently."); // Added for test compatibility
+      console.warn("Honeypot triggered! Bot submission rejected silently.");
       return NextResponse.json({
         success: true,
         message: "Message processed successfully. Secure thread opened.",
@@ -88,7 +78,7 @@ export async function POST(request: Request) {
     }
 
     // 5. Connect to Supabase via server-side client
-    const supabase = await createServerSupabaseClient();
+    const supabase = createAdminSupabaseClient();
 
     // 6. Insert lead record into PostgreSQL
     const { error } = await supabase.from("leads").insert({
