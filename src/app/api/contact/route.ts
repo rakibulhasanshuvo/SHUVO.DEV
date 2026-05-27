@@ -1,6 +1,16 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { createServerSupabaseClient } from "@/lib/supabase/server";
+import { Resend } from 'resend';
+
+// Provide a mock fallback so tests don't crash when initializing Resend
+const resend = new Resend(process.env.RESEND_API_KEY || "re_mock_123");
+
+// 0. Lightweight memory-based rate limiting map
+// Maps IP address to an array of request timestamps
+const rateLimitMap = new Map<string, number[]>();
+const RATE_LIMIT_WINDOW_MS = 15 * 60 * 1000; // 15 minutes
+const MAX_REQUESTS_PER_WINDOW = 5; // 5 requests per 15 minutes
 
 // 1. Establish Zod schema for runtime payload validation
 const contactSchema = z.object({
@@ -13,10 +23,34 @@ const contactSchema = z.object({
 
 export async function POST(request: Request) {
   try {
+    // 1.5 Rate Limiting
+    // Extract IP address from standard proxy headers or fallback
+    const ip = request.headers.get("x-forwarded-for") || request.headers.get("x-real-ip") || "unknown_ip";
+    const now = Date.now();
+
+    if (ip !== "unknown_ip") {
+      const timestamps = rateLimitMap.get(ip) || [];
+      // Filter out timestamps older than the window
+      const recentTimestamps = timestamps.filter(timestamp => now - timestamp < RATE_LIMIT_WINDOW_MS);
+
+      if (recentTimestamps.length >= MAX_REQUESTS_PER_WINDOW) {
+        return NextResponse.json(
+          { success: false, error: "Too many requests. Please try again later." },
+          { status: 429 } // 429 Too Many Requests
+        );
+      }
+
+      // Add current request timestamp
+      recentTimestamps.push(now);
+      rateLimitMap.set(ip, recentTimestamps);
+    }
+
+
     const rawData = await request.json();
 
     // 2. Perform Honeypot verification (silently discard bots)
     if (rawData.confirm_corporate_website) {
+      console.warn("Honeypot triggered! Bot submission rejected silently."); // Added for test compatibility
       return NextResponse.json({
         success: true,
         message: "Message processed successfully. Secure thread opened.",
@@ -72,6 +106,27 @@ export async function POST(request: Request) {
       throw new Error(error.message);
     }
 
+    // 7. Fire off background email notification
+    if (process.env.RESEND_API_KEY && process.env.ADMIN_EMAIL) {
+      // Intentionally avoiding await so we don't block the API response
+      resend.emails.send({
+        from: 'Portfolio Contact <onboarding@resend.dev>',
+        to: [process.env.ADMIN_EMAIL],
+        subject: `New Lead: ${name} - ${quoteSummary || 'Direct Contact'}`,
+        html: `
+          <h3>New Contact Form Submission</h3>
+          <p><strong>Name:</strong> ${name}</p>
+          <p><strong>Email:</strong> ${email}</p>
+          <p><strong>Service Tier:</strong> ${service_tier}</p>
+          <p><strong>Estimated Budget:</strong> $${estimated_budget}</p>
+          <p><strong>Message:</strong></p>
+          <p>${message}</p>
+        `
+      }).catch(err => {
+         console.error("Failed to send background email notification:", err);
+      });
+    }
+
     return NextResponse.json({
       success: true,
       message: "Your message has been securely compiled and delivered to Muhammad Rakibul Hasan Shuvo's pipeline.",
@@ -84,4 +139,3 @@ export async function POST(request: Request) {
     );
   }
 }
-
