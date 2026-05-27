@@ -143,21 +143,6 @@ const GalleryColumn = ({
               shadow-2xl ${item.glow}
             `}
           >
-            {/* Dynamic Project Cover Screenshot Background (Supabase Storage served) */}
-            {item.coverUrl && (
-              <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-[2rem] z-0">
-                <img
-                  src={item.coverUrl}
-                  alt={item.title}
-                  className="w-full h-full object-cover opacity-15 mix-blend-luminosity filter blur-[0.5px] group-hover:opacity-30 group-hover:scale-[1.05] transition-all duration-700"
-                  onError={(e) => {
-                    e.currentTarget.style.display = "none";
-                  }}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0c] via-black/80 to-transparent" />
-              </div>
-            )}
-
             {/* Dynamic Glowing Mesh Background Overlay */}
             <div className={`absolute inset-0 bg-gradient-to-br ${item.color} opacity-40 mix-blend-color-dodge transition-opacity duration-700 group-hover:opacity-60 z-0`} />
             
