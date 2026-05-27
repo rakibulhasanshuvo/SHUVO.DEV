@@ -56,32 +56,32 @@ export default function Footer() {
         <div>
           <h3 className="font-cabinet font-bold text-sm uppercase tracking-wider mb-6 text-white">Navigation</h3>
           <ul className="space-y-3 text-sm text-text-muted">
-            <li><Link href="/projects" className="hover:text-neon-cyan transition-colors focus-visible:text-neon-cyan focus:outline-none rounded block py-2">Work</Link></li>
-            <li><Link href="/about" className="hover:text-neon-cyan transition-colors focus-visible:text-neon-cyan focus:outline-none rounded block py-2">About</Link></li>
-            <li><Link href="/#process" className="hover:text-neon-cyan transition-colors focus-visible:text-neon-cyan focus:outline-none rounded block py-2">Process</Link></li>
-            <li><Link href="/#reviews" className="hover:text-neon-cyan transition-colors focus-visible:text-neon-cyan focus:outline-none rounded block py-2">Reviews</Link></li>
-            <li><Link href="/contact" className="hover:text-neon-cyan transition-colors focus-visible:text-neon-cyan focus:outline-none rounded block py-2">Contact</Link></li>
+            <li><Link href="/projects" className="hover:text-neon-cyan transition-colors focus-visible:text-neon-cyan focus:outline-none rounded block py-2 w-full">Work</Link></li>
+            <li><Link href="/about" className="hover:text-neon-cyan transition-colors focus-visible:text-neon-cyan focus:outline-none rounded block py-2 w-full">About</Link></li>
+            <li><Link href="/#process" className="hover:text-neon-cyan transition-colors focus-visible:text-neon-cyan focus:outline-none rounded block py-2 w-full">Process</Link></li>
+            <li><Link href="/#reviews" className="hover:text-neon-cyan transition-colors focus-visible:text-neon-cyan focus:outline-none rounded block py-2 w-full">Reviews</Link></li>
+            <li><Link href="/contact" className="hover:text-neon-cyan transition-colors focus-visible:text-neon-cyan focus:outline-none rounded block py-2 w-full">Contact</Link></li>
           </ul>
         </div>
 
         <div>
           <h3 className="font-cabinet font-bold text-sm uppercase tracking-wider mb-6 text-white">Services</h3>
           <ul className="space-y-3 text-sm text-text-muted">
-            <li><Link href="/contact#pricing" className="hover:text-electric-purple transition-colors focus-visible:text-electric-purple focus:outline-none rounded block py-2">Web Development</Link></li>
-            <li><Link href="/contact#pricing" className="hover:text-electric-purple transition-colors focus-visible:text-electric-purple focus:outline-none rounded block py-2">UI/UX Design</Link></li>
-            <li><Link href="/contact#pricing" className="hover:text-electric-purple transition-colors focus-visible:text-electric-purple focus:outline-none rounded block py-2">Performance Optimization</Link></li>
-            <li><Link href="/contact#pricing" className="hover:text-electric-purple transition-colors focus-visible:text-electric-purple focus:outline-none rounded block py-2">Custom Integration</Link></li>
+            <li><Link href="/contact#pricing" className="hover:text-electric-purple transition-colors focus-visible:text-electric-purple focus:outline-none rounded block py-2 w-full">Web Development</Link></li>
+            <li><Link href="/contact#pricing" className="hover:text-electric-purple transition-colors focus-visible:text-electric-purple focus:outline-none rounded block py-2 w-full">UI/UX Design</Link></li>
+            <li><Link href="/contact#pricing" className="hover:text-electric-purple transition-colors focus-visible:text-electric-purple focus:outline-none rounded block py-2 w-full">Performance Optimization</Link></li>
+            <li><Link href="/contact#pricing" className="hover:text-electric-purple transition-colors focus-visible:text-electric-purple focus:outline-none rounded block py-2 w-full">Custom Integration</Link></li>
           </ul>
         </div>
       </div>
 
       <div className="flex flex-col md:flex-row justify-between items-center text-text-muted text-xs font-satoshi border-t border-white/5 pt-8">
         <p>© 2026 M.R.H. Shuvo. All rights reserved.</p>
-        <div className="flex gap-4 mt-4 md:mt-0 items-center">
-          <Link href="/dashboard" className="text-neon-cyan hover:underline font-bold transition-all focus-visible:ring-1 focus-visible:ring-neon-cyan rounded px-1">Admin Dashboard</Link>
+        <div className="flex flex-wrap gap-4 mt-4 md:mt-0 items-center">
+          <Link href="/dashboard" className="text-neon-cyan hover:underline font-bold transition-all focus-visible:ring-1 focus-visible:ring-neon-cyan rounded p-2 block">Admin Dashboard</Link>
           <span className="text-white/10">|</span>
-          <Link href="/contact?subject=privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
-          <Link href="/contact?subject=terms" className="hover:text-white transition-colors">Terms of Service</Link>
+          <Link href="/contact?subject=privacy" className="hover:text-white transition-colors p-2 block">Privacy Policy</Link>
+          <Link href="/contact?subject=terms" className="hover:text-white transition-colors p-2 block">Terms of Service</Link>
         </div>
       </div>
     </footer>

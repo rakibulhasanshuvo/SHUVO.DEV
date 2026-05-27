@@ -11,7 +11,7 @@ describe("Contact API - Honeypot", () => {
 
   beforeEach(() => {
     // Suppress console.warn during this test block
-    consoleSpy = jest.spyOn(console, "warn").mockImplementation(() => {});
+    consoleSpy = jest.spyOn(console, "log").mockImplementation(() => {});
   });
 
   afterEach(() => {
