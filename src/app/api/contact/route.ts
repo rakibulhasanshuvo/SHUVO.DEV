@@ -1,6 +1,17 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { createAdminSupabaseClient } from "@/lib/supabase/admin";
+import { Resend } from "resend";
+
+
+
+// Basic in-memory rate limiting
+const rateLimitMap = new Map<string, number[]>();
+const RATE_LIMIT_WINDOW_MS = 60000; // 1 minute
+const MAX_REQUESTS_PER_WINDOW = 5;
+
+// Initialize Resend
+const resend = new Resend(process.env.RESEND_API_KEY || 're_dummy');
 
 // 1. Establish Zod schema for runtime payload validation
 const contactSchema = z.object({
