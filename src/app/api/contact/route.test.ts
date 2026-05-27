@@ -1,6 +1,9 @@
 /**
  * @jest-environment node
  */
+// Mock environment variables before importing route
+process.env.RESEND_API_KEY = "re_mock_123";
+
 import { POST } from "./route";
 
 describe("Contact API - Honeypot", () => {

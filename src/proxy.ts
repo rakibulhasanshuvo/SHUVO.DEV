@@ -54,8 +54,8 @@ export async function proxy(request: NextRequest) {
   const { data: { user } } = await supabase.auth.getUser();
 
   // 5. Protect Admin Dashboard routes from unauthenticated access
-  // BYPASS: Permits unrestricted access during local development so you don't need a Supabase user session
-  if (request.nextUrl.pathname.startsWith("/dashboard") && !user && process.env.NODE_ENV !== "development") {
+  // Strictly enforce authentication for all /dashboard routes
+  if (request.nextUrl.pathname.startsWith("/dashboard") && !user) {
     return NextResponse.redirect(new URL("/signup", request.url));
   }
 
@@ -75,4 +75,3 @@ export const config = {
     '/((?!api|_next/static|_next/image|favicon.ico|images/).*)',
   ],
 };
-
