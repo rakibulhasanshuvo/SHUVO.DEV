@@ -87,7 +87,7 @@ export default function Navbar() {
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
             className="md:hidden flex flex-col justify-center items-center gap-1.5 w-11 h-11 rounded-lg border border-white/10 bg-white/5 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-neon-cyan focus-visible:ring-offset-2 focus-visible:ring-offset-black"
-            aria-label="Toggle Menu"
+            aria-label="Toggle mobile menu"
           >
             <span
               className={`w-5 h-0.5 bg-white transition-all duration-300 ${
