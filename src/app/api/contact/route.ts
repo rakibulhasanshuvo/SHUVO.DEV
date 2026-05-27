@@ -124,7 +124,7 @@ export async function POST(request: Request) {
           <p>${message}</p>
         `
       }).catch(err => {
-         console.error("Failed to send background email notification:", err);
+         console.error("Failed to send background email notification:", err?.message || err);
       });
     }
 

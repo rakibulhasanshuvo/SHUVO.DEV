@@ -65,6 +65,9 @@ export default function AnalyticsPage() {
   const [webhookInput, setWebhookInput] = useState(`{\n  "event": "crawlers_batch_upload",\n  "shop_count": 5,\n  "payload_size_kb": 142.4,\n  "node_origin": "docker-swarm-ams"\n}`);
   const [webhookSuccess, setWebhookSuccess] = useState(false);
   const [webhookSending, setWebhookSending] = useState(false);
+  const [jsonError, setJsonError] = useState<string | null>(null);
+  const [latestResponse, setLatestResponse] = useState<any>(null);
+  const [dispatches, setDispatches] = useState<any[]>([]);
 
   const consoleEndRef = useRef<HTMLDivElement>(null);
 
@@ -111,12 +114,59 @@ export default function AnalyticsPage() {
     );
     setBots(runningBots);
 
+    // Generate high-fidelity dynamic logs based on current bot profiles
+    const dynamicLogs: string[] = [
+      "Initializing docker crawler swarm configuration...",
+      "Acquiring fresh rotating proxy credentials...",
+    ];
+
+    runningBots.forEach((bot) => {
+      if (bot.status === "running") {
+        const node = `proxy-${bot.name.toLowerCase().replace(/\s+/g, "-")}-${Math.floor(Math.random() * 89 + 10)}.socks5.net`;
+        dynamicLogs.push(`[PROXY] Registered container node on ${node}`);
+      }
+    });
+
+    runningBots.forEach((bot) => {
+      if (bot.status === "running") {
+        dynamicLogs.push(`[${bot.name.toUpperCase()}] Dispatching GET request to target: ${bot.targetMarket}`);
+      } else if (bot.status === "error") {
+        dynamicLogs.push(`[${bot.name.toUpperCase()}] [HALTED] Connection pool exhausted for target: ${bot.targetMarket}`);
+      }
+    });
+
+    runningBots.forEach((bot) => {
+      if (bot.status === "running") {
+        const latency = bot.speedMs + Math.floor(Math.random() * 60 - 30);
+        dynamicLogs.push(`[HTTP] ${bot.name} resolved. Status: 200 OK (Latency: ${latency}ms)`);
+      } else if (bot.status === "error") {
+        dynamicLogs.push(`[HTTP] ${bot.name} connection failed: 504 Gateway Timeout (Attempt 3/3)`);
+      }
+    });
+
+    runningBots.forEach((bot) => {
+      if (bot.status === "running") {
+        dynamicLogs.push(`[HTML-PARSER] ${bot.name} compiling cheerio JSDOM selectors...`);
+        const items = Math.floor(Math.random() * 60) + 40;
+        dynamicLogs.push(`[${bot.name.toUpperCase()}] Extracted ${items} pricing cards, standardizing pricing schema...`);
+        const drops = Math.floor(Math.random() * 4);
+        if (drops > 0) {
+          dynamicLogs.push(`[PIPELINE] ${bot.name} detected ${drops} pricing anomalies (> 15% discount)!`);
+        }
+        dynamicLogs.push(`[SUPABASE] Bulk upserting ${items} rows into 'shop_pricing_telemetry' ledger...`);
+      }
+    });
+
+    dynamicLogs.push("[TINYBIRD] Dispatching clickstream telemetry payload event to event gateway...");
+    dynamicLogs.push("[SUCCESS] Tinybird batch sync accepted (201 Created). Telemetry synchronized.");
+    dynamicLogs.push(`Scraper swarm execution pipeline finished synchronously in ${(Math.random() * 0.5 + 1.1).toFixed(2)} seconds.`);
+
     let currentLogIndex = 0;
     
     const logInterval = setInterval(() => {
-      if (currentLogIndex < STREAMING_LOG_TEMPLATES.length) {
+      if (currentLogIndex < dynamicLogs.length) {
         const timeStamp = new Date().toLocaleTimeString();
-        setConsoleLogs((prev) => [...prev, `[${timeStamp}] ${STREAMING_LOG_TEMPLATES[currentLogIndex]}`]);
+        setConsoleLogs((prev) => [...prev, `[${timeStamp}] ${dynamicLogs[currentLogIndex]}`]);
         currentLogIndex++;
       } else {
         clearInterval(logInterval);
@@ -131,7 +181,7 @@ export default function AnalyticsPage() {
         setBots(idleBots);
         saveBots(idleBots);
       }
-    }, 450);
+    }, 350);
   };
 
   // Simulate Tinybird webhook event dispatch
@@ -139,12 +189,60 @@ export default function AnalyticsPage() {
     e.preventDefault();
     if (webhookSending) return;
 
-    setWebhookSending(true);
+    setJsonError(null);
     setWebhookSuccess(false);
 
+    let parsedPayload: any = null;
+    try {
+      parsedPayload = JSON.parse(webhookInput);
+      if (typeof parsedPayload !== "object" || parsedPayload === null) {
+        throw new Error("Payload must be a valid JSON object.");
+      }
+    } catch (err: any) {
+      setJsonError(err.message || "Invalid JSON syntax. Please verify keys and commas.");
+      return;
+    }
+
+    setWebhookSending(true);
+
     setTimeout(() => {
+      const transactionId = "evt_" + Math.random().toString(36).substring(2, 12);
+      const latency = Math.floor(Math.random() * 25) + 12; // 12-37ms latency
+      const responseObj = {
+        status: "accepted",
+        id: transactionId,
+        timestamp: new Date().toISOString(),
+        rows_imported: parsedPayload.shop_count || 1,
+        payload: parsedPayload
+      };
+
+      setLatestResponse({
+        statusCode: 202,
+        statusText: "Accepted",
+        latencyMs: latency,
+        headers: {
+          "content-type": "application/json",
+          "x-tinybird-ratelimit-remaining": "999",
+          "x-tinybird-transaction-id": transactionId
+        },
+        body: responseObj
+      });
+
       setWebhookSending(false);
       setWebhookSuccess(true);
+
+      // Append to dispatches history list
+      setDispatches((prev) => [
+        {
+          id: transactionId,
+          timestamp: new Date().toLocaleTimeString(),
+          event: parsedPayload.event || "unknown_event",
+          status: 202,
+          latencyMs: latency,
+          origin: parsedPayload.node_origin || "unknown_node"
+        },
+        ...prev
+      ].slice(0, 5));
     }, 1200);
   };
 
@@ -355,23 +453,65 @@ export default function AnalyticsPage() {
               <span className="text-[10px] text-darkpan-slate font-mono">POST /v1/events</span>
             </div>
 
+            {jsonError && (
+              <div className="p-3 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-[11px] font-semibold flex items-start gap-2">
+                <AlertTriangle className="w-4 h-4 mt-0.5 flex-shrink-0 text-red-500" />
+                <div>
+                  <p className="font-bold text-white">JSON Compile Error</p>
+                  <p className="text-red-400/80 mt-0.5">{jsonError}</p>
+                </div>
+              </div>
+            )}
+
             {webhookSuccess ? (
               <m.div
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-bold flex items-center gap-3"
+                className="space-y-4"
               >
-                <CheckCircle className="w-8 h-8 text-emerald-500 flex-shrink-0" />
-                <div>
-                  <p className="text-white">API Event Dispatched Successfully!</p>
-                  <p className="text-[10px] text-emerald-400/70 font-medium mt-0.5">Response code: 202 Accepted. Telemetry payload committed to Tinybird datasource.</p>
-                  <button
-                    onClick={() => setWebhookSuccess(false)}
-                    className="text-[10px] text-darkpan-red hover:underline mt-2 cursor-pointer font-bold block"
-                  >
-                    Reset Sandbox Trigger
-                  </button>
+                <div className="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-bold flex items-start gap-3">
+                  <CheckCircle className="w-6 h-6 text-emerald-500 flex-shrink-0 mt-0.5" />
+                  <div className="flex-1">
+                    <p className="text-white">API Event Dispatched Successfully!</p>
+                    <p className="text-[10px] text-emerald-400/70 font-medium mt-0.5">Response code: 202 Accepted. Telemetry payload committed to Tinybird datasource.</p>
+                    <button
+                      onClick={() => {
+                        setWebhookSuccess(false);
+                        setLatestResponse(null);
+                      }}
+                      className="text-[10px] text-darkpan-red hover:underline mt-2 cursor-pointer font-bold block"
+                    >
+                      Reset Sandbox Trigger
+                    </button>
+                  </div>
                 </div>
+
+                {/* Diagnostics Panel */}
+                {latestResponse && (
+                  <div className="bg-black/50 border border-white/5 rounded-xl p-4 space-y-3 font-mono text-[10px]">
+                    <div className="flex justify-between items-center border-b border-white/5 pb-2 text-[9px] text-darkpan-slate">
+                      <span>HTTP/2 • Response Headers</span>
+                      <span className="text-emerald-400">Latency: {latestResponse.latencyMs}ms</span>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-darkpan-slate text-[9px]">
+                      <div>
+                        <span className="text-white font-bold">status:</span> {latestResponse.statusCode} {latestResponse.statusText}
+                      </div>
+                      <div>
+                        <span className="text-white font-bold">content-type:</span> {latestResponse.headers["content-type"]}
+                      </div>
+                      <div className="md:col-span-2">
+                        <span className="text-white font-bold">x-tinybird-transaction-id:</span> {latestResponse.headers["x-tinybird-transaction-id"]}
+                      </div>
+                    </div>
+                    <div className="border-t border-white/5 pt-2">
+                      <span className="text-[9px] text-darkpan-slate block mb-1">Response Body</span>
+                      <pre className="text-emerald-400 bg-black/40 p-2.5 rounded border border-white/5 text-[9px] overflow-x-auto font-mono">
+                        {JSON.stringify(latestResponse.body, null, 2)}
+                      </pre>
+                    </div>
+                  </div>
+                )}
               </m.div>
             ) : (
               <form onSubmit={handleDispatchWebhook} className="space-y-4">
@@ -380,7 +520,10 @@ export default function AnalyticsPage() {
                   <textarea
                     rows={4}
                     value={webhookInput}
-                    onChange={(e) => setWebhookInput(e.target.value)}
+                    onChange={(e) => {
+                      setWebhookInput(e.target.value);
+                      if (jsonError) setJsonError(null);
+                    }}
                     className="w-full bg-black border border-white/10 rounded-xl p-3 text-xs text-white placeholder:text-darkpan-slate focus:border-darkpan-red/40 focus:outline-none transition-all font-mono resize-none"
                   />
                 </div>
@@ -404,6 +547,30 @@ export default function AnalyticsPage() {
                   </button>
                 </div>
               </form>
+            )}
+
+            {/* Dynamic ledger section */}
+            {dispatches.length > 0 && (
+              <div className="border-t border-white/5 pt-4 space-y-2.5">
+                <p className="text-[10px] uppercase tracking-wider text-darkpan-slate font-extrabold">Recent Webhook Dispatch Ledger</p>
+                <div className="space-y-2 max-h-[160px] overflow-y-auto pr-1">
+                  {dispatches.map((disp) => (
+                    <div key={disp.id} className="bg-black/30 border border-white/5 rounded-xl p-3 flex justify-between items-center text-[10px] font-mono hover:border-white/10 transition-all">
+                      <div className="space-y-0.5">
+                        <div className="flex items-center gap-2">
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                          <span className="text-white font-bold">{disp.event}</span>
+                        </div>
+                        <p className="text-darkpan-slate text-[9px]">ID: {disp.id} • Node: {disp.origin}</p>
+                      </div>
+                      <div className="text-right space-y-1">
+                        <span className="text-emerald-400 font-bold bg-emerald-500/10 border border-emerald-500/20 px-1.5 py-0.5 rounded text-[8px]">{disp.status} OK</span>
+                        <p className="text-darkpan-slate text-[9px]">{disp.latencyMs}ms • {disp.timestamp}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
             )}
           </div>
         </div>
