@@ -15,7 +15,8 @@ import {
   Check,
   Globe,
   Layers,
-  Image as ImageIcon
+  Image as ImageIcon,
+  RotateCw
 } from "lucide-react";
 
 interface ProjectCaseStudy {
@@ -96,6 +97,10 @@ export default function ProjectsCRUDPage() {
   const [formDescription, setFormDescription] = useState("");
   const [formContentMarkdown, setFormContentMarkdown] = useState("");
   const [formError, setFormError] = useState("");
+  
+  const [uploading, setUploading] = useState(false);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [previewUrl, setPreviewUrl] = useState("");
 
   const handleOpenCreateDrawer = () => {
     setActiveProject(null);
@@ -111,6 +116,9 @@ export default function ProjectsCRUDPage() {
     setFormDescription("");
     setFormContentMarkdown("");
     setFormError("");
+    setSelectedFile(null);
+    setPreviewUrl("");
+    setUploading(false);
     setIsDrawerOpen(true);
   };
 
@@ -128,6 +136,9 @@ export default function ProjectsCRUDPage() {
     setFormDescription(project.description);
     setFormContentMarkdown(project.contentMarkdown);
     setFormError("");
+    setSelectedFile(null);
+    setPreviewUrl("");
+    setUploading(false);
     setIsDrawerOpen(true);
   };
 
@@ -239,63 +250,110 @@ export default function ProjectsCRUDPage() {
     }
   };
 
-  const handleSaveProject = (e: React.FormEvent) => {
+  const uploadScreenshot = async (file: File, slug: string): Promise<string> => {
+    const { createClient } = await import("@/lib/supabase/client");
+    const supabase = createClient();
+    const fileExt = file.name.split('.').pop() || 'png';
+    const filePath = `screenshots/${slug}-${Date.now()}.${fileExt}`;
+
+    const { error: uploadError } = await supabase.storage
+      .from('project-screenshots')
+      .upload(filePath, file, {
+        cacheControl: '3600',
+        upsert: true
+      });
+
+    if (uploadError) throw uploadError;
+
+    const { data: { publicUrl } } = supabase.storage
+      .from('project-screenshots')
+      .getPublicUrl(filePath);
+
+    return publicUrl;
+  };
+
+  const handleSaveProject = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formTitle.trim() || !formSlug.trim() || !formDescription.trim()) {
       setFormError("Title, Slug, and Short Description are required.");
       return;
     }
 
-    const techArray = formTechStack
-      .split(",")
-      .map((tag) => tag.trim())
-      .filter((tag) => tag.length > 0);
+    setUploading(true);
+    setFormError("");
 
-    const coverImg = formCoverUrl.trim() || "https://images.unsplash.com/photo-1607799279861-4dd421887fb3?auto=format&fit=crop&w=600&q=80";
+    try {
+      const cleanSlug = formSlug.trim().toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "");
+      let coverImg = formCoverUrl.trim();
 
-    let updated: ProjectCaseStudy[];
+      // If a file was uploaded locally, save it in storage first
+      if (selectedFile) {
+        try {
+          coverImg = await uploadScreenshot(selectedFile, cleanSlug);
+        } catch (err: any) {
+          console.warn("Supabase Storage upload failed, falling back to local object URL:", err);
+          // Fallback to local preview URL so the user doesn't lose their data and still sees it
+          coverImg = previewUrl || "https://images.unsplash.com/photo-1607799279861-4dd421887fb3?auto=format&fit=crop&w=600&q=80";
+        }
+      }
 
-    if (activeProject) {
-      // Editing
-      updated = projects.map((p) =>
-        p.id === activeProject.id
-          ? {
-              ...p,
-              title: formTitle.trim(),
-              subtitle: formSubtitle.trim(),
-              slug: formSlug.trim().toLowerCase().replace(/\s+/g, "-"),
-              category: formCategory,
-              techStack: techArray,
-              coverUrl: coverImg,
-              featured: formFeatured,
-              role: formRole.trim() || "Developer",
-              client: formClient.trim() || "Independent",
-              description: formDescription.trim(),
-              contentMarkdown: formContentMarkdown.trim(),
-            }
-          : p
-      );
-    } else {
-      // Creating
-      const newProject: ProjectCaseStudy = {
-        id: `proj-${Date.now()}`,
-        title: formTitle.trim(),
-        subtitle: formSubtitle.trim(),
-        slug: formSlug.trim().toLowerCase().replace(/\s+/g, "-"),
-        category: formCategory,
-        techStack: techArray,
-        coverUrl: coverImg,
-        featured: formFeatured,
-        role: formRole.trim() || "Developer",
-        client: formClient.trim() || "Independent",
-        description: formDescription.trim(),
-        contentMarkdown: formContentMarkdown.trim(),
-      };
-      updated = [newProject, ...projects];
+      if (!coverImg) {
+        coverImg = "https://images.unsplash.com/photo-1607799279861-4dd421887fb3?auto=format&fit=crop&w=600&q=80";
+      }
+
+      const techArray = formTechStack
+        .split(",")
+        .map((tag) => tag.trim())
+        .filter((tag) => tag.length > 0);
+
+      let updated: ProjectCaseStudy[];
+
+      if (activeProject) {
+        // Editing
+        updated = projects.map((p) =>
+          p.id === activeProject.id
+            ? {
+                ...p,
+                title: formTitle.trim(),
+                subtitle: formSubtitle.trim(),
+                slug: cleanSlug,
+                category: formCategory,
+                techStack: techArray,
+                coverUrl: coverImg,
+                featured: formFeatured,
+                role: formRole.trim() || "Developer",
+                client: formClient.trim() || "Independent",
+                description: formDescription.trim(),
+                contentMarkdown: formContentMarkdown.trim(),
+              }
+            : p
+        );
+      } else {
+        // Creating
+        const newProject: ProjectCaseStudy = {
+          id: `proj-${Date.now()}`,
+          title: formTitle.trim(),
+          subtitle: formSubtitle.trim(),
+          slug: cleanSlug,
+          category: formCategory,
+          techStack: techArray,
+          coverUrl: coverImg,
+          featured: formFeatured,
+          role: formRole.trim() || "Developer",
+          client: formClient.trim() || "Independent",
+          description: formDescription.trim(),
+          contentMarkdown: formContentMarkdown.trim(),
+        };
+        updated = [newProject, ...projects];
+      }
+
+      await saveProjects(updated);
+      setIsDrawerOpen(false);
+    } catch (err: any) {
+      setFormError(err.message || "Failed to process project case study save.");
+    } finally {
+      setUploading(false);
     }
-
-    saveProjects(updated);
-    setIsDrawerOpen(false);
   };
 
   return (
@@ -520,19 +578,47 @@ export default function ProjectsCRUDPage() {
                     </select>
                   </div>
 
-                  {/* Cover URL */}
+                  {/* Cover URL / Upload Image */}
                   <div className="space-y-1">
                     <label className="text-[10px] uppercase tracking-wider text-darkpan-slate font-extrabold flex items-center gap-1">
                       <ImageIcon className="w-3 h-3 text-darkpan-red" />
-                      Mockup Cover Image URL
+                      Project Showcase Screenshot
                     </label>
-                    <input
-                      type="url"
-                      value={formCoverUrl}
-                      onChange={(e) => setFormCoverUrl(e.target.value)}
-                      placeholder="e.g. https://images.unsplash.com/..."
-                      className="w-full bg-black border border-white/10 focus:border-darkpan-red/40 rounded-xl px-4 py-2.5 text-xs text-white placeholder:text-darkpan-slate focus:outline-none transition-all"
-                    />
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 items-center">
+                      {/* Image Preview */}
+                      <div className="relative h-20 bg-black/40 rounded-xl border border-white/10 overflow-hidden flex items-center justify-center">
+                        {previewUrl || formCoverUrl ? (
+                          <img
+                            src={previewUrl || formCoverUrl}
+                            alt="Preview"
+                            className="w-full h-full object-cover opacity-70"
+                          />
+                        ) : (
+                          <ImageIcon className="w-5 h-5 text-darkpan-slate" />
+                        )}
+                      </div>
+                      
+                      {/* File input widget */}
+                      <div className="sm:col-span-2 relative border border-dashed border-white/10 hover:border-darkpan-red/30 rounded-xl p-3 flex flex-col items-center justify-center cursor-pointer transition-colors bg-black/30 group">
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={(e) => {
+                            const file = e.target.files?.[0];
+                            if (file) {
+                              setSelectedFile(file);
+                              setPreviewUrl(URL.createObjectURL(file));
+                            }
+                          }}
+                          className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                        />
+                        <Plus className="w-4 h-4 text-darkpan-slate group-hover:text-darkpan-red transition-colors" />
+                        <span className="text-[9px] text-white font-bold mt-1 text-center truncate w-full px-2">
+                          {selectedFile ? selectedFile.name : "Choose PNG/JPG File"}
+                        </span>
+                        <span className="text-[8px] text-darkpan-slate mt-0.5">Max size: 5MB</span>
+                      </div>
+                    </div>
                   </div>
                 </div>
 
@@ -633,10 +719,20 @@ export default function ProjectsCRUDPage() {
                   </button>
                   <button
                     type="submit"
-                    className="px-4 py-2.5 rounded-xl bg-darkpan-red text-white hover:bg-red-700 font-bold text-xs cursor-pointer transition-all flex items-center gap-2 shadow-[0_0_15px_rgba(235,22,22,0.3)]"
+                    disabled={uploading}
+                    className="px-4 py-2.5 rounded-xl bg-darkpan-red text-white hover:bg-red-700 font-bold text-xs cursor-pointer transition-all flex items-center gap-2 shadow-[0_0_15px_rgba(235,22,22,0.3)] disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    <Save className="w-3.5 h-3.5" />
-                    Save Changes
+                    {uploading ? (
+                      <>
+                        <RotateCw className="w-3.5 h-3.5 animate-spin" />
+                        Saving & Uploading...
+                      </>
+                    ) : (
+                      <>
+                        <Save className="w-3.5 h-3.5" />
+                        Save Changes
+                      </>
+                    )}
                   </button>
                 </div>
               </form>
