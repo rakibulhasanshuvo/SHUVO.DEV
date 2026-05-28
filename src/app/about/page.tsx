@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import { m } from "framer-motion";
 import TechPhysicsSandbox from "@/components/TechPhysicsSandbox";
 import HardwareShowroom from "@/components/HardwareShowroom";
@@ -56,81 +57,58 @@ export default function AboutPage() {
       <div className="absolute bottom-0 left-1/4 w-[500px] h-[500px] bg-electric-purple/5 rounded-full blur-[180px] pointer-events-none" />
 
       <div className="max-w-6xl mx-auto space-y-28 relative z-10">
-        
+
         {/* ==========================================
             📣 HERO BIOGRAPHY GRID CONSOLE
            ========================================== */}
         <section className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          
-          {/* Left Column: Bento Data-Matrix Card */}
-          <div className="lg:col-span-5 relative w-full rounded-3xl border border-[#00F0FF]/25 bg-gradient-to-br from-[#0B0B0E]/90 to-[#040405]/95 backdrop-blur-xl p-6 shadow-[0_20px_50px_rgba(0,0,0,0.6),0_0_30px_rgba(0,240,255,0.02)] overflow-hidden">
-            {/* Dynamic Background Grid Pattern */}
-            <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.01)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.01)_1px,transparent_1px)] bg-[size:16px_16px] pointer-events-none" />
-            
-            {/* Cyber Corner Marks */}
-            <div className="absolute top-0 left-0 w-2 h-2 border-t-2 border-l-2 border-neon-cyan/40" />
-            <div className="absolute top-0 right-0 w-2 h-2 border-t-2 border-r-2 border-neon-cyan/40" />
-            <div className="absolute bottom-0 left-0 w-2 h-2 border-b-2 border-l-2 border-neon-cyan/40" />
-            <div className="absolute bottom-0 right-0 w-2 h-2 border-b-2 border-r-2 border-neon-cyan/40" />
 
-            {/* Diagnostic Header */}
-            <div className="flex items-center justify-between pb-4 border-b border-white/5 mb-5 relative z-10">
-              <div className="flex items-center gap-2">
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
-                </span>
-                <span className="text-[9px] font-mono font-bold tracking-widest text-emerald-400 uppercase">
-                  OPERATOR DIAGNOSTIC
-                </span>
-              </div>
-              <span className="text-[9px] font-mono text-white/30 uppercase tracking-widest">SYS ACTIVE</span>
-            </div>
+          {/* Left Column: Premium Cyber-Framed Portrait */}
+          <div className="lg:col-span-5 relative group w-full aspect-[4/5] z-10">
+            {/* 3D Pulsing Ambient Backdrop Shadow Glow */}
+            <div
+              className="absolute -inset-2 rounded-[2rem] opacity-35 group-hover:opacity-60 blur-3xl transition-opacity duration-700 pointer-events-none bg-gradient-to-r from-[#00F0FF]/35 to-[#A100FF]/35"
+            />
 
-            {/* Core Stats Inventory */}
-            <div className="space-y-4 font-mono text-xs relative z-10">
-              <div>
-                <span className="text-zinc-500 block uppercase text-[10px] tracking-wider">Ident Registered</span>
-                <span className="text-white font-bold text-sm">MUHAMMAD RAKIBUL HASAN SHUVO</span>
-              </div>
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <span className="text-zinc-500 block uppercase text-[10px] tracking-wider">Stack Engine</span>
-                  <span className="text-[#00F0FF] font-bold">NEXT.JS // REACT 19</span>
-                </div>
-                <div>
-                  <span className="text-zinc-500 block uppercase text-[10px] tracking-wider">Build Compile</span>
-                  <span className="text-emerald-400 font-bold">&lt; 8.4s // SUCCESS</span>
-                </div>
-              </div>
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <span className="text-zinc-500 block uppercase text-[10px] tracking-wider">Design Latency</span>
-                  <span className="text-[#A100FF] font-bold">0ms // PERFECT</span>
-                </div>
-                <div>
-                  <span className="text-zinc-500 block uppercase text-[10px] tracking-wider">Primary Role</span>
-                  <span className="text-white font-bold">FULL-STACK ARCHITECT</span>
-                </div>
-              </div>
-              <div className="pb-4 border-b border-white/5">
-                <span className="text-zinc-500 block uppercase text-[10px] tracking-wider">Current Geolocation</span>
-                <span className="text-white block mt-0.5">DHAKA, BANGLADESH (UTC+6)</span>
-              </div>
-            </div>
+            {/* Main Cyber Frame */}
+            <div className="h-full w-full rounded-3xl border border-[#00F0FF]/25 bg-gradient-to-br from-[#0B0B0E]/95 to-[#040405]/98 backdrop-blur-2xl p-3.5 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.8)] relative overflow-hidden transition-all duration-500 hover:scale-[1.02]">
+              {/* Dynamic Grid Background Overlay */}
+              <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.01)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.01)_1px,transparent_1px)] bg-[size:16px_16px] pointer-events-none" />
 
-            {/* High-tech Operator Visual badge */}
-            <div className="relative h-28 w-full bg-black/40 rounded-xl border border-white/5 flex items-center justify-center overflow-hidden mt-5">
-              <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.01)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.01)_1px,transparent_1px)] bg-[size:12px_12px] pointer-events-none" />
-              <svg className="w-full h-full text-neon-cyan/15 absolute inset-0" viewBox="0 0 300 120" fill="none">
-                <circle cx="150" cy="60" r="45" stroke="currentColor" strokeWidth="1" strokeDasharray="3 3" />
-                <circle cx="150" cy="60" r="30" stroke="currentColor" strokeWidth="1" />
-                <path d="M 60,60 L 240,60 M 150,10 L 150,110" stroke="currentColor" strokeWidth="0.5" strokeDasharray="5 5" />
-                <rect x="135" y="45" width="30" height="30" rx="3" stroke="currentColor" strokeWidth="1" />
-              </svg>
-              <div className="relative z-10 text-center font-mono text-[9px] text-zinc-500 uppercase tracking-[0.2em] font-bold leading-normal">
-                BIOMETRIC IDENTITY VERIFIED<br />
-                <span className="text-[#00F0FF] text-[10px] font-bold mt-1 inline-block">SECURE NODE // SHUVO.DEV</span>
+              {/* Cyber Corner Marks */}
+              <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-[#00F0FF] z-20" />
+              <div className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-[#00F0FF] z-20" />
+              <div className="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-[#00F0FF] z-20" />
+              <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-[#00F0FF] z-20" />
+
+              {/* Diagnostic Active Scanner Line (subtle micro-animation) */}
+              <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-[#00F0FF]/60 to-transparent animate-[scan_3s_ease-in-out_infinite] z-20 pointer-events-none" />
+
+              {/* Image Inner Wrapper */}
+              <div className="relative w-full h-full rounded-2xl overflow-hidden border border-white/5 bg-[#050505]">
+                <Image
+                  src="/portrait-new.png"
+                  alt="Muhammad Rakibul Hasan Shuvo"
+                  fill
+                  priority
+                  sizes="(max-width: 768px) 100vw, 500px"
+                  className="object-cover opacity-90 group-hover:opacity-100 group-hover:scale-[1.04] transition-all duration-700 select-none"
+                />
+
+                {/* Visual grid shading reflection overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none z-10" />
+
+                {/* HUD Telemetry Plate Overlay */}
+                <div className="absolute bottom-4 left-4 right-4 z-20 p-4 rounded-xl border border-white/5 bg-[#030303]/75 backdrop-blur-md flex items-center justify-between font-mono text-[9px] text-zinc-400 select-none">
+                  <div>
+                    <span className="text-zinc-500 uppercase tracking-widest block text-[8px] font-bold">Ident Confirmed</span>
+                    <span className="text-white font-bold font-mono tracking-wide">R. HASAN SHUVO</span>
+                  </div>
+                  <div className="text-right">
+                    <span className="text-zinc-500 uppercase tracking-widest block text-[8px] font-bold">Sys Registry</span>
+                    <span className="text-[#00F0FF] font-bold font-mono">NODE // ACTIVE</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -146,6 +124,20 @@ export default function AboutPage() {
             <p className="text-zinc-400 font-satoshi text-base sm:text-lg font-normal leading-relaxed">
               Bridging extreme design aesthetics with technical execution. As a software engineer and former graphic designer, I build custom digital experiences that look elite and execute with raw, optimized speed.
             </p>
+            <div className="pt-6">
+              <a
+                href="/resume.pdf"
+                download
+                className="inline-flex items-center justify-center px-8 py-3.5 border border-white/10 hover:border-white/20 bg-white/5 hover:bg-white/10 text-white font-cabinet font-bold rounded-full hover:scale-[1.03] transition-all backdrop-blur-md text-center group/btn2 cursor-pointer"
+              >
+                <span className="text-sm tracking-wide uppercase">Download CV</span>
+                <span className="ml-2 w-4 h-4 flex items-center justify-center group-hover/btn2:translate-y-0.5 transition-transform duration-300">
+                  <svg className="w-4 h-4 stroke-white" fill="none" strokeWidth="2.5" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                  </svg>
+                </span>
+              </a>
+            </div>
           </div>
         </section>
 
@@ -162,7 +154,7 @@ export default function AboutPage() {
               A high-performance physics-based playground representing the technologies I utilize to compile, run, and scale applications.
             </p>
           </div>
-          
+
           {/* Gravity Simulator Console */}
           <div className="relative rounded-3xl border border-white/5 bg-[#0A0A0C]/40 p-4 sm:p-6 shadow-2xl">
             {/* Console Header Bar */}
@@ -176,7 +168,7 @@ export default function AboutPage() {
                 <span>PARTICLES: 08 ACTIVE</span>
               </div>
             </div>
-            
+
             <TechPhysicsSandbox />
           </div>
         </section>
@@ -191,7 +183,7 @@ export default function AboutPage() {
           </div>
 
           <div className="relative ml-4 md:ml-0 py-6 space-y-16">
-            
+
             {/* Core Vertical Neon Pipeline Track */}
             <div className="absolute left-[9px] md:left-24 top-0 bottom-0 w-0.5 bg-gradient-to-b from-[#00F0FF] via-[#A100FF] to-transparent opacity-30 pointer-events-none" />
 
@@ -216,12 +208,12 @@ export default function AboutPage() {
 
                 {/* Main Milestone content card */}
                 <div className="glass p-6 md:p-8 rounded-3xl border border-white/5 bg-[#0B0B0E]/40 hover:border-white/10 hover:bg-[#0B0B0E]/60 transition-all duration-300 shadow-lg group-hover:shadow-2xl relative overflow-hidden">
-                  
+
                   {/* Mobile responsive Year label */}
                   <span className="inline-block md:hidden text-[#A100FF] font-mono text-[11px] font-bold tracking-widest mb-2">
                     {item.year}
                   </span>
-                  
+
                   <div className="space-y-3">
                     <h3 className="font-clash font-bold text-xl md:text-2xl text-white group-hover:text-neon-cyan transition-colors duration-300 leading-snug">
                       {item.title}

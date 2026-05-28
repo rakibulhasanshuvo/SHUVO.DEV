@@ -12,7 +12,7 @@ export default function ContactVideo({ isMobileServer }: { isMobileServer?: bool
       <div 
         className="h-full w-full bg-cover bg-center opacity-60 sm:rounded-ss-[30px] md:rounded-ss-[60px]"
         style={{ 
-          backgroundImage: "url('/portrait.png')",
+          backgroundImage: "url('/portrait-new.png')",
           minHeight: "300px"
         }}
       />
@@ -25,7 +25,7 @@ export default function ContactVideo({ isMobileServer }: { isMobileServer?: bool
       muted
       loop
       playsInline
-      poster="/portrait.png"
+      poster="/portrait-new.png"
       preload="none"
       className="h-full w-full object-cover opacity-60 sm:rounded-ss-[30px] md:rounded-ss-[60px]"
     >

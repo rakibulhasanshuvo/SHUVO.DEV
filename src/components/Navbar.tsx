@@ -32,11 +32,10 @@ export default function Navbar() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-[padding,background-color,border-color] duration-300 ${
-        scrolled
+      className={`fixed top-0 left-0 right-0 z-50 transition-[padding,background-color,border-color] duration-300 ${scrolled
           ? "py-3 bg-cyber-black/70 backdrop-blur-md border-b border-neon-cyan/20 shadow-[0_4px_30px_rgba(0,0,0,0.8),0_0_15px_rgba(0,240,255,0.05)]"
           : "py-5 bg-transparent border-b border-transparent"
-      }`}
+        }`}
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="flex items-center justify-between">
@@ -56,14 +55,13 @@ export default function Navbar() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`relative px-5 py-2 text-sm font-semibold tracking-wide transition-colors duration-300 rounded-full z-10 focus-visible:ring-2 focus-visible:ring-neon-cyan focus-visible:ring-offset-2 focus-visible:ring-offset-black focus:outline-none ${
-                    isActive ? "text-white" : "text-text-muted hover:text-white"
-                  }`}
+                  className={`relative px-5 py-2 text-sm font-semibold tracking-wide transition-colors duration-300 rounded-full z-10 focus-visible:ring-2 focus-visible:ring-neon-cyan focus-visible:ring-offset-2 focus-visible:ring-offset-black focus:outline-none ${isActive ? "text-white" : "text-text-muted hover:text-white"
+                    }`}
                 >
                   {isActive && (
                     <m.div
                       layoutId="nav-glider"
-                      className="absolute inset-0 bg-gradient-to-r from-neon-cyan/40 to-neon-cyan rounded-full z-[-1] shadow-[0_0_15px_rgba(0,240,255,0.3)] border border-neon-cyan/20"
+                      className="absolute inset-[0.5px] bg-gradient-to-r from-neon-cyan/40 to-neon-cyan rounded-full z-[-1] shadow-[0_0_15px_rgba(0,240,255,0.3)]"
                       transition={{ type: "spring", stiffness: 380, damping: 30 }}
                     />
                   )}
@@ -90,19 +88,16 @@ export default function Navbar() {
             aria-label="Toggle mobile menu"
           >
             <span
-              className={`w-5 h-0.5 bg-white transition-all duration-300 ${
-                mobileOpen ? "rotate-45 translate-y-2" : ""
-              }`}
+              className={`w-5 h-0.5 bg-white transition-all duration-300 ${mobileOpen ? "rotate-45 translate-y-2" : ""
+                }`}
             />
             <span
-              className={`w-5 h-0.5 bg-white transition-all duration-300 ${
-                mobileOpen ? "opacity-0" : ""
-              }`}
+              className={`w-5 h-0.5 bg-white transition-all duration-300 ${mobileOpen ? "opacity-0" : ""
+                }`}
             />
             <span
-              className={`w-5 h-0.5 bg-white transition-all duration-300 ${
-                mobileOpen ? "-rotate-45 -translate-y-2" : ""
-              }`}
+              className={`w-5 h-0.5 bg-white transition-all duration-300 ${mobileOpen ? "-rotate-45 -translate-y-2" : ""
+                }`}
             />
           </button>
         </div>
@@ -126,9 +121,8 @@ export default function Navbar() {
                   <Link
                     key={link.href}
                     href={link.href}
-                    className={`text-lg font-bold tracking-wide transition-colors focus-visible:ring-2 focus-visible:ring-neon-cyan focus-visible:ring-offset-2 focus-visible:ring-offset-black focus:outline-none rounded-lg px-4 py-3 block ${
-                      isActive ? "text-neon-cyan" : "text-white/70 hover:text-white"
-                    }`}
+                    className={`text-lg font-bold tracking-wide transition-colors focus-visible:ring-2 focus-visible:ring-neon-cyan focus-visible:ring-offset-2 focus-visible:ring-offset-black focus:outline-none rounded-lg px-4 py-3 block ${isActive ? "text-neon-cyan" : "text-white/70 hover:text-white"
+                      }`}
                   >
                     {link.label}
                   </Link>

@@ -262,19 +262,19 @@ export default function CyberCoreShowcase({ isMobileServer }: { isMobileServer?:
             <div className="grid grid-cols-3 gap-2">
               <button 
                 onClick={() => handleDiagnostics("cores")}
-                className="py-2.5 rounded-lg border border-neon-cyan/20 hover:border-neon-cyan bg-neon-cyan/5 hover:bg-neon-cyan/15 text-[9px] font-mono text-neon-cyan hover:text-white uppercase tracking-wider transition-all duration-300 active:scale-95 cursor-pointer font-bold text-center"
+                className="py-3 rounded-lg border border-neon-cyan/20 hover:border-neon-cyan bg-neon-cyan/5 hover:bg-neon-cyan/15 text-[9px] font-mono text-neon-cyan hover:text-white uppercase tracking-wider transition-all duration-300 active:scale-95 cursor-pointer font-bold text-center"
               >
                 [ WARM CORES ]
               </button>
               <button 
                 onClick={() => handleDiagnostics("cache")}
-                className="py-2.5 rounded-lg border border-electric-purple/20 hover:border-electric-purple bg-electric-purple/5 hover:bg-electric-purple/15 text-[9px] font-mono text-electric-purple hover:text-white uppercase tracking-wider transition-all duration-300 active:scale-95 cursor-pointer font-bold text-center"
+                className="py-3 rounded-lg border border-electric-purple/20 hover:border-electric-purple bg-electric-purple/5 hover:bg-electric-purple/15 text-[9px] font-mono text-electric-purple hover:text-white uppercase tracking-wider transition-all duration-300 active:scale-95 cursor-pointer font-bold text-center"
               >
                 [ FLUSH CACHE ]
               </button>
               <button 
                 onClick={() => handleDiagnostics("reboot")}
-                className="py-2.5 rounded-lg border border-white/5 hover:border-white/20 bg-white/5 hover:bg-white/10 text-[9px] font-mono text-zinc-400 hover:text-white uppercase tracking-wider transition-all duration-300 active:scale-95 cursor-pointer font-bold text-center"
+                className="py-3 rounded-lg border border-white/5 hover:border-white/20 bg-white/5 hover:bg-white/10 text-[9px] font-mono text-zinc-400 hover:text-white uppercase tracking-wider transition-all duration-300 active:scale-95 cursor-pointer font-bold text-center"
               >
                 [ REBOOT TRD ]
               </button>

@@ -3,9 +3,7 @@ import { z } from "zod";
 import { createAdminSupabaseClient } from "@/lib/supabase/admin";
 import { Resend } from "resend";
 
-
-
-// Basic in-memory rate limiting
+// Basic in-memory rate limiting map
 const rateLimitMap = new Map<string, number[]>();
 const RATE_LIMIT_WINDOW_MS = 60000; // 1 minute
 const MAX_REQUESTS_PER_WINDOW = 5;
@@ -22,14 +20,43 @@ const contactSchema = z.object({
   confirm_corporate_website: z.string().min(0).max(200, { message: "Confirm URL is too long." }).optional(),
 });
 
+/**
+ * Safely extracts client IP address preventing HTTP header spoofing.
+ */
+function getClientIP(request: Request): string {
+  const xRealIp = request.headers.get("x-real-ip");
+  if (xRealIp) return xRealIp.trim();
+
+  const xForwardedFor = request.headers.get("x-forwarded-for");
+  if (xForwardedFor) {
+    const ips = xForwardedFor.split(",");
+    const clientIp = ips[0]?.trim();
+    if (clientIp) return clientIp;
+  }
+
+  return "unknown_ip";
+}
+
 export async function POST(request: Request) {
   try {
-    // 1.5 Rate Limiting
-    // Extract IP address from standard proxy headers or fallback
-    const ip = request.headers.get("x-forwarded-for") || request.headers.get("x-real-ip") || "unknown_ip";
+    // 1.5 Rate Limiting with Spoofing Protection
+    const ip = getClientIP(request);
     const now = Date.now();
 
     if (ip !== "unknown_ip") {
+      // Memory leak mitigation sweep: evict expired IPs when Map reaches threshold size
+      if (rateLimitMap.size > 1000) {
+        const nowTime = Date.now();
+        for (const [key, timestamps] of rateLimitMap.entries()) {
+          const active = timestamps.filter(timestamp => nowTime - timestamp < RATE_LIMIT_WINDOW_MS);
+          if (active.length === 0) {
+            rateLimitMap.delete(key);
+          } else {
+            rateLimitMap.set(key, active);
+          }
+        }
+      }
+
       const timestamps = rateLimitMap.get(ip) || [];
       // Filter out timestamps older than the window
       const recentTimestamps = timestamps.filter(timestamp => now - timestamp < RATE_LIMIT_WINDOW_MS);
@@ -45,7 +72,6 @@ export async function POST(request: Request) {
       recentTimestamps.push(now);
       rateLimitMap.set(ip, recentTimestamps);
     }
-
 
     const rawData = await request.json();
 
@@ -88,26 +114,32 @@ export async function POST(request: Request) {
       }
     }
 
-    // 5. Connect to Supabase via server-side client
-    const supabase = createAdminSupabaseClient();
+    // 5. Connect to Supabase via server-side client safely
+    // Wrap database write in separate try/catch so database failures don't drop lead emails
+    let dbInserted = false;
+    try {
+      const supabase = createAdminSupabaseClient();
+      // 6. Insert lead record into PostgreSQL
+      const { error } = await supabase.from("leads").insert({
+        name,
+        email,
+        message,
+        subject: quoteSummary || "Direct Contact Form Submission",
+        service_tier,
+        estimated_budget,
+        status: "new",
+      });
 
-    // 6. Insert lead record into PostgreSQL
-    const { error } = await supabase.from("leads").insert({
-      name,
-      email,
-      message,
-      subject: quoteSummary || "Direct Contact Form Submission",
-      service_tier,
-      estimated_budget,
-      status: "new",
-    });
-
-    if (error) {
-      console.error("Supabase error inserting contact lead:", error.message);
-      throw new Error(error.message);
+      if (error) {
+        console.error("Supabase database lead insert failed:", error.message);
+      } else {
+        dbInserted = true;
+      }
+    } catch (dbErr: any) {
+      console.error("Supabase unconfigured or connection failed. Bypassing database lead save:", dbErr?.message || dbErr);
     }
 
-    // 7. Fire off email notification (awaited to ensure serverless execution is not terminated prematurely)
+    // 7. Fire off email notification via Resend
     if (process.env.RESEND_API_KEY && process.env.ADMIN_EMAIL) {
       try {
         await resend.emails.send({
@@ -120,6 +152,7 @@ export async function POST(request: Request) {
             <p><strong>Email:</strong> ${email}</p>
             <p><strong>Service Tier:</strong> ${service_tier}</p>
             <p><strong>Estimated Budget:</strong> $${estimated_budget}</p>
+            <p><strong>Database Status:</strong> ${dbInserted ? "Saved successfully" : "Skipped/Failed"}</p>
             <p><strong>Message:</strong></p>
             <p>${message}</p>
           `

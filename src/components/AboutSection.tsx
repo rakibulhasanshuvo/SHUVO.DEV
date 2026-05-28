@@ -47,13 +47,13 @@ export default function AboutSection({ isMobileServer }: { isMobileServer?: bool
     >
       {/* Dynamic Ambient cyber dot background pattern */}
       <div className="absolute inset-0 bg-[radial-gradient(rgba(0,240,255,0.02)_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none z-0" />
-      
-      {/* 1. Stretched Background Text "SHUVO" (Moved to z-0, opacity controlled) */}
-      <div className="absolute inset-0 w-full h-full flex items-center justify-center select-none pointer-events-none z-0 opacity-[0.25] sm:opacity-40">
+
+      {/* 1. Massive Proportional Background Text "SHUVO" (Full-Width Proportional, zero distortion) */}
+      <div className="absolute inset-0 w-full h-full flex items-center justify-center select-none pointer-events-none z-0 opacity-[0.25] sm:opacity-[0.35]">
         <m.svg
-          className="w-full h-full"
+          className="w-full h-auto"
           viewBox="0 0 1000 400"
-          preserveAspectRatio="none"
+          preserveAspectRatio="xMidYMid meet"
           xmlns="http://www.w3.org/2000/svg"
           initial="hidden"
           whileInView="visible"
@@ -64,25 +64,25 @@ export default function AboutSection({ isMobileServer }: { isMobileServer?: bool
             d="M 30,0 L 190,0 L 190,140 L 140,140 L 140,50 L 80,50 L 80,175 L 190,175 L 190,400 L 30,400 L 30,260 L 80,260 L 80,350 L 140,350 L 140,225 L 30,225 Z"
             variants={getVariants(0.0)}
           />
-          
+
           {/* H */}
           <m.path
             d="M 220,0 L 270,0 L 270,175 L 330,175 L 330,0 L 380,0 L 380,400 L 330,400 L 330,225 L 270,225 L 270,400 L 220,400 Z"
             variants={getVariants(0.2)}
           />
-          
+
           {/* U */}
           <m.path
             d="M 410,0 L 460,0 L 460,350 L 520,350 L 520,0 L 570,0 L 570,400 L 410,400 Z"
             variants={getVariants(0.4)}
           />
-          
+
           {/* V */}
           <m.path
             d="M 600,0 L 650,0 L 680,270 L 710,0 L 760,0 L 700,400 L 660,400 Z"
             variants={getVariants(0.6)}
           />
-          
+
           {/* O */}
           <m.path
             fillRule="evenodd"
@@ -91,10 +91,10 @@ export default function AboutSection({ isMobileServer }: { isMobileServer?: bool
           />
         </m.svg>
       </div>
- 
+
       {/* Main Grid Container */}
       <div className="relative w-full max-w-[1440px] mx-auto z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-        
+
         {/* 2. Left Column: Sleek Description, Stats & Tech chips */}
         <div className="lg:col-span-7 flex flex-col justify-center space-y-6 text-left animate-fade-up">
           {/* Section Indicator Badge */}
@@ -172,7 +172,7 @@ export default function AboutSection({ isMobileServer }: { isMobileServer?: bool
                 </svg>
               </span>
             </a>
-            
+
             <a
               href="/resume.pdf"
               download
@@ -189,22 +189,27 @@ export default function AboutSection({ isMobileServer }: { isMobileServer?: bool
         </div>
 
         {/* 3. Right Column: Beautifully Framed Cyber Avatar */}
-        <div className="lg:col-span-5 flex items-center justify-center relative animate-fade-up">
-          {/* Cyber Circular Glow Backdrop */}
+        <div className="lg:col-span-5 flex items-center justify-center relative animate-fade-up lg:translate-y-6">
+          {/* Cyber Ambient Glow Backdrop */}
+          <div className="absolute w-[280px] h-[400px] bg-gradient-to-b from-neon-cyan/20 via-electric-purple/10 to-transparent blur-[70px] rounded-full pointer-events-none -z-10 animate-pulse" />
+          <div className="absolute w-[200px] h-[200px] bg-neon-cyan/5 blur-[45px] rounded-full pointer-events-none -z-10" />
 
+          {/* Blueprint mechanical concentric rotating rings background */}
+          <div className="absolute w-[380px] h-[380px] border border-white/[0.02] rounded-full animate-[spin_50s_linear_infinite] pointer-events-none -z-10" />
+          <div className="absolute w-[300px] h-[300px] border border-[#00F0FF]/5 border-dashed rounded-full animate-[spin_25s_linear_infinite_reverse] pointer-events-none -z-10" />
 
           {/* Avatar container */}
-          <div className="relative w-full max-w-[420px] sm:max-w-[480px] group">
+          <div className="relative w-full max-w-[500px] sm:max-w-[560px] lg:max-w-[620px] group transition-all duration-500">
             {/* User Portrait Image */}
             <Image
-              src="/portrait.png"
+              src="/portrait-standing.png"
               alt="Muhammad Rakibul Hasan Shuvo"
-              width={480}
-              height={600}
-              sizes="(max-w-768px) 420px, 480px"
+              width={620}
+              height={828}
+              sizes="(max-w-768px) 500px, 620px"
               priority
               fetchPriority="high"
-              className="w-full h-auto object-contain transition-transform duration-700 group-hover:scale-105 pointer-events-auto filter drop-shadow-[0_0_30px_rgba(0,240,255,0.15)]"
+              className="w-full h-auto object-contain transition-transform duration-700 group-hover:scale-[1.04] pointer-events-auto filter drop-shadow-[0_10px_40px_rgba(0,240,255,0.25)]"
               onError={(e) => {
                 e.currentTarget.src = "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=500&q=80";
               }}

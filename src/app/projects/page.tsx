@@ -1,11 +1,12 @@
 "use client";
-
 import React, { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { m } from "framer-motion";
 import InteractiveGridBackground from "@/components/InteractiveGridBackground";
 import { TiltCard } from "@/components/ui/TiltCard";
 import { projectsData } from "./data";
+import BrowserMockup from "@/components/ui/BrowserMockup";
 
 // ==========================================
 // 📐 CUSTOM SYSTEM ARCHITECTURE SVGS (BLUEPRINTS)
@@ -249,7 +250,6 @@ const miniProjects = [
     link: "/projects/izzan",
   },
 ];
-
 export default function ProjectsPage() {
   const [hoveredRow, setHoveredRow] = useState<number | null>(null);
   const [projectsList, setProjectsList] = useState<any[]>(Object.values(projectsData));
@@ -345,7 +345,7 @@ export default function ProjectsPage() {
               >
                 {/* 1. Left/Right Content Block */}
                 <div
-                  className={`lg:col-span-6 space-y-8 flex flex-col justify-center ${
+                  className={`lg:col-span-5 space-y-8 flex flex-col justify-center ${
                     isEven ? "lg:order-1" : "lg:order-2"
                   }`}
                 >
@@ -378,11 +378,13 @@ export default function ProjectsPage() {
                   </p>
 
                   {/* Key ROI Callout */}
-                  <div className={`p-5 rounded-2xl border border-white/5 bg-white/[0.02] flex items-center gap-4 shadow-md`}>
-                    <span className="text-2xl select-none">📈</span>
+                  <div className="relative overflow-hidden p-5 rounded-2xl border border-white/5 bg-gradient-to-r from-white/[0.02] to-transparent flex items-center gap-4 shadow-[0_0_30px_rgba(0,0,0,0.4)]">
+                    {/* Left glowing accent line */}
+                    <div className={`absolute left-0 top-0 bottom-0 w-[3px] ${project.dotColor} ${project.dotGlow}`} />
+                    <span className="text-2xl select-none filter drop-shadow-[0_0_8px_rgba(255,255,255,0.2)]">📈</span>
                     <div>
-                      <h4 className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest font-bold mb-0.5">Value Realization</h4>
-                      <p className="text-sm font-semibold text-white">{project.roi}</p>
+                      <h4 className="text-[9px] font-mono text-zinc-500 uppercase tracking-widest font-bold mb-0.5">Value Realization</h4>
+                      <p className="text-sm font-semibold text-white tracking-wide">{project.roi}</p>
                     </div>
                   </div>
 
@@ -431,29 +433,22 @@ export default function ProjectsPage() {
                   </div>
                 </div>
 
-                {/* 2. Left/Right Visual Blueprint Card */}
+                {/* 2. Left/Right Browser Mockup Media Showcase */}
                 <div
-                  className={`lg:col-span-6 flex justify-center items-center ${
+                  className={`lg:col-span-7 flex justify-center items-center ${
                     isEven ? "lg:order-2" : "lg:order-1"
                   }`}
                 >
-                  <TiltCard
+                  <BrowserMockup
+                    videoSrc={project.videoSrc}
+                    imageSrc={project.imageSrc}
+                    posterSrc={project.posterSrc}
                     glowColor={project.spotlightColor}
-                    className="w-full max-w-[500px] h-[340px] md:h-[380px]"
-                  >
-                    <div className={`p-8 md:p-10 h-full w-full rounded-[2.5rem] border ${project.borderColor} bg-gradient-to-br from-[#0c0c0e]/90 to-[#040405]/95 backdrop-blur-xl flex items-center justify-center relative overflow-hidden transition-all duration-500`}>
-                      {/* Ambient corner light shadow reflection */}
-                      <div className="absolute top-0 right-0 w-48 h-48 bg-white/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
-                      
-                      {/* Embed dynamic Custom high-fidelity system SVG blueprint */}
-                      <div className="w-full max-w-[280px] md:max-w-[320px] aspect-square flex items-center justify-center relative z-10">
-                        {project.schematic}
-                      </div>
-
-                      {/* Top right target locator dot */}
-                      <div className={`absolute top-8 right-8 w-2 h-2 rounded-full ${project.dotColor} ${project.dotGlow}`} />
-                    </div>
-                  </TiltCard>
+                    borderColor={project.borderColor}
+                    dotColor={project.dotColor}
+                    dotGlow={project.dotGlow}
+                    projectTitle={project.title}
+                  />
                 </div>
               </div>
             );

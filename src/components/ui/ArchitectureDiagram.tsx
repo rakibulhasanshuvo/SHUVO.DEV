@@ -3,46 +3,165 @@
 import React, { useState } from "react";
 import { m } from "framer-motion";
 
-const nodes = [
-  {
-    id: "scrapers",
-    label: "Puppeteer Workers",
-    sub: "Serverless Ingest",
-    x: 100,
-    y: 100,
-    color: "#00F0FF",
-    glow: "rgba(0, 240, 255, 0.4)",
-    info: "10+ concurrent Puppeteer worker instances executing scrape routines on serverless Edge functions.",
-  },
-  {
-    id: "queue",
-    label: "Redis Queue",
-    sub: "In-Memory buffer",
-    x: 350,
-    y: 100,
-    color: "#A100FF",
-    glow: "rgba(161, 0, 255, 0.4)",
-    info: "Fast, concurrent in-memory Redis LPUSH/RPOP worker queue throttling high density traffic spikes.",
-  },
-  {
-    id: "db",
-    label: "PostgreSQL",
-    sub: "Transactional Lock",
-    x: 600,
-    y: 100,
-    color: "#10B981",
-    glow: "rgba(16, 185, 129, 0.4)",
-    info: "Durable database tier storing version-locked tables, analytics datasets, and index ledger transactions.",
-  },
-];
+export interface NodeData {
+  id: string;
+  label: string;
+  sub: string;
+  x: number;
+  y: number;
+  color: string;
+  glow: string;
+  info: string;
+}
 
-const nodesById = nodes.reduce((acc, node) => {
-  acc[node.id] = node;
-  return acc;
-}, {} as Record<string, typeof nodes[0]>);
+const nodeConfigMap: Record<string, NodeData[]> = {
+  amolnama: [
+    {
+      id: "scrapers",
+      label: "Puppeteer Workers",
+      sub: "Serverless Ingest",
+      x: 100,
+      y: 100,
+      color: "#00F0FF",
+      glow: "rgba(0, 240, 255, 0.4)",
+      info: "10+ concurrent Puppeteer worker instances executing scrape routines on serverless Edge functions.",
+    },
+    {
+      id: "queue",
+      label: "Redis Queue",
+      sub: "In-Memory buffer",
+      x: 350,
+      y: 100,
+      color: "#A100FF",
+      glow: "rgba(161, 0, 255, 0.4)",
+      info: "Fast, concurrent in-memory Redis LPUSH/RPOP worker queue throttling high density traffic spikes.",
+    },
+    {
+      id: "db",
+      label: "PostgreSQL",
+      sub: "Transactional Lock",
+      x: 600,
+      y: 100,
+      color: "#10B981",
+      glow: "rgba(16, 185, 129, 0.4)",
+      info: "Durable database tier storing version-locked tables, analytics datasets, and index ledger transactions.",
+    },
+  ],
+  componeo: [
+    {
+      id: "uploader",
+      label: "ESM Parser",
+      sub: "Upload Handler",
+      x: 100,
+      y: 100,
+      color: "#A100FF",
+      glow: "rgba(161, 0, 255, 0.4)",
+      info: "Upload trigger performing semantic structural validation and size threshold audits on TSX assets.",
+    },
+    {
+      id: "compiler",
+      label: "esbuild Compiler",
+      sub: "In-Memory Bundler",
+      x: 350,
+      y: 100,
+      color: "#00F0FF",
+      glow: "rgba(0, 240, 255, 0.4)",
+      info: "High-performance esbuild-wasm runtime converting standard code into minified, zero-dependency ESM components in 32ms.",
+    },
+    {
+      id: "cache",
+      label: "Redis Cache",
+      sub: "Edge CDN Cache",
+      x: 600,
+      y: 100,
+      color: "#10B981",
+      glow: "rgba(16, 185, 129, 0.4)",
+      info: "Redis caches storing bundled components directly at edge points, eliminating standard hard disk file system bottlenecks.",
+    },
+  ],
+  izzan: [
+    {
+      id: "router",
+      label: "Checkout Router",
+      sub: "Concurrency Gate",
+      x: 100,
+      y: 100,
+      color: "#10B981",
+      glow: "rgba(16, 185, 129, 0.4)",
+      info: "API gateway routing dense transactional payloads and flash-sale checkout queues.",
+    },
+    {
+      id: "tx",
+      label: "Prisma Transaction",
+      sub: "Optimistic Lock",
+      x: 350,
+      y: 100,
+      color: "#00F0FF",
+      glow: "rgba(0, 240, 255, 0.4)",
+      info: "Active prisma database transactions performing version checking on target inventory tables.",
+    },
+    {
+      id: "db",
+      label: "PostgreSQL DB",
+      sub: "Durable Storage",
+      x: 600,
+      y: 100,
+      color: "#A100FF",
+      glow: "rgba(161, 0, 255, 0.4)",
+      info: "PostgreSQL database tier locking rows, committing transactions with zero cart double-sale anomalies.",
+    },
+  ],
+  vortexa: [
+    {
+      id: "orchestrator",
+      label: "API Orchestrator",
+      sub: "Request Handler",
+      x: 100,
+      y: 100,
+      color: "#EF4444",
+      glow: "rgba(239, 68, 68, 0.4)",
+      info: "Clustering agent executing Unix socket queries to assign DB runtimes globally in <1.5s.",
+    },
+    {
+      id: "pool",
+      label: "Pre-warm Pool",
+      sub: "Standby Containers",
+      x: 350,
+      y: 100,
+      color: "#00F0FF",
+      glow: "rgba(0, 240, 255, 0.4)",
+      info: "A pool of 10 standby, unassigned database containers kept warm with minimized memory limits.",
+    },
+    {
+      id: "daemon",
+      label: "Docker Daemon",
+      sub: "Container Socket",
+      x: 600,
+      y: 100,
+      color: "#A100FF",
+      glow: "rgba(161, 0, 255, 0.4)",
+      info: "Standard socket layer binding networks dynamically to live container nodes, securing top-tier playground response times.",
+    },
+  ],
+};
 
-export default function ArchitectureDiagram() {
+interface ArchitectureDiagramProps {
+  slug: string;
+}
+
+export default function ArchitectureDiagram({ slug }: ArchitectureDiagramProps) {
   const [activeNode, setActiveNode] = useState<string | null>(null);
+
+  // Fallback to amolnama if slug mismatch
+  const targetSlug = slug in nodeConfigMap ? slug : "amolnama";
+  const nodes = nodeConfigMap[targetSlug];
+
+  const nodesById = React.useMemo(() => {
+    return nodes.reduce((acc, node) => {
+      acc[node.id] = node;
+      return acc;
+    }, {} as Record<string, NodeData>);
+  }, [nodes]);
 
   const activeNodeData = activeNode ? nodesById[activeNode] : null;
 
@@ -58,18 +177,18 @@ export default function ArchitectureDiagram() {
         preserveAspectRatio="xMidYMid meet"
       >
         {/* Animated Paths */}
-        {/* Scrapers -> Queue */}
+        {/* Node 1 -> Node 2 */}
         <path
           d="M 175,100 L 275,100"
           fill="none"
-          stroke="rgba(255, 255, 255, 0.1)"
+          stroke="rgba(255, 255, 255, 0.05)"
           strokeWidth="4"
           strokeLinecap="round"
         />
         <m.path
           d="M 175,100 L 275,100"
           fill="none"
-          stroke="url(#cyanPurpleGrad)"
+          stroke={`url(#${targetSlug}_grad1)`}
           strokeWidth="4"
           strokeLinecap="round"
           strokeDasharray="10 15"
@@ -77,18 +196,18 @@ export default function ArchitectureDiagram() {
           transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
         />
 
-        {/* Queue -> DB */}
+        {/* Node 2 -> Node 3 */}
         <path
           d="M 425,100 L 525,100"
           fill="none"
-          stroke="rgba(255, 255, 255, 0.1)"
+          stroke="rgba(255, 255, 255, 0.05)"
           strokeWidth="4"
           strokeLinecap="round"
         />
         <m.path
           d="M 425,100 L 525,100"
           fill="none"
-          stroke="url(#purpleGreenGrad)"
+          stroke={`url(#${targetSlug}_grad2)`}
           strokeWidth="4"
           strokeLinecap="round"
           strokeDasharray="12 18"
@@ -96,15 +215,46 @@ export default function ArchitectureDiagram() {
           transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
         />
 
-        {/* Dynamic Gradients */}
+        {/* Dynamic Gradients Definitions */}
         <defs>
-          <linearGradient id="cyanPurpleGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+          {/* Amolnama Gradients */}
+          <linearGradient id="amolnama_grad1" x1="0%" y1="0%" x2="100%" y2="0%">
             <stop offset="0%" stopColor="#00F0FF" />
             <stop offset="100%" stopColor="#A100FF" />
           </linearGradient>
-          <linearGradient id="purpleGreenGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+          <linearGradient id="amolnama_grad2" x1="0%" y1="0%" x2="100%" y2="0%">
             <stop offset="0%" stopColor="#A100FF" />
             <stop offset="100%" stopColor="#10B981" />
+          </linearGradient>
+
+          {/* Componeo Gradients */}
+          <linearGradient id="componeo_grad1" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#A100FF" />
+            <stop offset="100%" stopColor="#00F0FF" />
+          </linearGradient>
+          <linearGradient id="componeo_grad2" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#00F0FF" />
+            <stop offset="100%" stopColor="#10B981" />
+          </linearGradient>
+
+          {/* Izzan Gradients */}
+          <linearGradient id="izzan_grad1" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#10B981" />
+            <stop offset="100%" stopColor="#00F0FF" />
+          </linearGradient>
+          <linearGradient id="izzan_grad2" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#00F0FF" />
+            <stop offset="100%" stopColor="#A100FF" />
+          </linearGradient>
+
+          {/* Vortexa Gradients */}
+          <linearGradient id="vortexa_grad1" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#EF4444" />
+            <stop offset="100%" stopColor="#00F0FF" />
+          </linearGradient>
+          <linearGradient id="vortexa_grad2" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#00F0FF" />
+            <stop offset="100%" stopColor="#A100FF" />
           </linearGradient>
         </defs>
 
@@ -161,7 +311,7 @@ export default function ArchitectureDiagram() {
                 y={node.y - 6}
                 textAnchor="middle"
                 fill="#FFF"
-                fontSize="11"
+                fontSize="10"
                 fontWeight="bold"
                 className="font-cabinet tracking-wide pointer-events-none"
               >
@@ -172,7 +322,7 @@ export default function ArchitectureDiagram() {
                 y={node.y + 12}
                 textAnchor="middle"
                 fill="rgba(255,255,255,0.4)"
-                fontSize="9"
+                fontSize="8"
                 className="font-mono tracking-widest uppercase pointer-events-none"
               >
                 {node.sub}
@@ -188,7 +338,7 @@ export default function ArchitectureDiagram() {
           <m.div
             initial={{ opacity: 0, y: 5 }}
             animate={{ opacity: 1, y: 0 }}
-            className="flex flex-col gap-1.5"
+            className="flex flex-col gap-1.5 text-left"
           >
             <h4
               className="text-sm font-bold tracking-wide flex items-center gap-2"

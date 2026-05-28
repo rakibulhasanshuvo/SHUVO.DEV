@@ -21,6 +21,9 @@ export interface Project {
     highlightedLines: number[];
   };
   tech: string[];
+  videoSrc?: string;
+  imageSrc?: string;
+  posterSrc?: string;
 }
 
 export const projectsData: Record<string, Project> = {
@@ -77,6 +80,7 @@ export async function scrapeEventSource(url: string) {
       highlightedLines: [15, 16, 20],
     },
     tech: ["Next.js", "Puppeteer", "Redis", "PostgreSQL", "Tailwind CSS"],
+    videoSrc: "/videos/abstract-data-flows.mp4",
   },
   componeo: {
     slug: "componeo",
@@ -122,6 +126,7 @@ export async function bundleComponent(source: string) {
       highlightedLines: [5, 6, 7, 8],
     },
     tech: ["Next.js", "Supabase", "TypeScript", "Tailwind CSS", "esbuild"],
+    imageSrc: "/images/componeo.png",
   },
   izzan: {
     slug: "izzan",
@@ -179,6 +184,7 @@ export async function secureCheckout(productId: string, userId: string) {
       highlightedLines: [15, 16, 17, 26],
     },
     tech: ["Next.js", "Prisma", "PostgreSQL", "Stripe", "Framer Motion"],
+    imageSrc: "/images/izzan.png",
   },
   vortexa: {
     slug: "vortexa",
@@ -226,5 +232,6 @@ export async function allocatePrewarmedContainer(userId: string) {
       highlightedLines: [3, 4, 11, 14],
     },
     tech: ["React", "Node.js", "Docker", "Redis", "MongoDB"],
+    imageSrc: "/images/vortexa.png",
   },
 };

@@ -22,6 +22,9 @@ const FAQItem = ({ question, answer, isOpen, onClick }: FAQItemProps) => {
     >
       <button
         onClick={onClick}
+        aria-expanded={isOpen}
+        aria-controls={`faq-content-${question.replace(/\s+/g, '-').toLowerCase()}`}
+        id={`faq-header-${question.replace(/\s+/g, '-').toLowerCase()}`}
         className="w-full flex items-center justify-between p-5 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-neon-cyan focus-visible:ring-offset-2 focus-visible:ring-offset-black rounded-xl"
       >
         <span className={`font-semibold transition-colors duration-300 ${isOpen ? "text-neon-cyan" : "text-white group-hover:text-white/90"}`}>
@@ -37,10 +40,13 @@ const FAQItem = ({ question, answer, isOpen, onClick }: FAQItemProps) => {
           </svg>
         </m.div>
       </button>
-
+ 
       <AnimatePresence initial={false}>
         {isOpen && (
           <m.div
+            id={`faq-content-${question.replace(/\s+/g, '-').toLowerCase()}`}
+            role="region"
+            aria-labelledby={`faq-header-${question.replace(/\s+/g, '-').toLowerCase()}`}
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}

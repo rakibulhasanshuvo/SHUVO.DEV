@@ -48,7 +48,7 @@ export default function DashboardLayout({
 
   // Dynamic user profile settings states
   const [displayName, setDisplayName] = useState("Rakibul Shuvo");
-  const [avatarUrl, setAvatarUrl] = useState("/portrait.png");
+  const [avatarUrl, setAvatarUrl] = useState("/portrait-new.png");
   
   // Settings modal states
   const [settingsModalOpen, setSettingsModalOpen] = useState(false);
@@ -883,7 +883,7 @@ export default function DashboardLayout({
                             </div>
                           ) : (
                             <Image
-                              src={editAvatarUrl || "/portrait.png"}
+                              src={editAvatarUrl || "/portrait-new.png"}
                               alt="Profile Avatar"
                               fill
                               sizes="80px"
@@ -908,10 +908,10 @@ export default function DashboardLayout({
                                 disabled={isAvatarUploading}
                               />
                             </label>
-                            {editAvatarUrl && editAvatarUrl !== "/portrait.png" && (
+                            {editAvatarUrl && editAvatarUrl !== "/portrait-new.png" && (
                               <button
                                 type="button"
-                                onClick={() => setEditAvatarUrl("/portrait.png")}
+                                onClick={() => setEditAvatarUrl("/portrait-new.png")}
                                 className="border border-white/5 hover:border-white/10 hover:bg-white/5 text-darkpan-slate hover:text-white px-3 py-2 rounded-xl text-xs font-bold transition-all focus:outline-none"
                               >
                                 Reset to Default
