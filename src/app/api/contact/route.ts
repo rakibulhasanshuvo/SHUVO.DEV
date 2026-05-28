@@ -18,8 +18,8 @@ const contactSchema = z.object({
   name: z.string().min(2, { message: "Name must be at least 2 characters." }).max(100, { message: "Name is too long." }),
   email: z.string().email({ message: "Please enter a valid corporate email address." }).max(150, { message: "Email is too long." }),
   message: z.string().min(10, { message: "Message must be at least 10 characters." }).max(2000, { message: "Message is too long." }),
-  quoteSummary: z.string().max(1000, { message: "Quote summary is too long." }).optional(),
-  confirm_corporate_website: z.string().max(200, { message: "Confirm URL is too long." }).optional(),
+  quoteSummary: z.string().min(0).max(1000, { message: "Quote summary is too long." }).optional(),
+  confirm_corporate_website: z.string().min(0).max(200, { message: "Confirm URL is too long." }).optional(),
 });
 
 export async function POST(request: Request) {

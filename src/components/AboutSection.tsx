@@ -96,13 +96,7 @@ export default function AboutSection({ isMobileServer }: { isMobileServer?: bool
       <div className="relative w-full max-w-[1440px] mx-auto z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
         
         {/* 2. Left Column: Sleek Description, Stats & Tech chips */}
-        <m.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.1 }}
-          transition={{ type: "spring", stiffness: 60, damping: 15, delay: 0.1 }}
-          className="lg:col-span-7 flex flex-col justify-center space-y-6 text-left"
-        >
+        <div className="lg:col-span-7 flex flex-col justify-center space-y-6 text-left animate-fade-up">
           {/* Section Indicator Badge */}
           <div className="flex flex-wrap items-center gap-3">
             <span className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-neon-cyan/10 border border-neon-cyan/20 text-xs font-bold text-neon-cyan uppercase tracking-widest font-mono">
@@ -134,10 +128,9 @@ export default function AboutSection({ isMobileServer }: { isMobileServer?: bool
             {stats.map((stat, i) => {
               const Icon = stat.icon;
               return (
-                <m.div
+                <div
                   key={stat.label}
-                  whileHover={{ y: -4, borderColor: "rgba(0, 240, 255, 0.2)" }}
-                  className="bg-gradient-to-br from-[#0e0e10]/80 to-[#050506]/90 border border-white/5 p-5 rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,0.5)] transition-all duration-300 relative overflow-hidden group text-left"
+                  className="bg-gradient-to-br from-[#0e0e10]/80 to-[#050506]/90 border border-white/5 p-5 rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,0.5)] transition-all duration-300 relative overflow-hidden group text-left hover:-translate-y-1 hover:border-[rgba(0,240,255,0.2)]"
                 >
                   <div className="absolute -top-6 -right-6 w-12 h-12 bg-neon-cyan/5 rounded-full blur-xl group-hover:bg-neon-cyan/10 transition-colors" />
                   <div className="w-8 h-8 rounded-lg bg-black border border-white/5 flex items-center justify-center text-neon-cyan mb-3">
@@ -146,7 +139,7 @@ export default function AboutSection({ isMobileServer }: { isMobileServer?: bool
                   <h4 className="font-cabinet font-black text-xl text-white tracking-tight leading-none">{stat.value}</h4>
                   <p className="text-xs text-white/95 font-bold uppercase tracking-wider font-mono mt-1">{stat.label}</p>
                   <p className="text-[10px] text-darkpan-slate font-medium leading-normal mt-1 max-w-[150px]">{stat.desc}</p>
-                </m.div>
+                </div>
               );
             })}
           </div>
@@ -193,16 +186,10 @@ export default function AboutSection({ isMobileServer }: { isMobileServer?: bool
               </span>
             </a>
           </div>
-        </m.div>
+        </div>
 
         {/* 3. Right Column: Beautifully Framed Cyber Avatar */}
-        <m.div
-          initial={{ opacity: 0, x: 50, scale: 0.95 }}
-          whileInView={{ opacity: 1, x: 0, scale: 1 }}
-          viewport={{ once: true, amount: 0.1 }}
-          transition={{ type: "spring", stiffness: 50, damping: 20, delay: 0.2 }}
-          className="lg:col-span-5 flex items-center justify-center relative"
-        >
+        <div className="lg:col-span-5 flex items-center justify-center relative animate-fade-up">
           {/* Cyber Circular Glow Backdrop */}
 
 
@@ -223,7 +210,7 @@ export default function AboutSection({ isMobileServer }: { isMobileServer?: bool
               }}
             />
           </div>
-        </m.div>
+        </div>
 
       </div>
     </section>

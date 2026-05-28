@@ -56,28 +56,16 @@ export default function ClientReviews() {
         >
           Valued <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-cyan to-electric-purple animate-gradient drop-shadow-[0_0_20px_rgba(0,240,255,0.15)]">Feedback</span>
         </m.h2>
-        <m.p
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="text-text-muted max-w-xl mx-auto font-light mt-4 text-sm sm:text-base leading-relaxed"
-        >
+        <p className="text-text-muted max-w-xl mx-auto font-light mt-4 text-sm sm:text-base leading-relaxed animate-fade-up animation-delay-200">
           Read reviews from global product leaders and creators who have collaborated with SHUVO.DEV to engineer high-end web applications.
-        </m.p>
+        </p>
       </div>
 
       {/* Bento Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         
         {/* Bento Cell 1: Overall Score Badge (Left Column) */}
-        <m.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="glass p-8 rounded-3xl border border-white/5 bg-gradient-to-br from-white/[0.04] to-transparent shadow-xl relative overflow-hidden group flex flex-col justify-between min-h-[220px]"
-        >
+        <div className="glass p-8 rounded-3xl border border-white/5 bg-gradient-to-br from-white/[0.04] to-transparent shadow-xl relative overflow-hidden group flex flex-col justify-between min-h-[220px] animate-fade-up">
           <div className="absolute top-0 right-0 w-24 h-24 bg-neon-cyan/5 rounded-full blur-2xl group-hover:bg-neon-cyan/10 transition-colors" />
           <div>
             <div className="flex items-center gap-2 mb-4">
@@ -99,16 +87,10 @@ export default function ClientReviews() {
             <span className="font-medium">Upwork Job Success</span>
             <span className="font-mono text-white font-bold bg-white/5 border border-white/10 px-2.5 py-0.5 rounded-full">100%</span>
           </div>
-        </m.div>
+        </div>
 
         {/* Bento Cell 2: Primary Testimonial (Center-Right Span 2 Columns) */}
-        <m.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-          className="lg:col-span-2"
-        >
+        <div className="lg:col-span-2 animate-fade-up animation-delay-100">
           <TiltCard className="w-full h-full" glowColor={reviews[0].glowColor}>
             <div className="p-8 h-full flex flex-col justify-between rounded-3xl border border-white/5 bg-gradient-to-br from-white/[0.04] to-transparent relative overflow-hidden group">
               <div className="absolute -top-20 -right-20 w-44 h-44 bg-neon-cyan/5 blur-3xl rounded-full group-hover:bg-neon-cyan/10 transition-all duration-500" />
@@ -140,15 +122,10 @@ export default function ClientReviews() {
               </div>
             </div>
           </TiltCard>
-        </m.div>
+        </div>
 
         {/* Bento Cell 3: Second Testimonial (Left Column) */}
-        <m.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-        >
+        <div className="animate-fade-up animation-delay-200">
           <TiltCard className="w-full h-full" glowColor={reviews[2].glowColor}>
             <div className="p-8 h-full flex flex-col justify-between rounded-3xl border border-white/5 bg-gradient-to-br from-white/[0.04] to-transparent relative overflow-hidden group min-h-[280px]">
               <div className="absolute -top-20 -right-20 w-36 h-36 bg-neon-cyan/5 blur-3xl rounded-full" />
@@ -169,15 +146,10 @@ export default function ClientReviews() {
               </div>
             </div>
           </TiltCard>
-        </m.div>
+        </div>
 
         {/* Bento Cell 4: Third Testimonial (Center Column) */}
-        <m.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-        >
+        <div className="animate-fade-up animation-delay-300">
           <TiltCard className="w-full h-full" glowColor={reviews[1].glowColor}>
             <div className="p-8 h-full flex flex-col justify-between rounded-3xl border border-white/5 bg-gradient-to-br from-white/[0.04] to-transparent relative overflow-hidden group min-h-[280px]">
               <div className="absolute -top-20 -right-20 w-36 h-36 bg-electric-purple/5 blur-3xl rounded-full" />
@@ -198,16 +170,10 @@ export default function ClientReviews() {
               </div>
             </div>
           </TiltCard>
-        </m.div>
+        </div>
 
         {/* Bento Cell 5: Stats Rating Breakdown (Right Column) */}
-        <m.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="glass p-8 rounded-3xl border border-white/5 bg-gradient-to-br from-white/[0.04] to-transparent shadow-xl relative overflow-hidden group flex flex-col justify-between min-h-[280px]"
-        >
+        <div className="glass p-8 rounded-3xl border border-white/5 bg-gradient-to-br from-white/[0.04] to-transparent shadow-xl relative overflow-hidden group flex flex-col justify-between min-h-[280px] animate-fade-up animation-delay-400">
           <div className="absolute -top-20 -left-20 w-36 h-36 bg-electric-purple/5 blur-3xl rounded-full" />
           
           <div>
@@ -264,7 +230,7 @@ export default function ClientReviews() {
           <div className="pt-6 border-t border-white/5 text-center text-[10px] font-mono text-darkpan-slate uppercase tracking-widest font-bold mt-4">
             Audited May 2026
           </div>
-        </m.div>
+        </div>
 
       </div>
     </section>
