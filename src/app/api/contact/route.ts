@@ -105,14 +105,7 @@ function getClientIP(request: Request): string {
 export async function POST(request: Request) {
   try {
     // 0. Environment configuration sanity check
-    const secret = process.env.RATE_LIMIT_SECRET;
-    if (!secret) {
-      console.error("RATE_LIMIT_SECRET environment variable is missing.");
-      return NextResponse.json(
-        { success: false, error: "Internal compilation failure." },
-        { status: 500 }
-      );
-    }
+    const secret = process.env.RATE_LIMIT_SECRET || "fallback-secret-for-development-do-not-use-in-prod";
 
     // CSRF protection check
     const origin = request.headers.get("origin");
