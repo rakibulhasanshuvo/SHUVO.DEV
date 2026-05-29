@@ -1,12 +1,11 @@
-🧪 Testing Improvement: Test Honeypot Detection in Contact API
+🧪 [Testing Improvement] Contact Form Error Handling on Network Failure
 
-🎯 **What:**
-Added unit tests for the honeypot detection feature inside the Contact API route (`src/app/api/contact/route.ts`). This ensures that submissions containing a value in the `confirm_corporate_website` honeypot field are accurately detected as bot spam and rejected securely.
+🎯 **What:** The testing gap addressed
+The contact form page had missing test coverage for handling form submission rejections (e.g., successful fetch but with `data.success = false`). We have introduced tests to ensure correct error messages (both default and custom `data.error`) are appropriately displayed in the DOM. The `Network compilation timeout` case was already covered via `jest.fn().mockRejectedValueOnce`, but these new assertions significantly fortify the fallback scenarios.
 
-📊 **Coverage:**
-- Mocked the Next.js standard `Request` object in a Node testing environment.
-- Verified that bot submissions are discarded with a `200 OK` status and a `silent_dropped` payload so bots aren't tipped off.
-- Ensured `console.warn` side-effects are suppressed securely inside the test suite to keep execution clean.
+📊 **Coverage:** What scenarios are now tested
+- Validated that if a successful API response arrives with `success: false` and a specific custom error string (e.g. `data.error`), the DOM updates with `⚠ {custom error string}`.
+- Validated that if a successful API response arrives with `success: false` and no custom error string provided, the DOM updates gracefully using the default fallback message `⚠ Submission rejected.`.
 
-✨ **Result:**
-By locking down the honeypot feature with a dedicated test, we enhance test coverage and prevent future regressions to the contact form's anti-spam security mechanism.
+✨ **Result:** The improvement in test coverage
+Test coverage for `src/app/contact/page.tsx` has been significantly augmented, ensuring the user interface always properly communicates failure states accurately. This safety net allows for confident refactoring inside the React form handling logic without breaking UI feedback.
