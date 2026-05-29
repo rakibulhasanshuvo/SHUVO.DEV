@@ -36,6 +36,8 @@ export default function TechPhysicsSandbox({ isMobileServer }: { isMobileServer?
   const isMobile = isMobileServer ?? isMobileClient;
   const [dimensions, setDimensions] = useState({ width: 0, height: 400 });
 
+  const showFallback = reducedMotion || isMobile === undefined || isMobile === true;
+
   // Check prefers-reduced-motion
   useEffect(() => {
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -47,7 +49,7 @@ export default function TechPhysicsSandbox({ isMobileServer }: { isMobileServer?
 
   // Handle Resize
   useEffect(() => {
-    if (!containerRef.current) return;
+    if (showFallback || !containerRef.current) return;
     const updateSize = () => {
       if (containerRef.current) {
         setDimensions({
@@ -59,9 +61,7 @@ export default function TechPhysicsSandbox({ isMobileServer }: { isMobileServer?
     updateSize();
     window.addEventListener("resize", updateSize);
     return () => window.removeEventListener("resize", updateSize);
-  }, []);
-
-  const showFallback = reducedMotion || isMobile === undefined || isMobile === true;
+  }, [showFallback]);
 
   // Main Canvas Physics Loop
   useEffect(() => {

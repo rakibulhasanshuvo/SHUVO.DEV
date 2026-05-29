@@ -178,10 +178,10 @@ export default function TemplatesPage() {
             PREMIUM DIGITAL SHELF
           </span>
           <h1 className="text-5xl sm:text-7xl font-extrabold font-clash tracking-tight text-white leading-none">
-            Developer Templates
+            Developer Products
           </h1>
           <p className="text-zinc-400 text-base sm:text-[17px] font-normal leading-relaxed font-satoshi max-w-2xl mx-auto">
-            Beautifully designed, highly performant templates engineered with Next.js, Framer Motion, and elite CSS aesthetics.
+            Beautifully designed, highly performant products and boilerplates engineered with Next.js, Framer Motion, and elite CSS aesthetics.
           </p>
 
           {/* ==========================================

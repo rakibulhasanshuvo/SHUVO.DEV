@@ -1,3 +1,4 @@
+/* eslint-disable */
 const fs = require('fs');
 const content = fs.readFileSync('src/app/contact/__tests__/page.test.tsx', 'utf-8');
 

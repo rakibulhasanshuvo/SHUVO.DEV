@@ -589,15 +589,14 @@ export default function DashboardPage() {
                   </g>
                 );
               })}
+              {/* Geometrical Month Labels aligned with SVG x-coordinates */}
+              <text x="10" y="178" fill="#6C7293" fontSize="8" fontWeight="bold" textAnchor="middle">Jan</text>
+              <text x="90" y="178" fill="#6C7293" fontSize="8" fontWeight="bold" textAnchor="middle">Feb</text>
+              <text x="170" y="178" fill="#6C7293" fontSize="8" fontWeight="bold" textAnchor="middle">Mar</text>
+              <text x="250" y="178" fill="#6C7293" fontSize="8" fontWeight="bold" textAnchor="middle">Apr</text>
+              <text x="330" y="178" fill="#6C7293" fontSize="8" fontWeight="bold" textAnchor="middle">May</text>
+              <text x="490" y="178" fill="#6C7293" fontSize="8" fontWeight="bold" textAnchor="middle">Jun</text>
             </svg>
-            <div className="flex justify-between text-[9px] text-darkpan-slate font-bold px-2 mt-1">
-              <span>Jan</span>
-              <span>Feb</span>
-              <span>Mar</span>
-              <span>Apr</span>
-              <span>May</span>
-              <span>Jun</span>
-            </div>
           </div>
         </m.div>
       </section>
@@ -957,7 +956,7 @@ export default function DashboardPage() {
               {/* Content area */}
               <div className="p-6 overflow-y-auto space-y-6 text-left">
                 {/* Meta details grid */}
-                <div className="grid grid-cols-2 gap-4 bg-black/30 border border-white/5 rounded-2xl p-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-black/30 border border-white/5 rounded-2xl p-4">
                   <div>
                     <span className="text-[9px] uppercase font-bold text-darkpan-slate tracking-wider block">Customer</span>
                     <span className="text-xs font-bold text-white mt-1 block">{selectedInvoice.customer}</span>

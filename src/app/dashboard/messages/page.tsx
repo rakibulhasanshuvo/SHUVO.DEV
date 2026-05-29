@@ -77,6 +77,7 @@ export default function MessagesPage() {
   const [replyText, setReplyText] = useState("");
   const [isSending, setIsSending] = useState(false);
   const [sendSuccess, setSendSuccess] = useState(false);
+  const [showDetailsOnMobile, setShowDetailsOnMobile] = useState(false);
 
   // Load messages from Supabase or localStorage fallback
   useEffect(() => {
@@ -137,6 +138,7 @@ export default function MessagesPage() {
 
   const handleSelectMessage = async (id: string) => {
     setSelectedId(id);
+    setShowDetailsOnMobile(true);
     
     // 1. Optimistic UI Update
     const updated = messages.map((m) => {
@@ -204,6 +206,7 @@ export default function MessagesPage() {
     if (selectedId === id) {
       const remaining = updated.filter(m => activeTab === "archived" ? m.archived : !m.archived);
       setSelectedId(remaining.length > 0 ? remaining[0].id : null);
+      setShowDetailsOnMobile(false);
     }
 
     // 2. Sync to Supabase Database
@@ -228,6 +231,7 @@ export default function MessagesPage() {
     
     if (selectedId === id) {
       setSelectedId(updated.length > 0 ? updated[0].id : null);
+      setShowDetailsOnMobile(false);
     }
 
     // 2. Sync to Supabase Database
@@ -322,7 +326,7 @@ export default function MessagesPage() {
       {/* Main Mailbox Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 bg-darkpan-bg border border-darkpan-red/10 rounded-2xl overflow-hidden shadow-2xl min-h-[600px]">
         {/* Thread Sidebar (4 cols) */}
-        <div className="lg:col-span-5 border-r border-white/5 flex flex-col h-[650px] bg-black/20">
+        <div className={`lg:col-span-5 border-r border-white/5 flex-col h-[650px] bg-black/20 ${showDetailsOnMobile ? "hidden lg:flex" : "flex"}`}>
           {/* Sidebar Search */}
           <div className="p-4 border-b border-white/5 space-y-3 bg-black/40">
             <div className="relative flex items-center">
@@ -441,7 +445,7 @@ export default function MessagesPage() {
         </div>
 
         {/* Thread Details Panel (7 cols) */}
-        <div className="lg:col-span-7 flex flex-col h-[650px]">
+        <div className={`lg:col-span-7 flex-col h-[650px] ${!showDetailsOnMobile ? "hidden lg:flex" : "flex"}`}>
           <AnimatePresence mode="wait">
             {!activeMessage ? (
               <div className="flex-1 flex items-center justify-center text-darkpan-slate text-xs font-semibold p-8">
@@ -458,6 +462,14 @@ export default function MessagesPage() {
               >
                 {/* Detail Header */}
                 <div className="p-6 border-b border-white/5 bg-black/40 space-y-4">
+                  {/* Mobile Back Button */}
+                  <button
+                    onClick={() => setShowDetailsOnMobile(false)}
+                    className="lg:hidden flex items-center gap-1.5 text-xs font-bold text-darkpan-red hover:text-red-500 transition-colors mb-2 cursor-pointer focus:outline-none"
+                    type="button"
+                  >
+                    ← Back to Inbox
+                  </button>
                   <div className="flex items-center justify-between gap-4">
                     <div className="space-y-1">
                       <h4 className="font-cabinet font-bold text-lg text-white">

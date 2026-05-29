@@ -89,7 +89,7 @@ function ContactPageContent() {
           email,
           message,
           quoteSummary: finalQuoteSummary,
-          confirm_corporate_website: honeypot, // Honeypot field
+          website_url: honeypot, // Honeypot field
         }),
       });
 
@@ -453,11 +453,14 @@ function ContactPageContent() {
             </div>
 
             {/* Honeypot Input: Hidden from legitimate users */}
-            <div className="absolute opacity-0 w-0 h-0 overflow-hidden pointer-events-none -z-50">
+            <div 
+              style={{ position: "absolute", left: "-9999px", top: "-9999px" }} 
+              aria-hidden="true"
+            >
               <input
                 type="text"
-                id="confirm_corporate_website"
-                name="confirm_corporate_website"
+                id="website_url"
+                name="website_url"
                 placeholder="Leave this empty"
                 value={honeypot}
                 onChange={(e) => setHoneypot(e.target.value)}

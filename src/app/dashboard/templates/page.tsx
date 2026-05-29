@@ -37,6 +37,8 @@ interface WebTemplate {
   downloadUrl: string;
   description: string;
   posterUrl: string;
+  tabletImageUrl: string;
+  mobileImageUrl: string;
 }
 
 const DEFAULT_TEMPLATES: WebTemplate[] = [
@@ -54,7 +56,9 @@ const DEFAULT_TEMPLATES: WebTemplate[] = [
     previewWebmUrl: "https://assets.mixkit.co/videos/preview/mixkit-futuristic-subway-station-with-neon-lights-43950-large.mp4",
     downloadUrl: "/templates/neocyber-v1.zip",
     description: "Ultra-luxury retro-future web blueprint utilizing customizable neon grid arrays, self-hosted outfits, and custom hydration safe-guards.",
-    posterUrl: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=800"
+    posterUrl: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=800",
+    tabletImageUrl: "https://images.unsplash.com/photo-1542744094-3a31f103e35f?auto=format&fit=crop&q=80&w=800",
+    mobileImageUrl: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&q=80&w=800"
   },
   {
     id: "temp-2",
@@ -70,7 +74,9 @@ const DEFAULT_TEMPLATES: WebTemplate[] = [
     previewWebmUrl: "https://assets.mixkit.co/videos/preview/mixkit-abstract-glowing-lines-animation-43184-large.mp4",
     downloadUrl: "/templates/glassmorphic-deck.zip",
     description: "Responsive React 19 Framer Motion component library optimized for card slides and smooth mobile transition swipes.",
-    posterUrl: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=800"
+    posterUrl: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=800",
+    tabletImageUrl: "https://images.unsplash.com/photo-1531403009284-440f080d1e12?auto=format&fit=crop&q=80&w=800",
+    mobileImageUrl: "https://images.unsplash.com/photo-1555421689-491a97ff2040?auto=format&fit=crop&q=80&w=800"
   },
   {
     id: "temp-3",
@@ -86,7 +92,9 @@ const DEFAULT_TEMPLATES: WebTemplate[] = [
     previewWebmUrl: "https://assets.mixkit.co/videos/preview/mixkit-green-binary-code-screen-background-39877-large.mp4",
     downloadUrl: "/templates/matrix-rain.zip",
     description: "WebGL canvas segment streaming random characters in cyber-luxury dark green/charcoal layers.",
-    posterUrl: "https://images.unsplash.com/photo-1639762681485-074b7f938ba0?auto=format&fit=crop&q=80&w=800"
+    posterUrl: "https://images.unsplash.com/photo-1639762681485-074b7f938ba0?auto=format&fit=crop&q=80&w=800",
+    tabletImageUrl: "https://images.unsplash.com/photo-1508921912186-1d1a45ebb3c1?auto=format&fit=crop&q=80&w=800",
+    mobileImageUrl: "https://images.unsplash.com/photo-1598327105666-5b89351aff97?auto=format&fit=crop&q=80&w=800"
   }
 ];
 
@@ -111,12 +119,18 @@ export default function TemplatesPage() {
   const [previewWebmUrl, setPreviewWebmUrl] = useState("");
   const [downloadUrl, setDownloadUrl] = useState("");
   const [posterUrl, setPosterUrl] = useState("");
+  const [tabletImageUrl, setTabletImageUrl] = useState("");
+  const [mobileImageUrl, setMobileImageUrl] = useState("");
   
   const [formError, setFormError] = useState("");
   const [isUploading, setIsUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [isImageUploading, setIsImageUploading] = useState(false);
   const [imageUploadProgress, setImageUploadProgress] = useState(0);
+  const [isTabletUploading, setIsTabletUploading] = useState(false);
+  const [tabletUploadProgress, setTabletUploadProgress] = useState(0);
+  const [isMobileUploading, setIsMobileUploading] = useState(false);
+  const [mobileUploadProgress, setMobileUploadProgress] = useState(0);
 
   // Load from Supabase or LocalStorage fallback
   useEffect(() => {
@@ -141,6 +155,8 @@ export default function TemplatesPage() {
             downloadUrl: dbTemp.source_url || dbTemp.sourceUrl || "",
             description: dbTemp.description || "",
             posterUrl: dbTemp.poster_url || dbTemp.posterUrl || "",
+            tabletImageUrl: dbTemp.tablet_image_url || dbTemp.tabletImageUrl || "",
+            mobileImageUrl: dbTemp.mobile_image_url || dbTemp.mobileImageUrl || "",
           }));
           setTemplates(formatted);
           return;
@@ -188,6 +204,8 @@ export default function TemplatesPage() {
           source_url: temp.downloadUrl,
           description: temp.description,
           poster_url: temp.posterUrl,
+          tablet_image_url: temp.tabletImageUrl || "",
+          mobile_image_url: temp.mobileImageUrl || "",
           category: "E-Commerce"
         };
         await supabase
@@ -212,6 +230,8 @@ export default function TemplatesPage() {
     setPreviewWebmUrl("");
     setDownloadUrl("/templates/new-theme.zip");
     setPosterUrl("");
+    setTabletImageUrl("");
+    setMobileImageUrl("");
     setFormError("");
     setIsModalOpen(true);
   };
@@ -229,6 +249,8 @@ export default function TemplatesPage() {
     setPreviewWebmUrl(template.previewWebmUrl);
     setDownloadUrl(template.downloadUrl);
     setPosterUrl(template.posterUrl || "");
+    setTabletImageUrl(template.tabletImageUrl || "");
+    setMobileImageUrl(template.mobileImageUrl || "");
     setFormError("");
     setIsModalOpen(true);
   };
@@ -325,6 +347,156 @@ export default function TemplatesPage() {
     } catch (err: any) {
       setFormError(`Upload failed: ${err.message}`);
       setIsImageUploading(false);
+    }
+  };
+
+  const handleCloudinaryTabletUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (file.size > 10 * 1024 * 1024) {
+      setFormError("Tablet image file is too large. Keep it under 10MB.");
+      return;
+    }
+
+    setIsTabletUploading(true);
+    setTabletUploadProgress(0);
+    setFormError("");
+
+    try {
+      const signResponse = await fetch("/api/upload", { method: "POST" });
+      if (!signResponse.ok) {
+        const errorData = await signResponse.json();
+        throw new Error(errorData.error || "Failed to retrieve upload signature.");
+      }
+      
+      const { signature, timestamp, apiKey, cloudName, folder, uploadPreset } = await signResponse.json();
+
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("api_key", apiKey);
+      formData.append("timestamp", timestamp.toString());
+      formData.append("signature", signature);
+      formData.append("folder", folder);
+      formData.append("upload_preset", uploadPreset);
+
+      const xhr = new XMLHttpRequest();
+      xhr.open("POST", `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`);
+
+      xhr.upload.onprogress = (event) => {
+        if (event.lengthComputable) {
+          const percentComplete = Math.round((event.loaded / event.total) * 100);
+          setTabletUploadProgress(percentComplete);
+        }
+      };
+
+      xhr.onload = () => {
+        if (xhr.status === 200) {
+          const response = JSON.parse(xhr.responseText);
+          let optimizedUrl = response.secure_url;
+          
+          if (optimizedUrl.includes("/image/upload/")) {
+            optimizedUrl = optimizedUrl.replace("/image/upload/", "/image/upload/w_800,c_scale,f_auto,q_auto/");
+          }
+          
+          setTabletImageUrl(optimizedUrl);
+          setIsTabletUploading(false);
+          setTabletUploadProgress(0);
+        } else {
+          try {
+            const response = JSON.parse(xhr.responseText);
+            setFormError(`Upload failed: ${response.error?.message || "Verify signature and preset"}`);
+          } catch {
+            setFormError("Upload failed. Verify your Cloudinary credentials and settings.");
+          }
+          setIsTabletUploading(false);
+        }
+      };
+
+      xhr.onerror = () => {
+        setFormError("Network error occurred during tablet image upload.");
+        setIsTabletUploading(false);
+      };
+
+      xhr.send(formData);
+    } catch (err: any) {
+      setFormError(`Upload failed: ${err.message}`);
+      setIsTabletUploading(false);
+    }
+  };
+
+  const handleCloudinaryMobileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (file.size > 10 * 1024 * 1024) {
+      setFormError("Mobile image file is too large. Keep it under 10MB.");
+      return;
+    }
+
+    setIsMobileUploading(true);
+    setMobileUploadProgress(0);
+    setFormError("");
+
+    try {
+      const signResponse = await fetch("/api/upload", { method: "POST" });
+      if (!signResponse.ok) {
+        const errorData = await signResponse.json();
+        throw new Error(errorData.error || "Failed to retrieve upload signature.");
+      }
+      
+      const { signature, timestamp, apiKey, cloudName, folder, uploadPreset } = await signResponse.json();
+
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("api_key", apiKey);
+      formData.append("timestamp", timestamp.toString());
+      formData.append("signature", signature);
+      formData.append("folder", folder);
+      formData.append("upload_preset", uploadPreset);
+
+      const xhr = new XMLHttpRequest();
+      xhr.open("POST", `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`);
+
+      xhr.upload.onprogress = (event) => {
+        if (event.lengthComputable) {
+          const percentComplete = Math.round((event.loaded / event.total) * 100);
+          setMobileUploadProgress(percentComplete);
+        }
+      };
+
+      xhr.onload = () => {
+        if (xhr.status === 200) {
+          const response = JSON.parse(xhr.responseText);
+          let optimizedUrl = response.secure_url;
+          
+          if (optimizedUrl.includes("/image/upload/")) {
+            optimizedUrl = optimizedUrl.replace("/image/upload/", "/image/upload/w_800,c_scale,f_auto,q_auto/");
+          }
+          
+          setMobileImageUrl(optimizedUrl);
+          setIsMobileUploading(false);
+          setMobileUploadProgress(0);
+        } else {
+          try {
+            const response = JSON.parse(xhr.responseText);
+            setFormError(`Upload failed: ${response.error?.message || "Verify signature and preset"}`);
+          } catch {
+            setFormError("Upload failed. Verify your Cloudinary credentials and settings.");
+          }
+          setIsMobileUploading(false);
+        }
+      };
+
+      xhr.onerror = () => {
+        setFormError("Network error occurred during mobile image upload.");
+        setIsMobileUploading(false);
+      };
+
+      xhr.send(formData);
+    } catch (err: any) {
+      setFormError(`Upload failed: ${err.message}`);
+      setIsMobileUploading(false);
     }
   };
 
@@ -430,6 +602,8 @@ export default function TemplatesPage() {
               previewWebmUrl: previewWebmUrl.trim(),
               downloadUrl: downloadUrl.trim(),
               posterUrl: posterUrl.trim(),
+              tabletImageUrl: tabletImageUrl.trim(),
+              mobileImageUrl: mobileImageUrl.trim(),
             }
           : t
       );
@@ -450,6 +624,8 @@ export default function TemplatesPage() {
         previewWebmUrl: previewWebmUrl.trim() || "https://assets.mixkit.co/videos/preview/mixkit-futuristic-subway-station-with-neon-lights-43950-large.mp4",
         downloadUrl: downloadUrl.trim() || "/templates/new-theme.zip",
         posterUrl: posterUrl.trim() || "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=800",
+        tabletImageUrl: tabletImageUrl.trim() || "https://images.unsplash.com/photo-1542744094-3a31f103e35f?auto=format&fit=crop&q=80&w=800",
+        mobileImageUrl: mobileImageUrl.trim() || "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&q=80&w=800",
       };
       updated = [newTemplate, ...templates];
     }
@@ -791,10 +967,11 @@ export default function TemplatesPage() {
                     Visual Assets (Cloudinary)
                   </p>
                   
+                  {/* Grid of Upload zones */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     {/* Image Poster Upload Zone */}
                     <div className="space-y-2">
-                      <label className="text-[9px] uppercase tracking-wider text-darkpan-slate font-extrabold block">1. Cover Poster Image</label>
+                      <label className="text-[9px] uppercase tracking-wider text-darkpan-slate font-extrabold block">1. Cover Poster Image (Desktop)</label>
                       <div className="relative border-2 border-dashed border-white/10 hover:border-darkpan-red/30 rounded-xl p-3 flex flex-col items-center justify-center text-center transition-all bg-black/20 group h-32 overflow-hidden">
                         {isImageUploading ? (
                           <div className="space-y-1.5 flex flex-col items-center">
@@ -834,7 +1011,7 @@ export default function TemplatesPage() {
 
                     {/* Video Loop Upload Zone */}
                     <div className="space-y-2">
-                      <label className="text-[9px] uppercase tracking-wider text-darkpan-slate font-extrabold block">2. Hover Video Loop</label>
+                      <label className="text-[9px] uppercase tracking-wider text-darkpan-slate font-extrabold block">2. Desktop Video Preview</label>
                       <div className="relative border-2 border-dashed border-white/10 hover:border-darkpan-red/30 rounded-xl p-3 flex flex-col items-center justify-center text-center transition-all bg-black/20 group h-32 overflow-hidden">
                         {isUploading ? (
                           <div className="space-y-1.5 flex flex-col items-center">
@@ -874,29 +1051,134 @@ export default function TemplatesPage() {
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                    {/* Tablet screenshot mock upload zone */}
+                    <div className="space-y-2">
+                      <label className="text-[9px] uppercase tracking-wider text-darkpan-slate font-extrabold block">3. Tablet Preview Image</label>
+                      <div className="relative border-2 border-dashed border-white/10 hover:border-darkpan-red/30 rounded-xl p-3 flex flex-col items-center justify-center text-center transition-all bg-black/20 group h-32 overflow-hidden">
+                        {isTabletUploading ? (
+                          <div className="space-y-1.5 flex flex-col items-center">
+                            <Loader2 className="w-5 h-5 text-darkpan-red animate-spin" />
+                            <p className="text-[10px] text-white font-bold">Uploading tablet image...</p>
+                            <span className="text-[9px] text-darkpan-slate font-mono">{tabletUploadProgress}%</span>
+                          </div>
+                        ) : tabletImageUrl ? (
+                          <div className="absolute inset-0 rounded-lg overflow-hidden group">
+                            <img src={tabletImageUrl} alt="Tablet preview" className="w-full h-full object-cover opacity-60" />
+                            <label className="absolute inset-0 bg-black/75 opacity-0 group-hover:opacity-100 flex flex-col items-center justify-center cursor-pointer transition-opacity">
+                              <Upload className="w-5 h-5 text-white" />
+                              <span className="text-[10px] text-white font-bold mt-1">Replace Image</span>
+                              <input
+                                type="file"
+                                accept="image/*"
+                                onChange={handleCloudinaryTabletUpload}
+                                className="hidden"
+                              />
+                            </label>
+                          </div>
+                        ) : (
+                          <label className="cursor-pointer flex flex-col items-center py-1 w-full">
+                            <Upload className="w-5 h-5 text-darkpan-slate group-hover:text-white transition-colors mb-1" />
+                            <span className="text-[11px] text-white font-bold">Upload Tablet Mock</span>
+                            <span className="text-[8px] text-darkpan-slate">PNG/JPG (Max 10MB)</span>
+                            <input
+                              type="file"
+                              accept="image/*"
+                              onChange={handleCloudinaryTabletUpload}
+                              className="hidden"
+                            />
+                          </label>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Mobile screenshot mock upload zone */}
+                    <div className="space-y-2">
+                      <label className="text-[9px] uppercase tracking-wider text-darkpan-slate font-extrabold block">4. Mobile Preview Image</label>
+                      <div className="relative border-2 border-dashed border-white/10 hover:border-darkpan-red/30 rounded-xl p-3 flex flex-col items-center justify-center text-center transition-all bg-black/20 group h-32 overflow-hidden">
+                        {isMobileUploading ? (
+                          <div className="space-y-1.5 flex flex-col items-center">
+                            <Loader2 className="w-5 h-5 text-darkpan-red animate-spin" />
+                            <p className="text-[10px] text-white font-bold">Uploading mobile image...</p>
+                            <span className="text-[9px] text-darkpan-slate font-mono">{mobileUploadProgress}%</span>
+                          </div>
+                        ) : mobileImageUrl ? (
+                          <div className="absolute inset-0 rounded-lg overflow-hidden group">
+                            <img src={mobileImageUrl} alt="Mobile preview" className="w-full h-full object-cover opacity-60" />
+                            <label className="absolute inset-0 bg-black/75 opacity-0 group-hover:opacity-100 flex flex-col items-center justify-center cursor-pointer transition-opacity">
+                              <Upload className="w-5 h-5 text-white" />
+                              <span className="text-[10px] text-white font-bold mt-1">Replace Image</span>
+                              <input
+                                type="file"
+                                accept="image/*"
+                                onChange={handleCloudinaryMobileUpload}
+                                className="hidden"
+                              />
+                            </label>
+                          </div>
+                        ) : (
+                          <label className="cursor-pointer flex flex-col items-center py-1 w-full">
+                            <Upload className="w-5 h-5 text-darkpan-slate group-hover:text-white transition-colors mb-1" />
+                            <span className="text-[11px] text-white font-bold">Upload Mobile Mock</span>
+                            <span className="text-[8px] text-darkpan-slate">PNG/JPG (Max 10MB)</span>
+                            <input
+                              type="file"
+                              accept="image/*"
+                              onChange={handleCloudinaryMobileUpload}
+                              className="hidden"
+                            />
+                          </label>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4 pt-2">
                     <div className="space-y-1">
-                      <label className="text-[9px] uppercase tracking-wider text-darkpan-slate font-extrabold">Poster URL Link</label>
+                      <label className="text-[9px] uppercase tracking-wider text-darkpan-slate font-extrabold">Poster URL (Desktop)</label>
                       <input
                         type="text"
                         value={posterUrl}
                         onChange={(e) => setPosterUrl(e.target.value)}
-                        placeholder="e.g. https://res.cloudinary.com/..."
-                        className="w-full bg-black border border-white/10 focus:border-darkpan-red/40 rounded-xl px-3 py-2 text-[11px] text-white focus:outline-none transition-all"
+                        placeholder="Desktop Image Link"
+                        className="w-full bg-black border border-white/10 focus:border-darkpan-red/40 rounded-xl px-3 py-2 text-[10px] text-white focus:outline-none transition-all font-mono"
                       />
                     </div>
                     <div className="space-y-1">
-                      <label className="text-[9px] uppercase tracking-wider text-darkpan-slate font-extrabold">Video URL Link</label>
+                      <label className="text-[9px] uppercase tracking-wider text-darkpan-slate font-extrabold">Video URL (Desktop)</label>
                       <input
                         type="text"
                         value={previewWebmUrl}
                         onChange={(e) => setPreviewWebmUrl(e.target.value)}
-                        placeholder="e.g. https://res.cloudinary.com/..."
-                        className="w-full bg-black border border-white/10 focus:border-darkpan-red/40 rounded-xl px-3 py-2 text-[11px] text-white focus:outline-none transition-all"
+                        placeholder="Desktop Video Link"
+                        className="w-full bg-black border border-white/10 focus:border-darkpan-red/40 rounded-xl px-3 py-2 text-[10px] text-white focus:outline-none transition-all font-mono"
                       />
                     </div>
                   </div>
 
-                  <div className="space-y-1">
+                  <div className="grid grid-cols-2 gap-4 pt-2">
+                    <div className="space-y-1">
+                      <label className="text-[9px] uppercase tracking-wider text-darkpan-slate font-extrabold">Tablet Image URL</label>
+                      <input
+                        type="text"
+                        value={tabletImageUrl}
+                        onChange={(e) => setTabletImageUrl(e.target.value)}
+                        placeholder="Tablet Image Link"
+                        className="w-full bg-black border border-white/10 focus:border-darkpan-red/40 rounded-xl px-3 py-2 text-[10px] text-white focus:outline-none transition-all font-mono"
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <label className="text-[9px] uppercase tracking-wider text-darkpan-slate font-extrabold">Mobile Image URL</label>
+                      <input
+                        type="text"
+                        value={mobileImageUrl}
+                        onChange={(e) => setMobileImageUrl(e.target.value)}
+                        placeholder="Mobile Image Link"
+                        className="w-full bg-black border border-white/10 focus:border-darkpan-red/40 rounded-xl px-3 py-2 text-[10px] text-white focus:outline-none transition-all font-mono"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-1 pt-2">
                     <label className="text-[9px] uppercase tracking-wider text-darkpan-slate font-extrabold">Zip Download Link</label>
                     <input
                       type="text"

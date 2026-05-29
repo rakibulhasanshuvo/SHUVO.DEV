@@ -13,6 +13,8 @@ const SignupPage = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   
+  const [inviteCode, setInviteCode] = useState("");
+  
   const [errorMsg, setErrorMsg] = useState("");
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -33,6 +35,18 @@ const SignupPage = () => {
     if (!isLogin && password !== confirmPassword) {
       setErrorMsg("Passwords do not match.");
       return;
+    }
+
+    if (!isLogin) {
+      const expectedInviteCode = process.env.NEXT_PUBLIC_ADMIN_INVITE_CODE;
+      if (!expectedInviteCode) {
+        setErrorMsg("Admin registration is currently disabled (missing invite code configuration).");
+        return;
+      }
+      if (inviteCode.trim() !== expectedInviteCode) {
+        setErrorMsg("Invalid admin invite code.");
+        return;
+      }
     }
 
     setLoading(true);
@@ -192,21 +206,38 @@ const SignupPage = () => {
               required 
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              autoComplete={isLogin ? "current-password" : "new-password"}
             />
           </label>
           
           {!isLogin && (
-            <label className="relative flex flex-col gap-1 w-full">
-              <span className="text-[10px] font-mono font-bold tracking-wider text-zinc-300 uppercase">Confirm Password</span>
-              <input 
-                className="w-full bg-[#030303] border border-white/10 hover:border-white/20 focus:border-[#00F0FF]/40 rounded-xl px-3.5 py-2.5 text-xs font-mono text-white placeholder-zinc-700 outline-none transition-all duration-300"
-                type="password" 
-                placeholder="••••••••" 
-                required={!isLogin} 
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-              />
-            </label>
+            <>
+              <label className="relative flex flex-col gap-1 w-full">
+                <span className="text-[10px] font-mono font-bold tracking-wider text-zinc-300 uppercase">Confirm Password</span>
+                <input 
+                  className="w-full bg-[#030303] border border-white/10 hover:border-white/20 focus:border-[#00F0FF]/40 rounded-xl px-3.5 py-2.5 text-xs font-mono text-white placeholder-zinc-700 outline-none transition-all duration-300"
+                  type="password" 
+                  placeholder="••••••••" 
+                  required={!isLogin} 
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  autoComplete="new-password"
+                />
+              </label>
+
+              <label className="relative flex flex-col gap-1 w-full">
+                <span className="text-[10px] font-mono font-bold tracking-wider text-zinc-300 uppercase">Admin Invite Code</span>
+                <input 
+                  className="w-full bg-[#030303] border border-white/10 hover:border-white/20 focus:border-[#00F0FF]/40 rounded-xl px-3.5 py-2.5 text-xs font-mono text-white placeholder-zinc-700 outline-none transition-all duration-300"
+                  type="password" 
+                  placeholder="••••••••" 
+                  required={!isLogin} 
+                  value={inviteCode}
+                  onChange={(e) => setInviteCode(e.target.value)}
+                  autoComplete="new-password"
+                />
+              </label>
+            </>
           )}
           
           <button 

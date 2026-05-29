@@ -24,6 +24,9 @@ interface TemplateDetails {
   licenseUrl: string;
   specs: string[];
   iframePlaceholderUrl: string;
+  videoUrl: string;
+  tabletImageUrl: string;
+  mobileImageUrl: string;
 }
 
 const templatesDetailsData: Record<string, TemplateDetails> = {
@@ -40,6 +43,9 @@ const templatesDetailsData: Record<string, TemplateDetails> = {
     licenseUrl: "https://creativecommons.org/licenses/by/4.0/",
     specs: ["100/100 Core Web Vitals Score", "Dark & Light CSS themes", "Fully responsive layout grids"],
     iframePlaceholderUrl: "https://rakibulhasanshuvo.com",
+    videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-abstract-laser-lights-background-loop-41851-large.mp4",
+    tabletImageUrl: "https://images.unsplash.com/photo-1542744094-3a31f103e35f?auto=format&fit=crop&q=80&w=800",
+    mobileImageUrl: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&q=80&w=800",
   },
   nova: {
     id: "nova",
@@ -54,6 +60,9 @@ const templatesDetailsData: Record<string, TemplateDetails> = {
     licenseUrl: "https://creativecommons.org/licenses/by-nd/4.0/",
     specs: ["Wasm-powered esbuild bundling", "Automated container status check", "Zero-latency Redis edge cache"],
     iframePlaceholderUrl: "https://rakibulhasanshuvo.com",
+    videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-tunnel-of-futuristic-blue-neon-lights-loop-41747-large.mp4",
+    tabletImageUrl: "https://images.unsplash.com/photo-1531403009284-440f080d1e12?auto=format&fit=crop&q=80&w=800",
+    mobileImageUrl: "https://images.unsplash.com/photo-1555421689-491a97ff2040?auto=format&fit=crop&q=80&w=800",
   },
   ethereal: {
     id: "ethereal",
@@ -68,6 +77,9 @@ const templatesDetailsData: Record<string, TemplateDetails> = {
     licenseUrl: "https://creativecommons.org/licenses/by-sa/4.0/",
     specs: ["Race condition prevention layers", "Prisma PostgreSQL schemas", "Secure Stripe stepper workflows"],
     iframePlaceholderUrl: "https://rakibulhasanshuvo.com",
+    videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-digital-particles-in-blue-and-purple-loop-43285-large.mp4",
+    tabletImageUrl: "https://images.unsplash.com/photo-1508921912186-1d1a45ebb3c1?auto=format&fit=crop&q=80&w=800",
+    mobileImageUrl: "https://images.unsplash.com/photo-1598327105666-5b89351aff97?auto=format&fit=crop&q=80&w=800",
   },
 };
 
@@ -99,7 +111,7 @@ export default function TemplateDetailsPage({ params }: PageProps) {
   const [loading, setLoading] = useState(true);
 
   // Viewport states
-  const [viewport, setViewport] = useState<"desktop" | "tablet" | "mobile">("desktop");
+  const [viewport, setViewport] = useState<"desktop" | "mobile">("desktop");
   
   // CLI Sandbox Terminal states
   const [sandboxStatus, setSandboxStatus] = useState<"idle" | "booting" | "ready">("idle");
@@ -187,6 +199,9 @@ export default function TemplateDetailsPage({ params }: PageProps) {
             licenseUrl: data.license_url || data.licenseUrl || "https://creativecommons.org/licenses/by/4.0/",
             specs: data.features || data.specs || [],
             iframePlaceholderUrl: data.iframe_placeholder_url || data.iframePlaceholderUrl || "https://rakibulhasanshuvo.com",
+            videoUrl: data.video_url || data.videoUrl || "https://assets.mixkit.co/videos/preview/mixkit-abstract-laser-lights-background-loop-41851-large.mp4",
+            tabletImageUrl: data.tablet_image_url || data.tabletImageUrl || data.poster_url || data.posterUrl || "https://images.unsplash.com/photo-1542744094-3a31f103e35f?auto=format&fit=crop&q=80&w=800",
+            mobileImageUrl: data.mobile_image_url || data.mobileImageUrl || data.poster_url || data.posterUrl || "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&q=80&w=800",
           });
           setLoading(false);
           return;
@@ -284,10 +299,9 @@ export default function TemplateDetailsPage({ params }: PageProps) {
                   <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/50" />
                   <span className="w-2.5 h-2.5 rounded-full bg-green-500/50" />
                 </div>
-
                 {/* Viewport size triggers */}
                 <div className="flex gap-1 bg-white/5 p-1 rounded-xl border border-white/5 relative">
-                  {(["desktop", "tablet", "mobile"] as const).map((mode) => (
+                  {(["desktop", "mobile"] as const).map((mode) => (
                     <button
                       key={mode}
                       onClick={() => setViewport(mode)}
@@ -315,64 +329,68 @@ export default function TemplateDetailsPage({ params }: PageProps) {
                 <div
                   className={`w-full h-[280px] sm:h-[350px] md:h-[400px] rounded-2xl border ${style?.borderColor} bg-[#070709] overflow-hidden relative shadow-inner`}
                   style={{
-                    maxWidth: viewport === "desktop" ? "100%" : viewport === "tablet" ? "768px" : "375px"
+                    maxWidth: viewport === "desktop" ? "100%" : "375px"
                   }}
                 >
-                  {/* State 1: Sandbox Terminal is booting */}
-                  {sandboxStatus === "booting" && (
-                    <div className="absolute inset-0 z-20 bg-black p-6 font-mono text-[9px] sm:text-xs text-neon-cyan leading-relaxed flex flex-col justify-end overflow-hidden select-none">
-                      <div className="space-y-1.5">
-                        {cliLogs.map((log, index) => (
-                          <div key={index}>
-                            {log}
+                  <AnimatePresence mode="wait">
+                    {viewport === "desktop" ? (
+                      <m.div
+                        key="desktop"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.3 }}
+                        className="absolute inset-0 w-full h-full bg-black relative"
+                      >
+                        {template.videoUrl ? (
+                          <video
+                            src={template.videoUrl}
+                            autoPlay
+                            muted
+                            loop
+                            playsInline
+                            className="w-full h-full object-cover opacity-90"
+                          />
+                        ) : (
+                          <div className="w-full h-full relative">
+                            <Image
+                              src={template.posterUrl}
+                              alt={template.title}
+                              fill
+                              sizes="(max-width: 768px) 100vw, 800px"
+                              className="object-cover opacity-90"
+                              priority
+                            />
                           </div>
-                        ))}
-                        <span className="inline-block w-1.5 h-3 bg-neon-cyan animate-pulse ml-1" />
-                      </div>
-                    </div>
-                  )}
-
-                  {/* State 2: Sandbox is Ready / Loaded (Renders direct interactive iframe preview) */}
-                  {sandboxStatus === "ready" && (
-                    <div className="absolute inset-0 z-20 bg-black w-full h-full relative group">
-                      {/* Floating high-tech overlay controller */}
-                      <div className="absolute top-4 right-4 z-30 opacity-80 hover:opacity-100 transition-opacity">
-                        <button
-                          onClick={() => setSandboxStatus("idle")}
-                          className="px-4.5 py-2.5 rounded-xl bg-black/90 hover:bg-black text-white font-mono text-[9px] font-extrabold uppercase tracking-widest border border-white/10 hover:border-neon-cyan/40 shadow-xl cursor-pointer hover:scale-105 active:scale-95 transition-all duration-300"
-                        >
-                          Reset Sandbox
-                        </button>
-                      </div>
-
-                      {/* Live preview iframe */}
-                      <iframe 
-                        src={template.iframePlaceholderUrl} 
-                        className="w-full h-full border-none bg-black relative z-10" 
-                        title={`${template.title} Live Preview`}
-                        sandbox="allow-scripts allow-same-origin allow-popups"
-                      />
-                    </div>
-                  )}
-
-                  {/* State 3: Static Preview state (Default) */}
-                  {sandboxStatus === "idle" && (
-                    <div className="absolute inset-0 font-satoshi">
-                      <Image
-                        src={template.posterUrl}
-                        alt={template.title}
-                        fill
-                        className="object-cover opacity-80"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent flex flex-col justify-end p-8">
-                        <span className="text-[11px] font-mono text-neon-cyan tracking-[0.2em] uppercase mb-2 font-bold">LIVE SANDBOX READY</span>
-                        <h3 className="text-2xl md:text-3xl font-bold font-clash tracking-tight text-white mb-2 leading-none">{template.title}</h3>
-                        <p className="text-[13px] text-zinc-400 max-w-md font-normal leading-relaxed">
-                          Click the live preview command to trigger full sandbox instances mapped on pre-warmed clusters.
-                        </p>
-                      </div>
-                    </div>
-                  )}
+                        )}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none p-6 flex flex-col justify-end">
+                          <span className="text-[9px] font-mono text-neon-cyan tracking-[0.2em] uppercase mb-1 font-bold">DESKTOP PREVIEW LOOP</span>
+                          <h3 className="text-xl font-bold font-clash text-white leading-none">{template.title}</h3>
+                        </div>
+                      </m.div>
+                    ) : (
+                      <m.div
+                        key="mobile"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.3 }}
+                        className="absolute inset-0 w-full h-full bg-black relative"
+                      >
+                        <Image
+                          src={template.mobileImageUrl || template.posterUrl}
+                          alt={`${template.title} Mobile View`}
+                          fill
+                          sizes="375px"
+                          className="object-cover opacity-90"
+                          priority
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none p-6 flex flex-col justify-end">
+                          <span className="text-[9px] font-mono text-neon-cyan tracking-[0.2em] uppercase mb-1 font-bold">MOBILE SCREENSHOT</span>
+                        </div>
+                      </m.div>
+                    )}
+                  </AnimatePresence>
                 </div>
               </div>
             </div>
@@ -433,18 +451,26 @@ export default function TemplateDetailsPage({ params }: PageProps) {
                   Get Blueprint Bundle
                 </button>
                 <div className="flex gap-2">
-                  <button
-                    onClick={startSandbox}
-                    className="flex-1 py-3.5 bg-white hover:bg-zinc-100 active:bg-zinc-200 text-cyber-black text-[10px] font-mono font-extrabold uppercase tracking-wider rounded-xl transition-all cursor-pointer shadow-md"
-                  >
-                    {sandboxStatus === "idle" ? "Warm Sandbox" : sandboxStatus === "booting" ? "Booting..." : "Online"}
-                  </button>
-                  <button
-                    onClick={startSandbox}
-                    className="flex-1 py-3.5 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 text-white text-[10px] font-mono font-bold uppercase tracking-wider rounded-xl transition-all cursor-pointer"
-                  >
-                    Live Preview
-                  </button>
+                  {template.sourceUrl && (
+                    <a
+                      href={template.sourceUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex-1 py-3.5 bg-white hover:bg-zinc-100 active:bg-zinc-200 text-cyber-black text-[10px] font-mono font-extrabold uppercase tracking-wider rounded-xl transition-all cursor-pointer shadow-md flex items-center justify-center"
+                    >
+                      GitHub Code
+                    </a>
+                  )}
+                  {template.iframePlaceholderUrl && (
+                    <a
+                      href={template.iframePlaceholderUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex-1 py-3.5 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 text-white text-[10px] font-mono font-bold uppercase tracking-wider rounded-xl transition-all cursor-pointer flex items-center justify-center"
+                    >
+                      Live Demo
+                    </a>
+                  )}
                 </div>
               </div>
 

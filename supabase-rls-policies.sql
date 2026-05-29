@@ -17,6 +17,7 @@ DROP POLICY IF EXISTS "Admin full access projects" ON projects;
 DROP POLICY IF EXISTS "Public read projects" ON projects;
 DROP POLICY IF EXISTS "Admin full access templates" ON templates;
 DROP POLICY IF EXISTS "Public read templates" ON templates;
+DROP POLICY IF EXISTS "Admin full access service_tiers" ON service_tiers;
 
 -- 3. Authenticated admin-only READ/UPDATE/DELETE on leads
 -- Uses database parameter 'app.authorized_admins' with automatic fallback to your defaults:
@@ -32,7 +33,7 @@ CREATE POLICY "Admin modify leads"
     SELECT unnest(string_to_array(coalesce(nullif(current_setting('app.authorized_admins', true), ''), 'hasanshuvo541@gmail.com,m.rakibul.h45@gmail.com'), ','))
   ));
 
--- 4. Same pattern for projects and templates
+-- 4. Same pattern for projects, templates, and service_tiers
 CREATE POLICY "Admin full access projects"
   ON projects FOR ALL TO authenticated
   USING (auth.jwt() ->> 'email' IN (
@@ -41,6 +42,12 @@ CREATE POLICY "Admin full access projects"
 
 CREATE POLICY "Admin full access templates"
   ON templates FOR ALL TO authenticated
+  USING (auth.jwt() ->> 'email' IN (
+    SELECT unnest(string_to_array(coalesce(nullif(current_setting('app.authorized_admins', true), ''), 'hasanshuvo541@gmail.com,m.rakibul.h45@gmail.com'), ','))
+  ));
+
+CREATE POLICY "Admin full access service_tiers"
+  ON service_tiers FOR ALL TO authenticated
   USING (auth.jwt() ->> 'email' IN (
     SELECT unnest(string_to_array(coalesce(nullif(current_setting('app.authorized_admins', true), ''), 'hasanshuvo541@gmail.com,m.rakibul.h45@gmail.com'), ','))
   ));

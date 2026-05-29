@@ -53,11 +53,14 @@ describe("Contact API - Hardened Features", () => {
   it("should return a silent success response if honeypot field is filled", async () => {
     const mockRequest = new Request("http://localhost/api/contact", {
       method: "POST",
+      headers: {
+        "x-real-ip": "1.1.1.1",
+      },
       body: JSON.stringify({
         name: "Test User",
         email: "test@example.com",
         message: "This is a test message.",
-        confirm_corporate_website: "http://spam.com", // honeypot field
+        website_url: "http://spam.com", // honeypot field
       }),
     });
 
@@ -79,6 +82,7 @@ describe("Contact API - Hardened Features", () => {
       method: "POST",
       headers: {
         "content-length": "11500",
+        "x-real-ip": "2.2.2.2",
       },
       body: JSON.stringify({
         name: "Test User",
@@ -98,6 +102,9 @@ describe("Contact API - Hardened Features", () => {
   it("should reject disposable email addresses", async () => {
     const mockRequest = new Request("http://localhost/api/contact", {
       method: "POST",
+      headers: {
+        "x-real-ip": "3.3.3.3",
+      },
       body: JSON.stringify({
         name: "Test User",
         email: "spammer@mailinator.com",
@@ -118,6 +125,9 @@ describe("Contact API - Hardened Features", () => {
 
     const mockRequest = new Request("http://localhost/api/contact", {
       method: "POST",
+      headers: {
+        "x-real-ip": "4.4.4.4",
+      },
       body: JSON.stringify({
         name: "<b>Bold User</b>",
         email: "test@example.com",
@@ -146,6 +156,9 @@ describe("Contact API - Hardened Features", () => {
 
     const mockRequest1 = new Request("http://localhost/api/contact", {
       method: "POST",
+      headers: {
+        "x-real-ip": "5.5.5.1",
+      },
       body: JSON.stringify({
         name: "Test User",
         email: "test@example.com",
@@ -170,6 +183,9 @@ describe("Contact API - Hardened Features", () => {
     // Send 2nd request
     const response2 = await POST(new Request("http://localhost/api/contact", {
       method: "POST",
+      headers: {
+        "x-real-ip": "5.5.5.2",
+      },
       body: JSON.stringify({
         name: "Test User",
         email: "test@example.com",
@@ -186,6 +202,9 @@ describe("Contact API - Hardened Features", () => {
     // Send 3rd request (should also succeed since limit is 3)
     const response3 = await POST(new Request("http://localhost/api/contact", {
       method: "POST",
+      headers: {
+        "x-real-ip": "5.5.5.3",
+      },
       body: JSON.stringify({
         name: "Test User",
         email: "test@example.com",
@@ -202,6 +221,9 @@ describe("Contact API - Hardened Features", () => {
     // Send 4th request (should be rejected with 429!)
     const response4 = await POST(new Request("http://localhost/api/contact", {
       method: "POST",
+      headers: {
+        "x-real-ip": "5.5.5.4",
+      },
       body: JSON.stringify({
         name: "Test User",
         email: "test@example.com",

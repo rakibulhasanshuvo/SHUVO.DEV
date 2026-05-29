@@ -54,7 +54,7 @@ export async function POST(request: Request) {
       uploadPreset: "ml_default",
     });
   } catch (error: any) {
-    console.error("API error during Cloudinary signed parameter generation:", error?.message || error);
+    console.error("API error during Cloudinary signed parameter generation:", error?.message || "Unknown signature generation error");
     return NextResponse.json({ error: "Signature generation failure." }, { status: 500 });
   }
 }
