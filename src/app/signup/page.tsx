@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import CyberRain from "@/components/CyberRain";
 
 const SignupPage = () => {
+  const [isLogin, setIsLogin] = useState(false); // Toggle state for Login / Register modes
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -18,7 +19,7 @@ const SignupPage = () => {
   
   const router = useRouter();
 
-  const handleRegisterSubmit = async (e: React.FormEvent) => {
+  const handleAuthSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (loading) return;
     setErrorMsg("");
@@ -29,7 +30,7 @@ const SignupPage = () => {
       return;
     }
 
-    if (password !== confirmPassword) {
+    if (!isLogin && password !== confirmPassword) {
       setErrorMsg("Passwords do not match.");
       return;
     }
@@ -39,28 +40,47 @@ const SignupPage = () => {
     try {
       const { createClient } = await import("@/lib/supabase/client");
       const supabase = createClient();
-      const { error } = await supabase.auth.signUp({
-        email: email.trim(),
-        password: password.trim(),
-        options: {
-          data: {
-            first_name: firstName.trim(),
-            last_name: lastName.trim(),
-          }
+      
+      if (isLogin) {
+        // 1. Sign In Existing User
+        const { error } = await supabase.auth.signInWithPassword({
+          email: email.trim(),
+          password: password.trim(),
+        });
+
+        if (error) {
+          throw new Error(error.message);
         }
-      });
 
-      if (error) {
-        throw new Error(error.message);
+        setSuccess(true);
+        setTimeout(() => {
+          router.push("/dashboard");
+        }, 1500);
+      } else {
+        // 2. Sign Up New User
+        const { error } = await supabase.auth.signUp({
+          email: email.trim(),
+          password: password.trim(),
+          options: {
+            data: {
+              first_name: firstName.trim(),
+              last_name: lastName.trim(),
+            }
+          }
+        });
+
+        if (error) {
+          throw new Error(error.message);
+        }
+
+        setSuccess(true);
+        setTimeout(() => {
+          router.push("/dashboard");
+        }, 1500);
       }
-
-      setSuccess(true);
-      setTimeout(() => {
-        router.push("/dashboard");
-      }, 1500);
     } catch (err: any) {
       console.error("Supabase Auth error:", err);
-      setErrorMsg(err.message || "Failed to compile admin registration.");
+      setErrorMsg(err.message || `Failed to compile admin ${isLogin ? "login" : "registration"}.`);
     } finally {
       setLoading(false);
     }
@@ -88,7 +108,7 @@ const SignupPage = () => {
       <div className="relative z-10 w-full max-w-[380px] px-4">
         <form 
           className="flex flex-col gap-5 w-full p-8 rounded-3xl relative bg-[#0b0b0d]/90 text-white border border-[#00F0FF]/20 shadow-[0_20px_50px_rgba(0,0,0,0.8),0_0_30px_rgba(0,240,255,0.03)] backdrop-blur-xl" 
-          onSubmit={handleRegisterSubmit}
+          onSubmit={handleAuthSubmit}
         >
           {/* Cyber Corner Marks */}
           <div className="absolute top-0 left-0 w-2.5 h-2.5 border-t-2 border-l-2 border-neon-cyan/40" />
@@ -102,12 +122,14 @@ const SignupPage = () => {
               <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-neon-cyan"></span>
             </span>
             <h2 className="font-cabinet font-extrabold text-2xl tracking-tight text-white uppercase">
-              Register
+              {isLogin ? "Sign In" : "Register"}
             </h2>
           </div>
           
-          <p className="text-xs text-zinc-400 font-medium leading-relaxed -mt-3 pl-1 mb-2">
-            Signup now to configure the administrative portfolio dashboard.
+          <p className="text-xs text-zinc-200 font-medium leading-relaxed -mt-3 pl-1 mb-2">
+            {isLogin 
+              ? "Access the administrative portfolio dashboard settings." 
+              : "Signup now to configure the administrative portfolio dashboard."}
           </p>
           
           {errorMsg && (
@@ -122,33 +144,35 @@ const SignupPage = () => {
             </div>
           )}
 
-          <div className="grid grid-cols-2 gap-3.5">
-            <label className="relative flex flex-col gap-1 w-full">
-              <span className="text-[10px] font-mono font-bold tracking-wider text-zinc-500 uppercase">First Name</span>
-              <input 
-                className="w-full bg-[#030303] border border-white/10 hover:border-white/20 focus:border-[#00F0FF]/40 rounded-xl px-3.5 py-2.5 text-xs font-mono text-white placeholder-zinc-700 outline-none transition-all duration-300"
-                type="text" 
-                placeholder="Satoshi" 
-                required 
-                value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
-              />
-            </label>
-            <label className="relative flex flex-col gap-1 w-full">
-              <span className="text-[10px] font-mono font-bold tracking-wider text-zinc-500 uppercase">Last Name</span>
-              <input 
-                className="w-full bg-[#030303] border border-white/10 hover:border-white/20 focus:border-[#00F0FF]/40 rounded-xl px-3.5 py-2.5 text-xs font-mono text-white placeholder-zinc-700 outline-none transition-all duration-300"
-                type="text" 
-                placeholder="Nakamoto" 
-                required 
-                value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
-              />
-            </label>
-          </div>  
+          {!isLogin && (
+            <div className="grid grid-cols-2 gap-3.5">
+              <label className="relative flex flex-col gap-1 w-full">
+                <span className="text-[10px] font-mono font-bold tracking-wider text-zinc-300 uppercase">First Name</span>
+                <input 
+                  className="w-full bg-[#030303] border border-white/10 hover:border-white/20 focus:border-[#00F0FF]/40 rounded-xl px-3.5 py-2.5 text-xs font-mono text-white placeholder-zinc-700 outline-none transition-all duration-300"
+                  type="text" 
+                  placeholder="Satoshi" 
+                  required={!isLogin} 
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                />
+              </label>
+              <label className="relative flex flex-col gap-1 w-full">
+                <span className="text-[10px] font-mono font-bold tracking-wider text-zinc-300 uppercase">Last Name</span>
+                <input 
+                  className="w-full bg-[#030303] border border-white/10 hover:border-white/20 focus:border-[#00F0FF]/40 rounded-xl px-3.5 py-2.5 text-xs font-mono text-white placeholder-zinc-700 outline-none transition-all duration-300"
+                  type="text" 
+                  placeholder="Nakamoto" 
+                  required={!isLogin} 
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                />
+              </label>
+            </div>  
+          )}
           
           <label className="relative flex flex-col gap-1 w-full">
-            <span className="text-[10px] font-mono font-bold tracking-wider text-zinc-500 uppercase">Corporate Email</span>
+            <span className="text-[10px] font-mono font-bold tracking-wider text-zinc-300 uppercase">Corporate Email</span>
             <input 
               className="w-full bg-[#030303] border border-white/10 hover:border-white/20 focus:border-[#00F0FF]/40 rounded-xl px-3.5 py-2.5 text-xs font-mono text-white placeholder-zinc-700 outline-none transition-all duration-300"
               type="email" 
@@ -160,7 +184,7 @@ const SignupPage = () => {
           </label> 
           
           <label className="relative flex flex-col gap-1 w-full">
-            <span className="text-[10px] font-mono font-bold tracking-wider text-zinc-500 uppercase">Password</span>
+            <span className="text-[10px] font-mono font-bold tracking-wider text-zinc-300 uppercase">Password</span>
             <input 
               className="w-full bg-[#030303] border border-white/10 hover:border-white/20 focus:border-[#00F0FF]/40 rounded-xl px-3.5 py-2.5 text-xs font-mono text-white placeholder-zinc-700 outline-none transition-all duration-300"
               type="password" 
@@ -171,31 +195,40 @@ const SignupPage = () => {
             />
           </label>
           
-          <label className="relative flex flex-col gap-1 w-full">
-            <span className="text-[10px] font-mono font-bold tracking-wider text-zinc-500 uppercase">Confirm Password</span>
-            <input 
-              className="w-full bg-[#030303] border border-white/10 hover:border-white/20 focus:border-[#00F0FF]/40 rounded-xl px-3.5 py-2.5 text-xs font-mono text-white placeholder-zinc-700 outline-none transition-all duration-300"
-              type="password" 
-              placeholder="••••••••" 
-              required 
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-            />
-          </label>
+          {!isLogin && (
+            <label className="relative flex flex-col gap-1 w-full">
+              <span className="text-[10px] font-mono font-bold tracking-wider text-zinc-300 uppercase">Confirm Password</span>
+              <input 
+                className="w-full bg-[#030303] border border-white/10 hover:border-white/20 focus:border-[#00F0FF]/40 rounded-xl px-3.5 py-2.5 text-xs font-mono text-white placeholder-zinc-700 outline-none transition-all duration-300"
+                type="password" 
+                placeholder="••••••••" 
+                required={!isLogin} 
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+              />
+            </label>
+          )}
           
           <button 
             className="w-full mt-2 py-3 px-4 rounded-xl text-black bg-[#00F0FF] hover:bg-[#00F0FF]/90 font-mono text-xs font-bold uppercase tracking-widest cursor-pointer hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_0_20px_rgba(0,240,255,0.15)] hover:shadow-[0_0_25px_rgba(0,240,255,0.3)]" 
             type="submit" 
             disabled={loading}
           >
-            {loading ? "Compiling..." : "Submit"}
+            {loading ? "Compiling..." : (isLogin ? "Sign In" : "Register")}
           </button>
           
-          <p className="text-center text-xs text-zinc-400 font-medium mt-1">
-            Already have an account?{" "}
-            <Link href="/dashboard" className="text-white hover:text-[#00F0FF] hover:underline font-bold transition-colors">
-              Signin
-            </Link>
+          <p className="text-center text-xs text-zinc-200 font-medium mt-1">
+            {isLogin ? "Don't have an admin account? " : "Already have an account? "}
+            <button 
+              type="button"
+              onClick={() => {
+                setIsLogin(!isLogin);
+                setErrorMsg("");
+              }}
+              className="text-white hover:text-[#00F0FF] hover:underline font-bold transition-colors cursor-pointer bg-transparent border-none p-0 inline"
+            >
+              {isLogin ? "Register" : "Signin"}
+            </button>
           </p>
         </form>
       </div>

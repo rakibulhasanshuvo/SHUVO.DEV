@@ -99,14 +99,14 @@ export default function AboutPage() {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none z-10" />
 
                 {/* HUD Telemetry Plate Overlay */}
-                <div className="absolute bottom-4 left-4 right-4 z-20 p-4 rounded-xl border border-white/5 bg-[#030303]/75 backdrop-blur-md flex items-center justify-between font-mono text-[9px] text-zinc-400 select-none">
+                <div className="absolute bottom-4 left-4 right-4 z-20 p-4 rounded-xl border border-white/5 bg-[#030303]/85 backdrop-blur-md flex items-center justify-between font-mono text-[9px] text-zinc-300 select-none">
                   <div>
-                    <span className="text-zinc-500 uppercase tracking-widest block text-[8px] font-bold">Ident Confirmed</span>
-                    <span className="text-white font-bold font-mono tracking-wide">R. HASAN SHUVO</span>
+                    <span className="text-zinc-400 uppercase tracking-widest block text-[8px] font-extrabold">Ident Confirmed</span>
+                    <span className="text-white font-extrabold font-mono tracking-wide">R. HASAN SHUVO</span>
                   </div>
                   <div className="text-right">
-                    <span className="text-zinc-500 uppercase tracking-widest block text-[8px] font-bold">Sys Registry</span>
-                    <span className="text-[#00F0FF] font-bold font-mono">NODE // ACTIVE</span>
+                    <span className="text-zinc-400 uppercase tracking-widest block text-[8px] font-extrabold">Sys Registry</span>
+                    <span className="text-[#00F0FF] font-extrabold font-mono">NODE // ACTIVE</span>
                   </div>
                 </div>
               </div>
@@ -121,7 +121,7 @@ export default function AboutPage() {
             <h1 className="font-clash font-extrabold text-5xl sm:text-6xl text-white tracking-tight leading-none">
               Muhammad Rakibul Hasan Shuvo
             </h1>
-            <p className="text-zinc-400 font-satoshi text-base sm:text-lg font-normal leading-relaxed">
+            <p className="text-zinc-200 font-satoshi text-base sm:text-lg font-medium leading-relaxed">
               Bridging extreme design aesthetics with technical execution. As a software engineer and former graphic designer, I build custom digital experiences that look elite and execute with raw, optimized speed.
             </p>
             <div className="pt-6">
@@ -150,7 +150,7 @@ export default function AboutPage() {
               <span className="text-[10px] font-mono font-bold tracking-[0.2em] text-[#A100FF] uppercase block mb-1">Interactive Engine</span>
               <h2 className="font-clash font-extrabold text-3xl text-white">Core Tech Stack Inventory</h2>
             </div>
-            <p className="text-zinc-400 font-satoshi text-sm font-normal max-w-md md:text-right">
+            <p className="text-zinc-200 font-satoshi text-sm font-medium max-w-md md:text-right">
               A high-performance physics-based playground representing the technologies I utilize to compile, run, and scale applications.
             </p>
           </div>
@@ -158,7 +158,7 @@ export default function AboutPage() {
           {/* Gravity Simulator Console */}
           <div className="relative rounded-3xl border border-white/5 bg-[#0A0A0C]/40 p-4 sm:p-6 shadow-2xl">
             {/* Console Header Bar */}
-            <div className="flex items-center justify-between pb-3 border-b border-white/5 mb-5 font-mono text-[9px] sm:text-[10px] text-zinc-500 uppercase tracking-widest">
+            <div className="flex items-center justify-between pb-3 border-b border-white/5 mb-5 font-satoshi text-[11px] sm:text-[12px] text-zinc-300 uppercase tracking-wider font-extrabold">
               <div className="flex items-center gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
                 <span>GRAVITY VECTOR SIMULATOR v1.2 // ENGINE ACTIVE</span>
@@ -202,7 +202,7 @@ export default function AboutPage() {
                 </div>
 
                 {/* Left Year Badge (Only visible on larger screens) */}
-                <span className="absolute left-0 top-7 font-mono text-xs md:text-sm text-[#A100FF] font-bold tracking-widest hidden md:block text-right w-20">
+                <span className="absolute left-0 top-7 font-mono text-xs md:text-sm text-[#c266ff] font-extrabold tracking-widest hidden md:block text-right w-20">
                   {item.year.split(" — ")[0]}
                 </span>
 
@@ -210,7 +210,7 @@ export default function AboutPage() {
                 <div className="glass p-6 md:p-8 rounded-3xl border border-white/5 bg-[#0B0B0E]/40 hover:border-white/10 hover:bg-[#0B0B0E]/60 transition-all duration-300 shadow-lg group-hover:shadow-2xl relative overflow-hidden">
 
                   {/* Mobile responsive Year label */}
-                  <span className="inline-block md:hidden text-[#A100FF] font-mono text-[11px] font-bold tracking-widest mb-2">
+                  <span className="inline-block md:hidden text-[#c266ff] font-mono text-[11px] font-extrabold tracking-widest mb-2">
                     {item.year}
                   </span>
 
@@ -218,17 +218,17 @@ export default function AboutPage() {
                     <h3 className="font-clash font-bold text-xl md:text-2xl text-white group-hover:text-neon-cyan transition-colors duration-300 leading-snug">
                       {item.title}
                     </h3>
-                    <h4 className="text-zinc-500 font-mono text-[10px] font-bold uppercase tracking-[0.15em] block pb-2 border-b border-white/5 w-fit">
+                    <h4 className="text-zinc-300 font-satoshi text-[12px] font-extrabold uppercase tracking-wider block pb-2 border-b border-white/5 w-fit">
                       {item.subtitle}
                     </h4>
-                    <p className="text-zinc-400 font-satoshi text-[13px] sm:text-[14px] font-normal leading-relaxed">
+                    <p className="text-zinc-200 font-satoshi text-[13px] sm:text-[14px] font-medium leading-relaxed">
                       {item.description}
                     </p>
                     <div className="flex flex-wrap gap-1.5 pt-4">
                       {item.tags.map((tag) => (
                         <span
                           key={tag}
-                          className="font-mono text-[9px] tracking-wider font-semibold px-2.5 py-1 bg-white/[0.03] border border-white/5 rounded-lg text-zinc-500 select-none group-hover:text-zinc-300 group-hover:border-white/10 transition-colors"
+                          className="font-satoshi text-[11px] tracking-wider font-extrabold px-2.5 py-1 bg-white/[0.05] border border-white/10 rounded-lg text-zinc-200 select-none group-hover:text-zinc-100 group-hover:border-white/20 transition-colors"
                         >
                           {tag}
                         </span>

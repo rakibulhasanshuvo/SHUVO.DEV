@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { createClient } from "@/lib/supabase/client";
 import Link from "next/link";
 import { m, AnimatePresence } from "framer-motion";
 import {
@@ -115,7 +116,6 @@ export default function DashboardPage() {
   useEffect(() => {
     const syncDashboardData = async () => {
       try {
-        const { createClient } = await import("@/lib/supabase/client");
         const supabase = createClient();
 
         // 1. Fetch Dynamic Leads
@@ -212,7 +212,9 @@ export default function DashboardPage() {
           }
         }
       } catch (err) {
-        console.warn("Dashboard metrics sync bypassed, loading cache loops:", err);
+        if (process.env.NODE_ENV === "production") {
+          console.error("Dashboard metrics sync failed:", err);
+        }
       }
     };
 
@@ -232,7 +234,6 @@ export default function DashboardPage() {
 
     // Optional: Sync to Supabase `todos` table
     try {
-      const { createClient } = await import("@/lib/supabase/client");
       const supabase = createClient();
       
       if (lastUpdatedTodo) {

@@ -20,6 +20,11 @@ export async function proxy(request: NextRequest) {
 
   const pathname = request.nextUrl.pathname;
 
+  // Block public signup in production if configured
+  if (pathname === "/signup" && process.env.DISABLE_PUBLIC_SIGNUP === "true") {
+    return NextResponse.redirect(new URL("/", request.url));
+  }
+
   // 3. Only run Supabase auth edge check for /dashboard routes to optimize speed of public pages
   if (pathname.startsWith("/dashboard")) {
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -59,6 +64,24 @@ export async function proxy(request: NextRequest) {
 
       if (!user) {
         return NextResponse.redirect(new URL("/signup", request.url));
+      }
+
+      // Admin email allowlist enforcement
+      const adminEmails = (process.env.AUTHORIZED_ADMIN_EMAILS || "hasanshuvo541@gmail.com,m.rakibul.h45@gmail.com")
+        .split(",")
+        .map((e) => e.trim().toLowerCase())
+        .filter(Boolean);
+
+      if (adminEmails.length > 0 && !adminEmails.includes(user.email?.toLowerCase() || "")) {
+        // Unauthorized user — clear session and redirect to home
+        const redirectResponse = NextResponse.redirect(new URL("/", request.url));
+        // Delete all cookies starting with 'sb-' to sign out the user
+        request.cookies.getAll().forEach(cookie => {
+          if (cookie.name.startsWith("sb-")) {
+            redirectResponse.cookies.delete(cookie.name);
+          }
+        });
+        return redirectResponse;
       }
     } catch (error) {
       console.error("Middleware Supabase auth edge error:", error);

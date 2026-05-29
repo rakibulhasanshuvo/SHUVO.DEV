@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import { createClient } from "@/lib/supabase/client";
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
@@ -67,7 +68,6 @@ export default function DashboardLayout({
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const { createClient } = await import("@/lib/supabase/client");
         const supabase = createClient();
         
         // 1. Get active user session
@@ -164,7 +164,6 @@ export default function DashboardLayout({
 
   const handleLogout = async () => {
     try {
-      const { createClient } = await import("@/lib/supabase/client");
       const supabase = createClient();
       await supabase.auth.signOut();
       window.location.href = "/";
@@ -200,12 +199,23 @@ export default function DashboardLayout({
     setAvatarUploadProgress(0);
     setSettingsErrorMessage("");
 
-    const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME || "dv2tnlb40";
-    
     try {
+      // 1. Retrieve signed parameters from the server-side API proxy
+      const signResponse = await fetch("/api/upload", { method: "POST" });
+      if (!signResponse.ok) {
+        const errorData = await signResponse.json();
+        throw new Error(errorData.error || "Failed to retrieve upload signature.");
+      }
+      
+      const { signature, timestamp, apiKey, cloudName, folder, uploadPreset } = await signResponse.json();
+
       const formData = new FormData();
       formData.append("file", file);
-      formData.append("upload_preset", "ml_default");
+      formData.append("api_key", apiKey);
+      formData.append("timestamp", timestamp.toString());
+      formData.append("signature", signature);
+      formData.append("folder", folder);
+      formData.append("upload_preset", uploadPreset);
 
       const xhr = new XMLHttpRequest();
       xhr.open("POST", `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`);
@@ -259,7 +269,6 @@ export default function DashboardLayout({
     setSettingsErrorMessage("");
 
     try {
-      const { createClient } = await import("@/lib/supabase/client");
       const supabase = createClient();
 
       const updateData: any = {

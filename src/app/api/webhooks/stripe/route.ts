@@ -3,12 +3,23 @@ import Stripe from "stripe";
 import { headers } from "next/headers";
 import { createAdminSupabaseClient } from "@/lib/supabase/admin";
 
-// Initialize Stripe instance. Pass a fallback key so the server build doesn't crash if env var is missing.
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "sk_test_mock123", {
-  apiVersion: "2025-01-27.acacia" as any, // Using type casting to bypass strict apiVersion typing if needed
-});
+// Initialize Stripe instance safely.
+const stripe = process.env.STRIPE_SECRET_KEY
+  ? new Stripe(process.env.STRIPE_SECRET_KEY, {
+      apiVersion: "2025-01-27.acacia" as any,
+    })
+  : null;
 
 export async function POST(req: Request) {
+  // Return early if payment processing is not fully configured
+  if (!stripe || !process.env.STRIPE_WEBHOOK_SECRET) {
+    console.error("Stripe is not fully configured. Missing STRIPE_SECRET_KEY or STRIPE_WEBHOOK_SECRET.");
+    return NextResponse.json(
+      { error: "Payment processing is not configured." },
+      { status: 503 }
+    );
+  }
+
   const body = await req.text();
   const signature = (await headers()).get("Stripe-Signature") as string;
 

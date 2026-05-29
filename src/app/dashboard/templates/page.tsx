@@ -265,12 +265,23 @@ export default function TemplatesPage() {
     setImageUploadProgress(0);
     setFormError("");
 
-    const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME || "dv2tnlb40";
-    
     try {
+      // 1. Retrieve signed parameters from the server-side API proxy
+      const signResponse = await fetch("/api/upload", { method: "POST" });
+      if (!signResponse.ok) {
+        const errorData = await signResponse.json();
+        throw new Error(errorData.error || "Failed to retrieve upload signature.");
+      }
+      
+      const { signature, timestamp, apiKey, cloudName, folder, uploadPreset } = await signResponse.json();
+
       const formData = new FormData();
       formData.append("file", file);
-      formData.append("upload_preset", "ml_default");
+      formData.append("api_key", apiKey);
+      formData.append("timestamp", timestamp.toString());
+      formData.append("signature", signature);
+      formData.append("folder", folder);
+      formData.append("upload_preset", uploadPreset);
 
       const xhr = new XMLHttpRequest();
       xhr.open("POST", `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`);
@@ -297,9 +308,9 @@ export default function TemplatesPage() {
         } else {
           try {
             const response = JSON.parse(xhr.responseText);
-            setFormError(`Upload failed: ${response.error?.message || "Verify unsigned uploads are enabled in Cloudinary"}`);
+            setFormError(`Upload failed: ${response.error?.message || "Verify signature and preset"}`);
           } catch {
-            setFormError("Upload failed. Verify your Cloudinary upload preset settings.");
+            setFormError("Upload failed. Verify your Cloudinary credentials and settings.");
           }
           setIsImageUploading(false);
         }
@@ -330,12 +341,23 @@ export default function TemplatesPage() {
     setUploadProgress(0);
     setFormError("");
 
-    const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME || "dv2tnlb40";
-    
     try {
+      // 1. Retrieve signed parameters from the server-side API proxy
+      const signResponse = await fetch("/api/upload", { method: "POST" });
+      if (!signResponse.ok) {
+        const errorData = await signResponse.json();
+        throw new Error(errorData.error || "Failed to retrieve upload signature.");
+      }
+      
+      const { signature, timestamp, apiKey, cloudName, folder, uploadPreset } = await signResponse.json();
+
       const formData = new FormData();
       formData.append("file", file);
-      formData.append("upload_preset", "ml_default");
+      formData.append("api_key", apiKey);
+      formData.append("timestamp", timestamp.toString());
+      formData.append("signature", signature);
+      formData.append("folder", folder);
+      formData.append("upload_preset", uploadPreset);
 
       const xhr = new XMLHttpRequest();
       xhr.open("POST", `https://api.cloudinary.com/v1_1/${cloudName}/video/upload`);
@@ -362,9 +384,9 @@ export default function TemplatesPage() {
         } else {
           try {
             const response = JSON.parse(xhr.responseText);
-            setFormError(`Upload failed: ${response.error?.message || "Verify unsigned uploads are enabled in Cloudinary"}`);
+            setFormError(`Upload failed: ${response.error?.message || "Verify signature and preset"}`);
           } catch {
-            setFormError("Upload failed. Verify your Cloudinary upload preset settings.");
+            setFormError("Upload failed. Verify your Cloudinary credentials and settings.");
           }
           setIsUploading(false);
         }
