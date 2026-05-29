@@ -48,9 +48,9 @@ export default async function Home() {
       )}
 
       {/* Dynamic Glowing Orbs — CSS hardware-accelerated loops for absolute performance */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
-        <div className="absolute top-[-100px] left-1/4 w-[500px] h-[500px] bg-neon-cyan/20 rounded-full blur-3xl animate-orb-1" />
-        <div className="absolute bottom-[-100px] right-1/4 w-[600px] h-[600px] bg-electric-purple/15 rounded-full blur-3xl animate-orb-2 pointer-events-none" />
+      <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
+        <div className="absolute top-[-100px] left-1/4 w-[500px] h-[500px] bg-neon-cyan/20 rounded-full blur-3xl animate-orb-1 will-change-transform" />
+        <div className="absolute bottom-[-100px] right-1/4 w-[600px] h-[600px] bg-electric-purple/15 rounded-full blur-3xl animate-orb-2 pointer-events-none will-change-transform" />
       </div>
 
       <div className="relative z-10 pt-12 pb-4">
@@ -60,7 +60,7 @@ export default async function Home() {
             
             {/* Hero Ambient Backdrop */}
             <div className="absolute inset-0 -z-10 flex items-center justify-center overflow-hidden">
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-r from-neon-cyan/10 to-electric-purple/10 rounded-full blur-3xl pointer-events-none" />
+              <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-r from-neon-cyan/10 to-electric-purple/10 rounded-full blur-3xl pointer-events-none" />
             </div>
 
             <div className="max-w-4xl relative z-10">
@@ -68,7 +68,7 @@ export default async function Home() {
                 <h1 className="font-cabinet font-bold text-5xl sm:text-6xl md:text-8xl mb-6 leading-[0.9] tracking-tight text-balance">
                   Engineering{" "}
                   <span 
-                    className="text-transparent bg-clip-text bg-gradient-to-r from-neon-cyan to-electric-purple animate-gradient drop-shadow-[0_0_30px_rgba(0,240,255,0.2)]"
+                    className="text-transparent bg-clip-text bg-gradient-to-r from-neon-cyan to-electric-purple animate-gradient will-change-transform drop-shadow-[0_0_30px_rgba(0,240,255,0.2)]"
                     style={{ textShadow: "0 0 35px rgba(0, 240, 255, 0.35), 0 0 65px rgba(161, 0, 255, 0.25)" }}
                   >
                     Digital Luxury
