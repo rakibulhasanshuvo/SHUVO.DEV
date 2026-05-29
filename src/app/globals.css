@@ -83,6 +83,7 @@ body {
 .animate-gradient {
   background-size: 200% 200%;
   animation: gradient-shift 5s ease infinite;
+  will-change: background-position;
 }
 
 /* Marquee Animations */
@@ -194,10 +195,12 @@ html.lenis, html.lenis body {
 
 .animate-orb-1 {
   animation: orb-pulse-1 12s ease-in-out infinite;
+  will-change: transform, opacity;
 }
 
 .animate-orb-2 {
   animation: orb-pulse-2 15s ease-in-out infinite;
+  will-change: transform, opacity;
 }
 
 .animate-fade-up {

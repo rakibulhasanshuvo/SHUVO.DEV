@@ -122,6 +122,15 @@ export default function InteractiveGridBackground() {
     const particleNext = new Int32Array(particleCount);
 
     // Draw Loop
+    let currentFont = "";
+
+    const setFont = (font: string) => {
+      if (currentFont !== font) {
+        currentFont = font;
+        ctx.font = font;
+      }
+    };
+
     const draw = () => {
       // Semi-transparent overlay to create smooth trails
       ctx.fillStyle = "rgba(0, 0, 0, 0.16)";
@@ -234,16 +243,22 @@ export default function InteractiveGridBackground() {
             }
           }
         }
+      }
 
-        // 3. Technical Telemetry HUD overlay for labeled nodes
+      // 3. Technical Telemetry HUD overlay for labeled nodes (Grouped)
+      let hudActive = false;
+      for (let i = 0; i < particleCount; i++) {
+        const p = particles[i];
         if (p.label) {
           p.labelTimer += 0.01;
           const blink = Math.sin(p.labelTimer) > 0;
           
           if (blink) {
-            ctx.save();
-            ctx.font = "6px monospace";
-            ctx.fillStyle = "rgba(0, 240, 255, 0.12)";
+            if (!hudActive) {
+              setFont("6px monospace");
+              ctx.fillStyle = "rgba(0, 240, 255, 0.12)";
+              hudActive = true;
+            }
             
             // Draw a tiny HUD coordinate target mark
             ctx.beginPath();
@@ -263,13 +278,12 @@ export default function InteractiveGridBackground() {
 
             // Renders scientific tag next to the tracking node
             ctx.fillText(p.label, p.x + 8, p.y + 2);
-            ctx.restore();
           }
         }
       }
 
       // 4. Matrix Code Rain Pass with Authentic Leading Highlight & Fading Trails
-      ctx.font = `bold ${fontSize}px monospace`;
+      setFont(`bold ${fontSize}px monospace`);
       
       for (let i = 0; i < columns; i++) {
         const xPos = i * 36;

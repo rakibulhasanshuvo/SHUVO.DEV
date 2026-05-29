@@ -58,6 +58,15 @@ const MatrixBackground = () => {
     };
     window.addEventListener("resize", handleResize);
 
+    let currentFont = "";
+
+    const setFont = (font: string) => {
+      if (currentFont !== font) {
+        currentFont = font;
+        ctx.font = font;
+      }
+    };
+
     const draw = (timestamp: number) => {
       if (!lastDrawTime) lastDrawTime = timestamp;
 
@@ -74,7 +83,7 @@ const MatrixBackground = () => {
         gradient.addColorStop(1, "#A100FF"); // Electric Purple bottom
 
         ctx.fillStyle = gradient;
-        ctx.font = `${fontSize}px monospace`;
+        setFont(`${fontSize}px monospace`);
 
         for (let i = 0; i < drops.length; i++) {
           const text = chars[Math.floor(Math.random() * chars.length)];
@@ -96,7 +105,7 @@ const MatrixBackground = () => {
       animationFrameId = requestAnimationFrame(draw);
     };
 
-        let isObserving = false;
+    let isObserving = false;
 
     const handleIntersect = (entries: IntersectionObserverEntry[]) => {
       const [entry] = entries;
