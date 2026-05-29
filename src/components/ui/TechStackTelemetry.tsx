@@ -195,7 +195,7 @@ export default function TechStackTelemetry({ techList, slug, style }: TechStackT
               <span className={`animate-ping absolute inline-flex h-full w-full rounded-full ${style.bgColor} opacity-75`}></span>
               <span className={`relative inline-flex rounded-full h-2 w-2 ${style.bgColor}`}></span>
             </span>
-            <span className={style.textColor}>SYSTEM AUDIT: {selectedTech.toUpperCase()} // ACTIVE</span>
+            <span className={style.textColor}>SYSTEM AUDIT: {selectedTech.toUpperCase()} {"// ACTIVE"}</span>
           </div>
           <span>LOGS PORT: {selectedTech.slice(0, 3).toUpperCase()}-990</span>
         </div>
