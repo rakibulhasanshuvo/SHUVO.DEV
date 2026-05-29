@@ -64,7 +64,7 @@ export default async function Home() {
             </div>
 
             <div className="max-w-4xl relative z-10">
-              <div className="animate-fade-up">
+              <div>
                 <h1 className="font-cabinet font-bold text-5xl sm:text-6xl md:text-8xl mb-6 leading-[0.9] tracking-tight text-balance">
                   Engineering{" "}
                   <span 
