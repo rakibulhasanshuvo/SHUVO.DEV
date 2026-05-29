@@ -144,7 +144,7 @@ export default function TemplatesPage() {
             id: dbTemp.id,
             title: dbTemp.title,
             price: Number(dbTemp.price) || 0,
-            downloadCount: dbTemp.downloads_count || dbTemp.downloadCount || 0,
+            downloadCount: dbTemp.downloads_count || 0,
             likes: dbTemp.likes || 0,
             status: dbTemp.status || "active",
             taslTitle: dbTemp.tasl_title || dbTemp.taslTitle || "",

@@ -177,10 +177,10 @@ export default function DashboardPage() {
         // 3. Fetch Templates Downloads sum
         const { data: templatesData, error: templatesError } = await supabase
           .from("templates")
-          .select("downloads_count, downloadCount");
+          .select("downloads_count");
 
         if (templatesData && !templatesError) {
-          const totalDl = templatesData.reduce((sum: number, t: any) => sum + (t.downloads_count || t.downloadCount || 0), 0);
+          const totalDl = templatesData.reduce((sum: number, t: any) => sum + (t.downloads_count  || 0), 0);
           setTemplatesDownloadSum(totalDl);
         } else {
           const cachedTemplates = localStorage.getItem("darkpan_templates");

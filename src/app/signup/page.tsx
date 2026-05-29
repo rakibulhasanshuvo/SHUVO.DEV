@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+
 import CyberRain from "@/components/CyberRain";
 
 const SignupPage = () => {
@@ -19,7 +19,7 @@ const SignupPage = () => {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   
-  const router = useRouter();
+
 
   const handleAuthSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -68,7 +68,7 @@ const SignupPage = () => {
 
         setSuccess(true);
         setTimeout(() => {
-          router.push("/dashboard");
+          window.location.href = "/dashboard";
         }, 1500);
       } else {
         // 2. Sign Up New User
@@ -89,7 +89,7 @@ const SignupPage = () => {
 
         setSuccess(true);
         setTimeout(() => {
-          router.push("/dashboard");
+          window.location.href = "/dashboard";
         }, 1500);
       }
     } catch (err: any) {
