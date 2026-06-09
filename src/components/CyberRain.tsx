@@ -185,6 +185,14 @@ const CyberRain = () => {
         }
       `}</style>
       <div className="cyber-rain-container" />
+      <style>{`
+        @media (max-width: 1023px) {
+          .cyber-rain-container {
+            animation: none !important;
+            background-image: none !important;
+          }
+        }
+      `}</style>
     </div>
   );
 }

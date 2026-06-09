@@ -207,8 +207,6 @@ export default function AboutSection({ isMobileServer }: { isMobileServer?: bool
               width={620}
               height={828}
               sizes="(max-w-768px) 500px, 620px"
-              priority
-              fetchPriority="high"
               className="w-full h-auto object-contain transition-transform duration-700 group-hover:scale-[1.04] pointer-events-auto filter drop-shadow-[0_10px_40px_rgba(0,240,255,0.25)]"
               onError={(e) => {
                 e.currentTarget.src = "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=500&q=80";

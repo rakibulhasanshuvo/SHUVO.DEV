@@ -60,7 +60,7 @@ export default async function Home() {
             
             {/* Hero Ambient Backdrop */}
             <div className="absolute inset-0 -z-10 flex items-center justify-center overflow-hidden">
-              <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-r from-neon-cyan/10 to-electric-purple/10 rounded-full blur-3xl pointer-events-none" />
+              <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-r from-neon-cyan/10 to-electric-purple/10 rounded-full blur-3xl pointer-events-none hero-blur-orb" />
             </div>
 
             <div className="max-w-4xl relative z-10">
@@ -147,7 +147,7 @@ export default async function Home() {
             <div className="transform -rotate-6 scale-125 space-y-6">
               {/* Row 1 */}
               <div className="flex overflow-hidden select-none gap-8">
-                <div className="flex flex-shrink-0 justify-around min-w-full gap-8 animate-marquee [--duration:25s]">
+                <div className="flex flex-shrink-0 justify-around min-w-full gap-8 animate-marquee [--duration:25s] will-change-transform">
                   {["Next.js", "React", "Supabase", "TypeScript", "Tailwind CSS", "Framer Motion", "Node.js", "PostgreSQL", "Docker", "AWS"].map((tech, idx) => (
                     <div key={idx} className="flex items-center gap-3 glass px-4 py-2 rounded-xl border border-white/5 hover:border-neon-cyan/20 transition-colors">
                       <CodeIcon />
@@ -155,7 +155,7 @@ export default async function Home() {
                     </div>
                   ))}
                 </div>
-                <div className="flex flex-shrink-0 justify-around min-w-full gap-8 animate-marquee [--duration:25s]">
+                <div className="flex flex-shrink-0 justify-around min-w-full gap-8 animate-marquee [--duration:25s] will-change-transform">
                   {["Next.js", "React", "Supabase", "TypeScript", "Tailwind CSS", "Framer Motion", "Node.js", "PostgreSQL", "Docker", "AWS"].map((tech, idx) => (
                     <div key={idx} className="flex items-center gap-3 glass px-4 py-2 rounded-xl border border-white/5 hover:border-neon-cyan/20 transition-colors">
                       <CodeIcon />
@@ -167,7 +167,7 @@ export default async function Home() {
 
               {/* Row 2 */}
               <div className="flex overflow-hidden select-none gap-8">
-                <div className="flex flex-shrink-0 justify-around min-w-full gap-8 animate-marquee-reverse [--duration:30s]">
+                <div className="flex flex-shrink-0 justify-around min-w-full gap-8 animate-marquee-reverse [--duration:30s] will-change-transform">
                   {["UI/UX", "Optimization", "Database", "Cloud", "Analytics", "Security", "Scalability", "E-Commerce", "Scraping", "API"].map((tech, idx) => (
                     <div key={idx} className="flex items-center gap-3 glass px-4 py-2 rounded-xl border border-white/5 hover:border-neon-cyan/20 transition-colors">
                       <CodeIcon />
@@ -175,7 +175,7 @@ export default async function Home() {
                     </div>
                   ))}
                 </div>
-                <div className="flex flex-shrink-0 justify-around min-w-full gap-8 animate-marquee-reverse [--duration:30s]">
+                <div className="flex flex-shrink-0 justify-around min-w-full gap-8 animate-marquee-reverse [--duration:30s] will-change-transform">
                   {["UI/UX", "Optimization", "Database", "Cloud", "Analytics", "Security", "Scalability", "E-Commerce", "Scraping", "API"].map((tech, idx) => (
                     <div key={idx} className="flex items-center gap-3 glass px-4 py-2 rounded-xl border border-white/5 hover:border-neon-cyan/20 transition-colors">
                       <CodeIcon />

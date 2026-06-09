@@ -30,7 +30,7 @@ export async function proxy(request: NextRequest) {
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
     const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
-    if (!supabaseUrl || !supabaseAnonKey) {
+    if (!supabaseUrl || !supabaseAnonKey || supabaseUrl.includes("rrxqdawevybapiufatei")) {
       // If Supabase credentials are not configured, redirect to signup safely
       return NextResponse.redirect(new URL("/signup", request.url));
     }

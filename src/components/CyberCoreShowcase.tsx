@@ -40,8 +40,12 @@ export default function CyberCoreShowcase({ isMobileServer }: { isMobileServer?:
     let channel: any = null;
     const connectRealtime = async () => {
       try {
-        if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
-          console.warn("Realtime subscription bypassed: Supabase environment variables missing.");
+        if (
+          !process.env.NEXT_PUBLIC_SUPABASE_URL || 
+          !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 
+          process.env.NEXT_PUBLIC_SUPABASE_URL.includes("rrxqdawevybapiufatei")
+        ) {
+          console.warn("Realtime subscription bypassed: Supabase environment variables missing or pointing to the paused project.");
           return;
         }
 

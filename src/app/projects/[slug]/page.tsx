@@ -104,7 +104,11 @@ export default async function ProjectDetailPage({ params }: PageProps) {
   // 1. Attempt to fetch project dynamic metadata from Supabase
   let dbProject = null;
   try {
-    if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+    if (
+      !process.env.NEXT_PUBLIC_SUPABASE_URL || 
+      !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 
+      process.env.NEXT_PUBLIC_SUPABASE_URL.includes("rrxqdawevybapiufatei")
+    ) {
       throw new Error("Supabase env vars missing");
     }
     const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);

@@ -28,6 +28,7 @@ const securityHeaders = [
 ];
 
 const nextConfig: NextConfig = {
+  allowedDevOrigins: ["127.0.0.1", "localhost", "192.168.0.100"],
   turbopack: {
     root: process.cwd(),
   },
