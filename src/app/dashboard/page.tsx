@@ -96,11 +96,7 @@ const initialSales = [
   },
 ];
 
-const mockMessages = [
-  { id: 1, user: "Alice Cooper", msg: "Can we integrate this template with Prisma?", time: "10 mins ago" },
-  { id: 2, user: "Bob Marley", msg: "The animations on the home page look stellar!", time: "45 mins ago" },
-  { id: 3, user: "Charlie Sheen", msg: "Let's discuss the backend deployment timeline.", time: "3 hours ago" },
-];
+
 
 export default function DashboardPage() {
   // To-Do Checklist State

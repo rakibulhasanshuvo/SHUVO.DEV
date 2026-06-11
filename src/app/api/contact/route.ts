@@ -105,7 +105,10 @@ function getClientIP(request: Request): string {
 export async function POST(request: Request) {
   try {
     // 0. Environment configuration sanity check
-    const secret = process.env.RATE_LIMIT_SECRET || "fallback-secret-for-development-do-not-use-in-prod";
+    const secret = process.env.RATE_LIMIT_SECRET || (process.env.NODE_ENV === "production" ? undefined : "fallback-secret-for-development-do-not-use-in-prod");
+    if (!secret) {
+      throw new Error("CRITICAL: RATE_LIMIT_SECRET is not configured in production.");
+    }
 
     // CSRF protection check
     const origin = request.headers.get("origin");

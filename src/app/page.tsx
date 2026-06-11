@@ -14,16 +14,40 @@ import { headers } from "next/headers";
 import DynamicThreeDCarouselClient from "@/components/DynamicThreeDCarouselClient";
 
 
-import PricingCards from "@/components/PricingCards";
-import CyberButton from "@/components/CyberButton";
-import AngledGallery from "@/components/AngledGallery";
-import FeaturedWork from "@/components/featured-work/FeaturedWork";
-import StickyStackCards from "@/components/StickyStackCards";
-import AboutSection from "@/components/AboutSection";
-import FaqAccordion from "@/components/FaqAccordion";
-import ClientReviews from "@/components/ClientReviews";
-import CyberCoreShowcase from "@/components/CyberCoreShowcase";
-import ContactVideo from "@/components/ContactVideo";
+import dynamic from "next/dynamic";
+
+const PricingCards = dynamic(() => import("@/components/PricingCards"), {
+  ssr: true,
+  loading: () => <div className="w-full h-[350px] bg-slate-950/10 rounded-3xl animate-pulse" />
+});
+const AngledGallery = dynamic(() => import("@/components/AngledGallery"), {
+  ssr: true,
+  loading: () => <div className="w-full h-[600px] bg-slate-950/10 rounded-3xl animate-pulse" />
+});
+const StickyStackCards = dynamic(() => import("@/components/StickyStackCards"), {
+  ssr: true,
+  loading: () => <div className="w-full h-[500px] bg-slate-950/10 rounded-3xl animate-pulse" />
+});
+const AboutSection = dynamic(() => import("@/components/AboutSection"), {
+  ssr: true,
+  loading: () => <div className="w-full h-[400px] bg-slate-950/10 rounded-3xl animate-pulse" />
+});
+const FaqAccordion = dynamic(() => import("@/components/FaqAccordion"), {
+  ssr: true,
+  loading: () => <div className="w-full h-[300px] bg-slate-950/10 rounded-3xl animate-pulse" />
+});
+const ClientReviews = dynamic(() => import("@/components/ClientReviews"), {
+  ssr: true,
+  loading: () => <div className="w-full h-[300px] bg-slate-950/10 rounded-3xl animate-pulse" />
+});
+const CyberCoreShowcase = dynamic(() => import("@/components/CyberCoreShowcase"), {
+  ssr: true,
+  loading: () => <div className="w-full h-[400px] bg-slate-950/10 rounded-3xl animate-pulse" />
+});
+const ContactVideo = dynamic(() => import("@/components/ContactVideo"), {
+  ssr: true,
+  loading: () => <div className="w-full h-[250px] bg-slate-950/10 rounded-3xl animate-pulse" />
+});
 
 // Dynamic wrappers with ssr: false for heavy background animations
 import DynamicConstellation from "@/components/DynamicConstellation";
@@ -57,7 +81,7 @@ export default async function Home() {
         {/* Hero Section */}
         <div className="relative w-full">
           <section className="relative mb-28 md:mb-36 pt-10 max-w-[1440px] mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            
+
             {/* Hero Ambient Backdrop */}
             <div className="absolute inset-0 -z-10 flex items-center justify-center overflow-hidden">
               <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-r from-neon-cyan/10 to-electric-purple/10 rounded-full blur-3xl pointer-events-none hero-blur-orb" />
@@ -67,7 +91,7 @@ export default async function Home() {
               <div>
                 <h1 className="font-cabinet font-bold text-5xl sm:text-6xl md:text-8xl mb-6 leading-[0.9] tracking-tight text-balance">
                   Engineering{" "}
-                  <span 
+                  <span
                     className="text-transparent bg-clip-text bg-gradient-to-r from-neon-cyan to-electric-purple animate-gradient will-change-transform drop-shadow-[0_0_30px_rgba(0,240,255,0.2)]"
                     style={{ textShadow: "0 0 35px rgba(0, 240, 255, 0.35), 0 0 65px rgba(161, 0, 255, 0.25)" }}
                   >
@@ -89,14 +113,14 @@ export default async function Home() {
                   <div className="absolute inset-0 bg-gradient-to-r from-neon-cyan via-blue-500 to-electric-purple opacity-90 transition-opacity duration-300 group-hover:opacity-100 rounded-full" />
                   <div className="absolute -inset-0.5 bg-gradient-to-r from-neon-cyan to-electric-purple rounded-full blur-md opacity-50 group-hover:opacity-90 transition-opacity duration-300 z-0" />
                   <div className="absolute inset-[1.5px] bg-cyber-black rounded-full group-hover:bg-cyber-charcoal transition-colors duration-300 z-10" />
-                  
+
                   <span className="relative z-20 text-white text-sm uppercase tracking-wider flex items-center gap-2 font-bold">
                     View My Work
                     <svg className="w-4 h-4 text-neon-cyan transform group-hover:translate-x-1.5 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
                     </svg>
                   </span>
-                  
+
                   <div className="absolute top-0 -inset-full h-full w-1/2 z-20 block transform -skew-x-12 bg-gradient-to-r from-transparent via-white/20 to-transparent group-hover:animate-[shimmer_2s_infinite]" />
                 </a>
 
@@ -108,7 +132,7 @@ export default async function Home() {
                   <div className="absolute inset-0 border border-white/10 group-hover:border-white/20 rounded-full transition-colors duration-300 z-0" />
                   <div className="absolute inset-0 bg-white/5 group-hover:bg-white/10 backdrop-blur-md rounded-full transition-colors duration-300 z-10" />
                   <div className="absolute inset-0 bg-gradient-to-r from-neon-cyan/0 to-electric-purple/0 group-hover:from-neon-cyan/5 group-hover:to-electric-purple/5 rounded-full transition-all duration-500 z-10" />
-                  
+
                   <span className="relative z-20 text-zinc-300 group-hover:text-white text-sm uppercase tracking-wider flex items-center gap-2">
                     Get in Touch
                     <svg className="w-4 h-4 text-zinc-400 group-hover:text-electric-purple group-hover:translate-y-[-1px] group-hover:translate-x-[1px] transition-all duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
@@ -139,12 +163,12 @@ export default async function Home() {
         </section>
 
         {/* Technical Marquee */}
-        <div className="relative w-full overflow-hidden mb-28 md:mb-36">
-          <section className="mb-0 overflow-hidden py-32 relative">
+        <div className="relative w-full overflow-hidden">
+          <section className="mb-0 overflow-hidden py-10 relative">
             <div className="absolute inset-y-0 left-0 w-1/4 bg-gradient-to-r from-cyber-black to-transparent z-10 pointer-events-none" />
             <div className="absolute inset-y-0 right-0 w-1/4 bg-gradient-to-l from-cyber-black to-transparent z-10 pointer-events-none" />
 
-            <div className="transform -rotate-6 scale-125 space-y-6">
+            <div className="space-y-6">
               {/* Row 1 */}
               <div className="flex overflow-hidden select-none gap-8">
                 <div className="flex flex-shrink-0 justify-around min-w-full gap-8 animate-marquee [--duration:25s] will-change-transform">

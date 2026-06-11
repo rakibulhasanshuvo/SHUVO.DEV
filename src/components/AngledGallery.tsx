@@ -16,18 +16,18 @@ interface GalleryColumnProps {
   duration?: number;
 }
 
-const GalleryColumn = ({ 
-  items, 
-  reverse = false, 
-  duration = 20 
+const GalleryColumn = ({
+  items,
+  reverse = false,
+  duration = 20
 }: GalleryColumnProps) => {
   const [columnHovered, setColumnHovered] = useState(false);
   return (
     <div
       className={`flex flex-col will-change-transform ${reverse ? 'animate-scroll-reverse' : 'animate-scroll'}`}
-      style={{ 
+      style={{
         animationDuration: `${duration}s`,
-        animationPlayState: columnHovered ? "paused" : "running" 
+        animationPlayState: columnHovered ? "paused" : "running"
       }}
       onMouseEnter={() => setColumnHovered(true)}
       onMouseLeave={() => setColumnHovered(false)}
@@ -44,7 +44,7 @@ const GalleryColumn = ({
         >
           <div className={`absolute inset-0 bg-gradient-to-br ${item.color} opacity-50`} />
           <div className={`absolute inset-0 border ${item.border} rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
-          
+
           <div className="absolute bottom-0 left-0 p-4 md:p-6">
             <div className="w-24 md:w-32 h-3 md:h-4 bg-white/20 rounded-full mb-2 md:mb-3" />
             <div className="w-16 md:w-24 h-2 md:h-3 bg-white/10 rounded-full" />
@@ -57,7 +57,7 @@ const GalleryColumn = ({
 
 export default function AngledGallery() {
   return (
-    <section 
+    <section
       className="relative w-full min-h-[100vh] overflow-hidden bg-transparent flex items-center justify-center mb-28 md:mb-36"
     >
       <style>{`
@@ -77,7 +77,7 @@ export default function AngledGallery() {
         }
       `}</style>
       <div className="absolute inset-0 z-10 pointer-events-none bg-gradient-to-b from-black via-transparent to-black opacity-90" />
-      
+
       {/* 
         scale-[1.75] ensures no background clipping on 16:9 or ultrawide displays.
         rotate-[60deg] creates the architectural tilt.

@@ -11,12 +11,11 @@ const RainBackground = () => {
           position: absolute;
           inset: 0;
           z-index: 1;
-          backdrop-filter: blur(1em) brightness(6);
           background-image: radial-gradient(
             circle at 50% 50%,
             #0000 0,
             #0000 2px,
-            hsl(0 0 4%) 2px
+            rgba(0, 0, 0, 0.75) 2px
           );
           background-size: 8px 8px;
         }

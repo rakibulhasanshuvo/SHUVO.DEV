@@ -24,7 +24,7 @@ jest.mock("next/server", () => {
   };
 });
 
-import { proxy } from "./proxy";
+import { middleware } from "./middleware";
 import { NextRequest } from "next/server";
 
 describe("Edge Middleware - Admin Lockdown", () => {
@@ -34,7 +34,7 @@ describe("Edge Middleware - Admin Lockdown", () => {
 
   it("should block /signup in production when DISABLE_PUBLIC_SIGNUP is true", async () => {
     const request = new NextRequest("http://localhost/signup");
-    const response = await proxy(request);
+    const response = await middleware(request);
 
     expect(response.status).toBe(307);
     expect(response.headers.get("location")).toBe("http://localhost/");
@@ -48,7 +48,7 @@ describe("Edge Middleware - Admin Lockdown", () => {
     const request = new NextRequest("http://localhost/dashboard");
     request.cookies.set("sb-access-token", "some-token");
 
-    const response = await proxy(request);
+    const response = await middleware(request);
 
     expect(response.status).toBe(307);
     expect(response.headers.get("location")).toBe("http://localhost/");
@@ -64,7 +64,7 @@ describe("Edge Middleware - Admin Lockdown", () => {
     });
 
     const request = new NextRequest("http://localhost/dashboard");
-    const response = await proxy(request);
+    const response = await middleware(request);
 
     // Should proceed to NextResponse.next() without redirection
     expect(response.status).toBe(200);

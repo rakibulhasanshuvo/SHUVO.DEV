@@ -40,9 +40,9 @@
   overflow: hidden;
   inset: 0;
   transform: rotateY(calc((360deg / var(--quantity)) * var(--index))) translateZ(var(--translateZ));
-  background: rgba(8, 8, 10, 0.65); /* Frosted dark luxury glass backing */
-  backdrop-filter: blur(14px); /* Strong frosted blur */
-  -webkit-backdrop-filter: blur(14px);
+  background: rgba(8, 8, 10, 0.92); /* Highly opaque dark luxury backing */
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
   transform-style: preserve-3d;
   backface-visibility: hidden; /* CRITICAL: Hides backward-facing cards at the back of the cylinder to prevent messy mirrored graphics */
   
@@ -91,4 +91,34 @@
     rgba(0, 0, 0, 0) 100%
   );
 }
+
+.mobileList {
+  display: flex;
+  gap: 1.25rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding: 1.5rem 1rem;
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  margin-right: calc(-50vw + 50%);
+  scrollbar-width: none;
+}
+
+.mobileList::-webkit-scrollbar {
+  display: none;
+}
+
+.mobileCard {
+  flex: 0 0 280px;
+  scroll-snap-align: center;
+  height: 380px;
+  border: 1px solid rgba(var(--color-card), 0.35);
+  border-radius: 20px;
+  background: rgba(8, 8, 10, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+}
+
 

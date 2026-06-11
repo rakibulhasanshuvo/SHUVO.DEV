@@ -5,7 +5,7 @@ import { useIsMobile } from "@/hooks/use-mobile";
 
 export default function ContactVideo({ isMobileServer }: { isMobileServer?: boolean }) {
   const isMobileClient = useIsMobile();
-  const isMobile = isMobileServer ?? isMobileClient;
+  const isMobile = isMobileServer || (isMobileClient ?? false);
 
   if (isMobile) {
     return (

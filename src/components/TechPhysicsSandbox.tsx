@@ -33,7 +33,7 @@ export default function TechPhysicsSandbox({ isMobileServer }: { isMobileServer?
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [reducedMotion, setReducedMotion] = useState(false);
   const isMobileClient = useIsMobile();
-  const isMobile = isMobileServer ?? isMobileClient;
+  const isMobile = isMobileServer || (isMobileClient ?? false);
   const [dimensions, setDimensions] = useState({ width: 0, height: 400 });
 
   const showFallback = reducedMotion || isMobile === undefined || isMobile === true;

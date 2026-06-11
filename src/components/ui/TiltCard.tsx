@@ -2,6 +2,7 @@
 
 import React, { useRef, useState } from "react";
 import { m, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface TiltCardProps {
   children: React.ReactNode;
@@ -12,6 +13,7 @@ interface TiltCardProps {
 export const TiltCard = ({ children, className = "", glowColor = "rgba(0, 240, 255, 0.4)" }: TiltCardProps) => {
   const ref = useRef<HTMLDivElement>(null);
   const [isHovered, setIsHovered] = useState(false);
+  const isMobile = useIsMobile();
 
   // Spotlight mouse position tracking
   const mouseX = useMotionValue(0);
@@ -37,6 +39,7 @@ export const TiltCard = ({ children, className = "", glowColor = "rgba(0, 240, 2
   }, []);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (isMobile) return;
     const clientX = e.clientX;
     const clientY = e.clientY;
 
@@ -63,12 +66,14 @@ export const TiltCard = ({ children, className = "", glowColor = "rgba(0, 240, 2
   };
 
   const handleMouseLeave = () => {
+    if (isMobile) return;
     setIsHovered(false);
     x.set(0);
     y.set(0);
   };
 
   const handleMouseEnter = () => {
+    if (isMobile) return;
     setIsHovered(true);
     if (ref.current) {
       rectRef.current = ref.current.getBoundingClientRect();

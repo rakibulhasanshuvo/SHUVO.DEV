@@ -22,7 +22,7 @@ const systemLogs = [
 
 export default function CyberCoreShowcase({ isMobileServer }: { isMobileServer?: boolean }) {
   const isMobileClient = useIsMobile();
-  const isMobile = isMobileServer ?? isMobileClient;
+  const isMobile = isMobileServer || (isMobileClient ?? false);
 
   // Real-time scrolling terminal logs state
   const [logs, setLogs] = useState<string[]>([]);

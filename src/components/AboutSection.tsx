@@ -8,7 +8,7 @@ import { Sparkles, Terminal, Code, Cpu, Award, Zap } from "lucide-react";
 
 export default function AboutSection({ isMobileServer }: { isMobileServer?: boolean }) {
   const isMobileClient = useIsMobile();
-  const isMobile = isMobileServer ?? isMobileClient;
+  const isMobile = isMobileServer || (isMobileClient ?? false);
 
   const getVariants = (delay: number): any => {
     if (isMobile === undefined || isMobile) {

@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { m } from "framer-motion";
-import InteractiveGridBackground from "@/components/InteractiveGridBackground";
+import DynamicConstellation from "@/components/DynamicConstellation";
 import { TiltCard } from "@/components/ui/TiltCard";
 import { projectsData } from "./data";
 import BrowserMockup from "@/components/ui/BrowserMockup";
@@ -296,7 +296,7 @@ export default function ProjectsPage() {
   return (
     <div className="min-h-screen bg-[#000000] text-white py-20 px-6 md:px-12 lg:px-24 relative overflow-hidden font-satoshi">
       {/* Background Interactive Grid (Self-gates on mobile for smooth performance) */}
-      <InteractiveGridBackground />
+      <DynamicConstellation />
 
       <div className="max-w-7xl mx-auto relative z-10 space-y-36">
 

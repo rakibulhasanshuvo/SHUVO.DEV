@@ -2,11 +2,31 @@
 
 import React from 'react';
 import styles from './ThreeDCarousel.module.css';
+import { useIsMobile } from "@/hooks/use-mobile";
 
 
 const ThreeDCarousel = () => {
+  const isMobile = useIsMobile();
 
-
+  if (isMobile === undefined) {
+    return (
+      <div className="w-full min-h-[400px] flex items-center justify-center bg-transparent py-10">
+        <div className="w-[280px] h-[380px] rounded-[20px] border border-white/5 bg-[#08080a]/40 backdrop-blur-md flex flex-col justify-between p-6 animate-pulse">
+          <div className="flex justify-between items-center opacity-40">
+            <span className="w-16 h-4 rounded bg-white/10" />
+            <span className="w-1.5 h-1.5 rounded-full bg-white/20" />
+          </div>
+          <div className="flex-1 w-full flex items-center justify-center my-4">
+            <div className="w-10 h-10 rounded-full border border-white/10 border-t-transparent animate-spin opacity-20" />
+          </div>
+          <div className="border-t border-white/5 pt-4 opacity-40 space-y-2">
+            <div className="h-4 w-3/4 rounded bg-white/10" />
+            <div className="h-3 w-1/2 rounded bg-white/10" />
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   // Array of 10 high-fidelity cyber-luxury cards representing Shuvo's engineering and design stack
   const cards = [
@@ -402,6 +422,44 @@ const ThreeDCarousel = () => {
       )
     }
   ];
+
+  if (isMobile) {
+    return (
+      <div className={styles.mobileList}>
+        {cards.map((card) => (
+          <div 
+            key={card.index} 
+            className={styles.mobileCard} 
+            style={{ 
+              '--color-card': card.color 
+            } as React.CSSProperties}
+          >
+            <div className={`${styles.img} p-6 flex flex-col justify-between h-full w-full select-none text-left`}>
+              <div className="flex justify-between items-center opacity-80">
+                <span className="text-[9px] font-mono tracking-widest px-2 py-0.5 rounded border border-white/5 bg-white/5 font-semibold text-zinc-300" style={{ color: `rgb(${card.color})` }}>
+                  {card.tag}
+                </span>
+                <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ backgroundColor: `rgb(${card.color})`, boxShadow: `0 0 8px rgb(${card.color})` }} />
+              </div>
+              
+              <div className="flex-1 w-full flex items-center justify-center my-4 overflow-hidden relative">
+                {card.svg}
+              </div>
+              
+              <div className="border-t border-white/5 pt-2">
+                <h4 className="font-cabinet font-bold text-sm tracking-tight text-white line-clamp-1 leading-none mb-1">
+                  {card.title}
+                </h4>
+                <p className="text-[11px] font-light text-zinc-400 line-clamp-1">
+                  {card.subtitle}
+                </p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  }
 
   return (
     <div className={styles.wrapper}>

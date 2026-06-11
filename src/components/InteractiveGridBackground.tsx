@@ -306,13 +306,9 @@ export default function InteractiveGridBackground() {
             const char = chars[Math.floor((charY + i) % chars.length)];
 
             if (j === 0) {
-              // High-fidelity leader character: Pure white with custom cyber-drop shadows
-              ctx.save();
+              // High-fidelity leader character: Pure white (drawn directly with zero shadowBlur overhead)
               ctx.fillStyle = `rgba(255, 255, 255, ${opacity * 1.5})`;
-              ctx.shadowColor = i % 3 === 0 ? "rgba(161, 0, 255, 0.8)" : "rgba(0, 240, 255, 0.8)";
-              ctx.shadowBlur = 6;
               ctx.fillText(char, xPos, charY);
-              ctx.restore();
             } else {
               // Standard tail character in electric purple or cyan
               ctx.fillStyle = i % 3 === 0

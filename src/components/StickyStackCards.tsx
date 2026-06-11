@@ -75,10 +75,122 @@ const PROJECTS: Project[] = [
 import { useIsMobile } from "@/hooks/use-mobile";
 
 export default function StickyStackCards({ isMobileServer }: { isMobileServer?: boolean }) {
+  const isMobileClient = useIsMobile();
+
+  if (isMobileClient === undefined && !isMobileServer) {
+    return (
+      <section className="relative w-full py-20 px-4 overflow-visible flex flex-col gap-10">
+        <div className="text-center mb-8 px-2">
+          <span className="text-xs uppercase tracking-widest text-neon-cyan font-bold bg-neon-cyan/10 px-4 py-1.5 rounded-full border border-neon-cyan/20">
+            Featured Works
+          </span>
+          <h2 className="font-cabinet font-bold text-3xl mt-4 mb-2 text-white">
+            Featured Projects
+          </h2>
+        </div>
+        <div className="max-w-5xl mx-auto flex flex-col gap-12 w-full animate-pulse">
+          <div className="w-full rounded-[2rem] p-6 border border-white/5 bg-slate-950/20 flex flex-col justify-between h-[420px]">
+            <div className="flex justify-between items-start">
+              <span className="w-24 h-6 rounded-full bg-white/10" />
+              <span className="w-8 h-8 rounded bg-white/10" />
+            </div>
+            <div className="space-y-4">
+              <div className="h-8 w-1/3 rounded bg-white/10" />
+              <div className="h-4 w-3/4 rounded bg-white/10" />
+              <div className="h-4 w-1/2 rounded bg-white/10" />
+              <div className="flex gap-2">
+                <span className="w-16 h-6 rounded-full bg-white/5" />
+                <span className="w-16 h-6 rounded-full bg-white/5" />
+                <span className="w-16 h-6 rounded-full bg-white/5" />
+              </div>
+            </div>
+            <div className="h-10 w-full rounded-full bg-white/10 mt-4" />
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  const isMobile = isMobileServer || (isMobileClient ?? false);
+
+  if (isMobile) {
+    return <MobileStickyStackCards />;
+  }
+
+  return <DesktopStickyStackCards />;
+}
+
+function MobileStickyStackCards() {
+  return (
+    <section
+      className="relative w-full bg-transparent py-20 px-4 overflow-visible flex flex-col gap-10"
+    >
+      <div className="text-center mb-8 px-2">
+        <span className="text-xs uppercase tracking-widest text-neon-cyan font-bold bg-neon-cyan/10 px-4 py-1.5 rounded-full border border-neon-cyan/20">
+          Featured Works
+        </span>
+        <h2 className="font-cabinet font-bold text-3xl mt-4 mb-2 text-white">
+          Featured Projects
+        </h2>
+      </div>
+
+      <div className="max-w-5xl mx-auto flex flex-col gap-12 w-full">
+        {PROJECTS.map((project, index) => (
+          <div
+            key={project.id}
+            style={{
+              position: "relative",
+              zIndex: index * 10,
+            }}
+            className={`w-full rounded-[2rem] p-6 border ${project.borderColor} bg-gradient-to-b ${project.gradient} max-md:bg-[#070709] max-md:bg-opacity-95 backdrop-blur-xl max-md:backdrop-blur-none flex flex-col justify-between text-white shadow-xl h-[420px]`}
+          >
+            <div className="flex justify-between items-start">
+              <span className="text-[11px] font-mono text-neon-cyan uppercase tracking-widest bg-cyan-950/40 border border-cyan-500/20 px-2.5 py-1 rounded-full">
+                {project.subtitle}
+              </span>
+              <span className="text-3xl select-none">{project.icon}</span>
+            </div>
+
+            <div className="space-y-4">
+              <h3 className="font-cabinet font-bold text-2xl text-white tracking-tight">
+                {project.title}
+              </h3>
+              <p className="text-zinc-300 font-light text-xs leading-relaxed">
+                {project.description}
+              </p>
+              <div className="flex flex-wrap gap-1.5">
+                {project.tech.map((tech) => (
+                  <span
+                    key={tech}
+                    className="text-[11px] font-mono px-2 py-1 bg-white/5 border border-white/10 rounded-full text-zinc-400"
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            <div className="pt-2">
+              <Link
+                href={`/projects#${project.id}`}
+                className="inline-flex items-center gap-2 px-5 py-2.5 bg-white text-black text-xs font-semibold rounded-full w-full justify-center shadow-md"
+              >
+                <span>Explore Case Study</span>
+                <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                </svg>
+              </Link>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function DesktopStickyStackCards() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [mounted, setMounted] = useState(false);
-  const isMobileClient = useIsMobile();
-  const isMobile = isMobileServer ?? isMobileClient;
 
   // Verify client mount for Next.js SSR safety
   useEffect(() => {
@@ -91,77 +203,6 @@ export default function StickyStackCards({ isMobileServer }: { isMobileServer?: 
     offset: ["start start", "end end"],
   });
 
-  // Render Mobile Fallback: beautiful natural vertical scroll cards with subtle sticky stacked offsets
-  if (isMobile) {
-    return (
-      <section
-        ref={containerRef}
-        className="relative w-full bg-transparent py-20 px-4 overflow-visible flex flex-col gap-10"
-      >
-        <div className="text-center mb-8 px-2">
-          <span className="text-xs uppercase tracking-widest text-neon-cyan font-bold bg-neon-cyan/10 px-4 py-1.5 rounded-full border border-neon-cyan/20">
-            Featured Works
-          </span>
-          <h2 className="font-cabinet font-bold text-3xl mt-4 mb-2 text-white">
-            Featured Projects
-          </h2>
-        </div>
-
-        <div className="max-w-5xl mx-auto flex flex-col gap-12 w-full">
-          {PROJECTS.map((project, index) => (
-            <div
-              key={project.id}
-              style={{
-                position: "relative",
-                zIndex: index * 10,
-              }}
-              className={`w-full rounded-[2rem] p-6 border ${project.borderColor} bg-gradient-to-b ${project.gradient} max-md:bg-[#070709] max-md:bg-opacity-95 backdrop-blur-xl max-md:backdrop-blur-none flex flex-col justify-between text-white shadow-xl h-[420px]`}
-            >
-              <div className="flex justify-between items-start">
-                <span className="text-[11px] font-mono text-neon-cyan uppercase tracking-widest bg-cyan-950/40 border border-cyan-500/20 px-2.5 py-1 rounded-full">
-                  {project.subtitle}
-                </span>
-                <span className="text-3xl select-none">{project.icon}</span>
-              </div>
-
-              <div className="space-y-4">
-                <h3 className="font-cabinet font-bold text-2xl text-white tracking-tight">
-                  {project.title}
-                </h3>
-                <p className="text-zinc-300 font-light text-xs leading-relaxed">
-                  {project.description}
-                </p>
-                <div className="flex flex-wrap gap-1.5">
-                  {project.tech.map((tech) => (
-                    <span
-                      key={tech}
-                      className="text-[11px] font-mono px-2 py-1 bg-white/5 border border-white/10 rounded-full text-zinc-400"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              <div className="pt-2">
-                <Link
-                  href={`/projects#${project.id}`}
-                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-white text-black text-xs font-semibold rounded-full w-full justify-center shadow-md"
-                >
-                  <span>Explore Case Study</span>
-                  <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-                  </svg>
-                </Link>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-    );
-  }
-
-  // Render Desktop: Spectacular Viewport-Pinned 3D Sticky Stack Deck
   return (
     <section
       ref={containerRef}
